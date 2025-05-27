@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/testing/static/css/main.fd1048e0.css",
-    "main.js": "/testing/static/js/main.15ae4e81.js",
-    "index.html": "/testing/index.html",
-    "main.fd1048e0.css.map": "/testing/static/css/main.fd1048e0.css.map",
-    "main.15ae4e81.js.map": "/testing/static/js/main.15ae4e81.js.map"
+    "main.css": "/longevityanalytics/static/css/main.fd1048e0.css",
+    "main.js": "/longevityanalytics/static/js/main.15ae4e81.js",
+    "index.html": "/longevityanalytics/index.html",
+    "main.fd1048e0.css.map": "/longevityanalytics/static/css/main.fd1048e0.css.map",
+    "main.15ae4e81.js.map": "/longevityanalytics/static/js/main.15ae4e81.js.map"
   },
   "entrypoints": [
     "static/css/main.fd1048e0.css",
