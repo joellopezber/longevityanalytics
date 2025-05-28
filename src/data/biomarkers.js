@@ -24,7 +24,8 @@ import {
   FaClock,
   FaLeaf,
   FaSearch,
-  FaVial
+  FaVial,
+  FaDumbbell
 } from 'react-icons/fa';
 
 // Función para procesar los datos del CSV y extraer biomarcadores por categoría
@@ -288,7 +289,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: FaFlask,
+    icon: FaDumbbell,
     benefits: [
       'Detoxificación dirigida',
       'Prevención de toxicidad',
