@@ -27,8 +27,8 @@ import {
   FaDumbbell
 } from 'react-icons/fa';
 
-// Importar icono de mariposa desde Material Design
-// import { MdButterfly } from 'react-icons/md';
+// Importar icono de manzana desde Ant Design Icons
+import { AiFillApple } from 'react-icons/ai';
 
 // Función para procesar los datos del CSV y extraer biomarcadores por categoría
 const csvData = [
@@ -152,7 +152,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: FaAtom,
+    icon: AiFillApple,
     benefits: [
       'Función tiroidea avanzada',
       'Eje hipotálamo-hipófisis',
