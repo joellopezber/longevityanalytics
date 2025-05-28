@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/longevityanalytics/static/css/main.fd1048e0.css",
-    "main.js": "/longevityanalytics/static/js/main.15ae4e81.js",
+    "main.js": "/longevityanalytics/static/js/main.443ee0db.js",
     "index.html": "/longevityanalytics/index.html",
     "main.fd1048e0.css.map": "/longevityanalytics/static/css/main.fd1048e0.css.map",
-    "main.15ae4e81.js.map": "/longevityanalytics/static/js/main.15ae4e81.js.map"
+    "main.443ee0db.js.map": "/longevityanalytics/static/js/main.443ee0db.js.map"
   },
   "entrypoints": [
     "static/css/main.fd1048e0.css",
-    "static/js/main.15ae4e81.js"
+    "static/js/main.443ee0db.js"
   ]
 }
