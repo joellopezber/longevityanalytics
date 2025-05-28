@@ -19,7 +19,13 @@ const PackageComparison = () => {
   // Calcular totales dinámicos
   const calculateTotals = () => {
     let totalBiomarkers = essentialPackage.testCount;
-    let totalPrice = 299; // Precio base del Essential
+    // Actualizado para manejar precios por género del Essential
+    let totalPrice = typeof essentialPackage.price === 'object' 
+      ? essentialPackage.price[selectedGender] 
+      : essentialPackage.price;
+    let totalPvpPrice = typeof essentialPackage.pvpPrice === 'object' 
+      ? essentialPackage.pvpPrice[selectedGender] 
+      : essentialPackage.pvpPrice;
     let selectedAddOnsList = [];
 
     selectedAddOns.forEach(addOnId => {
@@ -27,7 +33,9 @@ const PackageComparison = () => {
       if (addOn) {
         totalBiomarkers += getPackageTestCount(addOn, selectedGender);
         let price = typeof addOn.price === 'object' ? addOn.price[selectedGender] : addOn.price;
+        let pvpPrice = typeof addOn.pvpPrice === 'object' ? addOn.pvpPrice[selectedGender] : addOn.pvpPrice;
         totalPrice += price;
+        totalPvpPrice += pvpPrice;
         selectedAddOnsList.push(addOn.name);
       }
     });
@@ -35,11 +43,12 @@ const PackageComparison = () => {
     return {
       totalBiomarkers,
       totalPrice,
+      totalPvpPrice,
       selectedAddOnsList
     };
   };
 
-  const { totalBiomarkers, totalPrice, selectedAddOnsList } = calculateTotals();
+  const { totalBiomarkers, totalPrice, totalPvpPrice, selectedAddOnsList } = calculateTotals();
 
   // Toggle Add-On selection
   const toggleAddOn = (addOnId) => {
@@ -144,6 +153,9 @@ const PackageComparison = () => {
 
                 {/* Precio dinámico */}
                 <div className="text-3xl font-bold mb-2 text-earth">{totalPrice}€</div>
+                <div className="text-sm text-gray-500 mb-2">
+                  PVP: {Math.round(totalPvpPrice)}€
+                </div>
                 <div className="text-sm text-taupe">
                   {selectedAddOns.length === 0 ? 'Precio base Essential' : `Essential + ${selectedAddOns.length} Add-On${selectedAddOns.length > 1 ? 's' : ''}`}
                 </div>

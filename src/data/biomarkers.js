@@ -3,10 +3,10 @@
  * Datos de biomarcadores basados en el CSV real
  * Organizado con Essential como paquete principal y Add-Ons especializados
  *
- * Cambios:
- * - Precios de los paquetes y add-ons actualizados según tabla de usuario (junio 2024).
- * - El campo price ahora es numérico o un objeto {male, female} si hay diferencia por género.
- * - Mapeo explícito de add-ons a la tabla de precios proporcionada.
+ * ACTUALIZACIÓN DICIEMBRE 2024:
+ * - Precios actualizados según CSV "Longevity Analytics_BioMark.xlsx - CP.csv"
+ * - Corrección de inconsistencias entre código y datos reales
+ * - Mapeo exacto de precios desde la tabla de precios del CSV
  */
 
 // Función para procesar los datos del CSV y extraer biomarcadores por categoría
@@ -65,7 +65,8 @@ export const essentialPackage = {
   name: 'Essential',
   description: 'El Essential Analysis examina los biomarcadores fundamentales para dibujar una imagen precisa de tu estado de salud actual. Con estos datos podemos anticipar riesgos silenciosos, establecer prioridades terapéuticas y definir si conviene añadir módulos adicionales (add on). Transformado la ciencia analitica en decisiones personalizadas y un plan de acción claro.',
   testCount: 46,
-  price: 299,
+  price: { male: 279, female: 279 },
+  pvpPrice: { male: 402.27, female: 399.02 },
   color: 'gradient-earth',
   bgColor: 'bg-earth-50',
   borderColor: 'border-earth',
@@ -89,9 +90,10 @@ export const addOnPackages = {
   hormonas: {
     id: 'hormonas',
     name: 'Hormonas Avanzadas',
-    description: 'Optimización hormonal completa para anti-aging y vitalidad',
+    description: 'Analiza el perfil hormonal completo (testosterona, estrógenos, progesterona, gonadotropinas) para optimizar vitalidad, libido, masa muscular y equilibrio hormonal. Esencial para terapias de reemplazo hormonal y anti-aging.',
     testCount: 11, // Dinámico: 6 para hombres, 8 para mujeres
-    price: { male: 149, female: 249 },
+    price: { male: 109, female: 119 },
+    pvpPrice: { male: 163.68, female: 173.60 },
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -121,9 +123,10 @@ export const addOnPackages = {
   endocrino: {
     id: 'endocrino',
     name: 'Endocrino',
-    description: 'Evaluación completa del sistema endocrino y metabólico',
+    description: 'Evalúa el eje hormonal completo (IGF-1, ACTH, función pancreática) para optimizar metabolismo, crecimiento celular y función endocrina. Identifica disfunciones metabólicas y guía estrategias de longevidad.',
     testCount: 7,
-    price: 499,
+    price: 139,
+    pvpPrice: 164.42,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -149,9 +152,10 @@ export const addOnPackages = {
   antioxidantes: {
     id: 'antioxidantes',
     name: 'Antioxidantes',
-    description: 'Defensa contra el envejecimiento y estrés oxidativo',
-    testCount: 14,
-    price: 433,
+    description: 'Mide vitaminas antioxidantes (A, C, E), coenzima Q10 y enzimas antioxidantes para evaluar tu capacidad de defensa contra el envejecimiento. Personaliza suplementación antioxidante y reduce estrés oxidativo.',
+    testCount: 11, // Actualizado tras remover Selenio, IL-6 y TNF-α
+    price: 179,
+    pvpPrice: 196.66,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -165,9 +169,6 @@ export const addOnPackages = {
     ],
     biomarkers: [
       { name: "VSG", category: "Inflamación", code: "H0020", gender: "both", description: "Velocidad de sedimentación globular. Marcador inespecífico de inflamación sistémica y procesos inflamatorios." },
-      { name: "IL-6", category: "Citocina inflamatoria", code: "B7790", gender: "both", description: "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento." },
-      { name: "TNF-α", category: "Citocina inflamatoria", code: "I2081", gender: "both", description: "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas." },
-      { name: "Selenio", category: "Antioxidante", code: "T3920", gender: "both", description: "Oligoelemento antioxidante esencial. Cofactor de glutatión peroxidasa. Protege contra estrés oxidativo." },
       { name: "Retinol (Vit A)", category: "Antioxidante", code: "T0811", gender: "both", description: "Vitamina A activa. Antioxidante liposoluble esencial para visión, inmunidad y diferenciación celular." },
       { name: "γ-Tocoferol", category: "Antioxidante", code: "T2841", gender: "both", description: "Forma gamma de vitamina E. Antioxidante específico contra radicales de nitrógeno y peroxinitrito." },
       { name: "α-Tocoferol", category: "Antioxidante", code: "T1191", gender: "both", description: "Forma alfa de vitamina E. Principal antioxidante liposoluble que protege membranas celulares." },
@@ -181,12 +182,61 @@ export const addOnPackages = {
     ]
   },
 
+  oxidative_cell: {
+    id: 'oxidative_cell',
+    name: 'Estrés Oxidativo Celular',
+    description: 'Analiza selenio y marcadores específicos de daño oxidativo celular para evaluar el envejecimiento a nivel molecular. Optimiza protección celular y previene daño oxidativo acumulativo.',
+    testCount: 1,
+    price: 199,
+    pvpPrice: 215.69,
+    color: 'gradient-warm',
+    bgColor: 'bg-warm-50',
+    borderColor: 'border-warm',
+    textColor: 'text-warm',
+    icon: '⚛️',
+    benefits: [
+      'Evaluación de daño celular',
+      'Capacidad antioxidante específica',
+      'Optimización celular',
+      'Prevención del envejecimiento'
+    ],
+    biomarkers: [
+      { name: "Selenio", category: "Antioxidante", code: "T3920", gender: "both", description: "Oligoelemento antioxidante esencial. Cofactor de glutatión peroxidasa. Protege contra estrés oxidativo." }
+    ]
+  },
+
+  inflammation: {
+    id: 'inflammation',
+    name: 'Inflamación',
+    description: 'Mide citocinas inflamatorias (IL-6, TNF-α) y marcadores de inflamación sistémica para detectar inflamación crónica silenciosa. Guía estrategias anti-inflamatorias y reduce riesgo de enfermedades crónicas.',
+    testCount: 3,
+    price: 109,
+    pvpPrice: 126.73,
+    color: 'gradient-warm',
+    bgColor: 'bg-warm-50',
+    borderColor: 'border-warm',
+    textColor: 'text-warm',
+    icon: '🔥',
+    benefits: [
+      'Detección de inflamación crónica',
+      'Evaluación de citocinas',
+      'Riesgo cardiovascular',
+      'Optimización anti-inflamatoria'
+    ],
+    biomarkers: [
+      { name: "VSG", category: "Inflamación", code: "H0020", gender: "both", description: "Velocidad de sedimentación globular. Marcador inespecífico de inflamación sistémica y procesos inflamatorios." },
+      { name: "IL-6", category: "Citocina inflamatoria", code: "B7790", gender: "both", description: "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento." },
+      { name: "TNF-α", category: "Citocina inflamatoria", code: "I2081", gender: "both", description: "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas." }
+    ]
+  },
+
   iv_nutrients: {
     id: 'iv_nutrients',
     name: 'IV & Nutrientes',
-    description: 'Optimización nutricional y soporte para terapias IV',
-    testCount: 6,
-    price: 283,
+    description: 'Analiza oligoelementos (cobre, cromo, selenio), vitaminas y balance hidroelectrolítico para optimizar terapias IV y suplementación. Personaliza protocolos nutricionales y mejora absorción de nutrientes.',
+    testCount: 7, // Actualizado con los biomarcadores correctos según CSV
+    price: 229,
+    pvpPrice: 264.10,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -202,18 +252,46 @@ export const addOnPackages = {
       { name: "Osmolalidad sérica", category: "Balance hidroelectrolítico", code: "B0270", gender: "both", description: "Concentración de partículas en sangre. Evalúa balance hídrico y función renal. Importante para terapias IV." },
       { name: "Cobre", category: "Oligoelemento", code: "B8060", gender: "both", description: "Oligoelemento esencial para formación de colágeno, función inmune y metabolismo del hierro." },
       { name: "Cromo", category: "Metabolismo glucídico", code: "T0500", gender: "both", description: "Oligoelemento que mejora sensibilidad a insulina y metabolismo de glucosa. Importante en diabetes." },
+      { name: "Selenio", category: "Antioxidante", code: "T3920", gender: "both", description: "Oligoelemento antioxidante esencial. Cofactor de glutatión peroxidasa. Protege contra estrés oxidativo." },
       { name: "Coenzima Q10", category: "Energía mitoc.", code: "T2830", gender: "both", description: "Antioxidante mitocondrial esencial. Crucial para producción de energía y protección celular." },
-      { name: "Vitamina C", category: "Antioxidante", code: "T1061", gender: "both", description: "Ácido ascórbico. Principal antioxidante hidrosoluble. Esencial para colágeno e inmunidad." },
-      { name: "G6PD", category: "Defensa oxidativa", code: "B3041", gender: "both", description: "Glucosa-6-fosfato deshidrogenasa. Enzima clave en defensa antioxidante celular." }
+      { name: "Vitamina K1", category: "Coagulación", code: "T1720", gender: "both", description: "Vitamina liposoluble esencial para coagulación. Cofactor de factores de coagulación." },
+      { name: "Vitamina C", category: "Antioxidante", code: "T1061", gender: "both", description: "Ácido ascórbico. Principal antioxidante hidrosoluble. Esencial para colágeno e inmunidad." }
+    ]
+  },
+
+  metals: {
+    id: 'metals',
+    name: 'Metales Pesados',
+    description: 'Detecta mercurio, plomo, arsénico y cadmio en sangre para identificar toxicidad por metales pesados. Guía protocolos de detoxificación y protege función neurológica y cognitiva.',
+    testCount: 4,
+    price: 79,
+    pvpPrice: 98.30,
+    color: 'gradient-warm',
+    bgColor: 'bg-warm-50',
+    borderColor: 'border-warm',
+    textColor: 'text-warm',
+    icon: '⚗️',
+    benefits: [
+      'Detoxificación dirigida',
+      'Prevención de toxicidad',
+      'Salud neurológica',
+      'Función cognitiva'
+    ],
+    biomarkers: [
+      { name: "Hg sangre", category: "Metales pesados", code: "T0302", gender: "both", description: "Mercurio en sangre. Metal tóxico que afecta sistema nervioso. Fuentes: pescado, amalgamas dentales." },
+      { name: "Pb sangre", category: "Metales pesados", code: "T0150", gender: "both", description: "Plomo en sangre. Metal tóxico que afecta desarrollo neurológico y función cognitiva." },
+      { name: "As sangre total", category: "Metales pesados", code: "T0960", gender: "both", description: "Arsénico total en sangre. Metaloide tóxico asociado con cáncer y enfermedades cardiovasculares." },
+      { name: "Cd sangre", category: "Metales pesados", code: "T0480", gender: "both", description: "Cadmio en sangre. Metal tóxico que afecta riñones, huesos y sistema cardiovascular." }
     ]
   },
 
   bone_mineral: {
     id: 'bone_mineral',
     name: 'Hueso & Mineral',
-    description: 'Salud ósea y metabolismo mineral completo',
+    description: 'Evalúa marcadores de formación y reabsorción ósea (ALP ósea, CTX), calcio iónico y vitamina D activa para prevenir osteoporosis y optimizar salud ósea a largo plazo.',
     testCount: 4,
     price: 149,
+    pvpPrice: 186.80,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -236,9 +314,10 @@ export const addOnPackages = {
   cardiovascular: {
     id: 'cardiovascular',
     name: 'Cardiovascular Avanzado',
-    description: 'Protección cardiovascular y prevención de riesgo cardíaco',
-    testCount: 6,
-    price: 139,
+    description: 'Analiza lipoproteínas aterogénicas (Lp(a), VLDL), marcadores de inflamación vascular y enzimas cardíacas para prevención cardiovascular avanzada. Reduce riesgo de infarto y optimiza salud cardíaca.',
+    testCount: 7,
+    price: 189,
+    pvpPrice: 250.42,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -252,6 +331,8 @@ export const addOnPackages = {
     ],
     biomarkers: [
       { name: "VLDL", category: "Perfil lipídico", code: "B0190", gender: "both", description: "Lipoproteínas de muy baja densidad. Transportan triglicéridos. Elevadas aumentan riesgo cardiovascular." },
+      { name: "Lp(a)", category: "Riesgo CV", code: "B7700", gender: "both", description: "Lipoproteína aterogénica genéticamente determinada. Factor de riesgo cardiovascular independiente." },
+      { name: "Cistatina-C", category: "Filtrado renal", code: "I5047", gender: "both", description: "Marcador de función renal más preciso que creatinina. No se ve afectado por masa muscular." },
       { name: "Ácido láctico", category: "Metabolismo energético", code: "B0750", gender: "both", description: "Producto del metabolismo anaeróbico. Elevado indica hipoxia tisular o disfunción mitocondrial." },
       { name: "CK-MB", category: "Enzima miocárdica", code: "B2120", gender: "both", description: "Creatina quinasa específica del miocardio. Marcador de daño cardíaco e infarto." },
       { name: "CPK total", category: "Enzima muscular", code: "B0220", gender: "both", description: "Creatina fosfoquinasa total. Enzima muscular que indica daño o estrés muscular." },
@@ -263,9 +344,10 @@ export const addOnPackages = {
   gut_health: {
     id: 'gut_health',
     name: 'Gut Health',
-    description: 'Salud intestinal y microbioma',
+    description: 'Evalúa función digestiva (enzimas pancreáticas), ácidos grasos omega-3, parásitos intestinales y metabolismo hepático para optimizar salud del microbioma y absorción de nutrientes.',
     testCount: 6,
-    price: 63,
+    price: 109,
+    pvpPrice: 159.65,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -290,9 +372,10 @@ export const addOnPackages = {
   coagulation: {
     id: 'coagulation',
     name: 'Coagulación',
-    description: 'Sistema de coagulación y hemostasia',
-    testCount: 4,
-    price: 92,
+    description: 'Analiza sistema de coagulación (fibrinógeno, APTT, INR) para evaluar riesgo trombótico y función hemostática. Optimiza anticoagulación y previene eventos cardiovasculares.',
+    testCount: 3, // Actualizado tras remover Vitamina K1
+    price: 15,
+    pvpPrice: 16.74,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -307,42 +390,17 @@ export const addOnPackages = {
     biomarkers: [
       { name: "Fibrinógeno", category: "Coagulación-inflamación", code: "H0050", gender: "both", description: "Proteína de coagulación y marcador inflamatorio. Elevado indica riesgo trombótico e inflamación." },
       { name: "Cefalina-APTT", category: "Coagulación", code: "H0850", gender: "both", description: "Tiempo de tromboplastina parcial activada. Evalúa vía intrínseca de coagulación." },
-      { name: "INR (Protrombina)", category: "Coagulación", code: "H0860", gender: "both", description: "Ratio internacional normalizado. Mide tiempo de protrombina. Monitorea anticoagulación." },
-      { name: "Vitamina K1", category: "Coagulación", code: "T1720", gender: "both", description: "Vitamina liposoluble esencial para coagulación. Cofactor de factores de coagulación." }
-    ]
-  },
-
-  metals: {
-    id: 'metals',
-    name: 'Metales Pesados',
-    description: 'Detección de toxicidad por metales pesados',
-    testCount: 4,
-    price: 99,
-    color: 'gradient-warm',
-    bgColor: 'bg-warm-50',
-    borderColor: 'border-warm',
-    textColor: 'text-warm',
-    icon: '⚗️',
-    benefits: [
-      'Detoxificación dirigida',
-      'Prevención de toxicidad',
-      'Salud neurológica',
-      'Función cognitiva'
-    ],
-    biomarkers: [
-      { name: "Hg sangre", category: "Metales pesados", code: "T0302", gender: "both", description: "Mercurio en sangre. Metal tóxico que afecta sistema nervioso. Fuentes: pescado, amalgamas dentales." },
-      { name: "Pb sangre", category: "Metales pesados", code: "T0150", gender: "both", description: "Plomo en sangre. Metal tóxico que afecta desarrollo neurológico y función cognitiva." },
-      { name: "As sangre total", category: "Metales pesados", code: "T0960", gender: "both", description: "Arsénico total en sangre. Metaloide tóxico asociado con cáncer y enfermedades cardiovasculares." },
-      { name: "Cd sangre", category: "Metales pesados", code: "T0480", gender: "both", description: "Cadmio en sangre. Metal tóxico que afecta riñones, huesos y sistema cardiovascular." }
+      { name: "INR (Protrombina)", category: "Coagulación", code: "H0860", gender: "both", description: "Ratio internacional normalizado. Mide tiempo de protrombina. Monitorea anticoagulación." }
     ]
   },
 
   cancer: {
     id: 'cancer',
     name: 'Marcadores Tumorales',
-    description: 'Screening y monitoreo de marcadores oncológicos',
+    description: 'Screening oncológico con marcadores tumorales específicos (PSA, CA125, CEA, AFP), análisis de orina y sangre oculta en heces para detección temprana y monitoreo preventivo de cáncer.',
     testCount: 7,
-    price: 99,
+    price: { male: 79, female: 89 },
+    pvpPrice: { male: 97.19, female: 104.63 },
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -355,6 +413,8 @@ export const addOnPackages = {
       'Seguimiento post-tratamiento'
     ],
     biomarkers: [
+      { name: "β-HCG", category: "Gestación / onc.", code: "D1760", gender: "both", description: "Gonadotropina coriónica humana beta. Marcador de embarazo y ciertos tumores testiculares y ováricos." },
+      { name: "Urianálisis + sedimento", category: "Riñón, Vías urinarias", code: "6897", gender: "both", description: "Análisis completo de orina. Detecta infecciones, proteinuria, hematuria y células anormales." },
       { name: "Sangre oculta en heces", category: "Cribado CCR", code: "M0010", gender: "both", description: "Detección de sangre microscópica en heces. Screening para cáncer colorrectal y pólipos." },
       { name: "AFP", category: "Tumor hepático", code: "B7900", gender: "both", description: "Alfafetoproteína. Marcador de cáncer hepático y tumores de células germinales." },
       { name: "CEA", category: "Tumor digestivo", code: "B5110", gender: "both", description: "Antígeno carcinoembrionario. Marcador de cánceres digestivos, especialmente colorrectal." },
@@ -368,9 +428,10 @@ export const addOnPackages = {
   bioage: {
     id: 'bioage',
     name: 'Edad Biológica',
-    description: 'Evaluación de edad biológica y fertilidad',
+    description: 'Evalúa edad biológica y fertilidad mediante AMH (reserva ovárica) y espermiograma para determinar tu edad reproductiva real. Guía estrategias de preservación de fertilidad y anti-aging.',
     testCount: 2,
-    price: { male: 35, female: 51 },
+    price: { male: 29, female: 49 },
+    pvpPrice: { male: 34.10, female: 50.80 },
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',

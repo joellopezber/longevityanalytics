@@ -23,19 +23,20 @@ const HeroSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h1 className="text-3xl lg:text-4xl font-bold text-stone mb-6 leading-tight max-w-4xl mx-auto">
-            Sin datos no hay acción, obten los tuyos
-          </h1>
-
-          {/* Logo y branding */}
+          {/* Logo y branding - PRIMERO */}
           <div className="flex flex-col items-center justify-center gap-3 mb-6">
             <div className="w-12 h-12 gradient-earth rounded-xl flex items-center justify-center">
               <span className="text-white text-xl font-bold">LA</span>
             </div>
-            <span className="text-2xl font-bold text-stone">Longevity Analytics</span>
+            <span className="text-3xl font-bold gradient-text-earth">Longevity Analytics</span>
           </div>
 
-          
+          {/* Frase principal - SEGUNDO */}
+          <h1 className="text-3xl lg:text-4xl font-bold text-stone mb-6 leading-tight max-w-4xl mx-auto">
+            Sin datos no hay acción, obten los tuyos
+          </h1>
+
+          {/* Descripción - TERCERO */}
           <p className="text-lg text-taupe max-w-3xl mx-auto mb-8 leading-relaxed">
             Mide 109 biomarcadores y convierte la ciencia de los datos en un plan de longevidad y optimización integral de tu organismo.
           </p>

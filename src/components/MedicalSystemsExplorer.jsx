@@ -40,14 +40,7 @@ const MedicalSystemsExplorer = () => {
   const getGenderIndicator = (addOnId, gender) => {
     if (!hasGenderDifferences(addOnId)) return null;
     
-    return (
-      <div className="flex items-center gap-1 text-xs text-taupe">
-        <span className="text-stone">•</span>
-        <span>
-          {gender === 'male' ? '♂ Perfil masculino' : '♀ Perfil femenino'}
-        </span>
-      </div>
-    );
+    return null;
   };
 
   const BiomarkerCard = ({ biomarker, index }) => {
@@ -184,8 +177,17 @@ const MedicalSystemsExplorer = () => {
                       {essentialPackage.description}
                     </p>
                     <div className="flex items-center gap-6">
-                      <div className="text-2xl font-bold text-earth">
-                        {essentialPackage.price}€
+                      <div className="flex flex-col">
+                        <div className="text-2xl font-bold text-earth">
+                          {typeof essentialPackage.price === 'object' 
+                            ? `${essentialPackage.price[selectedGender]}€` 
+                            : `${essentialPackage.price}€`}
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          PVP: {typeof essentialPackage.pvpPrice === 'object' 
+                            ? `${Math.round(essentialPackage.pvpPrice[selectedGender])}€` 
+                            : `${Math.round(essentialPackage.pvpPrice)}€`}
+                        </div>
                       </div>
                       <div className="text-taupe">
                         <span className="font-semibold text-sm">{essentialPackage.testCount} biomarcadores</span>
@@ -295,8 +297,13 @@ const MedicalSystemsExplorer = () => {
                   </div>
                   
                   <div className="flex items-center justify-between mb-4">
-                    <div className="text-2xl font-bold text-earth">
-                      {typeof addOn.price === 'object' ? `${addOn.price[selectedGender]}€` : `${addOn.price}€`}
+                    <div className="flex flex-col">
+                      <div className="text-2xl font-bold text-earth">
+                        {typeof addOn.price === 'object' ? `${addOn.price[selectedGender]}€` : `${addOn.price}€`}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        PVP: {typeof addOn.pvpPrice === 'object' ? `${Math.round(addOn.pvpPrice[selectedGender])}€` : `${Math.round(addOn.pvpPrice)}€`}
+                      </div>
                     </div>
                     <div className="text-taupe text-sm">
                       {addOn.testCount} tests
