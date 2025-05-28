@@ -24,9 +24,11 @@ import {
   FaClock,
   FaLeaf,
   FaSearch,
-  FaVial,
   FaDumbbell
 } from 'react-icons/fa';
+
+// Importar icono de mariposa desde Material Design
+import { MdButterfly } from 'react-icons/md';
 
 // Función para procesar los datos del CSV y extraer biomarcadores por categoría
 const csvData = [
@@ -150,7 +152,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: FaVial,
+    icon: MdButterfly,
     benefits: [
       'Función tiroidea avanzada',
       'Eje hipotálamo-hipófisis',
