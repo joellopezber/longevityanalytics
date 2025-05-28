@@ -13,7 +13,6 @@
 // Importar iconos de React Icons
 import { 
   FaDna, 
-  FaVenus, 
   FaShieldAlt, 
   FaAtom, 
   FaFire, 
@@ -21,14 +20,11 @@ import {
   FaFlask, 
   FaBone, 
   FaHeart, 
-  FaBug, 
   FaTint, 
-  FaRibbon, 
   FaClock,
   FaLeaf,
-  FaMicroscope,
-  FaWeight,
-  FaSearch
+  FaSearch,
+  FaVial
 } from 'react-icons/fa';
 
 // Función para procesar los datos del CSV y extraer biomarcadores por categoría
@@ -120,7 +116,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: FaVenus,
+    icon: FaFlask,
     benefits: [
       'Optimiza balance hormonal',
       'Mejora energía y vitalidad',
@@ -153,7 +149,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: FaWeight,
+    icon: FaVial,
     benefits: [
       'Función tiroidea avanzada',
       'Eje hipotálamo-hipófisis',
