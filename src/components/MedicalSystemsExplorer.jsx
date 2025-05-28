@@ -271,7 +271,9 @@ const MedicalSystemsExplorer = () => {
                 {/* Add-On Header */}
                 <div className={`${addOn.bgColor} ${addOn.borderColor} border-b p-6`}>
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="text-2xl">{addOn.icon}</div>
+                    <div className="text-2xl text-warm">
+                      <addOn.icon />
+                    </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
                         <h4 className="text-xl font-bold text-stone">
