@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCheck, FaChartBar, FaStar, FaPlus, FaMinus } from 'react-icons/fa';
+import { FaCheck, FaChartBar, FaStar, FaPlus, FaMinus, FaDna } from 'react-icons/fa';
 import { getEssentialPackageForGender, getAddOnPackagesForGender, getPackageTestCount } from '../data/biomarkers';
 
 const PackageComparison = () => {
@@ -112,7 +112,7 @@ const PackageComparison = () => {
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-4 mb-6">
                   <div className="w-16 h-16 gradient-earth rounded-full flex items-center justify-center shadow-lg">
-                    <span className="text-white text-xl font-bold">EA</span>
+                    <FaDna className="text-white text-2xl" />
                   </div>
                   <h3 className="text-3xl font-bold text-stone">Essential</h3>
                   
@@ -248,7 +248,9 @@ const PackageComparison = () => {
                           {/* Info del Add-On */}
                           <div className="flex-1">
                             <div className="flex items-center gap-2 mb-1">
-                              <span className="text-lg">{addOn.icon}</span>
+                              <div className="text-lg text-warm">
+                                <addOn.icon />
+                              </div>
                               <h4 className="font-bold text-stone text-sm">{addOn.name}</h4>
                             </div>
                             <p className="text-xs text-taupe mb-2">{addOn.description}</p>

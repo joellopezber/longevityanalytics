@@ -7,7 +7,29 @@
  * - Precios actualizados según CSV "Longevity Analytics_BioMark.xlsx - CP.csv"
  * - Corrección de inconsistencias entre código y datos reales
  * - Mapeo exacto de precios desde la tabla de precios del CSV
+ * - Iconos profesionales reemplazando emojis para consistencia visual
  */
+
+// Importar iconos de React Icons
+import { 
+  FaDna, 
+  FaVenus, 
+  FaShieldAlt, 
+  FaAtom, 
+  FaFire, 
+  FaPills, 
+  FaFlask, 
+  FaBone, 
+  FaHeart, 
+  FaBug, 
+  FaTint, 
+  FaRibbon, 
+  FaClock,
+  FaLeaf,
+  FaMicroscope,
+  FaWeight,
+  FaSearch
+} from 'react-icons/fa';
 
 // Función para procesar los datos del CSV y extraer biomarcadores por categoría
 const csvData = [
@@ -71,7 +93,7 @@ export const essentialPackage = {
   bgColor: 'bg-earth-50',
   borderColor: 'border-earth',
   textColor: 'text-earth',
-  icon: '🧬',
+  icon: FaDna,
   features: [
     'Metabolismo glucídico completo',
     'Función renal y hepática',
@@ -98,7 +120,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '🧬',
+    icon: FaVenus,
     benefits: [
       'Optimiza balance hormonal',
       'Mejora energía y vitalidad',
@@ -131,7 +153,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '🦋',
+    icon: FaWeight,
     benefits: [
       'Función tiroidea avanzada',
       'Eje hipotálamo-hipófisis',
@@ -160,7 +182,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '🛡️',
+    icon: FaShieldAlt,
     benefits: [
       'Evalúa capacidad antioxidante',
       'Identifica deficiencias vitamínicas',
@@ -193,7 +215,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '⚛️',
+    icon: FaAtom,
     benefits: [
       'Evaluación de daño celular',
       'Capacidad antioxidante específica',
@@ -216,7 +238,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '🔥',
+    icon: FaFire,
     benefits: [
       'Detección de inflamación crónica',
       'Evaluación de citocinas',
@@ -241,7 +263,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '💊',
+    icon: FaPills,
     benefits: [
       'Optimiza terapias IV',
       'Detecta deficiencias nutricionales',
@@ -270,7 +292,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '⚗️',
+    icon: FaFlask,
     benefits: [
       'Detoxificación dirigida',
       'Prevención de toxicidad',
@@ -296,7 +318,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '🦴',
+    icon: FaBone,
     benefits: [
       'Prevención de osteoporosis',
       'Optimización de calcio',
@@ -322,7 +344,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '❤️',
+    icon: FaHeart,
     benefits: [
       'Prevención cardiovascular avanzada',
       'Optimización lipídica',
@@ -352,7 +374,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '🦠',
+    icon: FaLeaf,
     benefits: [
       'Salud del microbioma',
       'Función digestiva',
@@ -380,7 +402,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '🩸',
+    icon: FaTint,
     benefits: [
       'Riesgo de trombosis',
       'Función plaquetaria',
@@ -405,7 +427,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '🎗️',
+    icon: FaSearch,
     benefits: [
       'Detección temprana',
       'Monitoreo oncológico',
@@ -436,7 +458,7 @@ export const addOnPackages = {
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
     textColor: 'text-warm',
-    icon: '⏳',
+    icon: FaClock,
     benefits: [
       'Edad biológica real',
       'Fertilidad y reproducción',
