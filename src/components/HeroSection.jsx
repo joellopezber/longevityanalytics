@@ -24,11 +24,12 @@ const HeroSection = () => {
           className="text-center mb-12"
         >
           {/* Logo y branding - PRIMERO */}
-          <div className="flex flex-col items-center justify-center gap-3 mb-6">
+          <div className="flex flex-col items-center justify-center gap-3 mb-8">
             <div className="w-12 h-12 gradient-earth rounded-xl flex items-center justify-center">
               <span className="text-white text-xl font-bold">LA</span>
             </div>
             <span className="text-3xl font-bold gradient-text-earth">Longevity Analytics</span>
+            <p className="text-sm text-taupe italic mt-2">Precision Data for Optimization.</p>
           </div>
 
           {/* Frase principal - SEGUNDO */}
@@ -38,7 +39,7 @@ const HeroSection = () => {
 
           {/* Descripción - TERCERO */}
           <p className="text-lg text-taupe max-w-3xl mx-auto mb-8 leading-relaxed">
-            Mide 109 biomarcadores y convierte la ciencia de los datos en un plan de longevidad y optimización integral.
+            Mide 154 biomarcadores y 7 análisis especializados, convirtiendo la ciencia de los datos en un plan de prevención, longevidad y optimización integral.
           </p>
 
           <div className="flex justify-center mb-8">

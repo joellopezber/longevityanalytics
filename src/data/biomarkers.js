@@ -65,7 +65,7 @@ const csvData = [
   { name: "T3 libre", category: "Tiroides", group: "Essential · Endocrino", code: "B6040", essential: true, gender: "both", description: "Hormona tiroidea activa. Regula metabolismo, temperatura corporal y función cardiovascular." },
   { name: "T4 libre", category: "Tiroides", group: "Essential · Endocrino", code: "B6070", essential: true, gender: "both", description: "Hormona tiroidea precursora. Se convierte en T3 activa en tejidos periféricos." },
   { name: "TSH", category: "Tiroides", group: "Essential · Endocrino", code: "B6130", essential: true, gender: "both", description: "Hormona estimulante del tiroides. Controla la producción de hormonas tiroideas T3 y T4." },
-  { name: "PCR (hsCRP)", category: "Inflamación sistémica", group: "Essential · Prevenii · Ox · Cardio", code: "B3170", essential: true, gender: "both", description: "Proteína C reactiva ultrasensible. Marcador de inflamación sistémica y riesgo cardiovascular." },
+  { name: "PCR (hsCRP)", category: "Inflamación cardiovascular", group: "Essential · Prevenii · Ox · Cardio", code: "B3170", essential: true, gender: "both", description: "Proteína C reactiva ultrasensible. Marcador de inflamación vascular y riesgo cardiovascular." },
   { name: "Homocisteína", category: "Metionina / CV", group: "Essential · Prevenii", code: "B5590", essential: true, gender: "both", description: "Aminoácido del metabolismo de metionina. Elevada indica riesgo cardiovascular y deficiencia de B6, B12, folato." },
   { name: "Fósforo", category: "Mineral óseo", group: "Essential · Prevenii · Bone_Mineral", code: "B0120", essential: true, gender: "both", description: "Mineral esencial para huesos, dientes y energía celular. Trabaja junto con calcio y vitamina D." },
   { name: "Calcio total", category: "Mineral óseo", group: "Essential · Prevenii · Bone_Mineral", code: "B0100", essential: true, gender: "both", description: "Mineral fundamental para huesos, contracción muscular, coagulación y función nerviosa." },
@@ -87,7 +87,7 @@ export const essentialPackage = {
   description: 'El Essential Analysis examina los biomarcadores fundamentales para dibujar una imagen precisa de tu estado de salud actual e incluye el cálculo de PhenoAge (edad biológica) basado en 9 biomarcadores validados científicamente. Con estos datos podemos anticipar riesgos silenciosos, establecer prioridades terapéuticas y definir si conviene añadir módulos adicionales (add on). Transformando la ciencia analítica en decisiones personalizadas y un plan de acción claro.',
   testCount: 46,
   price: { male: 259, female: 259 },
-  pvpPrice: { male: 306.51, female: 306.51 },
+  pvpPrice: { male: 402.27, female: 383.67 },
   color: 'gradient-earth',
   bgColor: 'bg-earth-50',
   borderColor: 'border-earth',
@@ -114,7 +114,7 @@ export const addOnPackages = {
     name: 'Hormonas Avanzadas',
     description: 'Analiza el perfil hormonal completo (testosterona, estrógenos, progesterona, gonadotropinas) para optimizar vitalidad, libido, masa muscular y equilibrio hormonal. Esencial para terapias de reemplazo hormonal y anti-aging.',
     price: { male: 109, female: 119 },
-    pvpPrice: { male: 163.68, female: 173.60 },
+    pvpPrice: { male: 160.82, female: 162.75 },
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -144,10 +144,10 @@ export const addOnPackages = {
   endocrino: {
     id: 'endocrino',
     name: 'Endocrino',
-    description: 'Evalúa el eje hormonal completo (IGF-1, ACTH, función pancreática) para optimizar metabolismo, crecimiento celular y función endocrina. Identifica disfunciones metabólicas y guía estrategias de longevidad.',
-    testCount: 7,
+    description: 'Evalúa el eje hormonal completo (IGF-1, ACTH, función pancreática, hormonas reproductivas) para optimizar metabolismo, crecimiento celular y función endocrina. Identifica disfunciones metabólicas y guía estrategias de longevidad.',
+    testCount: 13,
     price: 159,
-    pvpPrice: 188.51,
+    pvpPrice: 230.87,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -160,23 +160,29 @@ export const addOnPackages = {
       'Regulación hormonal'
     ],
     biomarkers: [
+      { name: "Bilirrubina directa", category: "Hígado", code: "B0260", gender: "both", description: "Bilirrubina conjugada. Específica de función hepática y obstrucción biliar." },
+      { name: "Lipasa", category: "Función pancreática", code: "B1980", gender: "both", description: "Enzima pancreática que digiere grasas. Marcador específico de función pancreática exocrina." },
+      { name: "Amilasa", category: "Función pancreática", code: "B0350", gender: "both", description: "Enzima que digiere carbohidratos. Producida por páncreas y glándulas salivales." },
+      { name: "LDH", category: "Enzima celular", code: "B0110", gender: "both", description: "Lactato deshidrogenasa. Enzima de daño celular presente en corazón, hígado, músculos y glóbulos rojos." },
+      { name: "Estradiol", category: "Hormonas femeninas", code: "B5350", gender: "both", description: "Principal estrógeno. Regula ciclo menstrual, salud ósea y cardiovascular en mujeres." },
+      { name: "Prolactina", category: "Hormonas femeninas", code: "B5980", gender: "both", description: "Hormona de la lactancia. Elevada puede suprimir función reproductiva." },
+      { name: "LH", category: "Gonadotropina", code: "B5800", gender: "both", description: "Estimula ovulación en mujeres y producción de testosterona en hombres." },
+      { name: "FSH", category: "Gonadotropina", code: "B5380", gender: "both", description: "Estimula desarrollo folicular y espermatogénesis. Marcador de reserva reproductiva." },
       { name: "IGF-1", category: "Eje GH/IGF", code: "B6030", gender: "both", description: "Factor de crecimiento insulínico. Mediador de hormona de crecimiento. Importante para longevity y masa muscular." },
       { name: "IGFBP-3", category: "Regula IGF", code: "B6010", gender: "both", description: "Proteína transportadora de IGF-1. Modula actividad de IGF-1 y tiene efectos independientes en longevity." },
       { name: "ACTH", category: "Pituitaria", code: "I6740", gender: "both", description: "Hormona adrenocorticotrópica. Estimula producción de cortisol. Evalúa función del eje hipotálamo-hipófisis-suprarrenal." },
-      { name: "Vitamina D 1,25-OH", category: "Activa", code: "D0560", gender: "both", description: "Forma activa de vitamina D (calcitriol). Hormona que regula calcio, inmunidad y expresión génica." },
-      { name: "Bilirrubina directa", category: "Hígado", code: "B0260", gender: "both", description: "Bilirrubina conjugada. Específica de función hepática y obstrucción biliar." },
-      { name: "Lipasa", category: "Función pancreática", code: "B1980", gender: "both", description: "Enzima pancreática que digiere grasas. Marcador específico de función pancreática exocrina." },
-      { name: "Amilasa", category: "Función pancreática", code: "B0350", gender: "both", description: "Enzima que digiere carbohidratos. Producida por páncreas y glándulas salivales." }
+      { name: "VSG", category: "Inflamación", code: "H0020", gender: "both", description: "Velocidad de sedimentación globular. Marcador inespecífico de inflamación sistémica." },
+      { name: "Vitamina D 1,25-OH", category: "Hormona calcitriol", code: "D0560", gender: "both", description: "Forma activa de vitamina D. Hormona que regula absorción de calcio y metabolismo óseo." }
     ]
   },
 
   antioxidantes: {
     id: 'antioxidantes',
     name: 'Antioxidantes',
-    description: 'Mide vitaminas antioxidantes (A, C, E), coenzima Q10 y enzimas antioxidantes para evaluar tu capacidad de defensa contra el envejecimiento. Personaliza suplementación antioxidante y reduce estrés oxidativo.',
-    testCount: 10, // Actualizado tras remover VSG (que pertenece al Add-On de inflamación)
+    description: 'Mide vitaminas antioxidantes (A, E), coenzima Q10 y carotenoides para evaluar tu capacidad de defensa contra el envejecimiento. Personaliza suplementación antioxidante y reduce estrés oxidativo.',
+    testCount: 6,
     price: 199,
-    pvpPrice: 235.69,
+    pvpPrice: 251.55,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -194,21 +200,17 @@ export const addOnPackages = {
       { name: "α-Tocoferol", category: "Antioxidante", code: "T1191", gender: "both", description: "Forma alfa de vitamina E. Principal antioxidante liposoluble que protege membranas celulares." },
       { name: "α-Caroteno", category: "Antioxidante", code: "T1200", gender: "both", description: "Carotenoide antioxidante. Precursor de vitamina A con potente actividad antioxidante." },
       { name: "β-Caroteno", category: "Antioxidante", code: "T1200", gender: "both", description: "Principal precursor de vitamina A. Antioxidante carotenoide que protege contra daño oxidativo." },
-      { name: "Coenzima Q10", category: "Energía mitoc.", code: "T2830", gender: "both", description: "Antioxidante mitocondrial esencial. Crucial para producción de energía y protección celular." },
-      { name: "Vitamina C", category: "Antioxidante", code: "T1061", gender: "both", description: "Ácido ascórbico. Principal antioxidante hidrosoluble. Esencial para colágeno e inmunidad." },
-      { name: "Glutatión reductasa + B2", category: "Antioxidante", code: "B7121", gender: "both", description: "Enzima antioxidante dependiente de vitamina B2. Regenera glutatión oxidado para defensa antioxidante." },
-      { name: "Glutatión peroxidasa", category: "Antioxidante", code: "B3015", gender: "both", description: "Enzima antioxidante dependiente de selenio. Neutraliza peróxidos y protege contra estrés oxidativo." },
-      { name: "G6PD", category: "Defensa oxidativa", code: "B3041", gender: "both", description: "Glucosa-6-fosfato deshidrogenasa. Enzima clave en defensa antioxidante celular." }
+      { name: "Coenzima Q10", category: "Energía mitoc.", code: "T2830", gender: "both", description: "Antioxidante mitocondrial esencial. Crucial para producción de energía y protección celular." }
     ]
   },
 
   oxidative_cell: {
     id: 'oxidative_cell',
     name: 'Estrés Oxidativo Celular',
-    description: 'Analiza selenio y marcadores específicos de daño oxidativo celular para evaluar el envejecimiento a nivel molecular. Optimiza protección celular y previene daño oxidativo acumulativo.',
-    testCount: 1,
+    description: 'Analiza selenio, vitamina C y marcadores específicos de sistema glutatión para evaluar el envejecimiento a nivel molecular. Optimiza protección celular y previene daño oxidativo acumulativo.',
+    testCount: 5,
     price: 199,
-    pvpPrice: 215.69,
+    pvpPrice: 224.32,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -221,17 +223,21 @@ export const addOnPackages = {
       'Prevención del envejecimiento'
     ],
     biomarkers: [
-      { name: "Selenio", category: "Antioxidante", code: "T3920", gender: "both", description: "Oligoelemento antioxidante esencial. Cofactor de glutatión peroxidasa. Protege contra estrés oxidativo." }
+      { name: "Selenio", category: "Antioxidante", code: "T3920", gender: "both", description: "Oligoelemento antioxidante esencial. Cofactor de glutatión peroxidasa. Protege contra estrés oxidativo." },
+      { name: "Vitamina C", category: "Antioxidante hidrosoluble", code: "T1061", gender: "both", description: "Vitamina antioxidante esencial. Neutraliza radicales libres y regenera otros antioxidantes como vitamina E." },
+      { name: "Glutatión reductasa + B2", category: "Sistema glutatión", code: "B7121", gender: "both", description: "Enzima que regenera glutatión reducido. Indicador del estado de vitamina B2 y capacidad antioxidante." },
+      { name: "Glutatión peroxidasa", category: "Sistema glutatión", code: "B3015", gender: "both", description: "Enzima antioxidante selenio-dependiente. Protege células del daño oxidativo por peróxidos." },
+      { name: "G6PD", category: "Defensa antioxidante", code: "B3041", gender: "both", description: "Glucosa-6-fosfato deshidrogenasa. Enzima clave en defensa antioxidante celular vía NADPH." }
     ]
   },
 
   inflammation: {
     id: 'inflammation',
     name: 'Inflamación',
-    description: 'Mide marcadores de inflamación sistémica (VSG) para detectar inflamación crónica silenciosa. Guía estrategias anti-inflamatorias y reduce riesgo de enfermedades crónicas.',
-    testCount: 1,
+    description: 'Mide marcadores de inflamación sistémica (VSG, IL-6, TNF-α) para detectar inflamación crónica silenciosa. Guía estrategias anti-inflamatorias y reduce riesgo de enfermedades crónicas.',
+    testCount: 3,
     price: 109,
-    pvpPrice: 126.73,
+    pvpPrice: 131.36,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -244,17 +250,19 @@ export const addOnPackages = {
       'Optimización anti-inflamatoria'
     ],
     biomarkers: [
-      { name: "VSG", category: "Inflamación", code: "H0020", gender: "both", description: "Velocidad de sedimentación globular. Marcador inespecífico de inflamación sistémica." }
+      { name: "VSG", category: "Inflamación", code: "H0020", gender: "both", description: "Velocidad de sedimentación globular. Marcador inespecífico de inflamación sistémica." },
+      { name: "IL-6", category: "Citocina inflamatoria", code: "B7790", gender: "both", description: "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento." },
+      { name: "TNF-α", category: "Citocina inflamatoria", code: "I2081", gender: "both", description: "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas." }
     ]
   },
 
   iv_nutrients: {
     id: 'iv_nutrients',
     name: 'IV & Nutrientes',
-    description: 'Analiza oligoelementos (cobre, cromo), vitaminas específicas y balance hidroelectrolítico para optimizar terapias IV y suplementación. Personaliza protocolos nutricionales y mejora absorción de nutrientes.',
-    testCount: 4, // Actualizado tras remover Selenio, Coenzima Q10 y Vitamina C (que pertenecen al Add-On de antioxidantes)
+    description: 'Analiza oligoelementos (cobre, cromo, selenio, magnesio), vitaminas específicas (C, K1), ácidos grasos omega-3 y balance hidroelectrolítico para optimizar terapias IV y suplementación. Personaliza protocolos nutricionales y mejora absorción de nutrientes.',
+    testCount: 8,
     price: 199,
-    pvpPrice: 235.69,
+    pvpPrice: 250.51,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -268,9 +276,13 @@ export const addOnPackages = {
     ],
     biomarkers: [
       { name: "Osmolalidad sérica", category: "Balance hidroelectrolítico", code: "B0270", gender: "both", description: "Concentración de partículas en sangre. Evalúa balance hídrico y función renal. Importante para terapias IV." },
+      { name: "Ácidos grasos %", category: "Estado Ω-3", code: "T2590", gender: "both", description: "Perfil de ácidos grasos omega-3. Evalúa estado nutricional y balance inflamatorio." },
+      { name: "Magnesio", category: "Mineral esencial", code: "B1600", gender: "both", description: "Mineral esencial para función muscular, nerviosa y cardiovascular. Cofactor de >300 enzimas." },
       { name: "Cobre", category: "Oligoelemento", code: "B8060", gender: "both", description: "Oligoelemento esencial para formación de colágeno, función inmune y metabolismo del hierro." },
       { name: "Cromo", category: "Metabolismo glucídico", code: "T0500", gender: "both", description: "Oligoelemento que mejora sensibilidad a insulina y metabolismo de glucosa. Importante en diabetes." },
-      { name: "Vitamina K1", category: "Coagulación", code: "T1720", gender: "both", description: "Vitamina liposoluble esencial para coagulación. Cofactor de factores de coagulación." }
+      { name: "Selenio", category: "Antioxidante", code: "T3920", gender: "both", description: "Oligoelemento antioxidante esencial. Cofactor de glutatión peroxidasa. Protege contra estrés oxidativo." },
+      { name: "Vitamina K1", category: "Coagulación", code: "T1720", gender: "both", description: "Vitamina liposoluble esencial para coagulación. Cofactor de factores de coagulación." },
+      { name: "Vitamina C", category: "Antioxidante hidrosoluble", code: "T1061", gender: "both", description: "Vitamina antioxidante esencial. Neutraliza radicales libres y regenera otros antioxidantes como vitamina E." }
     ]
   },
 
@@ -280,7 +292,7 @@ export const addOnPackages = {
     description: 'Detecta mercurio, plomo, arsénico y cadmio en sangre para identificar toxicidad por metales pesados. Guía protocolos de detoxificación y protege función neurológica y cognitiva.',
     testCount: 4,
     price: 79,
-    pvpPrice: 98.30,
+    pvpPrice: 83.56,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -306,7 +318,7 @@ export const addOnPackages = {
     description: 'Evalúa marcadores de formación y reabsorción ósea (ALP ósea, CTX), calcio iónico y vitamina D activa para prevenir osteoporosis y optimizar salud ósea a largo plazo.',
     testCount: 4,
     price: 139,
-    pvpPrice: 164.69,
+    pvpPrice: 143.40,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -322,17 +334,17 @@ export const addOnPackages = {
       { name: "ALP ósea", category: "Marcador óseo", code: "D1111", gender: "both", description: "Fosfatasa alcalina específica de hueso. Marcador de formación ósea y actividad osteoblástica." },
       { name: "CTX", category: "Reabsorción ósea", code: "I3291", gender: "both", description: "C-telopéptido. Marcador de reabsorción ósea. Evalúa actividad osteoclástica y pérdida ósea." },
       { name: "Calcio iónico", category: "Mineral óseo", code: "T1572", gender: "both", description: "Fracción activa del calcio sérico. Forma biológicamente disponible para funciones celulares." },
-      { name: "Vitamina D 1,25-OH", category: "Activa", code: "D0560", gender: "both", description: "Forma activa de vitamina D (calcitriol). Hormona que regula calcio, inmunidad y expresión génica." }
+      { name: "Vitamina D 1,25-OH", category: "Hormona calcitriol", code: "B3360", gender: "both", description: "Forma activa de vitamina D. Hormona que regula absorción de calcio y metabolismo óseo." }
     ]
   },
 
   cardiovascular: {
     id: 'cardiovascular',
     name: 'Cardiovascular Avanzado',
-    description: 'Analiza lipoproteínas aterogénicas (Lp(a), VLDL), marcadores de inflamación vascular y enzimas cardíacas para prevención cardiovascular avanzada. Reduce riesgo de infarto y optimiza salud cardíaca.',
-    testCount: 6, // Actualizado tras remover IL-6 y TNF-α (que pertenecen al Add-On de inflamación)
+    description: 'Analiza lipoproteínas aterogénicas (Lp(a), VLDL), marcadores de inflamación vascular (PCR), enzimas cardíacas para prevención cardiovascular avanzada. Reduce riesgo de infarto y optimiza salud cardíaca.',
+    testCount: 9,
     price: 189,
-    pvpPrice: 250.42,
+    pvpPrice: 209.21,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -345,16 +357,15 @@ export const addOnPackages = {
       'Monitoreo de inflamación vascular'
     ],
     biomarkers: [
+      { name: "Ácido láctico", category: "Metabolismo energético", code: "B0750", gender: "both", description: "Producto del metabolismo anaeróbico. Elevado indica hipoxia tisular o disfunción mitocondrial." },
       { name: "LDH", category: "Enzima celular", code: "B0110", gender: "both", description: "Lactato deshidrogenasa. Enzima de daño celular presente en corazón, hígado, músculos y glóbulos rojos." },
       { name: "LDL directo", category: "Perfil lipídico", code: "B1900", gender: "both", description: "LDL colesterol medido directamente. Más preciso que el calculado en casos de triglicéridos elevados." },
       { name: "VLDL", category: "Perfil lipídico", code: "B0190", gender: "both", description: "Lipoproteínas de muy baja densidad. Transportan triglicéridos. Elevadas aumentan riesgo cardiovascular." },
-      { name: "Lp(a)", category: "Riesgo CV", code: "B7700", gender: "both", description: "Lipoproteína aterogénica genéticamente determinada. Factor de riesgo cardiovascular independiente." },
-      { name: "Ácido láctico", category: "Metabolismo energético", code: "B0750", gender: "both", description: "Producto del metabolismo anaeróbico. Elevado indica hipoxia tisular o disfunción mitocondrial." },
+      { name: "Lp(a) *", category: "Riesgo CV", code: "B7700", gender: "both", description: "Lipoproteína aterogénica genéticamente determinada. Factor de riesgo cardiovascular independiente." },
       { name: "Cistatina-C", category: "Filtrado renal", code: "I5047", gender: "both", description: "Marcador de función renal más preciso que creatinina. No se ve afectado por masa muscular." },
       { name: "CK-MB", category: "Enzima miocárdica", code: "B2120", gender: "both", description: "Creatina quinasa específica del miocardio. Marcador de daño cardíaco e infarto." },
       { name: "CPK total", category: "Enzima muscular", code: "B0220", gender: "both", description: "Creatina fosfoquinasa total. Enzima muscular que indica daño o estrés muscular." },
-      { name: "IL-6", category: "Citocina inflamatoria", code: "B7790", gender: "both", description: "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento." },
-      { name: "TNF-α", category: "Citocina inflamatoria", code: "I2081", gender: "both", description: "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas." }
+      { name: "PCR (hsCRP)", category: "Inflamación cardiovascular", code: "B3170", gender: "both", description: "Proteína C reactiva ultrasensible. Marcador de inflamación vascular y riesgo cardiovascular." }
     ]
   },
 
@@ -362,9 +373,9 @@ export const addOnPackages = {
     id: 'immunity',
     name: 'Inmunidad',
     description: 'Evalúa el sistema inmunológico mediante autoanticuerpos, marcadores de autoinmunidad tiroidea y factores inflamatorios. Detecta enfermedades autoinmunes y optimiza función inmune.',
-    testCount: 7,
-    price: 269,
-    pvpPrice: 318.73,
+    testCount: 6,
+    price: 79,
+    pvpPrice: 89.51,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -377,7 +388,6 @@ export const addOnPackages = {
       'Inflamación sistémica'
     ],
     biomarkers: [
-      { name: "VSG", category: "Inflamación", code: "H0020", gender: "both", description: "Velocidad de sedimentación globular. Marcador inespecífico de inflamación sistémica." },
       { name: "Nucleares An (ANA)", category: "Autoinmunidad", code: "I0141", gender: "both", description: "Anticuerpos antinucleares. Screening para enfermedades autoinmunes sistémicas como lupus." },
       { name: "anti-CCP", category: "Artritis", code: "I5072", gender: "both", description: "Anticuerpos anti-péptido citrulinado cíclico. Específicos de artritis reumatoide." },
       { name: "anti-Tg", category: "Tiroides", code: "B6321", gender: "both", description: "Anticuerpos anti-tiroglobulina. Marcador de autoinmunidad tiroidea." },
@@ -393,7 +403,7 @@ export const addOnPackages = {
     description: 'Analiza función digestiva completa: enzimas pancreáticas, permeabilidad intestinal, parásitos, intolerancias alimentarias y ácidos grasos omega-3 para optimizar salud gastrointestinal.',
     testCount: 8,
     price: 269,
-    pvpPrice: 318.73,
+    pvpPrice: 323.69,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -413,7 +423,7 @@ export const addOnPackages = {
       { name: "Ácidos grasos %", category: "Estado Ω-3", code: "T2590", gender: "both", description: "Perfil de ácidos grasos omega-3. Evalúa estado nutricional y balance inflamatorio." },
       { name: "Urianálisis + sedimento", category: "Riñón, Vías urinarias", code: "6897", gender: "both", description: "Análisis completo de orina. Detecta infecciones, proteinuria, hematuria y células anormales." },
       { name: "Ova & Parasites stool", category: "Parasitología", code: "M1190", gender: "both", description: "Examen parasitológico de heces. Detecta parásitos intestinales que afectan salud digestiva." },
-      { name: "Intolerancia Alimentaria 200", category: "Intolerancias", code: "P3031", gender: "both", description: "Panel de 200 alimentos para detectar intolerancias alimentarias mediadas por IgG." }
+      { name: "Intolerancia Alimnetaria 200", category: "Intolerancias", code: "P3031", gender: "both", description: "Panel de 200 alimentos para detectar intolerancias alimentarias mediadas por IgG." }
     ]
   },
 
@@ -423,7 +433,7 @@ export const addOnPackages = {
     description: 'Análisis avanzado del microbioma intestinal y metaboloma urinario para evaluar diversidad microbiana, permeabilidad intestinal y metabolitos funcionales. Optimiza salud del gut-brain axis.',
     testCount: 2,
     price: 649,
-    pvpPrice: 768.01,
+    pvpPrice: 698.00,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -447,7 +457,7 @@ export const addOnPackages = {
     description: 'Análisis genómico completo mediante secuenciación de genoma completo (GWAS) y análisis genético especializado para identificar variantes genéticas, riesgo de enfermedades y farmacogenética.',
     testCount: 2,
     price: 599,
-    pvpPrice: 709.01,
+    pvpPrice: 649.00,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -495,7 +505,7 @@ export const addOnPackages = {
     name: 'Marcadores Tumorales',
     description: 'Screening oncológico con marcadores tumorales específicos expandido: incluye PSA, CA125, CEA, AFP, HE4, SCC, proteína S-100, NSE y otros marcadores avanzados para detección temprana integral.',
     price: { male: 269, female: 289 },
-    pvpPrice: { male: 318.73, female: 342.17 },
+    pvpPrice: { male: 335.27, female: 332.94 },
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -509,6 +519,7 @@ export const addOnPackages = {
     ],
     biomarkers: [
       { name: "LDH", category: "Enzima celular", code: "B0110", gender: "both", description: "Lactato deshidrogenasa. Enzima de daño celular presente en corazón, hígado, músculos y glóbulos rojos." },
+      { name: "FSH", category: "Gonadotropina", code: "B5380", gender: "female", description: "Estimula desarrollo folicular y espermatogénesis. Marcador de reserva reproductiva." },
       { name: "β-HCG", category: "Gestación / onc.", code: "D1760", gender: "both", description: "Gonadotropina coriónica humana beta. Marcador de embarazo y ciertos tumores testiculares y ováricos." },
       { name: "Urianálisis + sedimento", category: "Riñón, Vías urinarias", code: "6897", gender: "both", description: "Análisis completo de orina. Detecta infecciones, proteinuria, hematuria y células anormales." },
       { name: "Sangre oculta en heces", category: "Cribado CCR", code: "M0010", gender: "both", description: "Detección de sangre microscópica en heces. Screening para cáncer colorrectal y pólipos." },
@@ -521,11 +532,10 @@ export const addOnPackages = {
       { name: "CA 19-9", category: "Páncreas", code: "B5100", gender: "both", description: "Marcador tumoral de cáncer pancreático y biliar. También elevado en pancreatitis." },
       { name: "Proteína Epididimal Humana 4 (HE4)", category: "Ovario", code: "B8110", gender: "female", description: "Marcador tumoral de cáncer de ovario más específico que CA125." },
       { name: "Células escamosas Ag (SCC)", category: "Escamoso", code: "B8130", gender: "both", description: "Antígeno de células escamosas. Marcador de carcinomas escamosos de cérvix, pulmón y esófago." },
-      { name: "Proteína s-100", category: "Melanoma", code: "I5080", gender: "both", description: "Proteína S-100. Marcador de melanoma y tumores del sistema nervioso." },
+      { name: "Proteina s-100", category: "Melanoma", code: "I5080", gender: "both", description: "Proteína S-100. Marcador de melanoma y tumores del sistema nervioso." },
       { name: "NSE", category: "Neuroendocrino", code: "I5090", gender: "both", description: "Enolasa neuroespecífica. Marcador de tumores neuroendocrinos y cáncer de pulmón de células pequeñas." },
       { name: "CYFRA 21-1", category: "Pulmón", code: "B8120", gender: "both", description: "Fragmento de citoqueratina 21-1. Marcador de cáncer de pulmón no microcítico." },
       { name: "CA 72-4", category: "Gástrico", code: "D1271", gender: "both", description: "Marcador tumoral de cáncer gástrico y otros adenocarcinomas." },
-      { name: "Alfa-feto/suero", category: "Tumor hepático", code: "B7900", gender: "both", description: "Alfafetoproteína sérica. Marcador de hepatocarcinoma y tumores germinales." },
       { name: "Péptido liberador gastrina (ProGRP)", category: "Pulmón", code: "B8160", gender: "both", description: "Pro-péptido liberador de gastrina. Marcador específico de cáncer de pulmón microcítico." }
     ]
   },
@@ -535,7 +545,7 @@ export const addOnPackages = {
     name: 'Edad Biológica',
     description: 'Evalúa edad biológica mediante test epigenético MyEpiAgeing y fertilidad con AMH/espermiograma para determinar tu edad reproductiva y biológica real. Guía estrategias anti-aging precisas.',
     price: { male: 209, female: 219 },
-    pvpPrice: { male: 247.66, female: 259.49 },
+    pvpPrice: { male: 233.10, female: 249.80 },
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -611,7 +621,7 @@ export const comparisonData = {
   },
   longevityAnalytics: {
     name: 'Longevity Analytics',
-    testCount: 109,
+    testCount: 154,
     approach: 'Optimización - Mejora activa',
     focus: 'Optimización de longevity',
     recommendations: 'Protocolos específicos de suplementación, nutrición y estilo de vida',
@@ -624,7 +634,7 @@ export const fullPackagePrices = {
   male: 1879,
   female: 1899,
   pvp: {
-    male: 2224.01,
-    female: 2250.51
+    male: 2565.39,
+    female: 2547.53
   }
 }; 

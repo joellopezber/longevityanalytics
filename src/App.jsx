@@ -92,7 +92,7 @@ function App() {
                 <span className="text-xl font-bold text-cream">Longevity Analytics</span>
               </div>
               <p className="text-beige text-sm leading-relaxed">
-               Data de precisión para optimización.
+               Precision Data for Optimization.
               </p>
             </div>
 
@@ -118,7 +118,7 @@ function App() {
 
           <div className="border-t border-taupe mt-12 pt-8 text-center">
             <p className="text-beige text-sm">
-              © 2025 Longevity Analytics. Todos los derechos reservados.
+              © 2025 Longevity Analytics
             </p>
           </div>
         </div>

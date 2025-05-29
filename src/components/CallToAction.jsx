@@ -24,25 +24,10 @@ const CallToAction = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold mb-4">
-            Potencia tu <span className="text-yellow-300">Centro</span>
+            Inicia tu <span className="text-yellow-300">Transformación</span>
           </h2>
-          {/* 
-            TODO: EQUIPO DE MARKETING - Este texto necesita trabajo
-            - Muy genérico y poco convincente
-            - Falta propuesta de valor específica
-            - No explica beneficios concretos
-            - Suena como cualquier partnership genérico
-            Por favor, reescribir con:
-            - Beneficios específicos y cuantificables
-            - Diferenciación clara vs competencia
-            - Casos de uso concretos
-            - Llamada a la acción más persuasiva
-          */}
           <p className="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-            Ofrece análisis avanzados de biomarcadores con respuestas accionables en nutricion, estilo de vida, suplementos y terapias.
-            <br /> 
-            <br />
-            Convierte tu centro en el referente de longevity y optimización personal.
+            Descubre los secretos de tu cuerpo y desbloquea tu máximo potencial.
           </p>
         </motion.div>
 
