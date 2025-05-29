@@ -33,12 +33,12 @@ const HeroSection = () => {
 
           {/* Frase principal - SEGUNDO */}
           <h1 className="text-3xl lg:text-4xl font-bold text-stone mb-6 leading-tight max-w-4xl mx-auto">
-            Sin datos no hay acción, obten los tuyos
+            Sin datos no hay acción, obten los tuyos!
           </h1>
 
           {/* Descripción - TERCERO */}
           <p className="text-lg text-taupe max-w-3xl mx-auto mb-8 leading-relaxed">
-            Mide 109 biomarcadores y convierte la ciencia de los datos en un plan de longevidad y optimización integral de tu organismo.
+            Mide 109 biomarcadores y convierte la ciencia de los datos en un plan de longevidad y optimización integral.
           </p>
 
           <div className="flex justify-center mb-8">

@@ -68,7 +68,8 @@ const PackageComparison = () => {
       'Hormonas básicas',
       'Tiroides completo',
       'Minerales esenciales',
-      'Marcadores inflamatorios'
+      'Marcadores inflamatorios',
+      'Cálculo de edad biológica'
     ];
 
     const addOnIncludes = selectedAddOns.map(addOnId => {
@@ -146,9 +147,9 @@ const PackageComparison = () => {
                 </p>
 
                 {/* Contador dinámico de biomarcadores */}
-                <div className="inline-flex items-center justify-center gap-3 mb-6 px-6 py-3 rounded-full bg-earth-50 border-2 border-earth">
-                  <span className="text-4xl font-bold text-stone">{totalBiomarkers}</span>
-                  <span className="text-lg text-taupe font-medium"> biomarcadores</span>
+                <div className="flex flex-col items-center justify-center gap-0 mb-6 px-6 py-3 rounded-full bg-earth-50 border-2 border-earth">
+                  <span className="text-4xl font-bold text-stone leading-none">{totalBiomarkers}</span>
+                  <span className="text-lg text-taupe font-medium leading-none -mt-1">biomarcadores</span>
                 </div>
 
                 {/* Precio dinámico */}

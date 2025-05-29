@@ -13,7 +13,8 @@ import {
   FaFileAlt, 
   FaUserMd,
   FaClock,
-  FaShieldAlt
+  FaShieldAlt,
+  FaLock
 } from 'react-icons/fa';
 
 const ProcessFlow = () => {
@@ -121,7 +122,7 @@ const ProcessFlow = () => {
               Nuestras Garantías
             </h3>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-4 gap-6">
               <div className="text-center">
                 <div className="w-16 h-16 bg-earth-100 text-earth rounded-full flex items-center justify-center mx-auto mb-4">
                   <FaShieldAlt className="text-2xl" />
@@ -149,6 +150,16 @@ const ProcessFlow = () => {
                 <h4 className="font-semibold text-stone mb-2">Equipo Especializado</h4>
                 <p className="text-taupe text-sm">
                   Evaluación por especialistas para recomendaciones accionables
+                </p>
+              </div>
+
+              <div className="text-center">
+                <div className="w-16 h-16 bg-earth-200 text-earth rounded-full flex items-center justify-center mx-auto mb-4">
+                  <FaLock className="text-2xl" />
+                </div>
+                <h4 className="font-semibold text-stone mb-2">Cumplimiento GDPR</h4>
+                <p className="text-taupe text-sm">
+                  Protección total de datos personales según normativa europea GDPR
                 </p>
               </div>
             </div>

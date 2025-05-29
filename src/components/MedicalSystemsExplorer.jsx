@@ -118,7 +118,7 @@ const MedicalSystemsExplorer = () => {
               Essential <span className="gradient-text-earth">Análisis</span>
             </h2>
             <p className="text-lg text-taupe max-w-3xl mx-auto font-medium leading-relaxed">
-              <span className="font-bold text-earth">Essential</span>, proporciona la informacion que forma parte el eje central de tu salud, yla adicion de <span className="font-bold text-warm">Add-Ons especializados</span> según tus objetivos específicos, personalizad y adaptatu a tu analitica.
+              El <span className="font-bold text-earth">Essential</span> proporciona la información que forma el eje central de tu salud, y la adición de <span className="font-bold text-warm">Add-Ons especializados</span> según tus objetivos específicos te permite personalizar y adaptar tu analítica.
             </p>
           </div>
         </motion.div>
