@@ -8,7 +8,7 @@ Esta es una aplicación web React diseñada como presentación comercial para em
 
 **Objetivo Principal:** Posicionar nuestra empresa como proveedor líder de análisis clínicos para empresas de longevity, ofreciendo:
 
-- **132 biomarcadores** vs 19 de medicina tradicional
+- **130 biomarcadores** vs 19 de medicina tradicional
 - **Análisis especializado** en longevity y anti-aging
 - **Recomendaciones accionables** de suplementación, nutrición y estilo de vida
 - **Paquetes modulares** adaptables a diferentes necesidades
@@ -17,7 +17,7 @@ Esta es una aplicación web React diseñada como presentación comercial para em
 
 ### vs Medicina Tradicional
 - **Enfoque:** Optimización activa vs diagnóstico reactivo
-- **Alcance:** 132 tests vs 19 tests promedio
+- **Alcance:** 130 tests vs 19 tests promedio
 - **Resultado:** Protocolos de longevity vs tratamiento farmacológico
 
 ### vs Function Health
@@ -46,7 +46,7 @@ Esta es una aplicación web React diseñada como presentación comercial para em
 - Minerales esenciales
 - Marcadores inflamatorios
 
-#### Completo (132 tests)
+#### Completo (130 tests)
 - Todo el panel Essential
 - Biomarcadores especializados
 - Análisis antioxidante completo
@@ -130,7 +130,7 @@ src/
 
 Los datos están estructurados basándose en el CSV proporcionado, organizados en:
 
-- **132 biomarcadores** categorizados por función biológica
+- **130 biomarcadores** categorizados por función biológica
 - **Paquetes base** (Essential y Completo)
 - **Add-ons especializados** con beneficios específicos
 - **Comparación competitiva** con medicina tradicional y Function Health
