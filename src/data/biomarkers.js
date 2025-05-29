@@ -621,7 +621,7 @@ export const comparisonData = {
   },
   longevityAnalytics: {
     name: 'Longevity Analytics',
-    testCount: 154,
+    testCount: 132,
     approach: 'Optimización - Mejora activa',
     focus: 'Optimización de longevity',
     recommendations: 'Protocolos específicos de suplementación, nutrición y estilo de vida',
