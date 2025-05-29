@@ -604,10 +604,10 @@ export const getAddOnPackagesForGender = (gender) => {
 // Datos de comparación competitiva
 export const comparisonData = {
   traditional: {
-    name: 'Medicina Tradicional',
+    name: 'Medicina Laboral',
     testCount: 19,
     approach: 'Reactiva - Espera síntomas',
-    focus: 'Diagnóstico de enfermedad',
+    focus: 'Acceptación de aptitudes laborales',
     recommendations: 'Tratamiento farmacológico',
     frequency: 'Anual si hay síntomas'
   },
