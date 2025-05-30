@@ -7,10 +7,14 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaCheck, FaChartBar, FaStar, FaPlus, FaMinus, FaDna } from 'react-icons/fa';
 import { getEssentialPackageForGender, getAddOnPackagesForGender, getPackageTestCount } from '../data/biomarkers';
+import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 
 const PackageComparison = () => {
   const [selectedGender, setSelectedGender] = useState('male');
   const [selectedAddOns, setSelectedAddOns] = useState([]); // Array de IDs de Add-Ons seleccionados
+
+  // Usar el contexto para obtener las selecciones de biomarcadores
+  const { getAdjustedAddOnPrice, getSelectionSummary } = useBiomarkerSelection();
 
   // Obtener datos filtrados por género
   const essentialPackage = getEssentialPackageForGender(selectedGender);
@@ -32,10 +36,15 @@ const PackageComparison = () => {
       const addOn = addOnPackages[addOnId];
       if (addOn) {
         totalBiomarkers += getPackageTestCount(addOn, selectedGender);
-        let price = typeof addOn.price === 'object' ? addOn.price[selectedGender] : addOn.price;
-        let pvpPrice = typeof addOn.pvpPrice === 'object' ? addOn.pvpPrice[selectedGender] : addOn.pvpPrice;
-        totalPrice += price;
-        totalPvpPrice += pvpPrice;
+        
+        // Usar precios ajustados del contexto
+        let basePrice = typeof addOn.price === 'object' ? addOn.price[selectedGender] : addOn.price;
+        let basePvpPrice = typeof addOn.pvpPrice === 'object' ? addOn.pvpPrice[selectedGender] : addOn.pvpPrice;
+        
+        const adjustedPrices = getAdjustedAddOnPrice(addOnId, basePrice, basePvpPrice);
+        
+        totalPrice += adjustedPrices.price;
+        totalPvpPrice += adjustedPrices.pvp;
         selectedAddOnsList.push(addOn.name);
       }
     });
@@ -157,9 +166,26 @@ const PackageComparison = () => {
                 <div className="text-sm text-gray-500 mb-2">
                   PVP: {Math.round(totalPvpPrice)}€
                 </div>
-                <div className="text-sm text-taupe">
+                <div className="text-sm text-taupe mb-4">
                   {selectedAddOns.length === 0 ? 'Precio base Essential' : `Essential + ${selectedAddOns.length} Add-On${selectedAddOns.length > 1 ? 's' : ''}`}
                 </div>
+
+                {/* Resumen de biomarcadores individuales seleccionados */}
+                {getSelectionSummary().length > 0 && (
+                  <div className="mb-6 p-4 bg-earth-50 border border-earth rounded-lg">
+                    <h5 className="text-sm font-semibold text-earth mb-2">
+                      🎯 Biomarcadores adicionales seleccionados:
+                    </h5>
+                    <div className="space-y-1">
+                      {getSelectionSummary().map((biomarker, idx) => (
+                        <div key={idx} className="text-xs text-stone flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 bg-earth rounded-full"></span>
+                          {biomarker}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Inclusiones dinámicas */}
@@ -256,7 +282,14 @@ const PackageComparison = () => {
                             </div>
                             <p className="text-xs text-taupe mb-2">{addOn.description}</p>
                             <div className="flex items-center gap-4 text-xs">
-                              <span className="text-warm font-semibold">{typeof addOn.price === 'object' ? `${addOn.price[selectedGender]}€` : `${addOn.price}€`}</span>
+                              <span className="text-warm font-semibold">
+                                {(() => {
+                                  const basePrice = typeof addOn.price === 'object' ? addOn.price[selectedGender] : addOn.price;
+                                  const basePvp = typeof addOn.pvpPrice === 'object' ? addOn.pvpPrice[selectedGender] : addOn.pvpPrice;
+                                  const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
+                                  return `${adjustedPrices.price}€`;
+                                })()}
+                              </span>
                               <span className="text-taupe">{testCount} biomarcadores</span>
                             </div>
                           </div>

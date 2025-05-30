@@ -402,8 +402,8 @@ export const addOnPackages = {
     name: 'Digestivo',
     description: 'Analiza función digestiva completa: enzimas pancreáticas, permeabilidad intestinal, parásitos, intolerancias alimentarias y ácidos grasos omega-3 para optimizar salud gastrointestinal.',
     testCount: 8,
-    price: 269,
-    pvpPrice: 323.69,
+    price: 109,
+    pvpPrice: 143,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -432,8 +432,8 @@ export const addOnPackages = {
     name: 'Gut Gate',
     description: 'Análisis avanzado del microbioma intestinal y metaboloma urinario para evaluar diversidad microbiana, permeabilidad intestinal y metabolitos funcionales. Optimiza salud del gut-brain axis.',
     testCount: 2,
-    price: 649,
-    pvpPrice: 698.00,
+    price: 289,
+    pvpPrice: 299,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -455,9 +455,9 @@ export const addOnPackages = {
     id: 'genome',
     name: 'Genoma',
     description: 'Análisis genómico completo mediante secuenciación de genoma completo (GWAS) y análisis genético especializado para identificar variantes genéticas, riesgo de enfermedades y farmacogenética.',
-    testCount: 2,
-    price: 599,
-    pvpPrice: 649.00,
+    testCount: 5,
+    price: 449,
+    pvpPrice: 499,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -471,7 +471,9 @@ export const addOnPackages = {
     ],
     biomarkers: [
       { name: "Full Genom (GWAs)", category: "Genoma completo", code: "DL001", gender: "both", description: "Secuenciación de genoma completo que sirve para toda la vida. Analiza todas las variantes genéticas para riesgo de enfermedades y características hereditarias." },
-      { name: "Genom Analisis", category: "Análisis genético", code: "GT001", gender: "both", description: "Interpretación especializada del genoma que incluye análisis de suplementos, farmacogenética, nutrigenética y predisposición genética. Recomendaciones personalizadas basadas en tu perfil genético." }
+      { name: "Genom Analisis - Nutrición", category: "Nutrigenética", code: "GT002", gender: "both", description: "Análisis genético especializado en nutrición. Identifica variantes genéticas relacionadas con metabolismo de nutrientes, intolerancias y requerimientos nutricionales personalizados." },
+      { name: "Genom Analisis - Farmacogenómica", category: "Farmacogenética", code: "GT003", gender: "both", description: "Análisis de variantes genéticas que afectan la respuesta a medicamentos. Personaliza dosificación y selección de fármacos para maximizar eficacia y minimizar efectos adversos." },
+      { name: "Genom Analisis - Suplementación", category: "Suplementación genética", code: "GT004", gender: "both", description: "Análisis genético para suplementación personalizada. Identifica deficiencias genéticas y optimiza selección de suplementos basada en perfil genético individual." }
     ]
   },
 

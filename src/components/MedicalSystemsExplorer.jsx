@@ -6,12 +6,27 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaChevronDown, FaChevronUp, FaCheck } from 'react-icons/fa';
+import { FaChevronDown, FaChevronUp, FaCheck, FaPlus, FaMinus } from 'react-icons/fa';
 import { getEssentialPackageForGender, getAddOnPackagesForGender } from '../data/biomarkers';
+import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 
 const MedicalSystemsExplorer = () => {
   const [selectedGender, setSelectedGender] = useState('male'); // Género por defecto
   const [expandedBiomarkers, setExpandedBiomarkers] = useState([]); // Ningún biomarcador expandido por defecto
+  
+  // Usar el contexto para las selecciones de biomarcadores
+  const {
+    selectedIntolerancia,
+    setSelectedIntolerancia,
+    selectedMetaboloma,
+    setSelectedMetaboloma,
+    selectedGenomNutricion,
+    setSelectedGenomNutricion,
+    selectedGenomFarmaco,
+    setSelectedGenomFarmaco,
+    selectedGenomSuplem,
+    setSelectedGenomSuplem
+  } = useBiomarkerSelection();
 
   // Obtener datos filtrados por género
   const essentialPackage = getEssentialPackageForGender(selectedGender);
@@ -30,6 +45,29 @@ const MedicalSystemsExplorer = () => {
     // No forzar la apertura del Essential al cambiar género
   };
 
+  // Función para toggle de Intolerancia Alimentaria
+  const toggleIntoleranciaSelection = () => {
+    setSelectedIntolerancia(prev => !prev);
+  };
+
+  // Función para toggle de Metaboloma - orina
+  const toggleMetabolomaSelection = () => {
+    setSelectedMetaboloma(prev => !prev);
+  };
+
+  // Funciones para toggle de los biomarcadores del genoma
+  const toggleGenomNutricionSelection = () => {
+    setSelectedGenomNutricion(prev => !prev);
+  };
+
+  const toggleGenomFarmacoSelection = () => {
+    setSelectedGenomFarmaco(prev => !prev);
+  };
+
+  const toggleGenomSuplemSelection = () => {
+    setSelectedGenomSuplem(prev => !prev);
+  };
+
   // Función para verificar si un Add-On tiene diferencias por género
   const hasGenderDifferences = (addOnId) => {
     const genderSpecificAddOns = ['hormonas', 'cancer', 'bioage'];
@@ -45,13 +83,34 @@ const MedicalSystemsExplorer = () => {
 
   const BiomarkerCard = ({ biomarker, index }) => {
     const [isExpanded, setIsExpanded] = useState(false);
+    const isIntolerancia = biomarker.name === "Intolerancia Alimnetaria 200";
+    const isMetaboloma = biomarker.name === "Metaboloma - orina";
+    const isGenomNutricion = biomarker.name === "Genom Analisis - Nutrición";
+    const isGenomFarmaco = biomarker.name === "Genom Analisis - Farmacogenómica";
+    const isGenomSuplem = biomarker.name === "Genom Analisis - Suplementación";
     
     return (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: index * 0.05 }}
-        className="border border-cream rounded-lg overflow-hidden bg-warm-white shadow-md hover:shadow-lg transition-all hover:border-earth"
+        className={`
+          border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all
+          ${isIntolerancia && selectedIntolerancia 
+            ? 'border-cream bg-warm-white hover:border-earth' 
+            : isIntolerancia 
+              ? 'border-earth bg-earth-50 hover:border-warm'
+              : isMetaboloma && selectedMetaboloma
+                ? 'border-cream bg-warm-white hover:border-earth'
+                : isMetaboloma
+                  ? 'border-earth bg-earth-50 hover:border-warm'
+                  : (isGenomNutricion && selectedGenomNutricion) || (isGenomFarmaco && selectedGenomFarmaco) || (isGenomSuplem && selectedGenomSuplem)
+                    ? 'border-cream bg-warm-white hover:border-earth'
+                    : (isGenomNutricion || isGenomFarmaco || isGenomSuplem)
+                      ? 'border-earth bg-earth-50 hover:border-warm'
+                      : 'border-cream bg-warm-white hover:border-earth'
+          }
+        `}
       >
         <div 
           className="flex items-center justify-between py-3 px-4 cursor-pointer hover:bg-earth-50 transition-colors"
@@ -59,13 +118,135 @@ const MedicalSystemsExplorer = () => {
         >
           <div className="flex items-center gap-3 flex-1">
             <div className="w-3 h-3 gradient-earth rounded-full flex-shrink-0"></div>
+            
+            {/* Selector específico para Intolerancia Alimentaria - Lado Izquierdo */}
+            {isIntolerancia && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleIntoleranciaSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedIntolerancia
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedIntolerancia ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedIntolerancia ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+            
+            {/* Selector específico para Metaboloma - orina - Lado Izquierdo */}
+            {isMetaboloma && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleMetabolomaSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedMetaboloma
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedMetaboloma ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedMetaboloma ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+            
+            {/* Selector específico para Genom Analisis - Nutrición */}
+            {isGenomNutricion && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleGenomNutricionSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedGenomNutricion
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedGenomNutricion ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedGenomNutricion ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Genom Analisis - Farmacogenómica */}
+            {isGenomFarmaco && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleGenomFarmacoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedGenomFarmaco
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedGenomFarmaco ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedGenomFarmaco ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Genom Analisis - Suplementación */}
+            {isGenomSuplem && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleGenomSuplemSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedGenomSuplem
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedGenomSuplem ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedGenomSuplem ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+            
             <div className="flex-1">
-              <h5 className="font-semibold text-stone text-sm mb-1">
+              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && !selectedIntolerancia) || (isMetaboloma && !selectedMetaboloma) || (isGenomNutricion && !selectedGenomNutricion) || (isGenomFarmaco && !selectedGenomFarmaco) || (isGenomSuplem && !selectedGenomSuplem) ? 'text-earth' : 'text-stone'}`}>
                 {biomarker.name}
               </h5>
               <p className="text-xs text-taupe">{biomarker.category}</p>
             </div>
           </div>
+          
           <div className="flex items-center gap-2">
             {biomarker.description && (
               <div className="bg-earth-100 p-1.5 rounded-full text-earth hover:bg-earth-200 transition-colors">
@@ -301,10 +482,40 @@ const MedicalSystemsExplorer = () => {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex flex-col">
                       <div className="text-2xl font-bold text-earth">
-                        {typeof addOn.price === 'object' ? `${addOn.price[selectedGender]}€` : `${addOn.price}€`}
+                        {(() => {
+                          const basePrice = typeof addOn.price === 'object' ? addOn.price[selectedGender] : addOn.price;
+                          let finalPrice = basePrice;
+                          if (addOn.id === 'digest' && selectedIntolerancia) {
+                            finalPrice = basePrice + 160;
+                          } else if (addOn.id === 'gut_gate' && selectedMetaboloma) {
+                            finalPrice = basePrice + 360;
+                          } else if (addOn.id === 'genome') {
+                            let genomExtra = 0;
+                            if (selectedGenomNutricion) genomExtra += 50;
+                            if (selectedGenomFarmaco) genomExtra += 50;
+                            if (selectedGenomSuplem) genomExtra += 50;
+                            finalPrice = basePrice + genomExtra;
+                          }
+                          return `${finalPrice}€`;
+                        })()}
                       </div>
                       <div className="text-sm text-gray-500">
-                        PVP: {typeof addOn.pvpPrice === 'object' ? `${Math.round(addOn.pvpPrice[selectedGender])}€` : `${Math.round(addOn.pvpPrice)}€`}
+                        PVP: {(() => {
+                          const basePvp = typeof addOn.pvpPrice === 'object' ? addOn.pvpPrice[selectedGender] : addOn.pvpPrice;
+                          let finalPvp = basePvp;
+                          if (addOn.id === 'digest' && selectedIntolerancia) {
+                            finalPvp = basePvp + 180.69;
+                          } else if (addOn.id === 'gut_gate' && selectedMetaboloma) {
+                            finalPvp = basePvp + 399;
+                          } else if (addOn.id === 'genome') {
+                            let genomExtraPvp = 0;
+                            if (selectedGenomNutricion) genomExtraPvp += 83.33;
+                            if (selectedGenomFarmaco) genomExtraPvp += 83.33;
+                            if (selectedGenomSuplem) genomExtraPvp += 83.33;
+                            finalPvp = basePvp + genomExtraPvp;
+                          }
+                          return `${Math.round(finalPvp)}€`;
+                        })()}
                       </div>
                     </div>
                     <div className="text-taupe text-sm">
@@ -367,6 +578,76 @@ const MedicalSystemsExplorer = () => {
             ))}
           </div>
         </div>
+
+        {/* Resumen de selección de Intolerancia Alimentaria */}
+        {selectedIntolerancia && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-earth-50 border-2 border-earth rounded-xl p-6 mb-8"
+          >
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-earth mb-3">
+                🎯 Biomarcador Seleccionado
+              </h3>
+              <div className="bg-warm-white rounded-lg p-4 mb-4 border border-earth">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-6 h-6 rounded-full bg-earth flex items-center justify-center">
+                    <FaMinus className="text-white text-xs" />
+                  </div>
+                  <span className="font-semibold text-earth">Intolerancia Alimentaria 200</span>
+                </div>
+                <p className="text-sm text-taupe mt-2">
+                  Panel de 200 alimentos para detectar intolerancias alimentarias mediadas por IgG
+                </p>
+              </div>
+              <p className="text-stone text-sm mb-4">
+                Este biomarcador se añadirá a tu análisis Essential personalizado
+              </p>
+              <button 
+                onClick={toggleIntoleranciaSelection}
+                className="bg-earth text-white px-4 py-2 rounded-lg hover:bg-warm transition-colors font-medium"
+              >
+                Quitar selección
+              </button>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Resumen de selección de Metaboloma - orina */}
+        {selectedMetaboloma && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-earth-50 border-2 border-earth rounded-xl p-6 mb-8"
+          >
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-earth mb-3">
+                🎯 Biomarcador Seleccionado
+              </h3>
+              <div className="bg-warm-white rounded-lg p-4 mb-4 border border-earth">
+                <div className="flex items-center justify-center gap-3">
+                  <div className="w-6 h-6 rounded-full bg-earth flex items-center justify-center">
+                    <FaMinus className="text-white text-xs" />
+                  </div>
+                  <span className="font-semibold text-earth">Metaboloma - orina</span>
+                </div>
+                <p className="text-sm text-taupe mt-2">
+                  Perfil de metabolitos urinarios. Evalúa vías metabólicas y funcionalidad del microbioma
+                </p>
+              </div>
+              <p className="text-stone text-sm mb-4">
+                Este biomarcador se añadirá a tu análisis Essential personalizado
+              </p>
+              <button 
+                onClick={toggleMetabolomaSelection}
+                className="bg-earth text-white px-4 py-2 rounded-lg hover:bg-warm transition-colors font-medium"
+              >
+                Quitar selección
+              </button>
+            </div>
+          </motion.div>
+        )}
 
         {/* Bottom CTA */}
         <motion.div
