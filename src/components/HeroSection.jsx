@@ -37,21 +37,6 @@ const HeroSection = () => {
             Sin datos no hay acción, obten los tuyos!
           </h1>
 
-          {/* Imagen inspiracional - INTERMEDIO */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="mb-8 max-w-4xl mx-auto"
-          >
-            <img
-              src="/images/hero-runner.jpg"
-              alt="Hombre maduro corriendo al amanecer - Vitalidad y longevidad"
-              className="w-full h-64 md:h-80 lg:h-96 object-cover rounded-2xl shadow-xl"
-              loading="lazy"
-            />
-          </motion.div>
-
           {/* Descripción - TERCERO */}
           <p className="text-lg text-taupe max-w-3xl mx-auto mb-8 leading-relaxed">
             Mide 130 biomarcadores y 7 análisis especializados, convirtiendo la ciencia de los datos en un plan de prevención, longevidad y optimización integral.
