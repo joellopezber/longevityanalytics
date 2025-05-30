@@ -5,7 +5,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCheck, FaChartBar, FaStar, FaPlus, FaMinus, FaDna } from 'react-icons/fa';
+import { FaCheck, FaChartBar, FaStar, FaPlus, FaMinus } from 'react-icons/fa';
 import { getEssentialPackageForGender, getAddOnPackagesForGender, getPackageTestCount } from '../data/biomarkers';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 
@@ -121,9 +121,6 @@ const PackageComparison = () => {
               {/* Header del Essential */}
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-4 mb-6">
-                  <div className="w-16 h-16 gradient-earth rounded-full flex items-center justify-center shadow-lg">
-                    <FaDna className="text-white text-2xl" />
-                  </div>
                   <h3 className="text-3xl font-bold text-stone">Essential</h3>
                   
                   {/* Gender Selector */}

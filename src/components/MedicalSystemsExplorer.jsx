@@ -524,7 +524,7 @@ const MedicalSystemsExplorer = () => {
                   </div>
 
                   {/* Benefits */}
-                  <div className="space-y-2">
+                  <div className="space-y-2" style={{marginLeft: '32px'}}>
                     {addOn.benefits.map((benefit, idx) => (
                       <div key={idx} className="flex items-center gap-2">
                         <FaCheck className={`${addOn.textColor} text-xs`} />
