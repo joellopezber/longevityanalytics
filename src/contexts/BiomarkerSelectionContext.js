@@ -92,7 +92,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
   const getSelectionSummary = () => {
     const selected = [];
     if (selectedIntolerancia) selected.push('Intolerancia Alimentaria 200');
-    if (selectedMetaboloma) selected.push('Metaboloma - orina');
+    if (selectedMetaboloma) selected.push('Metaboloma (orina/heces)');
     if (selectedGenomNutricion) selected.push('Genom Analisis - Nutrición');
     if (selectedGenomFarmaco) selected.push('Genom Analisis - Farmacogenómica');
     if (selectedGenomSuplem) selected.push('Genom Analisis - Suplementación');

@@ -447,7 +447,7 @@ export const addOnPackages = {
     ],
     biomarkers: [
       { name: "Microbioma", category: "Microbioma intestinal", code: "AB001", gender: "both", description: "Análisis completo de diversidad microbiana intestinal. Evalúa balance de bacterias beneficiosas y patógenas." },
-      { name: "Metaboloma - orina", category: "Metabolómica", code: "AB002", gender: "both", description: "Perfil de metabolitos urinarios. Evalúa vías metabólicas y funcionalidad del microbioma." }
+      { name: "Metaboloma (orina/heces)", category: "Metabolómica", code: "AB002", gender: "both", description: "Perfil de metabolitos en orina y heces. Evalúa vías metabólicas y funcionalidad del microbioma." }
     ]
   },
 

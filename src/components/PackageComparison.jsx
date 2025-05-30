@@ -169,23 +169,6 @@ const PackageComparison = () => {
                 <div className="text-sm text-taupe mb-4">
                   {selectedAddOns.length === 0 ? 'Precio base Essential' : `Essential + ${selectedAddOns.length} Add-On${selectedAddOns.length > 1 ? 's' : ''}`}
                 </div>
-
-                {/* Resumen de biomarcadores individuales seleccionados */}
-                {getSelectionSummary().length > 0 && (
-                  <div className="mb-6 p-4 bg-earth-50 border border-earth rounded-lg">
-                    <h5 className="text-sm font-semibold text-earth mb-2">
-                      🎯 Biomarcadores adicionales seleccionados:
-                    </h5>
-                    <div className="space-y-1">
-                      {getSelectionSummary().map((biomarker, idx) => (
-                        <div key={idx} className="text-xs text-stone flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 bg-earth rounded-full"></span>
-                          {biomarker}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </div>
 
               {/* Inclusiones dinámicas */}
@@ -226,7 +209,7 @@ const PackageComparison = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative bg-warm-white rounded-2xl shadow-xl overflow-hidden border-2 border-warm transition-all duration-300 hover:shadow-2xl package-card"
+            className="relative bg-warm-white rounded-2xl shadow-xl overflow-hidden border-2 border-warm transition-all duration-300 hover:shadow-2xl package-card self-start"
           >
             <div className="p-8">
               {/* Header del Configurador */}
@@ -237,6 +220,24 @@ const PackageComparison = () => {
                   Cada Add-On se suma al Essential para una evaluación más profunda.
                 </p>
               </div>
+
+              {/* Resumen de biomarcadores individuales seleccionados */}
+              {getSelectionSummary().length > 0 && (
+                <div className="mb-6 p-4 bg-warm-50 border border-warm rounded-lg">
+                  <h5 className="text-sm font-semibold text-warm mb-2 text-center">
+                    Biomarcadores adicionales seleccionados:
+                  </h5>
+                  <div className="space-y-1" style={{paddingLeft: '24px'}}>
+                    <ul className="list-disc space-y-1">
+                      {getSelectionSummary().map((biomarker, idx) => (
+                        <li key={idx} className="text-xs text-stone">
+                          {biomarker}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
 
               {/* Grid de Add-Ons */}
               <div className="space-y-8 max-h-96 overflow-y-auto px-2">

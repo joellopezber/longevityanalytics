@@ -577,13 +577,20 @@ section[id] {
 .package-card {
   margin-left: 1rem;
   margin-right: 1rem;
+  align-self: start !important;
 }
 
 @media (min-width: 1024px) {
   .package-card {
     margin-left: 2rem;
     margin-right: 2rem;
+    align-self: start !important;
   }
+}
+
+/* Asegurar que todas las cards en grids trabajen independientemente */
+.grid > * {
+  align-self: start;
 }
 
 /* Selector de género en el título Essential */

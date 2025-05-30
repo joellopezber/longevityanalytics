@@ -50,7 +50,7 @@ const MedicalSystemsExplorer = () => {
     setSelectedIntolerancia(prev => !prev);
   };
 
-  // Función para toggle de Metaboloma - orina
+  // Función para toggle de Metaboloma (orina/heces)
   const toggleMetabolomaSelection = () => {
     setSelectedMetaboloma(prev => !prev);
   };
@@ -84,7 +84,7 @@ const MedicalSystemsExplorer = () => {
   const BiomarkerCard = ({ biomarker, index }) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const isIntolerancia = biomarker.name === "Intolerancia Alimnetaria 200";
-    const isMetaboloma = biomarker.name === "Metaboloma - orina";
+    const isMetaboloma = biomarker.name === "Metaboloma (orina/heces)";
     const isGenomNutricion = biomarker.name === "Genom Analisis - Nutrición";
     const isGenomFarmaco = biomarker.name === "Genom Analisis - Farmacogenómica";
     const isGenomSuplem = biomarker.name === "Genom Analisis - Suplementación";
@@ -143,7 +143,7 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
             
-            {/* Selector específico para Metaboloma - orina - Lado Izquierdo */}
+            {/* Selector específico para Metaboloma (orina/heces) - Lado Izquierdo */}
             {isMetaboloma && (
               <button
                 onClick={(e) => {
@@ -417,7 +417,7 @@ const MedicalSystemsExplorer = () => {
                       <h4 className="text-lg font-bold text-stone mb-6 flex items-center gap-2 text-center justify-center">
                         🧬 Biomarcadores Incluidos en Essential ({essentialPackage.testCount} tests)
                       </h4>
-                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
                         {essentialPackage.biomarkers.map((biomarker, index) => (
                           <BiomarkerCard key={biomarker.code} biomarker={biomarker} index={index} />
                         ))}
@@ -440,14 +440,14 @@ const MedicalSystemsExplorer = () => {
               <span className="font-semibold text-earth">Complementa tu Essential</span> con estos módulos especializados. Cada Add-On se suma a los 46 biomarcadores base para una evaluación más profunda.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-8">
             {Object.values(addOnPackages).map((addOn, index) => (
               <motion.div
                 key={addOn.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-warm-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border-2 border-cream hover:border-earth"
+                className="bg-warm-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border-2 border-cream hover:border-earth self-start"
               >
                 {/* Add-On Header */}
                 <div className={`${addOn.bgColor} ${addOn.borderColor} border-b p-6`}>
@@ -578,76 +578,6 @@ const MedicalSystemsExplorer = () => {
             ))}
           </div>
         </div>
-
-        {/* Resumen de selección de Intolerancia Alimentaria */}
-        {selectedIntolerancia && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-earth-50 border-2 border-earth rounded-xl p-6 mb-8"
-          >
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-earth mb-3">
-                🎯 Biomarcador Seleccionado
-              </h3>
-              <div className="bg-warm-white rounded-lg p-4 mb-4 border border-earth">
-                <div className="flex items-center justify-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-earth flex items-center justify-center">
-                    <FaMinus className="text-white text-xs" />
-                  </div>
-                  <span className="font-semibold text-earth">Intolerancia Alimentaria 200</span>
-                </div>
-                <p className="text-sm text-taupe mt-2">
-                  Panel de 200 alimentos para detectar intolerancias alimentarias mediadas por IgG
-                </p>
-              </div>
-              <p className="text-stone text-sm mb-4">
-                Este biomarcador se añadirá a tu análisis Essential personalizado
-              </p>
-              <button 
-                onClick={toggleIntoleranciaSelection}
-                className="bg-earth text-white px-4 py-2 rounded-lg hover:bg-warm transition-colors font-medium"
-              >
-                Quitar selección
-              </button>
-            </div>
-          </motion.div>
-        )}
-
-        {/* Resumen de selección de Metaboloma - orina */}
-        {selectedMetaboloma && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="bg-earth-50 border-2 border-earth rounded-xl p-6 mb-8"
-          >
-            <div className="text-center">
-              <h3 className="text-xl font-bold text-earth mb-3">
-                🎯 Biomarcador Seleccionado
-              </h3>
-              <div className="bg-warm-white rounded-lg p-4 mb-4 border border-earth">
-                <div className="flex items-center justify-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-earth flex items-center justify-center">
-                    <FaMinus className="text-white text-xs" />
-                  </div>
-                  <span className="font-semibold text-earth">Metaboloma - orina</span>
-                </div>
-                <p className="text-sm text-taupe mt-2">
-                  Perfil de metabolitos urinarios. Evalúa vías metabólicas y funcionalidad del microbioma
-                </p>
-              </div>
-              <p className="text-stone text-sm mb-4">
-                Este biomarcador se añadirá a tu análisis Essential personalizado
-              </p>
-              <button 
-                onClick={toggleMetabolomaSelection}
-                className="bg-earth text-white px-4 py-2 rounded-lg hover:bg-warm transition-colors font-medium"
-              >
-                Quitar selección
-              </button>
-            </div>
-          </motion.div>
-        )}
 
         {/* Bottom CTA */}
         <motion.div
