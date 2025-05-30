@@ -65,7 +65,6 @@ const csvData = [
   { name: "T3 libre", category: "Tiroides", group: "Essential · Endocrino", code: "B6040", essential: true, gender: "both", description: "Hormona tiroidea activa. Regula metabolismo, temperatura corporal y función cardiovascular." },
   { name: "T4 libre", category: "Tiroides", group: "Essential · Endocrino", code: "B6070", essential: true, gender: "both", description: "Hormona tiroidea precursora. Se convierte en T3 activa en tejidos periféricos." },
   { name: "TSH", category: "Tiroides", group: "Essential · Endocrino", code: "B6130", essential: true, gender: "both", description: "Hormona estimulante del tiroides. Controla la producción de hormonas tiroideas T3 y T4." },
-  { name: "PCR (hsCRP)", category: "Inflamación cardiovascular", group: "Essential · Prevenii · Ox · Cardio", code: "B3170", essential: true, gender: "both", description: "Proteína C reactiva ultrasensible. Marcador de inflamación vascular y riesgo cardiovascular." },
   { name: "Homocisteína", category: "Metionina / CV", group: "Essential · Prevenii", code: "B5590", essential: true, gender: "both", description: "Aminoácido del metabolismo de metionina. Elevada indica riesgo cardiovascular y deficiencia de B6, B12, folato." },
   { name: "Fósforo", category: "Mineral óseo", group: "Essential · Prevenii · Bone_Mineral", code: "B0120", essential: true, gender: "both", description: "Mineral esencial para huesos, dientes y energía celular. Trabaja junto con calcio y vitamina D." },
   { name: "Calcio total", category: "Mineral óseo", group: "Essential · Prevenii · Bone_Mineral", code: "B0100", essential: true, gender: "both", description: "Mineral fundamental para huesos, contracción muscular, coagulación y función nerviosa." },
@@ -341,10 +340,10 @@ export const addOnPackages = {
   cardiovascular: {
     id: 'cardiovascular',
     name: 'Cardiovascular Avanzado',
-    description: 'Analiza lipoproteínas aterogénicas (Lp(a), VLDL), marcadores de inflamación vascular (PCR), enzimas cardíacas para prevención cardiovascular avanzada. Reduce riesgo de infarto y optimiza salud cardíaca.',
-    testCount: 9,
-    price: 189,
-    pvpPrice: 209.21,
+    description: 'Analiza lipoproteínas aterogénicas (Lp(a), VLDL), enzimas cardíacas para prevención cardiovascular avanzada. Reduce riesgo de infarto y optimiza salud cardíaca.',
+    testCount: 8,
+    price: 159,
+    pvpPrice: 169.69,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -354,7 +353,7 @@ export const addOnPackages = {
       'Prevención cardiovascular avanzada',
       'Optimización lipídica',
       'Reducción de riesgo cardíaco',
-      'Monitoreo de inflamación vascular'
+      'Monitoreo enzimas cardíacas'
     ],
     biomarkers: [
       { name: "Ácido láctico", category: "Metabolismo energético", code: "B0750", gender: "both", description: "Producto del metabolismo anaeróbico. Elevado indica hipoxia tisular o disfunción mitocondrial." },
@@ -364,8 +363,7 @@ export const addOnPackages = {
       { name: "Lp(a) *", category: "Riesgo CV", code: "B7700", gender: "both", description: "Lipoproteína aterogénica genéticamente determinada. Factor de riesgo cardiovascular independiente." },
       { name: "Cistatina-C", category: "Filtrado renal", code: "I5047", gender: "both", description: "Marcador de función renal más preciso que creatinina. No se ve afectado por masa muscular." },
       { name: "CK-MB", category: "Enzima miocárdica", code: "B2120", gender: "both", description: "Creatina quinasa específica del miocardio. Marcador de daño cardíaco e infarto." },
-      { name: "CPK total", category: "Enzima muscular", code: "B0220", gender: "both", description: "Creatina fosfoquinasa total. Enzima muscular que indica daño o estrés muscular." },
-      { name: "PCR (hsCRP)", category: "Inflamación cardiovascular", code: "B3170", gender: "both", description: "Proteína C reactiva ultrasensible. Marcador de inflamación vascular y riesgo cardiovascular." }
+      { name: "CPK total", category: "Enzima muscular", code: "B0220", gender: "both", description: "Creatina fosfoquinasa total. Enzima muscular que indica daño o estrés muscular." }
     ]
   },
 
@@ -456,8 +454,8 @@ export const addOnPackages = {
     name: 'Genoma',
     description: 'Análisis genómico completo mediante secuenciación de genoma completo (GWAS) y análisis genético especializado para identificar variantes genéticas, riesgo de enfermedades y farmacogenética.',
     testCount: 5,
-    price: 449,
-    pvpPrice: 499,
+    price: 0,
+    pvpPrice: 0,
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',

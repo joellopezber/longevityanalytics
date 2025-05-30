@@ -25,7 +25,11 @@ const MedicalSystemsExplorer = () => {
     selectedGenomFarmaco,
     setSelectedGenomFarmaco,
     selectedGenomSuplem,
-    setSelectedGenomSuplem
+    setSelectedGenomSuplem,
+    selectedLpA,
+    setSelectedLpA,
+    selectedFullGenome,
+    setSelectedFullGenome
   } = useBiomarkerSelection();
 
   // Obtener datos filtrados por género
@@ -68,6 +72,16 @@ const MedicalSystemsExplorer = () => {
     setSelectedGenomSuplem(prev => !prev);
   };
 
+  // Función para toggle de Lp(a) *
+  const toggleLpASelection = () => {
+    setSelectedLpA(prev => !prev);
+  };
+
+  // Función para toggle de Full Genome
+  const toggleFullGenomeSelection = () => {
+    setSelectedFullGenome(prev => !prev);
+  };
+
   // Función para verificar si un Add-On tiene diferencias por género
   const hasGenderDifferences = (addOnId) => {
     const genderSpecificAddOns = ['hormonas', 'cancer', 'bioage'];
@@ -88,6 +102,8 @@ const MedicalSystemsExplorer = () => {
     const isGenomNutricion = biomarker.name === "Genom Analisis - Nutrición";
     const isGenomFarmaco = biomarker.name === "Genom Analisis - Farmacogenómica";
     const isGenomSuplem = biomarker.name === "Genom Analisis - Suplementación";
+    const isLpA = biomarker.name === "Lp(a) *";
+    const isFullGenome = biomarker.name === "Full Genom (GWAs)";
     
     return (
       <motion.div
@@ -108,7 +124,15 @@ const MedicalSystemsExplorer = () => {
                     ? 'border-cream bg-warm-white hover:border-earth'
                     : (isGenomNutricion || isGenomFarmaco || isGenomSuplem)
                       ? 'border-earth bg-earth-50 hover:border-warm'
-                      : 'border-cream bg-warm-white hover:border-earth'
+                      : isLpA && selectedLpA
+                        ? 'border-cream bg-warm-white hover:border-earth'
+                        : isLpA
+                          ? 'border-earth bg-earth-50 hover:border-warm'
+                          : isFullGenome && selectedFullGenome
+                            ? 'border-cream bg-warm-white hover:border-earth'
+                            : isFullGenome
+                              ? 'border-earth bg-earth-50 hover:border-warm'
+                              : 'border-cream bg-warm-white hover:border-earth'
           }
         `}
       >
@@ -238,9 +262,57 @@ const MedicalSystemsExplorer = () => {
                 )}
               </button>
             )}
+
+            {/* Selector específico para Lp(a) * */}
+            {isLpA && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleLpASelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedLpA
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedLpA ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedLpA ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Full Genom (GWAs) */}
+            {isFullGenome && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFullGenomeSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedFullGenome
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedFullGenome ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedFullGenome ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
             
             <div className="flex-1">
-              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && !selectedIntolerancia) || (isMetaboloma && !selectedMetaboloma) || (isGenomNutricion && !selectedGenomNutricion) || (isGenomFarmaco && !selectedGenomFarmaco) || (isGenomSuplem && !selectedGenomSuplem) ? 'text-earth' : 'text-stone'}`}>
+              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && !selectedIntolerancia) || (isMetaboloma && !selectedMetaboloma) || (isGenomNutricion && !selectedGenomNutricion) || (isGenomFarmaco && !selectedGenomFarmaco) || (isGenomSuplem && !selectedGenomSuplem) || (isLpA && !selectedLpA) || (isFullGenome && !selectedFullGenome) ? 'text-earth' : 'text-stone'}`}>
                 {biomarker.name}
               </h5>
               <p className="text-xs text-taupe">{biomarker.category}</p>
@@ -439,6 +511,9 @@ const MedicalSystemsExplorer = () => {
             <p className="text-base text-taupe text-center max-w-2xl mx-auto">
               <span className="font-semibold text-earth">Complementa tu Essential</span> con estos módulos especializados. Cada Add-On se suma a los 46 biomarcadores base para una evaluación más profunda.
             </p>
+            <p className="text-sm text-gray-600 text-center italic mt-8 max-w-2xl mx-auto">
+              <em>* Los precios de las pruebas genéticas pueden estar sujetos a modificaciones.</em>
+            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-8">
             {Object.values(addOnPackages).map((addOn, index) => (
@@ -491,10 +566,15 @@ const MedicalSystemsExplorer = () => {
                             finalPrice = basePrice + 360;
                           } else if (addOn.id === 'genome') {
                             let genomExtra = 0;
+                            // Full Genome (GWAs) - seleccionado por defecto
+                            if (selectedFullGenome) genomExtra += 389;
+                            // Análisis individuales
                             if (selectedGenomNutricion) genomExtra += 50;
                             if (selectedGenomFarmaco) genomExtra += 50;
                             if (selectedGenomSuplem) genomExtra += 50;
                             finalPrice = basePrice + genomExtra;
+                          } else if (addOn.id === 'cardiovascular' && selectedLpA) {
+                            finalPrice = basePrice + 10;
                           }
                           return `${finalPrice}€`;
                         })()}
@@ -509,10 +589,15 @@ const MedicalSystemsExplorer = () => {
                             finalPvp = basePvp + 399;
                           } else if (addOn.id === 'genome') {
                             let genomExtraPvp = 0;
+                            // Full Genome (GWAs) - seleccionado por defecto  
+                            if (selectedFullGenome) genomExtraPvp += 399;
+                            // Análisis individuales
                             if (selectedGenomNutricion) genomExtraPvp += 83.33;
                             if (selectedGenomFarmaco) genomExtraPvp += 83.33;
                             if (selectedGenomSuplem) genomExtraPvp += 83.33;
                             finalPvp = basePvp + genomExtraPvp;
+                          } else if (addOn.id === 'cardiovascular' && selectedLpA) {
+                            finalPvp = basePvp + 18.60;
                           }
                           return `${Math.round(finalPvp)}€`;
                         })()}

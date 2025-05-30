@@ -22,12 +22,15 @@ export const BiomarkerSelectionProvider = ({ children }) => {
   const [selectedGenomNutricion, setSelectedGenomNutricion] = useState(false);
   const [selectedGenomFarmaco, setSelectedGenomFarmaco] = useState(false);
   const [selectedGenomSuplem, setSelectedGenomSuplem] = useState(false);
+  const [selectedLpA, setSelectedLpA] = useState(false);
+  const [selectedFullGenome, setSelectedFullGenome] = useState(true); // Por defecto seleccionado
 
   // Función para calcular precios adicionales basados en selecciones
   const calculateAdditionalPrices = () => {
     let digestExtra = { price: 0, pvp: 0 };
     let gutGateExtra = { price: 0, pvp: 0 };
     let genomeExtra = { price: 0, pvp: 0 };
+    let cardiovascularExtra = { price: 0, pvp: 0 };
 
     // Digestivo - Intolerancia Alimentaria
     if (selectedIntolerancia) {
@@ -39,9 +42,22 @@ export const BiomarkerSelectionProvider = ({ children }) => {
       gutGateExtra = { price: 360, pvp: 399 };
     }
 
-    // Genome - Análisis individuales
+    // Cardiovascular - Lp(a)
+    if (selectedLpA) {
+      cardiovascularExtra = { price: 10, pvp: 18.60 };
+    }
+
+    // Genome - Full Genome (GWAs) + Análisis individuales
     let genomPrice = 0;
     let genomPvp = 0;
+    
+    // Full Genome (GWAs) - seleccionado por defecto
+    if (selectedFullGenome) {
+      genomPrice += 389;
+      genomPvp += 399;
+    }
+    
+    // Análisis individuales
     if (selectedGenomNutricion) {
       genomPrice += 50;
       genomPvp += 83.33;
@@ -59,7 +75,8 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     return {
       digestExtra,
       gutGateExtra,
-      genomeExtra
+      genomeExtra,
+      cardiovascularExtra
     };
   };
 
@@ -83,6 +100,11 @@ export const BiomarkerSelectionProvider = ({ children }) => {
           price: basePrice + extras.genomeExtra.price,
           pvp: basePvp + extras.genomeExtra.pvp
         };
+      case 'cardiovascular':
+        return {
+          price: basePrice + extras.cardiovascularExtra.price,
+          pvp: basePvp + extras.cardiovascularExtra.pvp
+        };
       default:
         return { price: basePrice, pvp: basePvp };
     }
@@ -93,9 +115,11 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     const selected = [];
     if (selectedIntolerancia) selected.push('Intolerancia Alimentaria 200');
     if (selectedMetaboloma) selected.push('Metaboloma (orina/heces)');
+    if (selectedFullGenome) selected.push('Full Genom (GWAs)');
     if (selectedGenomNutricion) selected.push('Genom Analisis - Nutrición');
     if (selectedGenomFarmaco) selected.push('Genom Analisis - Farmacogenómica');
     if (selectedGenomSuplem) selected.push('Genom Analisis - Suplementación');
+    if (selectedLpA) selected.push('Lp(a) *');
     return selected;
   };
 
@@ -111,6 +135,10 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     setSelectedGenomFarmaco,
     selectedGenomSuplem,
     setSelectedGenomSuplem,
+    selectedLpA,
+    setSelectedLpA,
+    selectedFullGenome,
+    setSelectedFullGenome,
     
     // Funciones
     calculateAdditionalPrices,
