@@ -24,14 +24,14 @@ export const BiomarkerSelectionProvider = ({ children }) => {
   const [selectedMyPharma, setSelectedMyPharma] = useState(false);
   const [selectedMyDetox, setSelectedMyDetox] = useState(false);
   const [selectedMyDiet, setSelectedMyDiet] = useState(false);
-  const [selectedMyAgeing, setSelectedMyAgeing] = useState(false);
+  const [selectedMyAgeing, setSelectedMyAgeing] = useState(true);
   const [selectedMySport, setSelectedMySport] = useState(false);
   const [selectedMySuplements, setSelectedMySuplements] = useState(false);
   const [selectedLpA, setSelectedLpA] = useState(false); // Por defecto seleccionado
-  const [selectedIL6, setSelectedIL6] = useState(true); // Por defecto seleccionado
-  const [selectedTNFα, setSelectedTNFα] = useState(true); // Por defecto seleccionado
+  const [selectedIL6, setSelectedIL6] = useState(false); // Por defecto deseleccionado
+  const [selectedTNFα, setSelectedTNFα] = useState(false); // Por defecto deseleccionado
   const [selectedLongitudTelomerica, setSelectedLongitudTelomerica] = useState(false); // Por defecto deseleccionado
-  const [selectedVitaminaC, setSelectedVitaminaC] = useState(true); // Por defecto seleccionada
+
   const [selectedAcidosGrasos, setSelectedAcidosGrasos] = useState(false); // Por defecto NO seleccionado
   const [selectedVitaminaK1, setSelectedVitaminaK1] = useState(true); // Por defecto SÍ seleccionado
   const [selectedHelicobacter, setSelectedHelicobacter] = useState(true); // Por defecto seleccionado
@@ -324,7 +324,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     if (selectedIL6) selected.push('IL-6');
     if (selectedTNFα) selected.push('TNF-α');
     if (selectedLongitudTelomerica) selected.push('Longitud telomérica');
-    if (selectedVitaminaC) selected.push('Vitamina C');
+
     if (selectedAcidosGrasos) selected.push('Ácidos grasos %');
     if (selectedVitaminaK1) selected.push('Vitamina K1');
     if (selectedHelicobacter) selected.push('Helicobacter pylori IgG An');
@@ -378,8 +378,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     setSelectedTNFα,
     selectedLongitudTelomerica,
     setSelectedLongitudTelomerica,
-    selectedVitaminaC,
-    setSelectedVitaminaC,
+
     selectedAcidosGrasos,
     setSelectedAcidosGrasos,
     selectedVitaminaK1,

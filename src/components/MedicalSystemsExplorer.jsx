@@ -36,8 +36,7 @@ const MedicalSystemsExplorer = () => {
     setSelectedLpA,
     selectedLongitudTelomerica,
     setSelectedLongitudTelomerica,
-    selectedVitaminaC,
-    setSelectedVitaminaC,
+
     selectedAcidosGrasos,
     setSelectedAcidosGrasos,
     selectedVitaminaK1,
@@ -150,9 +149,7 @@ const MedicalSystemsExplorer = () => {
   };
 
   // Función para toggle de Vitamina C
-  const toggleVitaminaCSelection = () => {
-    setSelectedVitaminaC(prev => !prev);
-  };
+
 
   // Función para toggle de Ácidos grasos %
   const toggleAcidosGrasosSelection = () => {
@@ -273,7 +270,7 @@ const MedicalSystemsExplorer = () => {
     const isMySuplements = biomarker.name === "MySuplements";
     const isLpA = biomarker.name === "Lp(a) *";
     const isLongitudTelomerica = biomarker.name === "Longitud telomérica";
-    const isVitaminaC = biomarker.name === "Vitamina C";
+
     const isAcidosGrasos = biomarker.name === "Ácidos grasos %";
     const isVitaminaK1 = biomarker.name === "Vitamina K1";
     const isIL6 = biomarker.name === "IL-6";
@@ -303,8 +300,8 @@ const MedicalSystemsExplorer = () => {
     
     const isFSHCancer = isFSH && addOnId === "cancer";
     
-    const isVitaminaCOxidativeCell = isVitaminaC && addOnId === "oxidative_cell";
-    const isVitaminaCIVNutrients = isVitaminaC && addOnId === "iv_nutrients";
+    const isVitaminaCOxidativeCell = biomarker.name === "Vitamina C" && addOnId === "oxidative_cell";
+    const isVitaminaCIVNutrients = biomarker.name === "Vitamina C" && addOnId === "iv_nutrients";
     
     const isUrinalisisDigestivo = isUrinalisis && addOnId === "digest";
     const isOvaParasitesDigestivo = isOvaParasites && addOnId === "digest";
@@ -332,15 +329,11 @@ const MedicalSystemsExplorer = () => {
                         ? 'border-earth bg-earth-50 hover:border-warm'
                         : isLpA
                           ? 'border-cream bg-warm-white hover:border-earth'
-                          : isLongitudTelomerica && selectedLongitudTelomerica
+                                                            : isLongitudTelomerica && selectedLongitudTelomerica
                                 ? 'border-earth bg-earth-50 hover:border-warm'
                                 : isLongitudTelomerica
                                   ? 'border-cream bg-warm-white hover:border-earth'
-                                  : isVitaminaC && selectedVitaminaC
-                                    ? 'border-earth bg-earth-50 hover:border-warm'
-                                    : isVitaminaC
-                                      ? 'border-cream bg-warm-white hover:border-earth'
-                                      : isAcidosGrasos && selectedAcidosGrasos
+                                  : isAcidosGrasos && selectedAcidosGrasos
                                         ? 'border-earth bg-earth-50 hover:border-warm'
                                         : isAcidosGrasos
                                           ? 'border-cream bg-warm-white hover:border-earth'
@@ -635,29 +628,7 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Vitamina C */}
-            {isVitaminaC && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleVitaminaCSelection();
-                }}
-                className={`
-                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
-                  ${selectedVitaminaC
-                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
-                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
-                  }
-                `}
-                title={selectedVitaminaC ? "Quitar del análisis" : "Añadir al análisis"}
-              >
-                {selectedVitaminaC ? (
-                  <FaMinus className="text-xs" />
-                ) : (
-                  <FaPlus className="text-xs" />
-                )}
-              </button>
-            )}
+
 
             {/* Selector específico para Ácidos grasos % */}
             {isAcidosGrasos && (
@@ -1142,7 +1113,7 @@ const MedicalSystemsExplorer = () => {
 
             
             <div className="flex-1">
-              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && selectedIntolerancia) || (isMetaboloma && selectedMetaboloma) || (isMyPharma && selectedMyPharma) || (isMyDetox && selectedMyDetox) || (isMyDiet && selectedMyDiet) || (isMyAgeing && selectedMyAgeing) || (isMySport && selectedMySport) || (isMySuplements && selectedMySuplements) || (isLpA && selectedLpA) || (isLongitudTelomerica && selectedLongitudTelomerica) || (isVitaminaC && selectedVitaminaC) || (isAcidosGrasos && selectedAcidosGrasos) || (isVitaminaK1 && selectedVitaminaK1) || (isIL6 && selectedIL6) || (isTNFα && selectedTNFα) || (isHelicobacter && selectedHelicobacter) || (isEstradiolHormonas && selectedEstradiolHormonas) || (isProlactinaHormonas && selectedProlactinaHormonas) || (isLHHormonas && selectedLHHormonas) || (isFSHHormonas && selectedFSHHormonas) || (isEstradiolEndocrino && selectedEstradiolEndocrino) || (isProlactinaEndocrino && selectedProlactinaEndocrino) || (isLHEndocrino && selectedLHEndocrino) || (isFSHEndocrino && selectedFSHEndocrino) || (isVSGEndocrino && selectedVSGEndocrino) || (isVitaminaD125OHEndocrino && selectedVitaminaD125OHEndocrino) || (isFSHCancer && selectedFSHCancer) || (isVitaminaCOxidativeCell && selectedVitaminaCOxidativeCell) || (isVitaminaCIVNutrients && selectedVitaminaCIVNutrients) || (isUrinalisisDigestivo && selectedUrinalisisDigestivo) || (isOvaParasitesDigestivo && selectedOvaParasitesDigestivo) ? 'text-earth' : 'text-stone'}`}>
+              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && selectedIntolerancia) || (isMetaboloma && selectedMetaboloma) || (isMyPharma && selectedMyPharma) || (isMyDetox && selectedMyDetox) || (isMyDiet && selectedMyDiet) || (isMyAgeing && selectedMyAgeing) || (isMySport && selectedMySport) || (isMySuplements && selectedMySuplements) || (isLpA && selectedLpA) || (isLongitudTelomerica && selectedLongitudTelomerica) || (isAcidosGrasos && selectedAcidosGrasos) || (isVitaminaK1 && selectedVitaminaK1) || (isIL6 && selectedIL6) || (isTNFα && selectedTNFα) || (isHelicobacter && selectedHelicobacter) || (isEstradiolHormonas && selectedEstradiolHormonas) || (isProlactinaHormonas && selectedProlactinaHormonas) || (isLHHormonas && selectedLHHormonas) || (isFSHHormonas && selectedFSHHormonas) || (isEstradiolEndocrino && selectedEstradiolEndocrino) || (isProlactinaEndocrino && selectedProlactinaEndocrino) || (isLHEndocrino && selectedLHEndocrino) || (isFSHEndocrino && selectedFSHEndocrino) || (isVSGEndocrino && selectedVSGEndocrino) || (isVitaminaD125OHEndocrino && selectedVitaminaD125OHEndocrino) || (isFSHCancer && selectedFSHCancer) || (isVitaminaCOxidativeCell && selectedVitaminaCOxidativeCell) || (isVitaminaCIVNutrients && selectedVitaminaCIVNutrients) || (isUrinalisisDigestivo && selectedUrinalisisDigestivo) || (isOvaParasitesDigestivo && selectedOvaParasitesDigestivo) ? 'text-earth' : 'text-stone'}`}>
                 {biomarker.name}
               </h5>
               <p className="text-xs text-taupe">{biomarker.category}</p>

@@ -33,7 +33,6 @@ const PackageComparison = () => {
     selectedMySuplements,
     selectedLpA,
     selectedLongitudTelomerica,
-    selectedVitaminaC,
     selectedAcidosGrasos,
     selectedVitaminaK1,
     getAdjustedAddOnPrice
@@ -115,16 +114,11 @@ const PackageComparison = () => {
       } else if (addOnId === 'bioage' && selectedLongitudTelomerica) {
         adjustedPrice += getPriceByCode('G1465', 'prevenii');
         adjustedPvpPrice += getPriceByCode('G1465', 'market');
-      } else if (addOnId === 'oxidative_cell' && selectedVitaminaC) {
-        adjustedPrice += getPriceByCode('T1061', 'prevenii');
-        adjustedPvpPrice += getPriceByCode('T1061', 'market');
+
       } else if (addOnId === 'iv_nutrients') {
         let ivExtra = 0;
         let ivExtraPvp = 0;
-        if (selectedVitaminaC) {
-          ivExtra += getPriceByCode('T1061', 'prevenii');
-          ivExtraPvp += getPriceByCode('T1061', 'market');
-        }
+
         if (selectedAcidosGrasos) {
           ivExtra += getPriceByCode('T2590', 'prevenii');
           ivExtraPvp += getPriceByCode('T2590', 'market');

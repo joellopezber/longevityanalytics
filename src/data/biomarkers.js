@@ -526,8 +526,8 @@ export const addOnPackages = {
       { name: "Cistatina-C", category: "Filtrado renal", code: "I5047", gender: "both", description: "Marcador de función renal más preciso que creatinina. No se ve afectado por masa muscular." },
       { name: "CK-MB", category: "Enzima miocárdica", code: "B2120", gender: "both", description: "Creatina quinasa específica del miocardio. Marcador de daño cardíaco e infarto." },
       { name: "CPK total", category: "Enzima muscular", code: "B0220", gender: "both", description: "Creatina fosfoquinasa total. Enzima muscular que indica daño o estrés muscular." },
-      { name: "IL-6", category: "Citocina inflamatoria", code: "B7790", gender: "both", description: "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento.", isOptional: true, defaultSelected: true },
-      { name: "TNF-α", category: "Citocina inflamatoria", code: "I2081", gender: "both", description: "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas.", isOptional: true, defaultSelected: true }
+      { name: "IL-6", category: "Citocina inflamatoria", code: "B7790", gender: "both", description: "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento.", isOptional: true, defaultSelected: false },
+      { name: "TNF-α", category: "Citocina inflamatoria", code: "I2081", gender: "both", description: "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas.", isOptional: true, defaultSelected: false }
     ],
     
     // Función para obtener precios dinámicos
@@ -700,7 +700,7 @@ export const addOnPackages = {
       { name: "MyPharma", category: "Farmacogenómica", code: "GP001", gender: "both", description: "Farmacogenómica general. Analiza variantes genéticas que afectan la respuesta a medicamentos para personalizar tratamientos y evitar efectos adversos.", isOptional: true },
       { name: "MyDetox", category: "Detoxificación", code: "GD001", gender: "both", description: "Análisis genético de detoxificación. Evalúa capacidad genética para eliminar toxinas y metabolizar xenobióticos.", isOptional: true },
       { name: "MyDiet", category: "Nutrigenética", code: "GN001", gender: "both", description: "Análisis genético nutricional. Identifica variantes que afectan metabolismo de macronutrientes y micronutrientes.", isOptional: true },
-      { name: "MyAgeing", category: "Envejecimiento", code: "GA001", gender: "both", description: "Análisis genético del envejecimiento. Evalúa predisposición genética al envejecimiento y longevidad.", isOptional: true },
+      { name: "MyAgeing", category: "Envejecimiento", code: "GA001", gender: "both", description: "Análisis genético del envejecimiento. Evalúa predisposición genética al envejecimiento y longevidad.", isOptional: true, defaultSelected: true },
       { name: "MySport", category: "Rendimiento", code: "GS001", gender: "both", description: "Análisis genético deportivo. Optimiza entrenamiento y rendimiento basado en perfil genético.", isOptional: true },
       { name: "MySuplements", category: "Suplementación", code: "GU001", gender: "both", description: "Análisis genético de suplementación. Personaliza suplementos basado en necesidades genéticas individuales.", isOptional: true }
     ],
