@@ -5,16 +5,39 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FaCheck, FaChartBar, FaStar, FaPlus, FaMinus } from 'react-icons/fa';
-import { getEssentialPackageForGender, getAddOnPackagesForGender, getPackageTestCount } from '../data/biomarkers';
+import { FaCheck, FaChartBar, FaStar, FaPlus } from 'react-icons/fa';
+import { 
+  getEssentialPackageForGender, 
+  getAddOnPackagesForGender, 
+  getPackageTestCount
+} from '../data/biomarkers';
+import { calculatePackagePrice } from '../data/priceCalculator';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
+import { getPriceByCode } from '../data/priceData.js';
 
 const PackageComparison = () => {
   const [selectedGender, setSelectedGender] = useState('male');
   const [selectedAddOns, setSelectedAddOns] = useState([]); // Array de IDs de Add-Ons seleccionados
 
   // Usar el contexto para obtener las selecciones de biomarcadores
-  const { getAdjustedAddOnPrice, getSelectionSummary } = useBiomarkerSelection();
+  const { 
+    getSelectionSummary,
+    selectedIntolerancia,
+    selectedMetaboloma,
+    // Tests genómicos
+    selectedMyPharma,
+    selectedMyDetox,
+    selectedMyDiet,
+    selectedMyAgeing,
+    selectedMySport,
+    selectedMySuplements,
+    selectedLpA,
+    selectedLongitudTelomerica,
+    selectedVitaminaC,
+    selectedAcidosGrasos,
+    selectedVitaminaK1,
+    getAdjustedAddOnPrice
+  } = useBiomarkerSelection();
 
   // Obtener datos filtrados por género
   const essentialPackage = getEssentialPackageForGender(selectedGender);
@@ -22,42 +45,109 @@ const PackageComparison = () => {
 
   // Calcular totales dinámicos
   const calculateTotals = () => {
-    let totalBiomarkers = essentialPackage.testCount;
-    // Actualizado para manejar precios por género del Essential
-    let totalPrice = typeof essentialPackage.price === 'object' 
-      ? essentialPackage.price[selectedGender] 
-      : essentialPackage.price;
-    let totalPvpPrice = typeof essentialPackage.pvpPrice === 'object' 
-      ? essentialPackage.pvpPrice[selectedGender] 
-      : essentialPackage.pvpPrice;
+    // Recopilar todos los biomarcadores para cálculo conjunto
+    let allBiomarkers = [...essentialPackage.biomarkers];
     let selectedAddOnsList = [];
 
+    // Agregar biomarcadores de add-ons seleccionados
     selectedAddOns.forEach(addOnId => {
       const addOn = addOnPackages[addOnId];
       if (addOn) {
-        totalBiomarkers += getPackageTestCount(addOn, selectedGender);
+        // Filtrar biomarcadores por género si es necesario
+        const addOnBiomarkers = addOn.biomarkers.filter(biomarker => {
+          if (!biomarker.gender || biomarker.gender === 'both') return true;
+          return biomarker.gender === selectedGender;
+        });
         
-        // Usar precios ajustados del contexto
-        let basePrice = typeof addOn.price === 'object' ? addOn.price[selectedGender] : addOn.price;
-        let basePvpPrice = typeof addOn.pvpPrice === 'object' ? addOn.pvpPrice[selectedGender] : addOn.pvpPrice;
-        
-        const adjustedPrices = getAdjustedAddOnPrice(addOnId, basePrice, basePvpPrice);
-        
-        totalPrice += adjustedPrices.price;
-        totalPvpPrice += adjustedPrices.pvp;
+        allBiomarkers = [...allBiomarkers, ...addOnBiomarkers];
         selectedAddOnsList.push(addOn.name);
       }
     });
 
+    // Calcular precio total sumando todos los biomarcadores (sin descuentos automáticos)
+    const totalCalculation = calculatePackagePrice(allBiomarkers, selectedGender, 'essential');
+    
+    // Aplicar ajustes del contexto (Intolerancia, Metaboloma, etc.)
+    // PRECIO FINAL = Suma exacta de tarifas Prevenii (sin descuentos automáticos)
+    let adjustedPrice = totalCalculation.costPrice; // Usar costPrice (suma exacta Prevenii)
+    let adjustedPvpPrice = totalCalculation.marketPrice; // Market como PVP referencial
+    
+    selectedAddOns.forEach(addOnId => {
+      if (addOnId === 'digest' && selectedIntolerancia) {
+        adjustedPrice += getPriceByCode('P3031', 'prevenii');
+        adjustedPvpPrice += getPriceByCode('P3031', 'market');
+      } else if (addOnId === 'gut_gate' && selectedMetaboloma) {
+        adjustedPrice += getPriceByCode('AB002', 'prevenii');
+        adjustedPvpPrice += getPriceByCode('AB002', 'market');
+      } else if (addOnId === 'genome') {
+        let genomExtra = 0;
+        let genomExtraPvp = 0;
+        // Tests genómicos
+        if (selectedMyPharma) {
+          genomExtra += getPriceByCode('GP001', 'prevenii');
+          genomExtraPvp += getPriceByCode('GP001', 'market');
+        }
+        if (selectedMyDetox) {
+          genomExtra += getPriceByCode('GD001', 'prevenii');
+          genomExtraPvp += getPriceByCode('GD001', 'market');
+        }
+        if (selectedMyDiet) {
+          genomExtra += getPriceByCode('GN001', 'prevenii');
+          genomExtraPvp += getPriceByCode('GN001', 'market');
+        }
+        if (selectedMyAgeing) {
+          genomExtra += getPriceByCode('GA001', 'prevenii');
+          genomExtraPvp += getPriceByCode('GA001', 'market');
+        }
+        if (selectedMySport) {
+          genomExtra += getPriceByCode('GS001', 'prevenii');
+          genomExtraPvp += getPriceByCode('GS001', 'market');
+        }
+        if (selectedMySuplements) {
+          genomExtra += getPriceByCode('GU001', 'prevenii');
+          genomExtraPvp += getPriceByCode('GU001', 'market');
+        }
+        adjustedPrice += genomExtra;
+        adjustedPvpPrice += genomExtraPvp;
+      } else if (addOnId === 'cardiovascular' && selectedLpA) {
+        adjustedPrice += getPriceByCode('B7700', 'prevenii');
+        adjustedPvpPrice += getPriceByCode('B7700', 'market');
+      } else if (addOnId === 'bioage' && selectedLongitudTelomerica) {
+        adjustedPrice += getPriceByCode('G1465', 'prevenii');
+        adjustedPvpPrice += getPriceByCode('G1465', 'market');
+      } else if (addOnId === 'oxidative_cell' && selectedVitaminaC) {
+        adjustedPrice += getPriceByCode('T1061', 'prevenii');
+        adjustedPvpPrice += getPriceByCode('T1061', 'market');
+      } else if (addOnId === 'iv_nutrients') {
+        let ivExtra = 0;
+        let ivExtraPvp = 0;
+        if (selectedVitaminaC) {
+          ivExtra += getPriceByCode('T1061', 'prevenii');
+          ivExtraPvp += getPriceByCode('T1061', 'market');
+        }
+        if (selectedAcidosGrasos) {
+          ivExtra += getPriceByCode('T2590', 'prevenii');
+          ivExtraPvp += getPriceByCode('T2590', 'market');
+        }
+        if (selectedVitaminaK1) {
+          ivExtra += getPriceByCode('T1720', 'prevenii');
+          ivExtraPvp += getPriceByCode('T1720', 'market');
+        }
+        adjustedPrice += ivExtra;
+        adjustedPvpPrice += ivExtraPvp;
+      }
+    });
+
     return {
-      totalBiomarkers,
-      totalPrice,
-      totalPvpPrice,
-      selectedAddOnsList
+      totalBiomarkers: totalCalculation.testCount,
+      totalPrice: Math.round(adjustedPrice),
+      totalPvpPrice: Math.round(adjustedPvpPrice),
+      selectedAddOnsList,
+      originalPrice: totalCalculation.marketPrice
     };
   };
 
-  const { totalBiomarkers, totalPrice, totalPvpPrice, selectedAddOnsList } = calculateTotals();
+  const { totalBiomarkers, totalPrice, totalPvpPrice } = calculateTotals();
 
   // Toggle Add-On selection
   const toggleAddOn = (addOnId) => {
@@ -280,14 +370,38 @@ const PackageComparison = () => {
                             </div>
                             <p className="text-xs text-taupe mb-2">{addOn.description}</p>
                             <div className="flex items-center gap-4 text-xs">
-                              <span className="text-warm font-semibold">
-                                {(() => {
-                                  const basePrice = typeof addOn.price === 'object' ? addOn.price[selectedGender] : addOn.price;
-                                  const basePvp = typeof addOn.pvpPrice === 'object' ? addOn.pvpPrice[selectedGender] : addOn.pvpPrice;
-                                  const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
-                                  return `${adjustedPrices.price}€`;
-                                })()}
-                              </span>
+                              {(() => {
+                                // Usar pricing directo del add-on
+                                const pricing = addOn.getPricing();
+                                
+                                // Obtener precio base según género
+                                let basePrice, basePvp;
+                                
+                                if (pricing[selectedGender]) {
+                                  basePrice = pricing[selectedGender].price;
+                                  basePvp = pricing[selectedGender].marketPrice;
+                                } else if (pricing.both) {
+                                  basePrice = pricing.both.price;
+                                  basePvp = pricing.both.marketPrice;
+                                } else {
+                                  basePrice = pricing.price;
+                                  basePvp = pricing.marketPrice;
+                                }
+                                
+                                // Aplicar ajustes del contexto (Full Genome, Metaboloma, etc.)
+                                const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
+                                
+                                return (
+                                  <div className="flex flex-col gap-1">
+                                    <span className="text-warm font-semibold">
+                                      {Math.round(adjustedPrices.price)}€
+                                    </span>
+                                    <span className="text-gray-500 text-xs">
+                                      PVP: {Math.round(adjustedPrices.pvp)}€
+                                    </span>
+                                  </div>
+                                );
+                              })()}
                               <span className="text-taupe">{testCount} biomarcadores</span>
                             </div>
                           </div>

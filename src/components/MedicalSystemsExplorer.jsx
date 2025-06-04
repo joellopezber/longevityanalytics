@@ -20,16 +20,71 @@ const MedicalSystemsExplorer = () => {
     setSelectedIntolerancia,
     selectedMetaboloma,
     setSelectedMetaboloma,
-    selectedGenomNutricion,
-    setSelectedGenomNutricion,
-    selectedGenomFarmaco,
-    setSelectedGenomFarmaco,
-    selectedGenomSuplem,
-    setSelectedGenomSuplem,
+    selectedMyPharma,
+    setSelectedMyPharma,
+    selectedMyDetox,
+    setSelectedMyDetox,
+    selectedMyDiet,
+    setSelectedMyDiet,
+    selectedMyAgeing,
+    setSelectedMyAgeing,
+    selectedMySport,
+    setSelectedMySport,
+    selectedMySuplements,
+    setSelectedMySuplements,
     selectedLpA,
     setSelectedLpA,
-    selectedFullGenome,
-    setSelectedFullGenome
+    selectedLongitudTelomerica,
+    setSelectedLongitudTelomerica,
+    selectedVitaminaC,
+    setSelectedVitaminaC,
+    selectedAcidosGrasos,
+    setSelectedAcidosGrasos,
+    selectedVitaminaK1,
+    setSelectedVitaminaK1,
+    selectedIL6,
+    setSelectedIL6,
+    selectedTNFα,
+    setSelectedTNFα,
+    selectedHelicobacter,
+    setSelectedHelicobacter,
+    // Estados específicos para Hormonas
+    selectedEstradiolHormonas,
+    setSelectedEstradiolHormonas,
+    selectedProlactinaHormonas,
+    setSelectedProlactinaHormonas,
+    selectedLHHormonas,
+    setSelectedLHHormonas,
+    selectedFSHHormonas,
+    setSelectedFSHHormonas,
+    // Estados específicos para Endocrino
+    selectedEstradiolEndocrino,
+    setSelectedEstradiolEndocrino,
+    selectedProlactinaEndocrino,
+    setSelectedProlactinaEndocrino,
+    selectedLHEndocrino,
+    setSelectedLHEndocrino,
+    selectedFSHEndocrino,
+    setSelectedFSHEndocrino,
+    selectedVSGEndocrino,
+    setSelectedVSGEndocrino,
+    selectedVitaminaD125OHEndocrino,
+    setSelectedVitaminaD125OHEndocrino,
+    // Estados específicos para Cancer
+    selectedFSHCancer,
+    setSelectedFSHCancer,
+    // Estados específicos para Vitamina C
+    selectedVitaminaCOxidativeCell,
+    setSelectedVitaminaCOxidativeCell,
+    selectedVitaminaCIVNutrients,
+    setSelectedVitaminaCIVNutrients,
+    // Estados específicos para Digestivo
+    selectedUrinalisisDigestivo,
+    setSelectedUrinalisisDigestivo,
+    selectedOvaParasitesDigestivo,
+    setSelectedOvaParasitesDigestivo,
+
+    getAdjustedAddOnPrice
   } = useBiomarkerSelection();
 
   // Obtener datos filtrados por género
@@ -59,17 +114,29 @@ const MedicalSystemsExplorer = () => {
     setSelectedMetaboloma(prev => !prev);
   };
 
-  // Funciones para toggle de los biomarcadores del genoma
-  const toggleGenomNutricionSelection = () => {
-    setSelectedGenomNutricion(prev => !prev);
+  // Funciones para toggle de los tests genómicos
+  const toggleMyPharmaSelection = () => {
+    setSelectedMyPharma(prev => !prev);
   };
 
-  const toggleGenomFarmacoSelection = () => {
-    setSelectedGenomFarmaco(prev => !prev);
+  const toggleMyDetoxSelection = () => {
+    setSelectedMyDetox(prev => !prev);
   };
 
-  const toggleGenomSuplemSelection = () => {
-    setSelectedGenomSuplem(prev => !prev);
+  const toggleMyDietSelection = () => {
+    setSelectedMyDiet(prev => !prev);
+  };
+
+  const toggleMyAgeingSelection = () => {
+    setSelectedMyAgeing(prev => !prev);
+  };
+
+  const toggleMySportSelection = () => {
+    setSelectedMySport(prev => !prev);
+  };
+
+  const toggleMySuplementsSelection = () => {
+    setSelectedMySuplements(prev => !prev);
   };
 
   // Función para toggle de Lp(a) *
@@ -77,10 +144,108 @@ const MedicalSystemsExplorer = () => {
     setSelectedLpA(prev => !prev);
   };
 
-  // Función para toggle de Full Genome
-  const toggleFullGenomeSelection = () => {
-    setSelectedFullGenome(prev => !prev);
+  // Función para toggle de Longitud Telomérica
+  const toggleLongitudTelomericaSelection = () => {
+    setSelectedLongitudTelomerica(prev => !prev);
   };
+
+  // Función para toggle de Vitamina C
+  const toggleVitaminaCSelection = () => {
+    setSelectedVitaminaC(prev => !prev);
+  };
+
+  // Función para toggle de Ácidos grasos %
+  const toggleAcidosGrasosSelection = () => {
+    setSelectedAcidosGrasos(prev => !prev);
+  };
+
+  // Función para toggle de Vitamina K1
+  const toggleVitaminaK1Selection = () => {
+    setSelectedVitaminaK1(prev => !prev);
+  };
+
+  // Función para toggle de IL-6
+  const toggleIL6Selection = () => {
+    setSelectedIL6(prev => !prev);
+  };
+
+  // Función para toggle de TNF-α
+  const toggleTNFαSelection = () => {
+    setSelectedTNFα(prev => !prev);
+  };
+
+  // Función para toggle de Helicobacter pylori
+  const toggleHelicobacterSelection = () => {
+    setSelectedHelicobacter(prev => !prev);
+  };
+
+  // Funciones para toggle de biomarcadores del add-on Endocrino
+  // Funciones toggle para Hormonas
+  const toggleEstradiolHormonasSelection = () => {
+    setSelectedEstradiolHormonas(prev => !prev);
+  };
+
+  const toggleProlactinaHormonasSelection = () => {
+    setSelectedProlactinaHormonas(prev => !prev);
+  };
+
+  const toggleLHHormonasSelection = () => {
+    setSelectedLHHormonas(prev => !prev);
+  };
+
+  const toggleFSHHormonasSelection = () => {
+    setSelectedFSHHormonas(prev => !prev);
+  };
+
+  // Funciones toggle para Endocrino
+  const toggleEstradiolEndocrinoSelection = () => {
+    setSelectedEstradiolEndocrino(prev => !prev);
+  };
+
+  const toggleProlactinaEndocrinoSelection = () => {
+    setSelectedProlactinaEndocrino(prev => !prev);
+  };
+
+  const toggleLHEndocrinoSelection = () => {
+    setSelectedLHEndocrino(prev => !prev);
+  };
+
+  const toggleFSHEndocrinoSelection = () => {
+    setSelectedFSHEndocrino(prev => !prev);
+  };
+
+  const toggleVSGEndocrinoSelection = () => {
+    setSelectedVSGEndocrino(prev => !prev);
+  };
+
+  const toggleVitaminaD125OHEndocrinoSelection = () => {
+    setSelectedVitaminaD125OHEndocrino(prev => !prev);
+  };
+
+  // Función toggle para FSH en Cancer
+  const toggleFSHCancerSelection = () => {
+    setSelectedFSHCancer(prev => !prev);
+  };
+
+  // Funciones toggle para Vitamina C específicas
+  const toggleVitaminaCOxidativeCellSelection = () => {
+    setSelectedVitaminaCOxidativeCell(prev => !prev);
+  };
+
+  const toggleVitaminaCIVNutrientsSelection = () => {
+    setSelectedVitaminaCIVNutrients(prev => !prev);
+  };
+
+  // Funciones toggle para Digestivo específicas
+  const toggleUrinalisisDigestivoSelection = () => {
+    setSelectedUrinalisisDigestivo(prev => !prev);
+  };
+
+  const toggleOvaParasitesDigestivoSelection = () => {
+    setSelectedOvaParasitesDigestivo(prev => !prev);
+  };
+
+
 
   // Función para verificar si un Add-On tiene diferencias por género
   const hasGenderDifferences = (addOnId) => {
@@ -95,15 +260,54 @@ const MedicalSystemsExplorer = () => {
     return null;
   };
 
-  const BiomarkerCard = ({ biomarker, index }) => {
+  const BiomarkerCard = ({ biomarker, index, addOnId }) => {
     const [isExpanded, setIsExpanded] = useState(false);
-    const isIntolerancia = biomarker.name === "Intolerancia Alimnetaria 200";
+    const isIntolerancia = biomarker.name === "Intolerancia Alimentaria 200";
     const isMetaboloma = biomarker.name === "Metaboloma (orina/heces)";
-    const isGenomNutricion = biomarker.name === "Genom Analisis - Nutrición";
-    const isGenomFarmaco = biomarker.name === "Genom Analisis - Farmacogenómica";
-    const isGenomSuplem = biomarker.name === "Genom Analisis - Suplementación";
+    // Tests genómicos
+    const isMyPharma = biomarker.name === "MyPharma";
+    const isMyDetox = biomarker.name === "MyDetox";
+    const isMyDiet = biomarker.name === "MyDiet";
+    const isMyAgeing = biomarker.name === "MyAgeing";
+    const isMySport = biomarker.name === "MySport";
+    const isMySuplements = biomarker.name === "MySuplements";
     const isLpA = biomarker.name === "Lp(a) *";
-    const isFullGenome = biomarker.name === "Full Genom (GWAs)";
+    const isLongitudTelomerica = biomarker.name === "Longitud telomérica";
+    const isVitaminaC = biomarker.name === "Vitamina C";
+    const isAcidosGrasos = biomarker.name === "Ácidos grasos %";
+    const isVitaminaK1 = biomarker.name === "Vitamina K1";
+    const isIL6 = biomarker.name === "IL-6";
+    const isTNFα = biomarker.name === "TNF-α";
+    const isHelicobacter = biomarker.name === "Helicobacter pylori IgG An";
+    const isEstradiol = biomarker.name === "Estradiol";
+    const isProlactina = biomarker.name === "Prolactina";
+    const isLH = biomarker.name === "LH";
+    const isFSH = biomarker.name === "FSH";
+    const isVSG = biomarker.name === "VSG";
+    const isVitaminaD125OH = biomarker.name === "Vitamina D 1,25-OH";
+    const isUrinalisis = biomarker.name === "Urianálisis + sedimento";
+    const isOvaParasites = biomarker.name === "Ova & Parasites stool";
+    
+    // Estados específicos por add-on para biomarcadores compartidos
+    const isEstradiolHormonas = isEstradiol && addOnId === "hormonas";
+    const isProlactinaHormonas = isProlactina && addOnId === "hormonas";
+    const isLHHormonas = isLH && addOnId === "hormonas";
+    const isFSHHormonas = isFSH && addOnId === "hormonas";
+    
+    const isEstradiolEndocrino = isEstradiol && addOnId === "endocrino";
+    const isProlactinaEndocrino = isProlactina && addOnId === "endocrino";
+    const isLHEndocrino = isLH && addOnId === "endocrino";
+    const isFSHEndocrino = isFSH && addOnId === "endocrino";
+    const isVSGEndocrino = isVSG && addOnId === "endocrino";
+    const isVitaminaD125OHEndocrino = isVitaminaD125OH && addOnId === "endocrino";
+    
+    const isFSHCancer = isFSH && addOnId === "cancer";
+    
+    const isVitaminaCOxidativeCell = isVitaminaC && addOnId === "oxidative_cell";
+    const isVitaminaCIVNutrients = isVitaminaC && addOnId === "iv_nutrients";
+    
+    const isUrinalisisDigestivo = isUrinalisis && addOnId === "digest";
+    const isOvaParasitesDigestivo = isOvaParasites && addOnId === "digest";
     
     return (
       <motion.div
@@ -113,26 +317,75 @@ const MedicalSystemsExplorer = () => {
         className={`
           border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all
           ${isIntolerancia && selectedIntolerancia 
-            ? 'border-cream bg-warm-white hover:border-earth' 
+            ? 'border-earth bg-earth-50 hover:border-warm' 
             : isIntolerancia 
-              ? 'border-earth bg-earth-50 hover:border-warm'
+              ? 'border-cream bg-warm-white hover:border-earth'
               : isMetaboloma && selectedMetaboloma
-                ? 'border-cream bg-warm-white hover:border-earth'
+                ? 'border-earth bg-earth-50 hover:border-warm'
                 : isMetaboloma
-                  ? 'border-earth bg-earth-50 hover:border-warm'
-                  : (isGenomNutricion && selectedGenomNutricion) || (isGenomFarmaco && selectedGenomFarmaco) || (isGenomSuplem && selectedGenomSuplem)
-                    ? 'border-cream bg-warm-white hover:border-earth'
-                    : (isGenomNutricion || isGenomFarmaco || isGenomSuplem)
-                      ? 'border-earth bg-earth-50 hover:border-warm'
+                  ? 'border-cream bg-warm-white hover:border-earth'
+                  : (isMyPharma && selectedMyPharma) || (isMyDetox && selectedMyDetox) || (isMyDiet && selectedMyDiet) || (isMyAgeing && selectedMyAgeing) || (isMySport && selectedMySport) || (isMySuplements && selectedMySuplements)
+                    ? 'border-earth bg-earth-50 hover:border-warm'
+                    : (isMyPharma || isMyDetox || isMyDiet || isMyAgeing || isMySport || isMySuplements)
+                      ? 'border-cream bg-warm-white hover:border-earth'
                       : isLpA && selectedLpA
-                        ? 'border-cream bg-warm-white hover:border-earth'
+                        ? 'border-earth bg-earth-50 hover:border-warm'
                         : isLpA
-                          ? 'border-earth bg-earth-50 hover:border-warm'
-                          : isFullGenome && selectedFullGenome
-                            ? 'border-cream bg-warm-white hover:border-earth'
-                            : isFullGenome
-                              ? 'border-earth bg-earth-50 hover:border-warm'
-                              : 'border-cream bg-warm-white hover:border-earth'
+                          ? 'border-cream bg-warm-white hover:border-earth'
+                          : isLongitudTelomerica && selectedLongitudTelomerica
+                                ? 'border-earth bg-earth-50 hover:border-warm'
+                                : isLongitudTelomerica
+                                  ? 'border-cream bg-warm-white hover:border-earth'
+                                  : isVitaminaC && selectedVitaminaC
+                                    ? 'border-earth bg-earth-50 hover:border-warm'
+                                    : isVitaminaC
+                                      ? 'border-cream bg-warm-white hover:border-earth'
+                                      : isAcidosGrasos && selectedAcidosGrasos
+                                        ? 'border-earth bg-earth-50 hover:border-warm'
+                                        : isAcidosGrasos
+                                          ? 'border-cream bg-warm-white hover:border-earth'
+                                          : isVitaminaK1 && selectedVitaminaK1
+                                            ? 'border-earth bg-earth-50 hover:border-warm'
+                                            : isVitaminaK1
+                                              ? 'border-cream bg-warm-white hover:border-earth'
+                                              : isIL6 && selectedIL6
+                                                ? 'border-earth bg-earth-50 hover:border-warm'
+                                                : isIL6
+                                                  ? 'border-cream bg-warm-white hover:border-earth'
+                                                  : isTNFα && selectedTNFα
+                                                    ? 'border-earth bg-earth-50 hover:border-warm'
+                                                    : isTNFα
+                                                      ? 'border-cream bg-warm-white hover:border-earth'
+                                                                                                                : isHelicobacter && selectedHelicobacter
+                                                        ? 'border-earth bg-earth-50 hover:border-warm'
+                                                        : isHelicobacter
+                                                          ? 'border-cream bg-warm-white hover:border-earth'
+                                                          : (isEstradiolHormonas && selectedEstradiolHormonas) || (isEstradiolEndocrino && selectedEstradiolEndocrino)
+                                                            ? 'border-earth bg-earth-50 hover:border-warm'
+                                                            : isEstradiolHormonas || isEstradiolEndocrino
+                                                              ? 'border-cream bg-warm-white hover:border-earth'
+                                                              : (isProlactinaHormonas && selectedProlactinaHormonas) || (isProlactinaEndocrino && selectedProlactinaEndocrino)
+                                                                ? 'border-earth bg-earth-50 hover:border-warm'
+                                                                : isProlactinaHormonas || isProlactinaEndocrino
+                                                                  ? 'border-cream bg-warm-white hover:border-earth'
+                                                                  : (isLHHormonas && selectedLHHormonas) || (isLHEndocrino && selectedLHEndocrino)
+                                                                    ? 'border-earth bg-earth-50 hover:border-warm'
+                                                                    : isLHHormonas || isLHEndocrino
+                                                                      ? 'border-cream bg-warm-white hover:border-earth'
+                                                                      : (isFSHHormonas && selectedFSHHormonas) || (isFSHEndocrino && selectedFSHEndocrino) || (isFSHCancer && selectedFSHCancer)
+                                                                        ? 'border-earth bg-earth-50 hover:border-warm'
+                                                                        : isFSHHormonas || isFSHEndocrino || isFSHCancer
+                                                                          ? 'border-cream bg-warm-white hover:border-earth'
+                                                                          : isVSGEndocrino && selectedVSGEndocrino
+                                                                            ? 'border-earth bg-earth-50 hover:border-warm'
+                                                                            : isVSGEndocrino
+                                                                              ? 'border-cream bg-warm-white hover:border-earth'
+
+                                                                              : isVitaminaD125OHEndocrino && selectedVitaminaD125OHEndocrino
+                                                                                ? 'border-earth bg-earth-50 hover:border-warm'
+                                                                                : isVitaminaD125OHEndocrino
+                                                                                  ? 'border-cream bg-warm-white hover:border-earth'
+                                                                                  : 'border-earth bg-earth-50 hover:border-warm'
           }
         `}
       >
@@ -191,23 +444,25 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
             
-            {/* Selector específico para Genom Analisis - Nutrición */}
-            {isGenomNutricion && (
+
+
+            {/* Selectores para los nuevos tests genómicos */}
+            {isMyPharma && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleGenomNutricionSelection();
+                  toggleMyPharmaSelection();
                 }}
                 className={`
                   w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
-                  ${selectedGenomNutricion
+                  ${selectedMyPharma
                     ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
                     : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
                   }
                 `}
-                title={selectedGenomNutricion ? "Quitar del análisis" : "Añadir al análisis"}
+                title={selectedMyPharma ? "Quitar del análisis" : "Añadir al análisis"}
               >
-                {selectedGenomNutricion ? (
+                {selectedMyPharma ? (
                   <FaMinus className="text-xs" />
                 ) : (
                   <FaPlus className="text-xs" />
@@ -215,23 +470,22 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Genom Analisis - Farmacogenómica */}
-            {isGenomFarmaco && (
+            {isMyDetox && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleGenomFarmacoSelection();
+                  toggleMyDetoxSelection();
                 }}
                 className={`
                   w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
-                  ${selectedGenomFarmaco
+                  ${selectedMyDetox
                     ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
                     : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
                   }
                 `}
-                title={selectedGenomFarmaco ? "Quitar del análisis" : "Añadir al análisis"}
+                title={selectedMyDetox ? "Quitar del análisis" : "Añadir al análisis"}
               >
-                {selectedGenomFarmaco ? (
+                {selectedMyDetox ? (
                   <FaMinus className="text-xs" />
                 ) : (
                   <FaPlus className="text-xs" />
@@ -239,23 +493,91 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Genom Analisis - Suplementación */}
-            {isGenomSuplem && (
+            {isMyDiet && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleGenomSuplemSelection();
+                  toggleMyDietSelection();
                 }}
                 className={`
                   w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
-                  ${selectedGenomSuplem
+                  ${selectedMyDiet
                     ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
                     : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
                   }
                 `}
-                title={selectedGenomSuplem ? "Quitar del análisis" : "Añadir al análisis"}
+                title={selectedMyDiet ? "Quitar del análisis" : "Añadir al análisis"}
               >
-                {selectedGenomSuplem ? (
+                {selectedMyDiet ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {isMyAgeing && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleMyAgeingSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedMyAgeing
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedMyAgeing ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedMyAgeing ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {isMySport && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleMySportSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedMySport
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedMySport ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedMySport ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {isMySuplements && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleMySuplementsSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedMySuplements
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedMySuplements ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedMySuplements ? (
                   <FaMinus className="text-xs" />
                 ) : (
                   <FaPlus className="text-xs" />
@@ -287,32 +609,540 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Full Genom (GWAs) */}
-            {isFullGenome && (
+
+
+            {/* Selector específico para Longitud telomérica */}
+            {isLongitudTelomerica && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleFullGenomeSelection();
+                  toggleLongitudTelomericaSelection();
                 }}
                 className={`
                   w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
-                  ${selectedFullGenome
+                  ${selectedLongitudTelomerica
                     ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
                     : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
                   }
                 `}
-                title={selectedFullGenome ? "Quitar del análisis" : "Añadir al análisis"}
+                title={selectedLongitudTelomerica ? "Quitar del análisis" : "Añadir al análisis"}
               >
-                {selectedFullGenome ? (
+                {selectedLongitudTelomerica ? (
                   <FaMinus className="text-xs" />
                 ) : (
                   <FaPlus className="text-xs" />
                 )}
               </button>
             )}
+
+            {/* Selector específico para Vitamina C */}
+            {isVitaminaC && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVitaminaCSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedVitaminaC
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedVitaminaC ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedVitaminaC ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Ácidos grasos % */}
+            {isAcidosGrasos && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleAcidosGrasosSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedAcidosGrasos
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedAcidosGrasos ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedAcidosGrasos ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Vitamina K1 */}
+            {isVitaminaK1 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVitaminaK1Selection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedVitaminaK1
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedVitaminaK1 ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedVitaminaK1 ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para IL-6 */}
+            {isIL6 && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleIL6Selection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedIL6
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedIL6 ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedIL6 ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para TNF-α */}
+            {isTNFα && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleTNFαSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedTNFα
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedTNFα ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedTNFα ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Helicobacter pylori IgG An */}
+            {isHelicobacter && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleHelicobacterSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedHelicobacter
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedHelicobacter ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedHelicobacter ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Estradiol en Hormonas */}
+            {isEstradiolHormonas && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleEstradiolHormonasSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedEstradiolHormonas
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedEstradiolHormonas ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedEstradiolHormonas ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Estradiol en Endocrino */}
+            {isEstradiolEndocrino && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleEstradiolEndocrinoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedEstradiolEndocrino
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedEstradiolEndocrino ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedEstradiolEndocrino ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Prolactina en Hormonas */}
+            {isProlactinaHormonas && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleProlactinaHormonasSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedProlactinaHormonas
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedProlactinaHormonas ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedProlactinaHormonas ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Prolactina en Endocrino */}
+            {isProlactinaEndocrino && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleProlactinaEndocrinoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedProlactinaEndocrino
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedProlactinaEndocrino ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedProlactinaEndocrino ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para LH en Hormonas */}
+            {isLHHormonas && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleLHHormonasSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedLHHormonas
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedLHHormonas ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedLHHormonas ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para LH en Endocrino */}
+            {isLHEndocrino && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleLHEndocrinoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedLHEndocrino
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedLHEndocrino ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedLHEndocrino ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para FSH en Hormonas */}
+            {isFSHHormonas && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFSHHormonasSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedFSHHormonas
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedFSHHormonas ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedFSHHormonas ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para FSH en Endocrino */}
+            {isFSHEndocrino && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFSHEndocrinoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedFSHEndocrino
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedFSHEndocrino ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedFSHEndocrino ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para FSH en Cancer */}
+            {isFSHCancer && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFSHCancerSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedFSHCancer
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedFSHCancer ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedFSHCancer ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Vitamina C en Estrés Oxidativo Celular */}
+            {isVitaminaCOxidativeCell && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVitaminaCOxidativeCellSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedVitaminaCOxidativeCell
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedVitaminaCOxidativeCell ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedVitaminaCOxidativeCell ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Vitamina C en IV & Nutrientes */}
+            {isVitaminaCIVNutrients && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVitaminaCIVNutrientsSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedVitaminaCIVNutrients
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedVitaminaCIVNutrients ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedVitaminaCIVNutrients ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Urianálisis + sedimento en Digestivo */}
+            {isUrinalisisDigestivo && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleUrinalisisDigestivoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedUrinalisisDigestivo
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedUrinalisisDigestivo ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedUrinalisisDigestivo ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Ova & Parasites stool en Digestivo */}
+            {isOvaParasitesDigestivo && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleOvaParasitesDigestivoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedOvaParasitesDigestivo
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedOvaParasitesDigestivo ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedOvaParasitesDigestivo ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para VSG en Endocrino */}
+            {isVSGEndocrino && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVSGEndocrinoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedVSGEndocrino
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedVSGEndocrino ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedVSGEndocrino ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Vitamina D 1,25-OH en Endocrino */}
+            {isVitaminaD125OHEndocrino && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleVitaminaD125OHEndocrinoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedVitaminaD125OHEndocrino
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedVitaminaD125OHEndocrino ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedVitaminaD125OHEndocrino ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+
             
             <div className="flex-1">
-              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && !selectedIntolerancia) || (isMetaboloma && !selectedMetaboloma) || (isGenomNutricion && !selectedGenomNutricion) || (isGenomFarmaco && !selectedGenomFarmaco) || (isGenomSuplem && !selectedGenomSuplem) || (isLpA && !selectedLpA) || (isFullGenome && !selectedFullGenome) ? 'text-earth' : 'text-stone'}`}>
+              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && selectedIntolerancia) || (isMetaboloma && selectedMetaboloma) || (isMyPharma && selectedMyPharma) || (isMyDetox && selectedMyDetox) || (isMyDiet && selectedMyDiet) || (isMyAgeing && selectedMyAgeing) || (isMySport && selectedMySport) || (isMySuplements && selectedMySuplements) || (isLpA && selectedLpA) || (isLongitudTelomerica && selectedLongitudTelomerica) || (isVitaminaC && selectedVitaminaC) || (isAcidosGrasos && selectedAcidosGrasos) || (isVitaminaK1 && selectedVitaminaK1) || (isIL6 && selectedIL6) || (isTNFα && selectedTNFα) || (isHelicobacter && selectedHelicobacter) || (isEstradiolHormonas && selectedEstradiolHormonas) || (isProlactinaHormonas && selectedProlactinaHormonas) || (isLHHormonas && selectedLHHormonas) || (isFSHHormonas && selectedFSHHormonas) || (isEstradiolEndocrino && selectedEstradiolEndocrino) || (isProlactinaEndocrino && selectedProlactinaEndocrino) || (isLHEndocrino && selectedLHEndocrino) || (isFSHEndocrino && selectedFSHEndocrino) || (isVSGEndocrino && selectedVSGEndocrino) || (isVitaminaD125OHEndocrino && selectedVitaminaD125OHEndocrino) || (isFSHCancer && selectedFSHCancer) || (isVitaminaCOxidativeCell && selectedVitaminaCOxidativeCell) || (isVitaminaCIVNutrients && selectedVitaminaCIVNutrients) || (isUrinalisisDigestivo && selectedUrinalisisDigestivo) || (isOvaParasitesDigestivo && selectedOvaParasitesDigestivo) ? 'text-earth' : 'text-stone'}`}>
                 {biomarker.name}
               </h5>
               <p className="text-xs text-taupe">{biomarker.category}</p>
@@ -432,14 +1262,16 @@ const MedicalSystemsExplorer = () => {
                     <div className="flex items-center gap-6">
                       <div className="flex flex-col">
                         <div className="text-2xl font-bold text-earth">
-                          {typeof essentialPackage.price === 'object' 
-                            ? `${essentialPackage.price[selectedGender]}€` 
-                            : `${essentialPackage.price}€`}
+                          {(() => {
+                            const essentialPricing = essentialPackage.getPricing(selectedGender);
+                            return `${essentialPricing.price}€`;
+                          })()}
                         </div>
                         <div className="text-sm text-gray-500">
-                          PVP: {typeof essentialPackage.pvpPrice === 'object' 
-                            ? `${Math.round(essentialPackage.pvpPrice[selectedGender])}€` 
-                            : `${Math.round(essentialPackage.pvpPrice)}€`}
+                          PVP: {(() => {
+                            const essentialPricing = essentialPackage.getPricing(selectedGender);
+                            return `${essentialPricing.costPrice}€`;
+                          })()}
                         </div>
                       </div>
                       <div className="text-taupe">
@@ -491,7 +1323,7 @@ const MedicalSystemsExplorer = () => {
                       </h4>
                                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
                         {essentialPackage.biomarkers.map((biomarker, index) => (
-                          <BiomarkerCard key={biomarker.code} biomarker={biomarker} index={index} />
+                          <BiomarkerCard key={biomarker.code} biomarker={biomarker} index={index} addOnId="essential" />
                         ))}
                        </div>
                     </div>
@@ -558,53 +1390,56 @@ const MedicalSystemsExplorer = () => {
                     <div className="flex flex-col">
                       <div className="text-2xl font-bold text-earth">
                         {(() => {
-                          const basePrice = typeof addOn.price === 'object' ? addOn.price[selectedGender] : addOn.price;
-                          let finalPrice = basePrice;
-                          if (addOn.id === 'digest' && selectedIntolerancia) {
-                            finalPrice = basePrice + 160;
-                          } else if (addOn.id === 'gut_gate' && selectedMetaboloma) {
-                            finalPrice = basePrice + 360;
-                          } else if (addOn.id === 'genome') {
-                            let genomExtra = 0;
-                            // Full Genome (GWAs) - seleccionado por defecto
-                            if (selectedFullGenome) genomExtra += 389;
-                            // Análisis individuales
-                            if (selectedGenomNutricion) genomExtra += 50;
-                            if (selectedGenomFarmaco) genomExtra += 50;
-                            if (selectedGenomSuplem) genomExtra += 50;
-                            finalPrice = basePrice + genomExtra;
-                          } else if (addOn.id === 'cardiovascular' && selectedLpA) {
-                            finalPrice = basePrice + 10;
+                          // Obtener precios dinámicos del add-on
+                          const addOnPricing = addOn.getPricing();
+                          
+                          let basePrice = 0;
+                          if (addOnPricing.male && addOnPricing.female) {
+                            // Add-on con diferenciación por género
+                            basePrice = addOnPricing[selectedGender].price;
+                          } else {
+                            // Add-on sin diferenciación por género
+                            basePrice = addOnPricing.price;
                           }
-                          return `${finalPrice}€`;
+                          
+                          // Usar el contexto para aplicar ajustes dinámicos
+                          const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, 0);
+                          return `${Math.round(adjustedPrices.price)}€`;
                         })()}
                       </div>
                       <div className="text-sm text-gray-500">
                         PVP: {(() => {
-                          const basePvp = typeof addOn.pvpPrice === 'object' ? addOn.pvpPrice[selectedGender] : addOn.pvpPrice;
-                          let finalPvp = basePvp;
-                          if (addOn.id === 'digest' && selectedIntolerancia) {
-                            finalPvp = basePvp + 180.69;
-                          } else if (addOn.id === 'gut_gate' && selectedMetaboloma) {
-                            finalPvp = basePvp + 399;
-                          } else if (addOn.id === 'genome') {
-                            let genomExtraPvp = 0;
-                            // Full Genome (GWAs) - seleccionado por defecto  
-                            if (selectedFullGenome) genomExtraPvp += 399;
-                            // Análisis individuales
-                            if (selectedGenomNutricion) genomExtraPvp += 83.33;
-                            if (selectedGenomFarmaco) genomExtraPvp += 83.33;
-                            if (selectedGenomSuplem) genomExtraPvp += 83.33;
-                            finalPvp = basePvp + genomExtraPvp;
-                          } else if (addOn.id === 'cardiovascular' && selectedLpA) {
-                            finalPvp = basePvp + 18.60;
+                          // Obtener precios dinámicos del add-on
+                          const addOnPricing = addOn.getPricing();
+                          
+                          let basePrice = 0;
+                          let basePvp = 0;
+                          if (addOnPricing.male && addOnPricing.female) {
+                            // Add-on con diferenciación por género
+                            basePrice = addOnPricing[selectedGender].price;
+                            basePvp = addOnPricing[selectedGender].marketPrice;
+                          } else {
+                            // Add-on sin diferenciación por género
+                            basePrice = addOnPricing.price;
+                            basePvp = addOnPricing.marketPrice;
                           }
-                          return `${Math.round(finalPvp)}€`;
+                          
+                          // Usar el contexto para aplicar ajustes dinámicos
+                          const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
+                          return `${Math.round(adjustedPrices.pvp)}€`;
                         })()}
                       </div>
                     </div>
                     <div className="text-taupe text-sm">
-                      {addOn.testCount} tests
+                      {(() => {
+                        // Obtener count dinámico del add-on
+                        const addOnPricing = addOn.getPricing();
+                        if (addOnPricing.male && addOnPricing.female) {
+                          return addOnPricing[selectedGender].testCount;
+                        } else {
+                          return addOnPricing.testCount;
+                        }
+                      })()} tests
                     </div>
                   </div>
 
@@ -651,7 +1486,7 @@ const MedicalSystemsExplorer = () => {
                           </h5>
                           <div className="space-y-2 max-h-60 overflow-y-auto">
                             {addOn.biomarkers.map((biomarker, idx) => (
-                              <BiomarkerCard key={biomarker.code} biomarker={biomarker} index={idx} />
+                              <BiomarkerCard key={biomarker.code} biomarker={biomarker} index={idx} addOnId={addOn.id} />
                             ))}
                           </div>
                         </div>

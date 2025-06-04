@@ -13,6 +13,9 @@ import CallToAction from './components/CallToAction';
 import { BiomarkerSelectionProvider } from './contexts/BiomarkerSelectionContext';
 import './styles/globals.css';
 
+// Importar exports para debugging (exporta paquetes a window)
+import './utils/debugExports';
+
 function App() {
   return (
     <BiomarkerSelectionProvider>

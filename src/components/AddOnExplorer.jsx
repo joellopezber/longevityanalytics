@@ -19,13 +19,18 @@ import {
   FaMinus,
   FaLeaf
 } from 'react-icons/fa';
-import { addOnPackages as addOns } from '../data/biomarkers';
+import { addOnPackages as addOns, getPackageTestCount } from '../data/biomarkers';
+import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 
 const AddOnExplorer = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [selectedAddOns, setSelectedAddOns] = useState([]);
   const [expandedAddOns, setExpandedAddOns] = useState([]);
   const [selectedBiomarkers, setSelectedBiomarkers] = useState({}); // {addOnKey: [biomarkerIndex, ...]}
+  const [selectedGender, setSelectedGender] = useState('male'); // Para precios dinámicos
+  
+  // Usar el contexto para obtener las selecciones adicionales
+  const { getAdjustedAddOnPrice } = useBiomarkerSelection();
 
   const addOnIcons = {
     hormonas: <FaDna />,
@@ -147,29 +152,63 @@ const AddOnExplorer = () => {
           </div>
         </motion.div>
 
-        {/* Filtros estilo Function Health */}
-        <div className="mb-12">
-          <div className="flex items-center gap-4 mb-6">
-            <FaFilter className="text-gray-500" />
-            <span className="font-medium text-gray-700">Filtrar por categoría</span>
-          </div>
-          
-          <div className="flex flex-wrap gap-3">
-            {filterOptions.map((filter) => (
+        {/* Controles: Filtros y Selector de Género */}
+        <div className="mb-12 space-y-6">
+          {/* Selector de Género para Precios Dinámicos */}
+          <div className="flex items-center justify-center gap-4">
+            <span className="font-medium text-gray-700">Precios para:</span>
+            <div className="flex gap-2 bg-gray-100 rounded-full p-1">
               <button
-                key={filter.id}
-                onClick={() => setSelectedFilter(filter.id)}
+                onClick={() => setSelectedGender('male')}
                 className={`
-                  px-4 py-2 rounded-full border-2 transition-all font-medium
-                  ${selectedFilter === filter.id
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:border-blue-300'
+                  px-4 py-2 rounded-full font-medium transition-all
+                  ${selectedGender === 'male'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-gray-600 hover:text-blue-600'
                   }
                 `}
               >
-                {filter.label} ({filter.count})
+                👨 Masculino
               </button>
-            ))}
+              <button
+                onClick={() => setSelectedGender('female')}
+                className={`
+                  px-4 py-2 rounded-full font-medium transition-all
+                  ${selectedGender === 'female'
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'text-gray-600 hover:text-blue-600'
+                  }
+                `}
+              >
+                👩 Femenino
+              </button>
+            </div>
+          </div>
+
+          {/* Filtros por categoría */}
+          <div>
+            <div className="flex items-center gap-4 mb-6">
+              <FaFilter className="text-gray-500" />
+              <span className="font-medium text-gray-700">Filtrar por categoría</span>
+            </div>
+            
+            <div className="flex flex-wrap gap-3 justify-center">
+              {filterOptions.map((filter) => (
+                <button
+                  key={filter.id}
+                  onClick={() => setSelectedFilter(filter.id)}
+                  className={`
+                    px-4 py-2 rounded-full border-2 transition-all font-medium
+                    ${selectedFilter === filter.id
+                      ? 'bg-blue-600 text-white border-blue-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-blue-300'
+                    }
+                  `}
+                >
+                  {filter.label} ({filter.count})
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -213,9 +252,6 @@ const AddOnExplorer = () => {
                       <h3 className="font-bold text-xl text-gray-900">
                         {addOn.name}
                       </h3>
-                      <span className="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">
-                        {addOn.testCount} biomarcadores
-                      </span>
                       {/* Botón de expansión para ver biomarcadores */}
                       <button
                         onClick={(e) => {
@@ -247,6 +283,50 @@ const AddOnExplorer = () => {
                     <p className="text-gray-600 mb-3 leading-relaxed">
                       {addOn.description}
                     </p>
+
+                    {/* Información de precio dinámico */}
+                    <div className="flex items-center gap-4 mb-3">
+                      {(() => {
+                        // Usar pricing directo del add-on (misma lógica que PackageComparison)
+                        const pricing = addOn.getPricing();
+                        
+                        // Obtener precio base según género
+                        let basePrice, basePvp;
+                        const testCount = getPackageTestCount(addOn, selectedGender);
+                        
+                        if (pricing[selectedGender]) {
+                          basePrice = pricing[selectedGender].price;
+                          basePvp = pricing[selectedGender].marketPrice;
+                        } else if (pricing.both) {
+                          basePrice = pricing.both.price;
+                          basePvp = pricing.both.marketPrice;
+                        } else {
+                          basePrice = pricing.price;
+                          basePvp = pricing.marketPrice;
+                        }
+                        
+                        // Aplicar ajustes del contexto (Full Genome, Metaboloma, etc.)
+                        const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
+                        
+                        return (
+                          <div className="flex items-center gap-4">
+                            <div className="flex flex-col">
+                              <span className="text-blue-600 font-bold text-lg">
+                                {Math.round(adjustedPrices.price)}€
+                              </span>
+                              <span className="text-gray-500 text-xs">
+                                PVP: {Math.round(adjustedPrices.pvp)}€
+                              </span>
+                            </div>
+                            <div className="bg-blue-50 px-3 py-1 rounded-full">
+                              <span className="text-blue-700 text-sm font-medium">
+                                {testCount} biomarcadores
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </div>
                     
                     {/* Tests en línea horizontal - solo si no está expandido */}
                     {!expandedAddOns.includes(key) && (
@@ -434,7 +514,7 @@ const AddOnExplorer = () => {
                       key={key}
                       className="px-4 py-2 bg-blue-600 text-white rounded-full font-medium"
                     >
-                      {addOns[key].name} ({addOns[key].testCount} tests)
+                      {addOns[key].name} ({getPackageTestCount(addOns[key], selectedGender)} tests)
                     </span>
                   ))}
                 </div>
@@ -472,7 +552,7 @@ const AddOnExplorer = () => {
             <p className="text-gray-600 mb-6">
               Total de biomarcadores adicionales: {' '}
               <span className="font-bold text-blue-600">
-                {selectedAddOns.reduce((total, key) => total + addOns[key].testCount, 0) + 
+                {selectedAddOns.reduce((total, key) => total + getPackageTestCount(addOns[key], selectedGender), 0) + 
                  Object.values(selectedBiomarkers).reduce((total, indices) => total + indices.length, 0)}
               </span>
             </p>
