@@ -9,8 +9,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown, FaChevronUp, FaCheck, FaPlus, FaMinus } from 'react-icons/fa';
 import { getEssentialPackageForGender, getAddOnPackagesForGender } from '../data/biomarkers';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const MedicalSystemsExplorer = () => {
+  const { t } = useLanguage(); // Hook para traducciones
   const [selectedGender, setSelectedGender] = useState('male'); // Género por defecto
   const [expandedBiomarkers, setExpandedBiomarkers] = useState([]); // Ningún biomarcador expandido por defecto
   
@@ -83,12 +85,27 @@ const MedicalSystemsExplorer = () => {
     selectedOvaParasitesDigestivo,
     setSelectedOvaParasitesDigestivo,
 
-    getAdjustedAddOnPrice
+    getAdjustedAddOnPrice,
+    getActualBiomarkerCount
   } = useBiomarkerSelection();
 
   // Obtener datos filtrados por género
   const essentialPackage = getEssentialPackageForGender(selectedGender);
   const addOnPackages = getAddOnPackagesForGender(selectedGender);
+
+  // Función para obtener las características traducidas del Essential
+  const getEssentialFeatures = () => {
+    return [
+      t('packageComparison.glucidMetabolism'),
+      t('packageComparison.renalHepaticFunction'),
+      t('packageComparison.advancedLipidProfile'),
+      t('packageComparison.basicHormones'),
+      t('packageComparison.completeThyroid'),
+      t('packageComparison.essentialMinerals'),
+      t('packageComparison.inflammatoryMarkers'),
+      t('packageComparison.biologicalAgeCalculation')
+    ];
+  };
 
   const toggleBiomarker = (biomarkerId) => {
     setExpandedBiomarkers(prev => 
@@ -966,7 +983,7 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Vitamina C en Estrés Oxidativo Celular */}
+            {/* Selector específico para Vitamina C en Estrés Oxidativo */}
             {isVitaminaCOxidativeCell && (
               <button
                 onClick={(e) => {
@@ -1114,9 +1131,9 @@ const MedicalSystemsExplorer = () => {
             
             <div className="flex-1">
               <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && selectedIntolerancia) || (isMetaboloma && selectedMetaboloma) || (isMyPharma && selectedMyPharma) || (isMyDetox && selectedMyDetox) || (isMyDiet && selectedMyDiet) || (isMyAgeing && selectedMyAgeing) || (isMySport && selectedMySport) || (isMySuplements && selectedMySuplements) || (isLpA && selectedLpA) || (isLongitudTelomerica && selectedLongitudTelomerica) || (isAcidosGrasos && selectedAcidosGrasos) || (isVitaminaK1 && selectedVitaminaK1) || (isIL6 && selectedIL6) || (isTNFα && selectedTNFα) || (isHelicobacter && selectedHelicobacter) || (isEstradiolHormonas && selectedEstradiolHormonas) || (isProlactinaHormonas && selectedProlactinaHormonas) || (isLHHormonas && selectedLHHormonas) || (isFSHHormonas && selectedFSHHormonas) || (isEstradiolEndocrino && selectedEstradiolEndocrino) || (isProlactinaEndocrino && selectedProlactinaEndocrino) || (isLHEndocrino && selectedLHEndocrino) || (isFSHEndocrino && selectedFSHEndocrino) || (isVSGEndocrino && selectedVSGEndocrino) || (isVitaminaD125OHEndocrino && selectedVitaminaD125OHEndocrino) || (isFSHCancer && selectedFSHCancer) || (isVitaminaCOxidativeCell && selectedVitaminaCOxidativeCell) || (isVitaminaCIVNutrients && selectedVitaminaCIVNutrients) || (isUrinalisisDigestivo && selectedUrinalisisDigestivo) || (isOvaParasitesDigestivo && selectedOvaParasitesDigestivo) ? 'text-earth' : 'text-stone'}`}>
-                {biomarker.name}
+                {t(`biomarkerNames.${biomarker.code}`, biomarker.name)}
               </h5>
-              <p className="text-xs text-taupe">{biomarker.category}</p>
+              <p className="text-xs text-taupe">{t(`biomarkerCategories.${biomarker.category}`, biomarker.category)}</p>
             </div>
           </div>
           
@@ -1146,7 +1163,7 @@ const MedicalSystemsExplorer = () => {
               <div className="px-4 pb-3 bg-earth-50 border-t border-earth">
                 <div className="p-3 mt-2">
                   <p className="text-xs text-stone leading-relaxed italic">
-                    {biomarker.description}
+                    {t(`biomarkers.${biomarker.code}.description`, biomarker.description)}
                   </p>
                 </div>
               </div>
@@ -1169,10 +1186,10 @@ const MedicalSystemsExplorer = () => {
         >
           <div className="bg-warm-white rounded-2xl p-8 shadow-xl border-2 border-earth">
             <h2 className="text-3xl lg:text-4xl font-bold text-stone mb-4">
-              Essential <span className="gradient-text-earth">Análisis</span>
+              {t('systems.title')} <span className="gradient-text-earth">{t('systems.titleHighlight')}</span>
             </h2>
             <p className="text-lg text-taupe max-w-3xl mx-auto font-medium leading-relaxed">
-              El <span className="font-bold text-earth">Essential</span> proporciona la información que forma el eje central de tu salud, y la adición de <span className="font-bold text-warm">Add-Ons especializados</span> según tus objetivos específicos te permite personalizar y adaptar tu analítica.
+              {t('systems.description')}
             </p>
           </div>
         </motion.div>
@@ -1228,7 +1245,7 @@ const MedicalSystemsExplorer = () => {
                       </div>
                     </div>
                     <p className="text-taupe text-base mb-4 max-w-2xl">
-                      {essentialPackage.description}
+                      {t('systems.essentialDescription')}
                     </p>
                     <div className="flex items-center gap-6">
                       <div className="flex flex-col">
@@ -1239,14 +1256,14 @@ const MedicalSystemsExplorer = () => {
                           })()}
                         </div>
                         <div className="text-sm text-gray-500">
-                          PVP: {(() => {
+                          {t('systems.pvp')}: {(() => {
                             const essentialPricing = essentialPackage.getPricing(selectedGender);
                             return `${essentialPricing.costPrice}€`;
                           })()}
                         </div>
                       </div>
                       <div className="text-taupe">
-                        <span className="font-semibold text-sm">{essentialPackage.testCount} biomarcadores</span>
+                        <span className="font-semibold text-sm">{essentialPackage.testCount} {t('systems.biomarkers')}</span>
                       </div>
                     </div>
                   </div>
@@ -1257,7 +1274,7 @@ const MedicalSystemsExplorer = () => {
                   onClick={() => toggleBiomarker('essential')}
                   className="biomarkers-button-position flex items-center gap-2 bg-warm-white text-earth px-6 py-3 rounded-full font-semibold border-2 border-earth hover:bg-earth-50 hover:border-warm transition-all shadow-md text-sm"
                 >
-                  Ver Biomarcadores
+                  {t('systems.viewBiomarkers')}
                   {expandedBiomarkers.includes('essential') ? (
                     <FaChevronUp className="text-sm" />
                   ) : (
@@ -1268,7 +1285,7 @@ const MedicalSystemsExplorer = () => {
 
               {/* Features Grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 ml-22">
-                {essentialPackage.features.map((feature, index) => (
+                {getEssentialFeatures().map((feature, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <FaCheck className="text-earth text-sm" />
                     <span className="text-taupe text-sm">{feature}</span>
@@ -1290,7 +1307,7 @@ const MedicalSystemsExplorer = () => {
                   <div className="p-6 bg-earth-50">
                     <div className="bg-warm-white rounded-xl p-6 border-2 border-earth shadow-lg">
                       <h4 className="text-lg font-bold text-stone mb-6 flex items-center gap-2 text-center justify-center">
-                        🧬 Biomarcadores Incluidos en Essential ({essentialPackage.testCount} tests)
+                        {t('systems.biomarkersIncludedEssential')} ({essentialPackage.testCount} {t('systems.tests')})
                       </h4>
                                              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
                         {essentialPackage.biomarkers.map((biomarker, index) => (
@@ -1309,13 +1326,13 @@ const MedicalSystemsExplorer = () => {
         <div className="mb-16">
           <div className="bg-warm-white rounded-xl p-6 shadow-lg border-2 border-warm mb-8">
             <h3 className="text-2xl font-bold text-stone mb-3 text-center">
-              Add-Ons <span className="gradient-text-earth">Especializados</span>
+              {t('systems.addOnsSpecialized')}
             </h3>
             <p className="text-base text-taupe text-center max-w-2xl mx-auto">
-              <span className="font-semibold text-earth">Complementa tu Essential</span> con estos módulos especializados. Cada Add-On se suma a los 46 biomarcadores base para una evaluación más profunda.
+              <span className="font-semibold text-earth">{t('systems.complementEssential')}</span> {t('systems.withSpecializedModules')}
             </p>
             <p className="text-sm text-gray-600 text-center italic mt-8 max-w-2xl mx-auto">
-              <em>* Los precios de las pruebas genéticas pueden estar sujetos a modificaciones.</em>
+              <em>* {t('systems.geneticPricesDisclaimer')}</em>
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-8">
@@ -1336,7 +1353,7 @@ const MedicalSystemsExplorer = () => {
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-1">
                         <h4 className="text-xl font-bold text-stone">
-                          {addOn.name}
+                          {t(`addOns.${addOn.id}.name`)}
                         </h4>
                         {hasGenderDifferences(addOn.id) && (
                           <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-warm-white border border-earth">
@@ -1347,7 +1364,7 @@ const MedicalSystemsExplorer = () => {
                         )}
                       </div>
                       <p className="text-taupe text-sm">
-                        {addOn.description}
+                        {t(`addOns.${addOn.id}.description`)}
                       </p>
                       {hasGenderDifferences(addOn.id) && (
                         <div className="mt-2">
@@ -1379,7 +1396,7 @@ const MedicalSystemsExplorer = () => {
                         })()}
                       </div>
                       <div className="text-sm text-gray-500">
-                        PVP: {(() => {
+                        {t('systems.pvp')}: {(() => {
                           // Obtener precios dinámicos del add-on
                           const addOnPricing = addOn.getPricing();
                           
@@ -1402,21 +1419,13 @@ const MedicalSystemsExplorer = () => {
                       </div>
                     </div>
                     <div className="text-taupe text-sm">
-                      {(() => {
-                        // Obtener count dinámico del add-on
-                        const addOnPricing = addOn.getPricing();
-                        if (addOnPricing.male && addOnPricing.female) {
-                          return addOnPricing[selectedGender].testCount;
-                        } else {
-                          return addOnPricing.testCount;
-                        }
-                      })()} tests
+                      {getActualBiomarkerCount(addOn.id, selectedGender)} {t('systems.tests')}
                     </div>
                   </div>
 
                   {/* Benefits */}
                   <div className="space-y-2" style={{marginLeft: '32px'}}>
-                    {addOn.benefits.map((benefit, idx) => (
+                    {t(`addOnBenefits.${addOn.id}`).map((benefit, idx) => (
                       <div key={idx} className="flex items-center gap-2">
                         <FaCheck className={`${addOn.textColor} text-xs`} />
                         <span className="text-taupe text-sm">{benefit}</span>
@@ -1432,7 +1441,7 @@ const MedicalSystemsExplorer = () => {
                       onClick={() => toggleBiomarker(addOn.id)}
                       className="flex items-center justify-between w-full py-3 px-4 rounded-lg border-2 border-cream hover:bg-earth-50 hover:border-earth transition-all font-medium"
                     >
-                      <span className="text-stone font-semibold text-sm">Ver Biomarcadores</span>
+                                              <span className="text-stone font-semibold text-sm">{t('systems.viewBiomarkers')}</span>
                       {expandedBiomarkers.includes(addOn.id) ? (
                         <FaChevronUp className="text-taupe text-sm" />
                       ) : (
@@ -1453,7 +1462,7 @@ const MedicalSystemsExplorer = () => {
                       >
                         <div className="bg-earth-50 rounded-lg p-4 border-2 border-cream">
                           <h5 className="text-base font-bold text-stone mb-4 flex items-center gap-2 justify-center">
-                            🔬 Biomarcadores de {addOn.name} ({addOn.testCount} tests)
+                            {t('systems.biomarkersOf')} {t(`addOns.${addOn.id}.name`)} ({getActualBiomarkerCount(addOn.id, selectedGender)} {t('systems.tests')})
                           </h5>
                           <div className="space-y-2 max-h-60 overflow-y-auto">
                             {addOn.biomarkers.map((biomarker, idx) => (
@@ -1478,12 +1487,9 @@ const MedicalSystemsExplorer = () => {
           className="text-center"
         >
           <div className="gradient-earth rounded-2xl p-8 text-white shadow-xl border-2 border-warm">
-            <h3 className="text-2xl font-bold mb-4 text-center">
-              ¿Listo para optimizar tu <span className="text-cream">organismo</span>?
+            <h3 className="text-2xl font-bold mb-4 text-center" dangerouslySetInnerHTML={{ __html: t('systems.ctaTitle') }}>
             </h3>
-            <p className="text-white text-opacity-90 mb-6 max-w-2xl mx-auto text-base text-center leading-relaxed">
-              Comienza con el <span className="font-bold text-cream">Essential</span> y añade los <span className="font-bold text-cream">Add-Ons</span> que necesites. 
-              Obtén recomendaciones personalizadas de suplementación, nutrición y estilo de vida.
+            <p className="text-white text-opacity-90 mb-6 max-w-2xl mx-auto text-base text-center leading-relaxed" dangerouslySetInnerHTML={{ __html: t('systems.ctaDescription') }}>
             </p>
           </div>
         </motion.div>

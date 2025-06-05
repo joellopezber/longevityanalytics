@@ -53,7 +53,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
   const [selectedFSHCancer, setSelectedFSHCancer] = useState(true); // Por defecto seleccionado
   
   // Estados específicos para biomarcadores con múltiples contextos
-  const [selectedVitaminaCOxidativeCell, setSelectedVitaminaCOxidativeCell] = useState(true); // Estrés Oxidativo Celular
+  const [selectedVitaminaCOxidativeCell, setSelectedVitaminaCOxidativeCell] = useState(true); // Estrés Oxidativo
   const [selectedVitaminaCIVNutrients, setSelectedVitaminaCIVNutrients] = useState(true); // IV & Nutrientes
   
   // Estados específicos para digestivo
@@ -123,7 +123,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
       bioAgeExtra = { price, pvp };
     }
 
-    // Estrés Oxidativo Celular - Vitamina C específica
+    // Estrés Oxidativo - Vitamina C específica
     if (selectedVitaminaCOxidativeCell) {
       const price = getPriceByCode('T1061', 'prevenii');
       const pvp = getPriceByCode('T1061', 'market');
@@ -309,15 +309,118 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     }
   };
 
-  // Función para obtener resumen de selecciones
+  // Función para calcular número real de biomarcadores seleccionados por add-on
+  const getActualBiomarkerCount = (addOnId, gender = 'both') => {
+    switch (addOnId) {
+      case 'hormonas':
+        const hormonasBase = gender === 'male' ? 7 : 8; // Biomarcadores base por género
+        let hormonasOptional = 0;
+        if (selectedEstradiolHormonas) hormonasOptional++;
+        if (selectedProlactinaHormonas) hormonasOptional++;
+        if (selectedLHHormonas) hormonasOptional++;
+        if (selectedFSHHormonas) hormonasOptional++;
+        return hormonasBase + hormonasOptional;
+
+      case 'endocrino':
+        const endocrinoBase = 7; // Biomarcadores obligatorios
+        let endocrinoOptional = 0;
+        if (selectedEstradiolEndocrino) endocrinoOptional++;
+        if (selectedProlactinaEndocrino) endocrinoOptional++;
+        if (selectedLHEndocrino) endocrinoOptional++;
+        if (selectedFSHEndocrino) endocrinoOptional++;
+        if (selectedVSGEndocrino) endocrinoOptional++; // Solo suma si está seleccionado
+        if (selectedVitaminaD125OHEndocrino) endocrinoOptional++;
+        return endocrinoBase + endocrinoOptional;
+
+      case 'oxidative_cell':
+        const oxidativeCellBase = 4; // Biomarcadores obligatorios
+        let oxidativeCellOptional = 0;
+        if (selectedVitaminaCOxidativeCell) oxidativeCellOptional++;
+        return oxidativeCellBase + oxidativeCellOptional;
+
+      case 'iv_nutrients':
+        const ivNutrientsBase = 5; // Biomarcadores obligatorios
+        let ivNutrientsOptional = 0;
+        if (selectedAcidosGrasos) ivNutrientsOptional++;
+        if (selectedVitaminaK1) ivNutrientsOptional++;
+        if (selectedVitaminaCIVNutrients) ivNutrientsOptional++;
+        return ivNutrientsBase + ivNutrientsOptional;
+
+      case 'cardiovascular':
+        const cardiovascularBase = 8; // Biomarcadores obligatorios
+        let cardiovascularOptional = 0;
+        if (selectedLpA) cardiovascularOptional++;
+        if (selectedIL6) cardiovascularOptional++;
+        if (selectedTNFα) cardiovascularOptional++;
+        return cardiovascularBase + cardiovascularOptional;
+
+      case 'immunity':
+        const immunityBase = 5; // Biomarcadores obligatorios
+        let immunityOptional = 0;
+        if (selectedHelicobacter) immunityOptional++;
+        return immunityBase + immunityOptional;
+
+      case 'digest':
+        const digestBase = 5; // Biomarcadores obligatorios
+        let digestOptional = 0;
+        if (selectedUrinalisisDigestivo) digestOptional++;
+        if (selectedOvaParasitesDigestivo) digestOptional++;
+        if (selectedIntolerancia) digestOptional++;
+        return digestBase + digestOptional;
+
+      case 'gut_gate':
+        const gutGateBase = 1; // Microbioma obligatorio
+        let gutGateOptional = 0;
+        if (selectedMetaboloma) gutGateOptional++;
+        return gutGateBase + gutGateOptional;
+
+      case 'genome':
+        let genomeCount = 0; // Todos los biomarcadores son opcionales
+        if (selectedMyPharma) genomeCount++;
+        if (selectedMyDetox) genomeCount++;
+        if (selectedMyDiet) genomeCount++;
+        if (selectedMyAgeing) genomeCount++;
+        if (selectedMySport) genomeCount++;
+        if (selectedMySuplements) genomeCount++;
+        return genomeCount;
+
+      case 'bioage':
+        const bioAgeBase = gender === 'male' ? 2 : 2; // MyEpiAgeing + (Espermiograma/AMH)
+        let bioAgeOptional = 0;
+        if (selectedLongitudTelomerica) bioAgeOptional++;
+        return bioAgeBase + bioAgeOptional;
+
+      case 'cancer':
+        // Cancer tiene biomarcadores específicos por género
+        return gender === 'male' ? 17 : 16; // Números fijos sin opcionales por ahora
+
+      default:
+        // Para add-ons sin biomarcadores opcionales, usar el conteo estático
+        const { addOnPackages } = require('../data/biomarkers');
+        const addOn = addOnPackages[addOnId];
+        if (addOn && addOn.biomarkers) {
+          return addOn.biomarkers.filter(b => 
+            (b.gender === 'both' || b.gender === gender) && !b.isOptional
+          ).length;
+        }
+        return 0;
+    }
+  };
+
+  // Función para obtener resumen de selecciones ADICIONALES (solo las que el usuario añadió manualmente)
   const getSelectionSummary = () => {
     const selected = [];
+    
+    // SOLO incluir biomarcadores que están por defecto en FALSE y el usuario los seleccionó
+    // O biomarcadores que están por defecto en TRUE pero el usuario los añadió específicamente
+    
+    // Tests opcionales que están por defecto NO seleccionados
     if (selectedIntolerancia) selected.push('Intolerancia Alimentaria 200');
     if (selectedMetaboloma) selected.push('Metaboloma (orina/heces)');
     if (selectedMyPharma) selected.push('MyPharma');
     if (selectedMyDetox) selected.push('MyDetox');
     if (selectedMyDiet) selected.push('MyDiet');
-    if (selectedMyAgeing) selected.push('MyAgeing');
+    // NO incluir MyAgeing porque está por defecto seleccionado
     if (selectedMySport) selected.push('MySport');
     if (selectedMySuplements) selected.push('MySuplements');
     if (selectedLpA) selected.push('Lp(a) *');
@@ -325,29 +428,21 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     if (selectedTNFα) selected.push('TNF-α');
     if (selectedLongitudTelomerica) selected.push('Longitud telomérica');
 
+    // IV & Nutrientes - solo los NO seleccionados por defecto
     if (selectedAcidosGrasos) selected.push('Ácidos grasos %');
-    if (selectedVitaminaK1) selected.push('Vitamina K1');
-    if (selectedHelicobacter) selected.push('Helicobacter pylori IgG An');
-    // Hormonas específicas
-    if (selectedEstradiolHormonas) selected.push('Estradiol (Hormonas)');
-    if (selectedProlactinaHormonas) selected.push('Prolactina (Hormonas)');
-    if (selectedLHHormonas) selected.push('LH (Hormonas)');
-    if (selectedFSHHormonas) selected.push('FSH (Hormonas)');
-    // Endocrino específicas
-    if (selectedEstradiolEndocrino) selected.push('Estradiol (Endocrino)');
-    if (selectedProlactinaEndocrino) selected.push('Prolactina (Endocrino)');
-    if (selectedLHEndocrino) selected.push('LH (Endocrino)');
-    if (selectedFSHEndocrino) selected.push('FSH (Endocrino)');
-    if (selectedVSGEndocrino) selected.push('VSG (Endocrino)');
-    if (selectedVitaminaD125OHEndocrino) selected.push('Vitamina D 1,25-OH (Endocrino)');
-    // Cancer específicas
-    if (selectedFSHCancer) selected.push('FSH (Cancer)');
-    // Vitamina C específicas
-    if (selectedVitaminaCOxidativeCell) selected.push('Vitamina C (Estrés Oxidativo)');
-    if (selectedVitaminaCIVNutrients) selected.push('Vitamina C (IV & Nutrientes)');
-    // Digestivo específicas
-    if (selectedUrinalisisDigestivo) selected.push('Urianálisis + sedimento (Digestivo)');
-    if (selectedOvaParasitesDigestivo) selected.push('Ova & Parasites stool (Digestivo)');
+    // NO incluir VitaminaK1 porque está por defecto seleccionada
+    // NO incluir VitaminaCIVNutrients porque está por defecto seleccionada
+    
+    // NO incluir Helicobacter porque está por defecto seleccionado
+    
+    // NO incluir hormonas específicas porque están por defecto seleccionadas
+    // NO incluir endocrino específicas porque están por defecto seleccionadas (excepto VSG)
+    if (selectedVSGEndocrino) selected.push('VSG (Endocrino)'); // Esta SÍ porque está por defecto NO seleccionada
+    
+    // NO incluir Cancer específicas porque están por defecto seleccionadas
+    // NO incluir Vitamina C específicas porque están por defecto seleccionadas
+    // NO incluir digestivo específicas porque están por defecto seleccionadas
+    
     return selected;
   };
 
@@ -425,7 +520,8 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     // Funciones
     calculateAdditionalPrices,
     getAdjustedAddOnPrice,
-    getSelectionSummary
+    getSelectionSummary,
+    getActualBiomarkerCount
   };
 
   return (

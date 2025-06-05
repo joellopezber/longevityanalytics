@@ -23,7 +23,7 @@ Características:
 ADD-ONS ESPECIALIZADOS
 =====================
 
-HORMONAS AVANZADAS
+HORMONAS
 ------------------
 Precio: 109€ (hombres), 119€ (mujeres)
 
@@ -65,7 +65,7 @@ Beneficios:
 • Reduce estrés oxidativo
 
 
-ESTRÉS OXIDATIVO CELULAR
+ESTRÉS OXIDATIVO
 ------------------------
 Precio: 199€
 
@@ -135,7 +135,7 @@ Beneficios:
 • Metabolismo mineral
 
 
-CARDIOVASCULAR AVANZADO
+CARDIOVASCULAR 
 -----------------------
 Precio: 189€
 

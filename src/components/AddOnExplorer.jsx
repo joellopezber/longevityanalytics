@@ -21,6 +21,7 @@ import {
 } from 'react-icons/fa';
 import { addOnPackages as addOns, getPackageTestCount } from '../data/biomarkers';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const AddOnExplorer = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
@@ -29,8 +30,11 @@ const AddOnExplorer = () => {
   const [selectedBiomarkers, setSelectedBiomarkers] = useState({}); // {addOnKey: [biomarkerIndex, ...]}
   const [selectedGender, setSelectedGender] = useState('male'); // Para precios dinámicos
   
+  // Hook para traducciones
+  const { t } = useLanguage();
+  
   // Usar el contexto para obtener las selecciones adicionales
-  const { getAdjustedAddOnPrice } = useBiomarkerSelection();
+  const { getAdjustedAddOnPrice, getActualBiomarkerCount } = useBiomarkerSelection();
 
   const addOnIcons = {
     hormonas: <FaDna />,
@@ -53,10 +57,10 @@ const AddOnExplorer = () => {
   };
 
   const filterOptions = [
-    { id: 'all', label: 'Todos los Add-Ons', count: 6 },
-    { id: 'longevity', label: 'Longevity / Healthspan', count: 4 },
-    { id: 'prevention', label: 'Prevención', count: 3 },
-    { id: 'optimization', label: 'Optimización', count: 3 }
+    { id: 'all', label: t('addOnExplorer.allAddOns'), count: 6 },
+    { id: 'longevity', label: t('addOnExplorer.longevityHealthspan'), count: 4 },
+    { id: 'prevention', label: t('addOnExplorer.prevention'), count: 3 },
+    { id: 'optimization', label: t('addOnExplorer.optimization'), count: 3 }
   ];
 
   const toggleAddOn = (addOnKey) => {
@@ -123,29 +127,28 @@ const AddOnExplorer = () => {
           className="text-center mb-16"
         >
           <h2 className="text-5xl font-bold text-gray-900 mb-6">
-            Los <span className="gradient-text">Add-Ons</span> del Essential
+            {t('addOnExplorer.title')} <span className="gradient-text">{t('addOnExplorer.titleHighlight')}</span> {t('addOnExplorer.titleSuffix')}
           </h2>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-6">
-            Amplía tu análisis Essential con módulos especializados. Cada add-on aporta insights únicos 
-            para optimizar aspectos específicos de tu longevity, siguiendo el modelo de Function Health.
+            {t('addOnExplorer.description')}
           </p>
           
           {/* Instrucciones de uso */}
           <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 max-w-4xl mx-auto">
             <h3 className="font-bold text-blue-900 mb-3 text-lg">
-              🎯 Nueva Funcionalidad: Selección Personalizada
+              🎯 {t('addOnExplorer.newFunctionality')}
             </h3>
             <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-800">
               <div className="flex items-start gap-2">
                 <span className="font-bold">✅</span>
                 <div>
-                  <strong>Add-on Completo:</strong> Click en la card del add-on para seleccionar todos los biomarcadores
+                  <strong>{t('addOnExplorer.completeAddOn')}</strong> {t('addOnExplorer.completeAddOnDesc')}
                 </div>
               </div>
               <div className="flex items-start gap-2">
                 <span className="font-bold">🔍</span>
                 <div>
-                  <strong>Biomarcadores Individuales:</strong> Click en el botón <FaPlus className="inline mx-1" /> para expandir y seleccionar solo los que necesites
+                  <strong>{t('addOnExplorer.individualBiomarkers')}</strong> {t('addOnExplorer.individualBiomarkersDesc')}
                 </div>
               </div>
             </div>
@@ -156,7 +159,7 @@ const AddOnExplorer = () => {
         <div className="mb-12 space-y-6">
           {/* Selector de Género para Precios Dinámicos */}
           <div className="flex items-center justify-center gap-4">
-            <span className="font-medium text-gray-700">Precios para:</span>
+            <span className="font-medium text-gray-700">{t('addOnExplorer.pricesFor')}</span>
             <div className="flex gap-2 bg-gray-100 rounded-full p-1">
               <button
                 onClick={() => setSelectedGender('male')}
@@ -168,7 +171,7 @@ const AddOnExplorer = () => {
                   }
                 `}
               >
-                👨 Masculino
+                👨 {t('addOnExplorer.masculine')}
               </button>
               <button
                 onClick={() => setSelectedGender('female')}
@@ -180,7 +183,7 @@ const AddOnExplorer = () => {
                   }
                 `}
               >
-                👩 Femenino
+                👩 {t('addOnExplorer.feminine')}
               </button>
             </div>
           </div>
@@ -189,7 +192,7 @@ const AddOnExplorer = () => {
           <div>
             <div className="flex items-center gap-4 mb-6">
               <FaFilter className="text-gray-500" />
-              <span className="font-medium text-gray-700">Filtrar por categoría</span>
+              <span className="font-medium text-gray-700">{t('addOnExplorer.filterByCategory')}</span>
             </div>
             
             <div className="flex flex-wrap gap-3 justify-center">
@@ -281,7 +284,7 @@ const AddOnExplorer = () => {
                       </button>
                     </div>
                     <p className="text-gray-600 mb-3 leading-relaxed">
-                      {addOn.description}
+                      {t(`addOns.${addOn.id}.description`)}
                     </p>
 
                     {/* Información de precio dinámico */}
@@ -292,7 +295,7 @@ const AddOnExplorer = () => {
                         
                         // Obtener precio base según género
                         let basePrice, basePvp;
-                        const testCount = getPackageTestCount(addOn, selectedGender);
+                        const testCount = getActualBiomarkerCount(addOn.id, selectedGender);
                         
                         if (pricing[selectedGender]) {
                           basePrice = pricing[selectedGender].price;
@@ -514,7 +517,7 @@ const AddOnExplorer = () => {
                       key={key}
                       className="px-4 py-2 bg-blue-600 text-white rounded-full font-medium"
                     >
-                      {addOns[key].name} ({getPackageTestCount(addOns[key], selectedGender)} tests)
+                      {addOns[key].name} ({getActualBiomarkerCount(key, selectedGender)} tests)
                     </span>
                   ))}
                 </div>
@@ -552,7 +555,7 @@ const AddOnExplorer = () => {
             <p className="text-gray-600 mb-6">
               Total de biomarcadores adicionales: {' '}
               <span className="font-bold text-blue-600">
-                {selectedAddOns.reduce((total, key) => total + getPackageTestCount(addOns[key], selectedGender), 0) + 
+                {selectedAddOns.reduce((total, key) => total + getActualBiomarkerCount(key, selectedGender), 0) + 
                  Object.values(selectedBiomarkers).reduce((total, indices) => total + indices.length, 0)}
               </span>
             </p>

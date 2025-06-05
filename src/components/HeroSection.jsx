@@ -6,9 +6,12 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../contexts/LanguageContext';
 import { FaArrowRight, FaCheckCircle, FaPills, FaUtensils, FaRunning, FaSyringe, FaFlask, FaChartLine, FaUsers, FaRocket } from 'react-icons/fa';
 
 const HeroSection = () => {
+  const { t } = useLanguage();
+  
   const scrollToSystems = () => {
     document.getElementById('systems')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -29,17 +32,17 @@ const HeroSection = () => {
               <span className="text-white text-xl font-bold">LA</span>
             </div>
             <span className="text-3xl font-bold gradient-text-earth">Longevity Analytics</span>
-            <p className="text-sm text-taupe italic mt-2">Precision Data for Optimization.</p>
+            <p className="text-sm text-taupe italic mt-2">{t('hero.tagline')}</p>
           </div>
 
           {/* Frase principal - SEGUNDO */}
           <h1 className="text-3xl lg:text-4xl font-bold text-stone mb-6 leading-tight max-w-4xl mx-auto">
-            Sin datos no hay acción, obten los tuyos!
+            {t('hero.title')}
           </h1>
 
           {/* Descripción - TERCERO */}
           <p className="text-lg text-taupe max-w-3xl mx-auto mb-8 leading-relaxed">
-            Mide 130 biomarcadores y 7 análisis especializados, convirtiendo la ciencia de los datos en un plan de prevención, longevidad y optimización integral.
+            {t('hero.description')}
           </p>
 
           <div className="flex justify-center mb-8">
@@ -47,7 +50,7 @@ const HeroSection = () => {
               onClick={scrollToSystems}
               className="inline-flex items-center bg-earth text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-stone transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              Explorar Análisis
+              {t('hero.exploreButton')}
             </button>
           </div>
         </motion.div>
@@ -62,7 +65,7 @@ const HeroSection = () => {
           className="gradient-earth rounded-2xl p-6 text-center text-white"
         >
           <h2 className="text-2xl font-bold mb-6">
-            Más allá del diagnóstico: <span className="text-cream">Recomendaciones accionables</span>
+            {t('hero.beyondDiagnosis')} <span className="text-cream">{t('hero.actionableRecommendations')}</span>
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-7xl mx-auto">
@@ -70,9 +73,9 @@ const HeroSection = () => {
               <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white border-opacity-30">
                 <FaPills className="text-lg text-white" />
               </div>
-              <div className="font-bold text-cream mb-2 text-base">Suplementación</div>
+              <div className="font-bold text-cream mb-2 text-base">{t('hero.supplementation')}</div>
               <div className="text-white text-opacity-90 text-xs leading-relaxed">
-                Identificamos posibles déficits y formulamos protocolos con nutracéuticos de alta biodisponibilidad. Ajustamos las dosis tras cada revisión analítica para mantenerte en rango óptimo.
+                {t('hero.supplementationDesc')}
               </div>
             </div>
             
@@ -80,9 +83,9 @@ const HeroSection = () => {
               <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white border-opacity-30">
                 <FaUtensils className="text-lg text-white" />
               </div>
-              <div className="font-bold text-cream mb-2 text-base">Nutrición</div>
+              <div className="font-bold text-cream mb-2 text-base">{t('hero.nutrition')}</div>
               <div className="text-white text-opacity-90 text-xs leading-relaxed">
-                Te mostramos los nutrientes que necesitas y cómo estructurar tu alimantacion, te proporcionamos la informacion y las herramientas para diseñar tu propio plan.
+                {t('hero.nutritionDesc')}
               </div>
             </div>
             
@@ -90,9 +93,9 @@ const HeroSection = () => {
               <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white border-opacity-30">
                 <FaRunning className="text-lg text-white" />
               </div>
-              <div className="font-bold text-cream mb-2 text-base">Estilo de vida</div>
+              <div className="font-bold text-cream mb-2 text-base">{t('hero.lifestyle')}</div>
               <div className="text-white text-opacity-90 text-xs leading-relaxed">
-                Proporcionamos recomendaciones para ajustar tu rutina y hábitos de vida para la mejora de tu sueño y adaptación del ejercicio y controlar el estrés basado en tus biomarcadores. 
+                {t('hero.lifestyleDesc')}
               </div>
             </div>
             
@@ -100,9 +103,9 @@ const HeroSection = () => {
               <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white border-opacity-30">
                 <FaSyringe className="text-lg text-white" />
               </div>
-              <div className="font-bold text-cream mb-2 text-base">Terapias avanzadas</div>
+              <div className="font-bold text-cream mb-2 text-base">{t('hero.monitoring')}</div>
               <div className="text-white text-opacity-90 text-xs leading-relaxed">
-                Cuando procede, incorporamos intervenciones (p. ej. infusión IV, fotobiomodulación, terapia hormonal) bajo seguimiento analítico para maximizar eficacia y seguridad.
+                {t('hero.monitoringDesc')}
               </div>
             </div>
           </div>

@@ -1,0 +1,40 @@
+{
+  "title": "Proceso",
+  "subtitle": "Integral",
+  "description": "Descubre tu edad biológica real y añade años de vida saludable en solo 5 pasos: análisis científico de biomarcadores + plan personalizado de longevidad + interpretación de resultados y plan de acción. Tu futuro más saludable comienza hoy.",
+  "step1": {
+    "title": "Configura",
+    "description": "Selecciona tu paquete Essential personalizado y añade los módulos especializados (Add-Ons) que mejor se adapten a tus objetivos de salud y longevidad",
+    "duration": "5 min"
+  },
+  "step2": {
+    "title": "Extracción",
+    "description": "Acude a cualquiera de nuestros más de 50 puntos de extracción distribuidos por toda España. Proceso rápido y cómodo con profesionales especializados",
+    "duration": "20 min"
+  },
+  "step3": {
+    "title": "Análisis",
+    "description": "Tus muestras se procesan en laboratorios certificados ISO 15189 con tecnología de vanguardia y los más altos estándares de calidad internacional",
+    "duration": "5-7 días *"
+  },
+  "step4": {
+    "title": "Resultados",
+    "description": "Recibe tu informe completo con análisis detallado de biomarcadores, cálculo de edad biológica y recomendaciones específicas personalizadas",
+    "duration": "1 día"
+  },
+  "step5": {
+    "title": "Consulta",
+    "description": "Sesión personalizada con nuestro Health Coach para interpretar resultados y diseñar tu plan de acción específico de longevidad",
+    "duration": "45 min"
+  },
+  "timeNote": "* Los tiempos pueden variar según los Add-Ons seleccionados",
+  "guarantees": "Nuestras Garantías",
+  "certifiedQuality": "Calidad Certificada",
+  "certifiedQualityDesc": "Laboratorios ISO 15189 y procesos validados internacionalmente",
+  "extractionNetwork": "Red de Extracción",
+  "extractionNetworkDesc": "Más de 50 puntos de extracción para máxima comodidad y accesibilidad",
+  "healthCoach": "Health Coach",
+  "healthCoachDesc": "Consulta personalizada para interpretar resultados y diseñar tu plan específico.",
+  "gdprCompliance": "Cumplimiento GDPR",
+  "gdprComplianceDesc": "Protección total de datos personales según normativa europea GDPR"
+} 

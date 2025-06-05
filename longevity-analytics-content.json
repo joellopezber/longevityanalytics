@@ -164,7 +164,7 @@
     },
     "addOns": {
       "hormonas": {
-        "name": "Hormonas Avanzadas",
+        "name": "Hormonas",
         "description": "Analiza el perfil hormonal completo (testosterona, estrógenos, progesterona, gonadotropinas) para optimizar vitalidad, libido, masa muscular y equilibrio hormonal. Esencial para terapias de reemplazo hormonal y anti-aging.",
         "price": {
           "male": "109",
@@ -200,7 +200,7 @@
         ]
       },
       "oxidative_cell": {
-        "name": "Estrés Oxidativo Celular",
+        "name": "Estrés Oxidativo",
         "description": "Analiza selenio y marcadores específicos de daño oxidativo celular para evaluar el envejecimiento a nivel molecular. Optimiza protección celular y previene daño oxidativo acumulativo.",
         "price": "199",
         "benefits": [
@@ -255,7 +255,7 @@
         ]
       },
       "cardiovascular": {
-        "name": "Cardiovascular Avanzado",
+        "name": "Cardiovascular",
         "description": "Analiza lipoproteínas aterogénicas (Lp(a), VLDL), marcadores de inflamación vascular y enzimas cardíacas para prevención cardiovascular avanzada. Reduce riesgo de infarto y optimiza salud cardíaca.",
         "price": "189",
         "benefits": [

@@ -39,15 +39,15 @@ console.log('');
 console.log('📦 ADD-ONS MIGRADOS:');
 console.log('--------------------');
 const addOns = [
-  'Hormonas Avanzadas',
+  'Hormonas',
   'Endocrino', 
   'Antioxidantes',
-  'Estrés Oxidativo Celular',
+  'Estrés Oxidativo',
   'Inflamación',
   'IV & Nutrientes',
   'Metales Pesados',
   'Hueso & Mineral',
-  'Cardiovascular Avanzado',
+  'Cardiovascular',
   'Inmunidad',
   'Digestivo',
   'Gut Gate',

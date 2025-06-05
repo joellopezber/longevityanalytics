@@ -21,7 +21,7 @@ El Essential Analysis examina los biomarcadores fundamentales para dibujar una i
 
 ## Add-Ons Especializados
 
-### Hormonas Avanzadas
+### Hormonas
 **Precio:** 109€ (hombres), 119€ (mujeres)
 
 Analiza el perfil hormonal completo (testosterona, estrógenos, progesterona, gonadotropinas) para optimizar vitalidad, libido, masa muscular y equilibrio hormonal. Esencial para terapias de reemplazo hormonal y anti-aging.
@@ -54,7 +54,7 @@ Mide vitaminas antioxidantes (A, C, E), coenzima Q10 y enzimas antioxidantes par
 - Optimiza suplementación
 - Reduce estrés oxidativo
 
-### Estrés Oxidativo Celular
+### Estrés Oxidativo
 **Precio:** 199€
 
 Analiza selenio y marcadores específicos de daño oxidativo celular para evaluar el envejecimiento a nivel molecular. Optimiza protección celular y previene daño oxidativo acumulativo.
@@ -109,7 +109,7 @@ Evalúa marcadores de formación y reabsorción ósea (ALP ósea, CTX), calcio i
 - Salud ósea a largo plazo
 - Metabolismo mineral
 
-### Cardiovascular Avanzado
+### Cardiovascular
 **Precio:** 189€
 
 Analiza lipoproteínas aterogénicas (Lp(a), VLDL), marcadores de inflamación vascular y enzimas cardíacas para prevención cardiovascular avanzada. Reduce riesgo de infarto y optimiza salud cardíaca.

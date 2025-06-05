@@ -5,13 +5,15 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../contexts/LanguageContext';
 import { FaMars, FaVenus } from 'react-icons/fa';
 
 const GenderSelector = ({ selectedGender, onGenderChange }) => {
+  const { t } = useLanguage();
   const genderOptions = [
     {
       value: 'male',
-      label: 'Hombre',
+      label: t('gender.male'),
       icon: <FaMars />,
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
@@ -20,7 +22,7 @@ const GenderSelector = ({ selectedGender, onGenderChange }) => {
     },
     {
       value: 'female',
-      label: 'Mujer',
+      label: t('gender.female'),
       icon: <FaVenus />,
       color: 'from-pink-500 to-pink-600',
       bgColor: 'bg-pink-50',

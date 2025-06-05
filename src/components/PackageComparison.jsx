@@ -14,10 +14,14 @@ import {
 import { calculatePackagePrice } from '../data/priceCalculator';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 import { getPriceByCode } from '../data/priceData.js';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const PackageComparison = () => {
   const [selectedGender, setSelectedGender] = useState('male');
   const [selectedAddOns, setSelectedAddOns] = useState([]); // Array de IDs de Add-Ons seleccionados
+
+  // Hook para traducciones
+  const { t } = useLanguage();
 
   // Usar el contexto para obtener las selecciones de biomarcadores
   const { 
@@ -35,7 +39,8 @@ const PackageComparison = () => {
     selectedLongitudTelomerica,
     selectedAcidosGrasos,
     selectedVitaminaK1,
-    getAdjustedAddOnPrice
+    getAdjustedAddOnPrice,
+    getActualBiomarkerCount
   } = useBiomarkerSelection();
 
   // Obtener datos filtrados por género
@@ -155,14 +160,14 @@ const PackageComparison = () => {
   // Generar lista de inclusiones dinámicas
   const getDynamicIncludes = () => {
     const baseIncludes = [
-      'Metabolismo glucídico completo',
-      'Función renal y hepática',
-      'Perfil lipídico avanzado',
-      'Hormonas básicas',
-      'Tiroides completo',
-      'Minerales esenciales',
-      'Marcadores inflamatorios',
-      'Cálculo de edad biológica'
+      t('packageComparison.glucidMetabolism'),
+      t('packageComparison.renalHepaticFunction'),
+      t('packageComparison.advancedLipidProfile'),
+      t('packageComparison.basicHormones'),
+      t('packageComparison.completeThyroid'),
+      t('packageComparison.essentialMinerals'),
+      t('packageComparison.inflammatoryMarkers'),
+      t('packageComparison.biologicalAgeCalculation')
     ];
 
     const addOnIncludes = selectedAddOns.map(addOnId => {
@@ -183,11 +188,10 @@ const PackageComparison = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-stone mb-4">
-            Configura tu <span className="gradient-text-earth">Análisis Personalizado</span>
+            {t('packageComparison.title')} <span className="gradient-text-earth">{t('packageComparison.titleHighlight')}</span>
           </h2>
           <p className="text-xl text-taupe max-w-3xl mx-auto">
-            Comienza con el Essential y añade los Add-Ons que necesites. 
-            Precio y biomarcadores se actualizan automáticamente.
+            {t('packageComparison.description')}
           </p>
         </motion.div>
 
@@ -205,7 +209,7 @@ const PackageComparison = () => {
               {/* Header del Essential */}
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-4 mb-6">
-                  <h3 className="text-3xl font-bold text-stone">Essential</h3>
+                  <h3 className="text-3xl font-bold text-stone">{t('packages.essential')}</h3>
                   
                   {/* Gender Selector */}
                   <div className="essential-gender-selector">
@@ -233,28 +237,33 @@ const PackageComparison = () => {
                 </div>
                 
                 <p className="text-lg text-taupe mb-6 leading-relaxed">
-                  {essentialPackage.description}
+                  {t('systems.essentialDescription')}
                 </p>
 
                 {/* Contador dinámico de biomarcadores */}
                 <div className="flex flex-col items-center justify-center gap-0 mb-6 px-6 py-3 rounded-full bg-earth-50 border-2 border-earth">
                   <span className="text-4xl font-bold text-stone leading-none">{totalBiomarkers}</span>
-                  <span className="text-lg text-taupe font-medium leading-none -mt-1">biomarcadores</span>
+                  <span className="text-lg text-taupe font-medium leading-none -mt-1">{t('systems.biomarkers')}</span>
                 </div>
 
                 {/* Precio dinámico */}
                 <div className="text-3xl font-bold mb-2 text-earth">{totalPrice}€</div>
                 <div className="text-sm text-gray-500 mb-2">
-                  PVP: {Math.round(totalPvpPrice)}€
+                  {t('systems.pvp')}: {Math.round(totalPvpPrice)}€
                 </div>
                 <div className="text-sm text-taupe mb-4">
-                  {selectedAddOns.length === 0 ? 'Precio base Essential' : `Essential + ${selectedAddOns.length} Add-On${selectedAddOns.length > 1 ? 's' : ''}`}
+                  {selectedAddOns.length === 0 
+                    ? t('packageComparison.basePriceEssential') 
+                    : t('packageComparison.essentialPlusAddOns')
+                        .replace('{count}', selectedAddOns.length)
+                        .replace('{plural}', selectedAddOns.length > 1 ? 's' : '')
+                  }
                 </div>
               </div>
 
               {/* Inclusiones dinámicas */}
               <div className="mb-8">
-                <h4 className="font-bold text-stone mb-6 text-lg">Incluye:</h4>
+                <h4 className="font-bold text-stone mb-6 text-lg">{t('packageComparison.includes')}</h4>
                 <div className="grid gap-3 max-h-80 overflow-y-auto">
                   {getDynamicIncludes().map((feature, idx) => (
                     <div key={idx} className={`
@@ -295,10 +304,9 @@ const PackageComparison = () => {
             <div className="p-8">
               {/* Header del Configurador */}
               <div className="text-center mb-8">
-                <h3 className="text-3xl font-bold text-stone mb-3">Add-Ons</h3>
+                <h3 className="text-3xl font-bold text-stone mb-3">{t('packages.addons')}</h3>
                 <p className="text-lg text-taupe mb-6 leading-relaxed">
-                  Selecciona los módulos especializados que necesites. 
-                  Cada Add-On se suma al Essential para una evaluación más profunda.
+                  {t('packageComparison.selectSpecializedModules')}
                 </p>
               </div>
 
@@ -306,7 +314,7 @@ const PackageComparison = () => {
               {getSelectionSummary().length > 0 && (
                 <div className="mb-6 p-4 bg-warm-50 border border-warm rounded-lg">
                   <h5 className="text-sm font-semibold text-warm mb-2 text-center">
-                    Biomarcadores adicionales seleccionados:
+                    {t('packageComparison.additionalBiomarkers')}
                   </h5>
                   <div className="space-y-1" style={{paddingLeft: '24px'}}>
                     <ul className="list-disc space-y-1">
@@ -324,7 +332,7 @@ const PackageComparison = () => {
               <div className="space-y-8 max-h-96 overflow-y-auto px-2">
                 {Object.values(addOnPackages).map((addOn, index) => {
                   const isSelected = selectedAddOns.includes(addOn.id);
-                  const testCount = getPackageTestCount(addOn, selectedGender);
+                  const testCount = getActualBiomarkerCount ? getActualBiomarkerCount(addOn.id, selectedGender) : getPackageTestCount(addOn, selectedGender);
                   
                   return (
                     <motion.div
@@ -362,7 +370,7 @@ const PackageComparison = () => {
                               </div>
                               <h4 className="font-bold text-stone text-sm">{addOn.name}</h4>
                             </div>
-                            <p className="text-xs text-taupe mb-2">{addOn.description}</p>
+                            <p className="text-xs text-taupe mb-2">{t(`addOns.${addOn.id}.description`)}</p>
                             <div className="flex items-center gap-4 text-xs">
                               {(() => {
                                 // Usar pricing directo del add-on
@@ -391,12 +399,12 @@ const PackageComparison = () => {
                                       {Math.round(adjustedPrices.price)}€
                                     </span>
                                     <span className="text-gray-500 text-xs">
-                                      PVP: {Math.round(adjustedPrices.pvp)}€
+                                      {t('systems.pvp')}: {Math.round(adjustedPrices.pvp)}€
                                     </span>
                                   </div>
                                 );
                               })()}
-                              <span className="text-taupe">{testCount} biomarcadores</span>
+                              <span className="text-taupe">{testCount} {t('systems.biomarkers')}</span>
                             </div>
                           </div>
                         </div>
@@ -418,7 +426,7 @@ const PackageComparison = () => {
         >
           <div className="bg-warm-white rounded-2xl shadow-lg p-8 max-w-6xl mx-auto border-2 border-earth">
             <h3 className="text-2xl font-bold text-stone mb-4">
-              Todos los Paquetes Incluyen
+              {t('packageComparison.allPackagesInclude')}
             </h3>
             
             <div className="grid md:grid-cols-4 gap-6">
@@ -426,9 +434,9 @@ const PackageComparison = () => {
                 <div className="w-12 h-12 bg-earth-100 text-earth rounded-full flex items-center justify-center mx-auto mb-3">
                   <FaCheck className="text-xl" />
                 </div>
-                <h4 className="font-semibold text-stone mb-2">Selección Personalizada</h4>
+                <h4 className="font-semibold text-stone mb-2">{t('hero.supplementation')}</h4>
                 <p className="text-taupe text-sm">
-                  Configuración adaptada a tus objetivos específicos de salud
+                  {t('hero.supplementationDesc')}
                 </p>
               </div>
               
@@ -436,9 +444,9 @@ const PackageComparison = () => {
                 <div className="w-12 h-12 bg-warm-100 text-warm rounded-full flex items-center justify-center mx-auto mb-3">
                   <FaChartBar className="text-xl" />
                 </div>
-                <h4 className="font-semibold text-stone mb-2">Análisis Especializado</h4>
+                <h4 className="font-semibold text-stone mb-2">{t('hero.nutrition')}</h4>
                 <p className="text-taupe text-sm">
-                  Interpretación enfocada en longevity y optimización
+                  {t('hero.nutritionDesc')}
                 </p>
               </div>
               
@@ -446,9 +454,9 @@ const PackageComparison = () => {
                 <div className="w-12 h-12 bg-sand rounded-full flex items-center justify-center mx-auto mb-3 text-white">
                   <FaChartBar className="text-xl" />
                 </div>
-                <h4 className="font-semibold text-stone mb-2">Recomendaciones Accionables</h4>
+                <h4 className="font-semibold text-stone mb-2">{t('hero.lifestyle')}</h4>
                 <p className="text-taupe text-sm">
-                  Protocolos específicos de suplementación y estilo de vida
+                  {t('hero.lifestyleDesc')}
                 </p>
               </div>
               
@@ -456,9 +464,9 @@ const PackageComparison = () => {
                 <div className="w-12 h-12 bg-earth-200 text-earth rounded-full flex items-center justify-center mx-auto mb-3">
                   <FaStar className="text-xl" />
                 </div>
-                <h4 className="font-semibold text-stone mb-2">Recomendaciones de Seguimiento</h4>
+                <h4 className="font-semibold text-stone mb-2">{t('hero.monitoring')}</h4>
                 <p className="text-taupe text-sm">
-                  Guías para monitoreo y próximos pasos en tu journey de longevity
+                  {t('hero.monitoringDesc')}
                 </p>
               </div>
             </div>

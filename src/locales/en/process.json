@@ -1,0 +1,40 @@
+{
+  "title": "Process",
+  "subtitle": "Comprehensive",
+  "description": "Discover your real biological age and add years of healthy life in just 5 steps: scientific biomarker analysis + personalized longevity plan + results interpretation and action plan. Your healthier future starts today.",
+  "step1": {
+    "title": "Configure",
+    "description": "Select your personalized Essential package and add specialized modules (Add-Ons) that best fit your health and longevity goals",
+    "duration": "5 min"
+  },
+  "step2": {
+    "title": "Extraction",
+    "description": "Visit any of our more than 50 extraction points distributed throughout Spain. Quick and comfortable process with specialized professionals",
+    "duration": "20 min"
+  },
+  "step3": {
+    "title": "Analysis",
+    "description": "Your samples are processed in ISO 15189 certified laboratories with cutting-edge technology and the highest international quality standards",
+    "duration": "5-7 days *"
+  },
+  "step4": {
+    "title": "Results",
+    "description": "Receive your complete report with detailed biomarker analysis, biological age calculation and personalized specific recommendations",
+    "duration": "1 day"
+  },
+  "step5": {
+    "title": "Consultation",
+    "description": "Personalized session with our Health Coach to interpret results and design your specific longevity action plan",
+    "duration": "45 min"
+  },
+  "timeNote": "* Times may vary depending on selected Add-Ons",
+  "guarantees": "Our Guarantees",
+  "certifiedQuality": "Certified Quality",
+  "certifiedQualityDesc": "ISO 15189 laboratories and internationally validated processes",
+  "extractionNetwork": "Extraction Network",
+  "extractionNetworkDesc": "More than 50 extraction points for maximum comfort and accessibility",
+  "healthCoach": "Health Coach",
+  "healthCoachDesc": "Personalized consultation to interpret results and design your specific plan.",
+  "gdprCompliance": "GDPR Compliance",
+  "gdprComplianceDesc": "Complete protection of personal data according to European GDPR regulations"
+} 

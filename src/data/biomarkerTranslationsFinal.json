@@ -1,0 +1,1216 @@
+{
+  "biomarkers": {
+    "spanish": {
+      "6897": {
+        "description": "Análisis completo de orina. Detecta infecciones, proteinuria, hematuria y células anormales."
+      },
+      "H0000": {
+        "description": "Análisis completo de células sanguíneas que evalúa glóbulos rojos, blancos, plaquetas y hemoglobina. Fundamental para detectar anemias, infecciones y trastornos hematológicos."
+      },
+      "H1420": {
+        "description": "Promedio de glucosa en sangre durante los últimos 2-3 meses. Marcador gold standard para diagnóstico y monitoreo de diabetes y prediabetes."
+      },
+      "B0000": {
+        "description": "Nivel de azúcar en sangre tras 8-12 horas de ayuno. Screening primario para diabetes y evaluación del metabolismo glucídico."
+      },
+      "B0200": {
+        "description": "Principal proteína del plasma sanguíneo. Indica función hepática, estado nutricional y capacidad de síntesis proteica."
+      },
+      "B5600": {
+        "description": "Nivel de insulina en ayunas. Marcador temprano de resistencia insulínica antes de que aparezcan alteraciones en la glucosa."
+      },
+      "B6510": {
+        "description": "Índice que evalúa resistencia insulínica combinando glucosa e insulina en ayunas. Predictor de diabetes tipo 2."
+      },
+      "B0020": {
+        "description": "Producto de desecho del metabolismo proteico. Evalúa función renal y estado de hidratación."
+      },
+      "B0030": {
+        "description": "Producto de desecho muscular. Marcador más específico de función renal que la urea."
+      },
+      "B0250": {
+        "description": "Producto final del metabolismo de purinas. Elevado indica riesgo de gota, cálculos renales y enfermedad cardiovascular."
+      },
+      "B1540": {
+        "description": "Tasa de filtración glomerular estimada. Mide la capacidad de filtrado de los riñones y detecta enfermedad renal temprana."
+      },
+      "B1260": {
+        "description": "Electrolitos esenciales para función celular. Sodio, potasio y cloro regulan hidratación, función nerviosa y muscular."
+      },
+      "B1970": {
+        "description": "Enzima presente en hígado y hueso. Elevada indica problemas hepáticos, óseos o obstrucción biliar."
+      },
+      "B0050": {
+        "description": "Enzima hepática específica. Elevada indica daño o inflamación del hígado. Marcador sensible de hepatotoxicidad."
+      },
+      "B0060": {
+        "description": "Enzima presente en hígado, corazón y músculo. Elevada indica daño celular en estos tejidos."
+      },
+      "B0080": {
+        "description": "Producto de degradación de glóbulos rojos. Elevada indica problemas hepáticos o hemólisis excesiva."
+      },
+      "B0240": {
+        "description": "Suma de todas las proteínas sanguíneas. Refleja estado nutricional y función hepática de síntesis proteica."
+      },
+      "B0070": {
+        "description": "Enzima hepática sensible al alcohol y medicamentos. Marcador de colestasis y daño hepático crónico."
+      },
+      "B0010": {
+        "description": "Suma de todas las fracciones de colesterol. Marcador básico de riesgo cardiovascular."
+      },
+      "B0040": {
+        "description": "Grasas en sangre. Elevados indican riesgo cardiovascular y resistencia insulínica."
+      },
+      "B0170": {
+        "description": "Colesterol 'bueno'. Transporta colesterol desde tejidos al hígado. Protector cardiovascular."
+      },
+      "B0180": {
+        "description": "Colesterol 'malo'. Transporta colesterol a tejidos. Elevado aumenta riesgo cardiovascular."
+      },
+      "B3110": {
+        "description": "Proteína de partículas aterogénicas (LDL, VLDL). Mejor predictor de riesgo cardiovascular que LDL-colesterol."
+      },
+      "B3100": {
+        "description": "Proteína principal del HDL. Facilita transporte reverso de colesterol. Protector cardiovascular."
+      },
+      "B5120": {
+        "description": "Hormona del estrés. Regula metabolismo, inmunidad e inflamación. Elevado indica estrés crónico."
+      },
+      "B5290": {
+        "description": "Precursor hormonal suprarrenal. Declina con edad. Importante para vitalidad y función cognitiva."
+      },
+      "B6020": {
+        "description": "Proteína transportadora de hormonas sexuales. Regula disponibilidad de testosterona y estradiol."
+      },
+      "B6160": {
+        "description": "Andrógeno importante en mujeres para libido, energía y masa muscular."
+      },
+      "B5850": {
+        "description": "Hormona paratiroidea. Regula calcio y fósforo. Elevada indica deficiencia de vitamina D o problemas óseos."
+      },
+      "B6040": {
+        "description": "Hormona tiroidea activa. Regula metabolismo, temperatura corporal y función cardiovascular."
+      },
+      "B6070": {
+        "description": "Hormona tiroidea precursora. Se convierte en T3 activa en tejidos periféricos."
+      },
+      "B6130": {
+        "description": "Hormona estimulante del tiroides. Controla la producción de hormonas tiroideas T3 y T4."
+      },
+      "B3170": {
+        "description": "Proteína C reactiva altamente sensible. Marcador de inflamación sistémica y riesgo cardiovascular."
+      },
+      "B5590": {
+        "description": "Aminoácido del metabolismo de metionina. Elevada indica riesgo cardiovascular y deficiencia de B6, B12, folato."
+      },
+      "B0120": {
+        "description": "Mineral esencial para huesos, dientes y energía celular. Trabaja junto con calcio y vitamina D."
+      },
+      "B0100": {
+        "description": "Mineral fundamental para huesos, contracción muscular, coagulación y función nerviosa."
+      },
+      "B1600": {
+        "description": "Mineral esencial para función muscular, nerviosa y cardiovascular. Cofactor de >300 enzimas."
+      },
+      "B8050": {
+        "description": "Oligoelemento esencial para inmunidad, cicatrización, función cognitiva y síntesis proteica."
+      },
+      "B0130": {
+        "description": "Mineral esencial para transporte de oxígeno, producción de energía y función cognitiva."
+      },
+      "B3210": {
+        "description": "Proteína transportadora de hierro. Refleja capacidad de transporte y estado nutricional del hierro."
+      },
+      "B7260": {
+        "description": "Porcentaje de saturación de transferrina. Indica disponibilidad de hierro para los tejidos."
+      },
+      "B5370": {
+        "description": "Proteína de almacenamiento de hierro. Refleja reservas corporales de hierro y puede indicar inflamación."
+      },
+      "B6180": {
+        "description": "Forma de almacenamiento de vitamina D. Esencial para huesos, inmunidad y función muscular."
+      },
+      "B6190": {
+        "description": "Esencial para formación de glóbulos rojos y función neurológica. Deficiencia causa anemia y neuropatía."
+      },
+      "B5410": {
+        "description": "Vitamina B9. Crucial para síntesis de ADN, formación de glóbulos rojos y desarrollo fetal."
+      },
+      "B5350": {
+        "description": "Principal estrógeno. Regula ciclo menstrual, salud ósea y cardiovascular en mujeres."
+      },
+      "B5980": {
+        "description": "Hormona de la lactancia. Elevada puede suprimir función reproductiva."
+      },
+      "B5800": {
+        "description": "Estimula ovulación en mujeres y producción de testosterona en hombres."
+      },
+      "B5380": {
+        "description": "Estimula desarrollo folicular y espermatogénesis. Marcador de reserva reproductiva."
+      },
+      "D0601": {
+        "description": "Fracción activa de testosterona no unida a proteínas. Más específica que testosterona total."
+      },
+      "B6480": {
+        "description": "Testosterona biodisponible. Fracción libre más débilmente unida. Mejor indicador de actividad androgénica."
+      },
+      "D0850": {
+        "description": "Dihidrotestosterona. Andrógeno más potente. Responsable de características masculinas y alopecia."
+      },
+      "B5932": {
+        "description": "Hormona del embarazo y ciclo menstrual. Importante para fertilidad y equilibrio hormonal."
+      },
+      "D0181": {
+        "description": "Precursor de cortisol y andrógenos. Elevada indica hiperplasia suprarrenal congénita."
+      },
+      "D0780": {
+        "description": "Estrógeno predominante en menopausia. Producido principalmente en tejido adiposo."
+      },
+      "B0260": {
+        "description": "Bilirrubina conjugada. Específica de función hepática y obstrucción biliar."
+      },
+      "B1980": {
+        "description": "Enzima pancreática que digiere grasas. Marcador específico de función pancreática exocrina."
+      },
+      "B0350": {
+        "description": "Enzima que digiere carbohidratos. Producida por páncreas y glándulas salivales."
+      },
+      "B0110": {
+        "description": "Lactato deshidrogenasa. Enzima de daño celular presente en corazón, hígado, músculos y glóbulos rojos."
+      },
+      "B6030": {
+        "description": "Factor de crecimiento insulínico. Mediador de hormona de crecimiento. Importante para longevity y masa muscular."
+      },
+      "B6010": {
+        "description": "Proteína transportadora de IGF-1. Modula actividad de IGF-1 y tiene efectos independientes en longevity."
+      },
+      "I6740": {
+        "description": "Hormona adrenocorticotrópica. Estimula producción de cortisol. Evalúa función del eje hipotálamo-hipófisis-suprarrenal."
+      },
+      "H0020": {
+        "description": "Velocidad de sedimentación globular. Marcador inespecífico de inflamación sistémica."
+      },
+      "D0560": {
+        "description": "Forma activa de vitamina D. Hormona que regula absorción de calcio y metabolismo óseo."
+      },
+      "T0811": {
+        "description": "Vitamina A activa. Antioxidante liposoluble esencial para visión, inmunidad y diferenciación celular."
+      },
+      "T2841": {
+        "description": "Forma gamma de vitamina E. Antioxidante específico contra radicales de nitrógeno y peroxinitrito."
+      },
+      "T1191": {
+        "description": "Forma alfa de vitamina E. Principal antioxidante liposoluble que protege membranas celulares."
+      },
+      "T1200": {
+        "description": "Principal precursor de vitamina A. Antioxidante carotenoide que protege contra daño oxidativo."
+      },
+      "T2830": {
+        "description": "Antioxidante mitocondrial esencial. Crucial para producción de energía y protección celular."
+      },
+      "T3920": {
+        "description": "Oligoelemento antioxidante esencial. Cofactor de glutatión peroxidasa. Protege contra estrés oxidativo."
+      },
+      "T1061": {
+        "description": "Vitamina antioxidante esencial. Neutraliza radicales libres y regenera otros antioxidantes como vitamina E."
+      },
+      "B7121": {
+        "description": "Enzima que regenera glutatión reducido. Indicador del estado de vitamina B2 y capacidad antioxidante."
+      },
+      "B3015": {
+        "description": "Enzima antioxidante selenio-dependiente. Protege células del daño oxidativo por peróxidos."
+      },
+      "B3041": {
+        "description": "Glucosa-6-fosfato deshidrogenasa. Enzima clave en defensa antioxidante celular vía NADPH."
+      },
+      "B7790": {
+        "description": "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento."
+      },
+      "I2081": {
+        "description": "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas."
+      },
+      "B0270": {
+        "description": "Concentración de partículas en sangre. Evalúa balance hídrico y función renal. Importante para terapias IV."
+      },
+      "B8060": {
+        "description": "Oligoelemento esencial para formación de colágeno, función inmune y metabolismo del hierro."
+      },
+      "T0500": {
+        "description": "Oligoelemento que mejora sensibilidad a insulina y metabolismo de glucosa. Importante en diabetes."
+      },
+      "T2590": {
+        "description": "Perfil de ácidos grasos omega-3. Evalúa estado nutricional y balance inflamatorio."
+      },
+      "T1720": {
+        "description": "Vitamina liposoluble esencial para coagulación. Cofactor de factores de coagulación."
+      },
+      "T0302": {
+        "description": "Mercurio en sangre. Metal tóxico que afecta sistema nervioso. Fuentes: pescado, amalgamas dentales."
+      },
+      "T0150": {
+        "description": "Plomo en sangre. Metal tóxico que afecta desarrollo neurológico y función cognitiva."
+      },
+      "T0960": {
+        "description": "Arsénico total en sangre. Metaloide tóxico asociado con cáncer y enfermedades cardiovasculares."
+      },
+      "T0480": {
+        "description": "Cadmio en sangre. Metal tóxico que afecta riñones, huesos y sistema cardiovascular."
+      },
+      "D1111": {
+        "description": "Fosfatasa alcalina específica de hueso. Marcador de formación ósea y actividad osteoblástica."
+      },
+      "I3291": {
+        "description": "C-telopéptido. Marcador de reabsorción ósea. Evalúa actividad osteoclástica y pérdida ósea."
+      },
+      "T1572": {
+        "description": "Fracción activa del calcio sérico. Forma biológicamente disponible para funciones celulares."
+      },
+      "B0750": {
+        "description": "Producto del metabolismo anaeróbico. Elevado indica hipoxia tisular o disfunción mitocondrial."
+      },
+      "B1900": {
+        "description": "LDL colesterol medido directamente. Más preciso que el calculado en casos de triglicéridos elevados."
+      },
+      "B0190": {
+        "description": "Lipoproteínas de muy baja densidad. Transportan triglicéridos. Elevadas aumentan riesgo cardiovascular."
+      },
+      "B7700": {
+        "description": "Lipoproteína aterogénica genéticamente determinada. Factor de riesgo cardiovascular independiente."
+      },
+      "I5047": {
+        "description": "Marcador de función renal más preciso que creatinina. No se ve afectado por masa muscular."
+      },
+      "B2120": {
+        "description": "Creatina quinasa específica del miocardio. Marcador de daño cardíaco e infarto."
+      },
+      "B0220": {
+        "description": "Creatina fosfoquinasa total. Enzima muscular que indica daño o estrés muscular."
+      },
+      "I0141": {
+        "description": "Anticuerpos antinucleares. Screening para enfermedades autoinmunes sistémicas como lupus."
+      },
+      "I5072": {
+        "description": "Anticuerpos anti-péptido citrulinado cíclico. Específicos de artritis reumatoide."
+      },
+      "B6321": {
+        "description": "Anticuerpos anti-tiroglobulina. Marcador de autoinmunidad tiroidea."
+      },
+      "B6300": {
+        "description": "Anticuerpos anti-peroxidasa tiroidea. Marcador de tiroiditis autoinmune (Hashimoto)."
+      },
+      "B7750": {
+        "description": "Anticuerpos contra H. pylori. Detecta infección gástrica asociada a úlceras y cáncer gástrico."
+      },
+      "B3130": {
+        "description": "Autoanticuerpo presente en artritis reumatoide y otras enfermedades autoinmunes."
+      },
+      "M1190": {
+        "description": "Examen parasitológico de heces. Detecta parásitos intestinales que afectan salud digestiva."
+      },
+      "P3031": {
+        "description": "Panel de 200 alimentos para detectar intolerancias alimentarias mediadas por IgG."
+      },
+      "AB001": {
+        "description": "Análisis completo de diversidad microbiana intestinal. Evalúa balance de bacterias beneficiosas y patógenas."
+      },
+      "AB002": {
+        "description": "Perfil de metabolitos en orina y heces. Evalúa vías metabólicas y funcionalidad del microbioma."
+      },
+      "GP001": {
+        "description": "Farmacogenómica general. Analiza variantes genéticas que afectan la respuesta a medicamentos para personalizar tratamientos y evitar efectos adversos."
+      },
+      "GD001": {
+        "description": "Análisis genético de detoxificación. Evalúa capacidad genética para eliminar toxinas y metabolizar xenobióticos."
+      },
+      "GN001": {
+        "description": "Análisis genético nutricional. Identifica variantes que afectan metabolismo de macronutrientes y micronutrientes."
+      },
+      "GA001": {
+        "description": "Análisis genético del envejecimiento. Evalúa predisposición genética al envejecimiento y longevidad."
+      },
+      "GS001": {
+        "description": "Análisis genético deportivo. Optimiza entrenamiento y rendimiento basado en perfil genético."
+      },
+      "GU001": {
+        "description": "Análisis genético de suplementación. Personaliza suplementos basado en necesidades genéticas individuales."
+      },
+      "H0050": {
+        "description": "Proteína de coagulación y marcador inflamatorio. Elevado indica riesgo trombótico e inflamación."
+      },
+      "H0850": {
+        "description": "Tiempo de tromboplastina parcial activada. Evalúa vía intrínseca de coagulación."
+      },
+      "H0860": {
+        "description": "Ratio internacional normalizado. Mide tiempo de protrombina. Monitorea anticoagulación."
+      },
+      "D1760": {
+        "description": "Gonadotropina coriónica humana beta. Marcador de embarazo y ciertos tumores testiculares y ováricos."
+      },
+      "M0010": {
+        "description": "Detección de sangre microscópica en heces. Screening para cáncer colorrectal y pólipos."
+      },
+      "B7900": {
+        "description": "Alfafetoproteína. Marcador de cáncer hepático y tumores de células germinales."
+      },
+      "B5830": {
+        "description": "Antígeno prostático específico total. Screening para cáncer de próstata e hiperplasia benigna."
+      },
+      "B5840": {
+        "description": "Fracción libre de PSA. Mejora especificidad para distinguir cáncer de hiperplasia benigna."
+      },
+      "B5110": {
+        "description": "Antígeno carcinoembrionario. Marcador de cánceres digestivos, especialmente colorrectal."
+      },
+      "B5080": {
+        "description": "Marcador tumoral de cáncer de ovario. También elevado en endometriosis y otras condiciones."
+      },
+      "B5090": {
+        "description": "Marcador tumoral de cáncer de mama. Útil para monitoreo de tratamiento y recurrencia."
+      },
+      "B5100": {
+        "description": "Marcador tumoral de cáncer pancreático y biliar. También elevado en pancreatitis."
+      },
+      "B8110": {
+        "description": "Marcador tumoral de cáncer de ovario más específico que CA125."
+      },
+      "B8130": {
+        "description": "Antígeno de células escamosas. Marcador de carcinomas escamosos de cérvix, pulmón y esófago."
+      },
+      "I5080": {
+        "description": "Proteína S-100. Marcador de melanoma y tumores del sistema nervioso."
+      },
+      "I5090": {
+        "description": "Enolasa neuroespecífica. Marcador de tumores neuroendocrinos y cáncer de pulmón de células pequeñas."
+      },
+      "B8120": {
+        "description": "Fragmento de citoqueratina 21-1. Marcador de cáncer de pulmón no microcítico."
+      },
+      "D1271": {
+        "description": "Marcador tumoral de cáncer gástrico y otros adenocarcinomas."
+      },
+      "B8160": {
+        "description": "Pro-péptido liberador de gastrina. Marcador específico de cáncer de pulmón microcítico."
+      },
+      "OG001": {
+        "description": "Test epigenético de edad biológica. Mide metilación del ADN para determinar edad biológica real."
+      },
+      "D1001": {
+        "description": "Hormona antimülleriana. Marcador de reserva ovárica y fertilidad femenina."
+      },
+      "B3340": {
+        "description": "Análisis completo del semen utilizado para medir la edad biológica masculina. Evalúa concentración, motilidad y morfología espermática como marcadores de envejecimiento reproductivo."
+      },
+      "G1465": {
+        "description": "Medición de la longitud de los telómeros. Biomarcador directo del envejecimiento celular y predictor de longevidad."
+      }
+    },
+    "english": {
+      "6897": {
+        "description": "Complete analysis de orina. Detecta infecciones, proteinuria, hematuria y células anormales."
+      },
+      "H0000": {
+        "description": "Complete analysis de blood cells que evalúa red blood cells, blancos, platelets y hemoglobin. Fundamental para detectar anemias, infecciones y trastornos hematológicos."
+      },
+      "H1420": {
+        "description": "Average blood glucose over the last 2-3 months. Gold standard marker for diabetes diagnosis and monitoring."
+      },
+      "B0000": {
+        "description": "Blood sugar level after 8-12 hours of fasting. Primary screening for diabetes and glucose metabolism assessment."
+      },
+      "B0200": {
+        "description": "Principal protein del plasma sanguíneo. Indica liver function, estado nutricional y capacidad de protein synthesis."
+      },
+      "B5600": {
+        "description": "Nivel de insulina en ayunas. marker temprano de insulin resistance antes de que aparezcan alteraciones en la glucosa."
+      },
+      "B6510": {
+        "description": "Índice que evalúa insulin resistance combinando glucosa e insulina en ayunas. Predictor de diabetes tipo 2."
+      },
+      "B0020": {
+        "description": "Producto de desecho del metabolism proteico. Evalúa kidney function y estado de hidratación."
+      },
+      "B0030": {
+        "description": "Producto de desecho muscular. marker más específico de kidney function que la urea."
+      },
+      "B0250": {
+        "description": "Producto final del metabolism de purinas. Elevated indicates riesgo de gota, cálculos renales y enfermedad cardiovascular."
+      },
+      "B1540": {
+        "description": "Tasa de filtración glomerular estimada. Mide la capacidad de filtrado de los riñones y detecta enfermedad renal temprana."
+      },
+      "B1260": {
+        "description": "Electrolitos esenciales para función celular. Sodio, potasio y cloro regulan hidratación, función nerviosa y muscular."
+      },
+      "B1970": {
+        "description": "enzyme presente en hígado y hueso. Elevada indica problemas hepáticos, óseos o obstrucción biliar."
+      },
+      "B0050": {
+        "description": "enzyme hepática específica. Elevada indica daño o inflamación del hígado. marker sensible de hepatotoxicidad."
+      },
+      "B0060": {
+        "description": "enzyme presente en hígado, corazón y músculo. Elevada indica daño celular en estos tejidos."
+      },
+      "B0080": {
+        "description": "Producto de degradación de red blood cells. Elevada indica problemas hepáticos o hemólisis excesiva."
+      },
+      "B0240": {
+        "description": "Suma de todas las proteins sanguíneas. Refleja estado nutricional y liver function de protein synthesis."
+      },
+      "B0070": {
+        "description": "enzyme hepática sensible al alcohol y medicamentos. marker de colestasis y daño hepático crónico."
+      },
+      "B0010": {
+        "description": "Suma de todas las fracciones de colesterol. marker básico de cardiovascular risk."
+      },
+      "B0040": {
+        "description": "Grasas en sangre. Elevados indican cardiovascular risk y insulin resistance."
+      },
+      "B0170": {
+        "description": "Colesterol 'bueno'. Transporta colesterol desde tejidos al hígado. Protector cardiovascular."
+      },
+      "B0180": {
+        "description": "Colesterol 'malo'. Transporta colesterol a tejidos. Elevado aumenta cardiovascular risk."
+      },
+      "B3110": {
+        "description": "protein de partículas aterogénicas (LDL, VLDL). Mejor predictor de cardiovascular risk que LDL-colesterol."
+      },
+      "B3100": {
+        "description": "protein principal del HDL. Facilita transporte reverso de colesterol. Protector cardiovascular."
+      },
+      "B5120": {
+        "description": "Stress hormone. Regulates metabolism, immunity and inflammation. Elevated indicates chronic stress."
+      },
+      "B5290": {
+        "description": "Precursor hormonel suprarrenal. Declina con edad. Important for vitalidad y función cognitiva."
+      },
+      "B6020": {
+        "description": "protein transportadora de hormones sexuales. Regula disponibilidad de testosterona y estradiol."
+      },
+      "B6160": {
+        "description": "Main male sex hormone, important in women. Regulates muscle mass, libido and energy."
+      },
+      "B5850": {
+        "description": "hormone paratiroidea. Regula calcio y fósforo. Elevada indica deficiencia de vitamin D o problemas óseos."
+      },
+      "B6040": {
+        "description": "hormone tiroidea activa. Regula metabolism, temperatura corporal y función cardiovascular."
+      },
+      "B6070": {
+        "description": "hormone tiroidea precursora. Se convierte en T3 activa en tejidos periféricos."
+      },
+      "B6130": {
+        "description": "hormone estimulante del tiroides. Controls producción de hormones tiroideas T3 y T4."
+      },
+      "B3170": {
+        "description": "High-sensitivity C-reactive protein. Marker of systemic inflammation and cardiovascular risk."
+      },
+      "B5590": {
+        "description": "Aminoácido del metabolism de metionina. Elevada indica cardiovascular risk y deficiencia de B6, B12, folato."
+      },
+      "B0120": {
+        "description": "mineral Essential for huesos, dientes y energía celular. Trabaja junto con calcio y vitamin D."
+      },
+      "B0100": {
+        "description": "mineral fundamental para huesos, contracción muscular, coagulación y función nerviosa."
+      },
+      "B1600": {
+        "description": "mineral Essential for función muscular, nerviosa y cardiovascular. Cofactor de >300 enzymes."
+      },
+      "B8050": {
+        "description": "trace element Essential for inmunidad, cicatrización, función cognitiva y protein synthesis."
+      },
+      "B0130": {
+        "description": "mineral Essential for oxygen transport, producción de energía y función cognitiva."
+      },
+      "B3210": {
+        "description": "protein transportadora de hierro. Refleja capacidad de transporte y estado nutricional del hierro."
+      },
+      "B7260": {
+        "description": "Porcentaje de saturación de transferrina. Indica disponibilidad de hierro para los tejidos."
+      },
+      "B5370": {
+        "description": "protein de almacenamiento de hierro. Refleja reservas corporales de hierro y puede indicar inflamación."
+      },
+      "B6180": {
+        "description": "Forma de almacenamiento de vitamin D. Essential for huesos, inmunidad y función muscular."
+      },
+      "B6190": {
+        "description": "Essential for formación de red blood cells y función neurológica. Deficiency causes anemia y neuropatía."
+      },
+      "B5410": {
+        "description": "vitamin B9. Crucial para síntesis de ADN, formación de red blood cells y desarrollo fetal."
+      },
+      "B5350": {
+        "description": "Principal estrógeno. Regula ciclo menstrual, salud ósea y cardiovascular en mujeres."
+      },
+      "B5980": {
+        "description": "hormone de la lactancia. Elevada puede suprimir función reproductiva."
+      },
+      "B5800": {
+        "description": "Estimula ovulación en mujeres y producción de testosterona en hombres."
+      },
+      "B5380": {
+        "description": "Estimula desarrollo folicular y espermatogénesis. marker de reserva reproductiva."
+      },
+      "D0601": {
+        "description": "Fracción activa de testosterona no unida a proteins. Más específica que testosterona total."
+      },
+      "B6480": {
+        "description": "Testosterona biodisponible. Fracción libre más débilmente unida. Mejor indicador de actividad androgénica."
+      },
+      "D0850": {
+        "description": "Dihidrotestosterona. Andrógeno más potente. Responsable de características masculinas y alopecia."
+      },
+      "B5932": {
+        "description": "hormone del embarazo y ciclo menstrual. Important for fertilidad y equilibrio hormonel."
+      },
+      "D0181": {
+        "description": "Precursor de cortisol y andrógenos. Elevada indica hiperplasia suprarrenal congénita."
+      },
+      "D0780": {
+        "description": "Estrógeno predominante en menopausia. Producido principalmente en tejido adiposo."
+      },
+      "B0260": {
+        "description": "Bilirrubina conjugada. Específica de liver function y obstrucción biliar."
+      },
+      "B1980": {
+        "description": "enzyme pancreática que digiere grasas. marker específico de función pancreática exocrina."
+      },
+      "B0350": {
+        "description": "enzyme que digiere carbohidratos. Producida por páncreas y glándulas salivales."
+      },
+      "B0110": {
+        "description": "Lactato deshidrogenasa. enzyme de daño celular presente en corazón, hígado, músculos y red blood cells."
+      },
+      "B6030": {
+        "description": "Factor de crecimiento insulínico. Mediador de hormone de crecimiento. Important for longevity y muscle mass."
+      },
+      "B6010": {
+        "description": "protein transportadora de IGF-1. Modula actividad de IGF-1 y tiene efectos independientes en longevity."
+      },
+      "I6740": {
+        "description": "hormone adrenocorticotrópica. Estimula producción de cortisol. Evalúa función del eje hipotálamo-hipófisis-suprarrenal."
+      },
+      "H0020": {
+        "description": "Velocidad de sedimentación globular. marker inespecífico de systemic inflammation."
+      },
+      "D0560": {
+        "description": "Forma activa de vitamin D. hormone que regula absorción de calcio y metabolism óseo."
+      },
+      "T0811": {
+        "description": "vitamin A activa. antioxidant liposoluble Essential for visión, inmunidad y diferenciación celular."
+      },
+      "T2841": {
+        "description": "Forma gamma de vitamin E. antioxidant específico contra radicales de nitrógeno y peroxinitrito."
+      },
+      "T1191": {
+        "description": "Forma alfa de vitamin E. Principal antioxidant liposoluble que protege membranas celulares."
+      },
+      "T1200": {
+        "description": "Principal precursor de vitamin A. antioxidant carotenoide que protege contra daño oxidativo."
+      },
+      "T2830": {
+        "description": "antioxidant mitocondrial esencial. Crucial para producción de energía y protección celular."
+      },
+      "T3920": {
+        "description": "trace element antioxidant esencial. Cofactor de glutatión peroxidasa. Protege contra oxidative stress."
+      },
+      "T1061": {
+        "description": "vitamin antioxidant esencial. Neutraliza radicales libres y regenera otros antioxidants como vitamin E."
+      },
+      "B7121": {
+        "description": "enzyme que regenera glutatión reducido. Indicador del estado de vitamin B2 y capacidad antioxidant."
+      },
+      "B3015": {
+        "description": "enzyme antioxidant selenio-dependiente. Protege células del daño oxidativo por peróxidos."
+      },
+      "B3041": {
+        "description": "Glucosa-6-fosfato deshidrogenasa. enzyme clave en defensa antioxidant celular vía NADPH."
+      },
+      "B7790": {
+        "description": "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento."
+      },
+      "I2081": {
+        "description": "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas."
+      },
+      "B0270": {
+        "description": "Concentración de partículas en sangre. Evalúa balance hídrico y kidney function. Important for terapias IV."
+      },
+      "B8060": {
+        "description": "trace element Essential for formación de colágeno, función inmune y metabolism del hierro."
+      },
+      "T0500": {
+        "description": "trace element que mejora sensibilidad a insulina y metabolism de glucosa. Importante en diabetes."
+      },
+      "T2590": {
+        "description": "Perfil de ácidos grasos omega-3. Evalúa estado nutricional y balance inflamatorio."
+      },
+      "T1720": {
+        "description": "vitamin liposoluble Essential for coagulación. Cofactor de factores de coagulación."
+      },
+      "T0302": {
+        "description": "Mercurio en sangre. Metal tóxico que afecta sistema nervioso. Fuentes: pescado, amalgamas dentales."
+      },
+      "T0150": {
+        "description": "Plomo en sangre. Metal tóxico que afecta desarrollo neurológico y función cognitiva."
+      },
+      "T0960": {
+        "description": "Arsénico total en sangre. Metaloide tóxico asociado con cáncer y enfermedades cardiovasculares."
+      },
+      "T0480": {
+        "description": "Cadmio en sangre. Metal tóxico que afecta riñones, huesos y sistema cardiovascular."
+      },
+      "D1111": {
+        "description": "Fosfatasa alcalina específica de hueso. marker de formación ósea y actividad osteoblástica."
+      },
+      "I3291": {
+        "description": "C-telopéptido. marker de reabsorción ósea. Evalúa actividad osteoclástica y pérdida ósea."
+      },
+      "T1572": {
+        "description": "Fracción activa del calcio sérico. Forma biológicamente disponible para funciones celulares."
+      },
+      "B0750": {
+        "description": "Producto del metabolism anaeróbico. Elevated indicates hipoxia tisular o disfunción mitocondrial."
+      },
+      "B1900": {
+        "description": "LDL colesterol medido directamente. Más preciso que el calculado en casos de triglicéridos elevados."
+      },
+      "B0190": {
+        "description": "Lipoproteins de muy baja densidad. Transportan triglicéridos. Elevadas aumentan cardiovascular risk."
+      },
+      "B7700": {
+        "description": "Lipoprotein aterogénica genéticamente determinada. Factor de cardiovascular risk independiente."
+      },
+      "I5047": {
+        "description": "marker de kidney function más preciso que creatinina. No se ve afectado por muscle mass."
+      },
+      "B2120": {
+        "description": "Creatina quinasa específica del miocardio. marker de daño cardíaco e infarto."
+      },
+      "B0220": {
+        "description": "Creatina fosfoquinasa total. enzyme muscular que indica daño o estrés muscular."
+      },
+      "I0141": {
+        "description": "Anticuerpos antinucleares. Screening para enfermedades autoinmunes sistémicas como lupus."
+      },
+      "I5072": {
+        "description": "Anticuerpos anti-péptido citrulinado cíclico. Específicos de artritis reumatoide."
+      },
+      "B6321": {
+        "description": "Anticuerpos anti-tiroglobulina. marker de autoinmunidad tiroidea."
+      },
+      "B6300": {
+        "description": "Anticuerpos anti-peroxidasa tiroidea. marker de tiroiditis autoinmune (Hashimoto)."
+      },
+      "B7750": {
+        "description": "Anticuerpos contra H. pylori. Detecta infección gástrica asociada a úlceras y cáncer gástrico."
+      },
+      "B3130": {
+        "description": "Autoanticuerpo presente en artritis reumatoide y otras enfermedades autoinmunes."
+      },
+      "M1190": {
+        "description": "Examen parasitológico de heces. Detecta parásitos intestinales que afectan salud digestiva."
+      },
+      "P3031": {
+        "description": "Panel de 200 alimentos para detectar intolerancias alimentarias mediadas por IgG."
+      },
+      "AB001": {
+        "description": "Complete analysis de diversidad microbiana intestinal. Evalúa balance de bacterias beneficiosas y patógenas."
+      },
+      "AB002": {
+        "description": "Perfil de metabolitos en orina y heces. Evalúa vías metabólicas y funcionalidad del microbioma."
+      },
+      "GP001": {
+        "description": "Farmacogenómica general. Analiza variantes genéticas que afectan la respuesta a medicamentos para personalizar tratamientos y evitar efectos adversos."
+      },
+      "GD001": {
+        "description": "Análisis genético de detoxificación. Evalúa capacidad genética para eliminar toxinas y metabolizar xenobióticos."
+      },
+      "GN001": {
+        "description": "Análisis genético nutricional. Identifica variantes que afectan metabolism de macronutrientes y micronutrientes."
+      },
+      "GA001": {
+        "description": "Análisis genético del envejecimiento. Evalúa predisposición genética al envejecimiento y longevidad."
+      },
+      "GS001": {
+        "description": "Análisis genético deportivo. Optimiza entrenamiento y rendimiento basado en perfil genético."
+      },
+      "GU001": {
+        "description": "Análisis genético de suplementación. Personaliza suplementos basado en necesidades genéticas individuales."
+      },
+      "H0050": {
+        "description": "protein de coagulación y marker inflamatorio. Elevated indicates riesgo trombótico e inflamación."
+      },
+      "H0850": {
+        "description": "Tiempo de tromboplastina parcial activada. Evalúa vía intrínseca de coagulación."
+      },
+      "H0860": {
+        "description": "Ratio internacional normalizado. Mide tiempo de protrombina. Monitorea anticoagulación."
+      },
+      "D1760": {
+        "description": "Gonadotropina coriónica humana beta. marker de embarazo y ciertos tumores testiculares y ováricos."
+      },
+      "M0010": {
+        "description": "Detección de sangre microscópica en heces. Screening para cáncer colorrectal y pólipos."
+      },
+      "B7900": {
+        "description": "Alfafetoprotein. marker de cáncer hepático y tumores de células germinales."
+      },
+      "B5830": {
+        "description": "Antígeno prostático específico total. Screening para cáncer de próstata e hiperplasia benigna."
+      },
+      "B5840": {
+        "description": "Fracción libre de PSA. Mejora especificidad para distinguir cáncer de hiperplasia benigna."
+      },
+      "B5110": {
+        "description": "Antígeno carcinoembrionario. marker de cánceres digestivos, especialmente colorrectal."
+      },
+      "B5080": {
+        "description": "marker tumoral de cáncer de ovario. También elevado en endometriosis y otras condiciones."
+      },
+      "B5090": {
+        "description": "marker tumoral de cáncer de mama. Útil para monitoreo de tratamiento y recurrencia."
+      },
+      "B5100": {
+        "description": "marker tumoral de cáncer pancreático y biliar. También elevado en pancreatitis."
+      },
+      "B8110": {
+        "description": "marker tumoral de cáncer de ovario más específico que CA125."
+      },
+      "B8130": {
+        "description": "Antígeno de células escamosas. marker de carcinomas escamosos de cérvix, pulmón y esófago."
+      },
+      "I5080": {
+        "description": "protein S-100. marker de melanoma y tumores del sistema nervioso."
+      },
+      "I5090": {
+        "description": "Enolasa neuroespecífica. marker de tumores neuroendocrinos y cáncer de pulmón de células pequeñas."
+      },
+      "B8120": {
+        "description": "Fragmento de citoqueratina 21-1. marker de cáncer de pulmón no microcítico."
+      },
+      "D1271": {
+        "description": "marker tumoral de cáncer gástrico y otros adenocarcinomas."
+      },
+      "B8160": {
+        "description": "Pro-péptido liberador de gastrina. marker específico de cáncer de pulmón microcítico."
+      },
+      "OG001": {
+        "description": "Test epigenético de edad biológica. Mide metilación del ADN para determinar edad biológica real."
+      },
+      "D1001": {
+        "description": "hormone antimülleriana. marker de reserva ovárica y fertilidad femenina."
+      },
+      "B3340": {
+        "description": "Complete analysis del semen utilizado para medir la edad biológica masculina. Evalúa concentración, motilidad y morfología espermática como markeres de envejecimiento reproductivo."
+      },
+      "G1465": {
+        "description": "Medición de la longitud de los telómeros. Biomarker directo del envejecimiento celular y predictor de longevidad."
+      }
+    },
+    "french": {
+      "6897": {
+        "description": "Analyse complète de orina. Detecta infecciones, proteinuria, hematuria y células anormales."
+      },
+      "H0000": {
+        "description": "Analyse complète de cellules sanguines que evalúa globules rouges, blancos, plaquettes y hémoglobine. Fundamental para detectar anemias, infecciones y trastornos hematológicos."
+      },
+      "H1420": {
+        "description": "Glucose sanguin moyen des 2-3 derniers mois. Marqueur de référence pour le diagnostic et le suivi du diabète."
+      },
+      "B0000": {
+        "description": "Taux de sucre dans le sang après 8-12 heures de jeûne. Dépistage primaire du diabète et évaluation du métabolisme glucidique."
+      },
+      "B0200": {
+        "description": "Principal protéine del plasma sanguíneo. Indica fonction hépatique, estado nutricional y capacidad de synthèse protéique."
+      },
+      "B5600": {
+        "description": "Nivel de insulina en ayunas. marqueur temprano de résistance à l'insuline antes de que aparezcan alteraciones en la glucosa."
+      },
+      "B6510": {
+        "description": "Índice que evalúa résistance à l'insuline combinando glucosa e insulina en ayunas. Predictor de diabetes tipo 2."
+      },
+      "B0020": {
+        "description": "Producto de desecho del métabolisme proteico. Evalúa fonction rénale y estado de hidratación."
+      },
+      "B0030": {
+        "description": "Producto de desecho muscular. marqueur más específico de fonction rénale que la urea."
+      },
+      "B0250": {
+        "description": "Producto final del métabolisme de purinas. Élevé indique riesgo de gota, cálculos renales y enfermedad cardiovascular."
+      },
+      "B1540": {
+        "description": "Tasa de filtración glomerular estimada. Mide la capacidad de filtrado de los riñones y detecta enfermedad renal temprana."
+      },
+      "B1260": {
+        "description": "Electrolitos esenciales para función celular. Sodio, potasio y cloro regulan hidratación, función nerviosa y muscular."
+      },
+      "B1970": {
+        "description": "enzyme presente en hígado y hueso. Elevada indica problemas hepáticos, óseos o obstrucción biliar."
+      },
+      "B0050": {
+        "description": "enzyme hepática específica. Elevada indica daño o inflamación del hígado. marqueur sensible de hepatotoxicidad."
+      },
+      "B0060": {
+        "description": "enzyme presente en hígado, corazón y músculo. Elevada indica daño celular en estos tejidos."
+      },
+      "B0080": {
+        "description": "Producto de degradación de globules rouges. Elevada indica problemas hepáticos o hemólisis excesiva."
+      },
+      "B0240": {
+        "description": "Suma de todas las protéines sanguíneas. Refleja estado nutricional y fonction hépatique de synthèse protéique."
+      },
+      "B0070": {
+        "description": "enzyme hepática sensible al alcohol y medicamentos. marqueur de colestasis y daño hepático crónico."
+      },
+      "B0010": {
+        "description": "Suma de todas las fracciones de colesterol. marqueur básico de risque cardiovasculaire."
+      },
+      "B0040": {
+        "description": "Grasas en sangre. Elevados indican risque cardiovasculaire y résistance à l'insuline."
+      },
+      "B0170": {
+        "description": "Colesterol 'bueno'. Transporta colesterol desde tejidos al hígado. Protector cardiovascular."
+      },
+      "B0180": {
+        "description": "Colesterol 'malo'. Transporta colesterol a tejidos. Elevado aumenta risque cardiovasculaire."
+      },
+      "B3110": {
+        "description": "protéine de partículas aterogénicas (LDL, VLDL). Mejor predictor de risque cardiovasculaire que LDL-colesterol."
+      },
+      "B3100": {
+        "description": "protéine principal del HDL. Facilita transporte reverso de colesterol. Protector cardiovascular."
+      },
+      "B5120": {
+        "description": "Hormone du stress. Régule le métabolisme, l'immunité et l'inflammation. Élevé indique un stress chronique."
+      },
+      "B5290": {
+        "description": "Precursor hormonel suprarrenal. Declina con edad. Important pour vitalidad y función cognitiva."
+      },
+      "B6020": {
+        "description": "protéine transportadora de hormones sexuales. Regula disponibilidad de testosterona y estradiol."
+      },
+      "B6160": {
+        "description": "Hormone sexuelle masculine principale, importante chez les femmes. Régule la masse musculaire, la libido et l'énergie."
+      },
+      "B5850": {
+        "description": "hormone paratiroidea. Regula calcio y fósforo. Elevada indica deficiencia de vitamine D o problemas óseos."
+      },
+      "B6040": {
+        "description": "hormone tiroidea activa. Regula métabolisme, temperatura corporal y función cardiovascular."
+      },
+      "B6070": {
+        "description": "hormone tiroidea precursora. Se convierte en T3 activa en tejidos periféricos."
+      },
+      "B6130": {
+        "description": "hormone estimulante del tiroides. Contrôle producción de hormones tiroideas T3 y T4."
+      },
+      "B3170": {
+        "description": "Protéine C réactive haute sensibilité. Marqueur d'inflammation systémique et de risque cardiovasculaire."
+      },
+      "B5590": {
+        "description": "Aminoácido del métabolisme de metionina. Elevada indica risque cardiovasculaire y deficiencia de B6, B12, folato."
+      },
+      "B0120": {
+        "description": "minéral Essentiel pour huesos, dientes y energía celular. Trabaja junto con calcio y vitamine D."
+      },
+      "B0100": {
+        "description": "minéral fundamental para huesos, contracción muscular, coagulación y función nerviosa."
+      },
+      "B1600": {
+        "description": "minéral Essentiel pour función muscular, nerviosa y cardiovascular. Cofactor de >300 enzymes."
+      },
+      "B8050": {
+        "description": "oligo-élément Essentiel pour inmunidad, cicatrización, función cognitiva y synthèse protéique."
+      },
+      "B0130": {
+        "description": "minéral Essentiel pour transport d'oxygène, producción de energía y función cognitiva."
+      },
+      "B3210": {
+        "description": "protéine transportadora de hierro. Refleja capacidad de transporte y estado nutricional del hierro."
+      },
+      "B7260": {
+        "description": "Porcentaje de saturación de transferrina. Indica disponibilidad de hierro para los tejidos."
+      },
+      "B5370": {
+        "description": "protéine de almacenamiento de hierro. Refleja reservas corporales de hierro y puede indicar inflamación."
+      },
+      "B6180": {
+        "description": "Forma de almacenamiento de vitamine D. Essentiel pour huesos, inmunidad y función muscular."
+      },
+      "B6190": {
+        "description": "Essentiel pour formación de globules rouges y función neurológica. La carence cause anemia y neuropatía."
+      },
+      "B5410": {
+        "description": "vitamine B9. Crucial para síntesis de ADN, formación de globules rouges y desarrollo fetal."
+      },
+      "B5350": {
+        "description": "Principal estrógeno. Regula ciclo menstrual, salud ósea y cardiovascular en mujeres."
+      },
+      "B5980": {
+        "description": "hormone de la lactancia. Elevada puede suprimir función reproductiva."
+      },
+      "B5800": {
+        "description": "Estimula ovulación en mujeres y producción de testosterona en hombres."
+      },
+      "B5380": {
+        "description": "Estimula desarrollo folicular y espermatogénesis. marqueur de reserva reproductiva."
+      },
+      "D0601": {
+        "description": "Fracción activa de testosterona no unida a protéines. Más específica que testosterona total."
+      },
+      "B6480": {
+        "description": "Testosterona biodisponible. Fracción libre más débilmente unida. Mejor indicador de actividad androgénica."
+      },
+      "D0850": {
+        "description": "Dihidrotestosterona. Andrógeno más potente. Responsable de características masculinas y alopecia."
+      },
+      "B5932": {
+        "description": "hormone del embarazo y ciclo menstrual. Important pour fertilidad y equilibrio hormonel."
+      },
+      "D0181": {
+        "description": "Precursor de cortisol y andrógenos. Elevada indica hiperplasia suprarrenal congénita."
+      },
+      "D0780": {
+        "description": "Estrógeno predominante en menopausia. Producido principalmente en tejido adiposo."
+      },
+      "B0260": {
+        "description": "Bilirrubina conjugada. Específica de fonction hépatique y obstrucción biliar."
+      },
+      "B1980": {
+        "description": "enzyme pancreática que digiere grasas. marqueur específico de función pancreática exocrina."
+      },
+      "B0350": {
+        "description": "enzyme que digiere carbohidratos. Producida por páncreas y glándulas salivales."
+      },
+      "B0110": {
+        "description": "Lactato deshidrogenasa. enzyme de daño celular presente en corazón, hígado, músculos y globules rouges."
+      },
+      "B6030": {
+        "description": "Factor de crecimiento insulínico. Mediador de hormone de crecimiento. Important pour longevity y masse musculaire."
+      },
+      "B6010": {
+        "description": "protéine transportadora de IGF-1. Modula actividad de IGF-1 y tiene efectos independientes en longevity."
+      },
+      "I6740": {
+        "description": "hormone adrenocorticotrópica. Estimula producción de cortisol. Evalúa función del eje hipotálamo-hipófisis-suprarrenal."
+      },
+      "H0020": {
+        "description": "Velocidad de sedimentación globular. marqueur inespecífico de inflammation systémique."
+      },
+      "D0560": {
+        "description": "Forma activa de vitamine D. hormone que regula absorción de calcio y métabolisme óseo."
+      },
+      "T0811": {
+        "description": "vitamine A activa. antioxydant liposoluble Essentiel pour visión, inmunidad y diferenciación celular."
+      },
+      "T2841": {
+        "description": "Forma gamma de vitamine E. antioxydant específico contra radicales de nitrógeno y peroxinitrito."
+      },
+      "T1191": {
+        "description": "Forma alfa de vitamine E. Principal antioxydant liposoluble que protege membranas celulares."
+      },
+      "T1200": {
+        "description": "Principal precursor de vitamine A. antioxydant carotenoide que protege contra daño oxidativo."
+      },
+      "T2830": {
+        "description": "antioxydant mitocondrial esencial. Crucial para producción de energía y protección celular."
+      },
+      "T3920": {
+        "description": "oligo-élément antioxydant esencial. Cofactor de glutatión peroxidasa. Protege contra stress oxydatif."
+      },
+      "T1061": {
+        "description": "vitamine antioxydant esencial. Neutraliza radicales libres y regenera otros antioxydants como vitamine E."
+      },
+      "B7121": {
+        "description": "enzyme que regenera glutatión reducido. Indicador del estado de vitamine B2 y capacidad antioxydant."
+      },
+      "B3015": {
+        "description": "enzyme antioxydant selenio-dependiente. Protege células del daño oxidativo por peróxidos."
+      },
+      "B3041": {
+        "description": "Glucosa-6-fosfato deshidrogenasa. enzyme clave en defensa antioxydant celular vía NADPH."
+      },
+      "B7790": {
+        "description": "Interleucina-6. Citocina proinflamatoria clave. Elevada en inflamación crónica y envejecimiento."
+      },
+      "I2081": {
+        "description": "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas."
+      },
+      "B0270": {
+        "description": "Concentración de partículas en sangre. Evalúa balance hídrico y fonction rénale. Important pour terapias IV."
+      },
+      "B8060": {
+        "description": "oligo-élément Essentiel pour formación de colágeno, función inmune y métabolisme del hierro."
+      },
+      "T0500": {
+        "description": "oligo-élément que mejora sensibilidad a insulina y métabolisme de glucosa. Importante en diabetes."
+      },
+      "T2590": {
+        "description": "Perfil de ácidos grasos omega-3. Evalúa estado nutricional y balance inflamatorio."
+      },
+      "T1720": {
+        "description": "vitamine liposoluble Essentiel pour coagulación. Cofactor de factores de coagulación."
+      },
+      "T0302": {
+        "description": "Mercurio en sangre. Metal tóxico que afecta sistema nervioso. Fuentes: pescado, amalgamas dentales."
+      },
+      "T0150": {
+        "description": "Plomo en sangre. Metal tóxico que afecta desarrollo neurológico y función cognitiva."
+      },
+      "T0960": {
+        "description": "Arsénico total en sangre. Metaloide tóxico asociado con cáncer y enfermedades cardiovasculares."
+      },
+      "T0480": {
+        "description": "Cadmio en sangre. Metal tóxico que afecta riñones, huesos y sistema cardiovascular."
+      },
+      "D1111": {
+        "description": "Fosfatasa alcalina específica de hueso. marqueur de formación ósea y actividad osteoblástica."
+      },
+      "I3291": {
+        "description": "C-telopéptido. marqueur de reabsorción ósea. Evalúa actividad osteoclástica y pérdida ósea."
+      },
+      "T1572": {
+        "description": "Fracción activa del calcio sérico. Forma biológicamente disponible para funciones celulares."
+      },
+      "B0750": {
+        "description": "Producto del métabolisme anaeróbico. Élevé indique hipoxia tisular o disfunción mitocondrial."
+      },
+      "B1900": {
+        "description": "LDL colesterol medido directamente. Más preciso que el calculado en casos de triglicéridos elevados."
+      },
+      "B0190": {
+        "description": "Lipoprotéines de muy baja densidad. Transportan triglicéridos. Elevadas aumentan risque cardiovasculaire."
+      },
+      "B7700": {
+        "description": "Lipoprotéine aterogénica genéticamente determinada. Factor de risque cardiovasculaire independiente."
+      },
+      "I5047": {
+        "description": "marqueur de fonction rénale más preciso que creatinina. No se ve afectado por masse musculaire."
+      },
+      "B2120": {
+        "description": "Creatina quinasa específica del miocardio. marqueur de daño cardíaco e infarto."
+      },
+      "B0220": {
+        "description": "Creatina fosfoquinasa total. enzyme muscular que indica daño o estrés muscular."
+      },
+      "I0141": {
+        "description": "Anticuerpos antinucleares. Screening para enfermedades autoinmunes sistémicas como lupus."
+      },
+      "I5072": {
+        "description": "Anticuerpos anti-péptido citrulinado cíclico. Específicos de artritis reumatoide."
+      },
+      "B6321": {
+        "description": "Anticuerpos anti-tiroglobulina. marqueur de autoinmunidad tiroidea."
+      },
+      "B6300": {
+        "description": "Anticuerpos anti-peroxidasa tiroidea. marqueur de tiroiditis autoinmune (Hashimoto)."
+      },
+      "B7750": {
+        "description": "Anticuerpos contra H. pylori. Detecta infección gástrica asociada a úlceras y cáncer gástrico."
+      },
+      "B3130": {
+        "description": "Autoanticuerpo presente en artritis reumatoide y otras enfermedades autoinmunes."
+      },
+      "M1190": {
+        "description": "Examen parasitológico de heces. Detecta parásitos intestinales que afectan salud digestiva."
+      },
+      "P3031": {
+        "description": "Panel de 200 alimentos para detectar intolerancias alimentarias mediadas por IgG."
+      },
+      "AB001": {
+        "description": "Analyse complète de diversidad microbiana intestinal. Evalúa balance de bacterias beneficiosas y patógenas."
+      },
+      "AB002": {
+        "description": "Perfil de metabolitos en orina y heces. Evalúa vías metabólicas y funcionalidad del microbioma."
+      },
+      "GP001": {
+        "description": "Farmacogenómica general. Analiza variantes genéticas que afectan la respuesta a medicamentos para personalizar tratamientos y evitar efectos adversos."
+      },
+      "GD001": {
+        "description": "Análisis genético de detoxificación. Evalúa capacidad genética para eliminar toxinas y metabolizar xenobióticos."
+      },
+      "GN001": {
+        "description": "Análisis genético nutricional. Identifica variantes que afectan métabolisme de macronutrientes y micronutrientes."
+      },
+      "GA001": {
+        "description": "Análisis genético del envejecimiento. Evalúa predisposición genética al envejecimiento y longevidad."
+      },
+      "GS001": {
+        "description": "Análisis genético deportivo. Optimiza entrenamiento y rendimiento basado en perfil genético."
+      },
+      "GU001": {
+        "description": "Análisis genético de suplementación. Personaliza suplementos basado en necesidades genéticas individuales."
+      },
+      "H0050": {
+        "description": "protéine de coagulación y marqueur inflamatorio. Élevé indique riesgo trombótico e inflamación."
+      },
+      "H0850": {
+        "description": "Tiempo de tromboplastina parcial activada. Evalúa vía intrínseca de coagulación."
+      },
+      "H0860": {
+        "description": "Ratio internacional normalizado. Mide tiempo de protrombina. Monitorea anticoagulación."
+      },
+      "D1760": {
+        "description": "Gonadotropina coriónica humana beta. marqueur de embarazo y ciertos tumores testiculares y ováricos."
+      },
+      "M0010": {
+        "description": "Detección de sangre microscópica en heces. Screening para cáncer colorrectal y pólipos."
+      },
+      "B7900": {
+        "description": "Alfafetoprotéine. marqueur de cáncer hepático y tumores de células germinales."
+      },
+      "B5830": {
+        "description": "Antígeno prostático específico total. Screening para cáncer de próstata e hiperplasia benigna."
+      },
+      "B5840": {
+        "description": "Fracción libre de PSA. Mejora especificidad para distinguir cáncer de hiperplasia benigna."
+      },
+      "B5110": {
+        "description": "Antígeno carcinoembrionario. marqueur de cánceres digestivos, especialmente colorrectal."
+      },
+      "B5080": {
+        "description": "marqueur tumoral de cáncer de ovario. También elevado en endometriosis y otras condiciones."
+      },
+      "B5090": {
+        "description": "marqueur tumoral de cáncer de mama. Útil para monitoreo de tratamiento y recurrencia."
+      },
+      "B5100": {
+        "description": "marqueur tumoral de cáncer pancreático y biliar. También elevado en pancreatitis."
+      },
+      "B8110": {
+        "description": "marqueur tumoral de cáncer de ovario más específico que CA125."
+      },
+      "B8130": {
+        "description": "Antígeno de células escamosas. marqueur de carcinomas escamosos de cérvix, pulmón y esófago."
+      },
+      "I5080": {
+        "description": "protéine S-100. marqueur de melanoma y tumores del sistema nervioso."
+      },
+      "I5090": {
+        "description": "Enolasa neuroespecífica. marqueur de tumores neuroendocrinos y cáncer de pulmón de células pequeñas."
+      },
+      "B8120": {
+        "description": "Fragmento de citoqueratina 21-1. marqueur de cáncer de pulmón no microcítico."
+      },
+      "D1271": {
+        "description": "marqueur tumoral de cáncer gástrico y otros adenocarcinomas."
+      },
+      "B8160": {
+        "description": "Pro-péptido liberador de gastrina. marqueur específico de cáncer de pulmón microcítico."
+      },
+      "OG001": {
+        "description": "Test epigenético de edad biológica. Mide metilación del ADN para determinar edad biológica real."
+      },
+      "D1001": {
+        "description": "hormone antimülleriana. marqueur de reserva ovárica y fertilidad femenina."
+      },
+      "B3340": {
+        "description": "Analyse complète del semen utilizado para medir la edad biológica masculina. Evalúa concentración, motilidad y morfología espermática como marqueures de envejecimiento reproductivo."
+      },
+      "G1465": {
+        "description": "Medición de la longitud de los telómeros. Biomarqueur directo del envejecimiento celular y predictor de longevidad."
+      }
+    }
+  }
+}

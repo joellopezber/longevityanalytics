@@ -27,8 +27,8 @@ import { calculatePackagePrice, calculateAddOnPrice } from './priceCalculator.js
 // Función para procesar los datos del CSV y extraer biomarcadores por categoría
 const csvData = [
   { name: "Hemograma completo", category: "Hematología, Hematopoyesis, Inmunidad", group: "Essential · Prevenii", code: "H0000", essential: true, gender: "both", description: "Análisis completo de células sanguíneas que evalúa glóbulos rojos, blancos, plaquetas y hemoglobina. Fundamental para detectar anemias, infecciones y trastornos hematológicos." },
-  { name: "Hemoglobina A1c", category: "Metabolismo glucídico", group: "Essential · Prevenii", code: "H1420", essential: true, gender: "both", description: "Promedio de glucosa en sangre durante los últimos 2-3 meses. Marcador gold standard para diagnóstico y monitoreo de diabetes y prediabetes." },
-  { name: "Glucosa en ayunas", category: "Metabolismo glucídico", group: "Essential · Prevenii", code: "B0000", essential: true, gender: "both", description: "Nivel de azúcar en sangre tras 8-12 horas de ayuno. Screening primario para diabetes y evaluación del metabolismo glucídico." },
+  { name: "Hemoglobina A1c", category: "Metabolismo glucídico", group: "Essential · Prevenii", code: "H1420", essential: true, gender: "both", description: "Promedio de glucosa en sangre durante los últimos 2-3 meses. Marcador estándar de oro para diagnóstico y monitoreo de diabetes y prediabetes." },
+  { name: "Glucosa en ayunas", category: "Metabolismo glucídico", group: "Essential · Prevenii", code: "B0000", essential: true, gender: "both", description: "Nivel de azúcar en sangre tras 8-12 horas de ayuno. Cribado primario para diabetes y evaluación del metabolismo glucídico." },
   { name: "Albúmina", category: "Función hepática, Nutrición", group: "Essential · Prevenii", code: "B0200", essential: true, gender: "both", description: "Principal proteína del plasma sanguíneo. Indica función hepática, estado nutricional y capacidad de síntesis proteica." },
   { name: "Insulina basal", category: "Resistencia insulínica", group: "Essential · Prevenii · Endocrino", code: "B5600", essential: true, gender: "both", description: "Nivel de insulina en ayunas. Marcador temprano de resistencia insulínica antes de que aparezcan alteraciones en la glucosa." },
   { name: "HOMA-R", category: "Resistencia insulínica", group: "Essential · Prevenii · Endocrino", code: "B6510", essential: true, gender: "both", description: "Índice que evalúa resistencia insulínica combinando glucosa e insulina en ayunas. Predictor de diabetes tipo 2." },
@@ -79,24 +79,24 @@ const essentialBiomarkers = csvData.filter(item => item.essential);
 export const essentialPackage = {
   id: 'essential',
   name: 'Essential',
-  description: 'El Essential Analysis examina los biomarcadores fundamentales para dibujar una imagen precisa de tu estado de salud actual e incluye el cálculo de PhenoAge (edad biológica) basado en 9 biomarcadores validados científicamente. Con estos datos podemos anticipar riesgos silenciosos, establecer prioridades terapéuticas y definir si conviene añadir módulos adicionales (add on). Transformando la ciencia analítica en decisiones personalizadas y un plan de acción claro.',
+  description: 'systems.essentialDescription', // Translation key instead of hardcoded text
   color: 'gradient-earth',
   bgColor: 'bg-earth-50',
   borderColor: 'border-earth',
   textColor: 'text-earth',
   icon: FaDna,
   features: [
-    'Metabolismo glucídico completo',
-    'Función renal y hepática',
-    'Perfil lipídico avanzado',
-    'Hormonas básicas',
-    'Tiroides completo',
-    'Minerales esenciales',
-    'Marcadores inflamatorios',
-    'Cálculo de edad biológica'
+    'packageComparison.glucidMetabolism',
+    'packageComparison.renalHepaticFunction',
+    'packageComparison.advancedLipidProfile',
+    'packageComparison.basicHormones',
+    'packageComparison.completeThyroid',
+    'packageComparison.essentialMinerals',
+    'packageComparison.inflammatoryMarkers',
+    'packageComparison.biologicalAgeCalculation'
   ],
   biomarkers: essentialBiomarkers,
-  targetAudience: 'Ideal para clientes que inician su journey de longevity',
+  targetAudience: 'Ideal para clientes que inician su viaje de longevidad',
   
   // Función para obtener precios dinámicos
   getPricing: (gender = 'both') => {
@@ -115,8 +115,8 @@ export const essentialPackage = {
 export const addOnPackages = {
   hormonas: {
     id: 'hormonas',
-    name: 'Hormonas Avanzadas',
-    description: 'Analiza el perfil hormonal completo (testosterona, estrógenos, progesterona, gonadotropinas) para optimizar vitalidad, libido, masa muscular y equilibrio hormonal. Esencial para terapias de reemplazo hormonal y anti-aging.',
+    name: 'Hormonas',
+    description: 'Analiza el perfil hormonal completo (testosterona, estrógenos, progesterona, gonadotropinas) para optimizar vitalidad, libido, masa muscular y equilibrio hormonal. Esencial para terapias de reemplazo hormonal y antienvejecimiento.',
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -195,8 +195,8 @@ export const addOnPackages = {
       { name: "Prolactina", category: "Hormonas femeninas", code: "B5980", gender: "both", description: "Hormona de la lactancia. Elevada puede suprimir función reproductiva.", isOptional: true, defaultSelected: true },
       { name: "LH", category: "Gonadotropina", code: "B5800", gender: "both", description: "Estimula ovulación en mujeres y producción de testosterona en hombres.", isOptional: true, defaultSelected: true },
       { name: "FSH", category: "Gonadotropina", code: "B5380", gender: "both", description: "Estimula desarrollo folicular y espermatogénesis. Marcador de reserva reproductiva.", isOptional: true, defaultSelected: true },
-      { name: "IGF-1", category: "Eje GH/IGF", code: "B6030", gender: "both", description: "Factor de crecimiento insulínico. Mediador de hormona de crecimiento. Importante para longevity y masa muscular." },
-      { name: "IGFBP-3", category: "Regula IGF", code: "B6010", gender: "both", description: "Proteína transportadora de IGF-1. Modula actividad de IGF-1 y tiene efectos independientes en longevity." },
+      { name: "IGF-1", category: "Eje GH/IGF", code: "B6030", gender: "both", description: "Factor de crecimiento insulínico. Mediador de hormona de crecimiento. Importante para longevidad y masa muscular." },
+      { name: "IGFBP-3", category: "Regula IGF", code: "B6010", gender: "both", description: "Proteína transportadora de IGF-1. Modula actividad de IGF-1 y tiene efectos independientes en longevidad." },
       { name: "ACTH", category: "Pituitaria", code: "I6740", gender: "both", description: "Hormona adrenocorticotrópica. Estimula producción de cortisol. Evalúa función del eje hipotálamo-hipófisis-suprarrenal." },
       { name: "VSG", category: "Inflamación", code: "H0020", gender: "both", description: "Velocidad de sedimentación globular. Marcador inespecífico de inflamación sistémica.", isOptional: true, defaultSelected: false },
       { name: "Vitamina D 1,25-OH", category: "Hormona calcitriol", code: "D0560", gender: "both", description: "Forma activa de vitamina D. Hormona que regula absorción de calcio y metabolismo óseo.", isOptional: true, defaultSelected: true }
@@ -266,7 +266,7 @@ export const addOnPackages = {
 
   oxidative_cell: {
     id: 'oxidative_cell',
-    name: 'Estrés Oxidativo Celular',
+    name: 'Estrés Oxidativo',
     description: 'Analiza selenio, vitamina C y marcadores específicos de sistema glutatión para evaluar el envejecimiento a nivel molecular. Optimiza protección celular y previene daño oxidativo acumulativo.',
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
@@ -504,7 +504,7 @@ export const addOnPackages = {
 
   cardiovascular: {
     id: 'cardiovascular',
-    name: 'Cardiovascular Avanzado',
+    name: 'Cardiovascular',
     description: 'Analiza lipoproteínas aterogénicas (Lp(a), VLDL), enzimas cardíacas para prevención cardiovascular avanzada. Reduce riesgo de infarto y optimiza salud cardíaca.',
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
@@ -572,7 +572,7 @@ export const addOnPackages = {
       'Inflamación sistémica'
     ],
     biomarkers: [
-      { name: "Nucleares An (ANA)", category: "Autoinmunidad", code: "I0141", gender: "both", description: "Anticuerpos antinucleares. Screening para enfermedades autoinmunes sistémicas como lupus." },
+      { name: "Nucleares An (ANA)", category: "Autoinmunidad", code: "I0141", gender: "both", description: "Anticuerpos antinucleares. Cribado para enfermedades autoinmunes sistémicas como lupus." },
       { name: "anti-CCP", category: "Artritis", code: "I5072", gender: "both", description: "Anticuerpos anti-péptido citrulinado cíclico. Específicos de artritis reumatoide." },
       { name: "anti-Tg", category: "Tiroides", code: "B6321", gender: "both", description: "Anticuerpos anti-tiroglobulina. Marcador de autoinmunidad tiroidea." },
       { name: "anti-TPO", category: "Tiroides", code: "B6300", gender: "both", description: "Anticuerpos anti-peroxidasa tiroidea. Marcador de tiroiditis autoinmune (Hashimoto)." },
@@ -650,7 +650,7 @@ export const addOnPackages = {
   gut_gate: {
     id: 'gut_gate',
     name: 'Gut Gate',
-    description: 'Análisis avanzado del microbioma intestinal y metaboloma urinario para evaluar diversidad microbiana, permeabilidad intestinal y metabolitos funcionales. Optimiza salud del gut-brain axis.',
+    description: 'Análisis avanzado del microbioma intestinal y metaboloma urinario para evaluar diversidad microbiana, permeabilidad intestinal y metabolitos funcionales. Optimiza salud del eje intestino-cerebro.',
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -659,7 +659,7 @@ export const addOnPackages = {
     benefits: [
       'Análisis microbioma',
       'Metabolitos funcionales',
-      'Gut-brain axis',
+      'Eje intestino-cerebro',
       'Permeabilidad intestinal'
     ],
     biomarkers: [
@@ -774,7 +774,7 @@ export const addOnPackages = {
   cancer: {
     id: 'cancer',
     name: 'Marcadores Tumorales',
-    description: 'Screening oncológico con marcadores tumorales específicos expandido: incluye PSA, CA125, CEA, AFP, HE4, SCC, proteína S-100, NSE y otros marcadores avanzados para detección temprana integral.',
+    description: 'Cribado oncológico con marcadores tumorales específicos expandido: incluye PSA, CA125, CEA, AFP, HE4, SCC, proteína S-100, NSE y otros marcadores avanzados para detección temprana integral.',
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -783,7 +783,7 @@ export const addOnPackages = {
     benefits: [
       'Detección temprana expandida',
       'Marcadores especializados',
-      'Screening integral',
+      'Cribado integral',
       'Seguimiento oncológico'
     ],
     biomarkers: [
@@ -791,9 +791,9 @@ export const addOnPackages = {
       { name: "FSH", category: "Gonadotropina", code: "B5380", gender: "female", description: "Estimula desarrollo folicular y espermatogénesis. Marcador de reserva reproductiva." },
       { name: "β-HCG", category: "Gestación / onc.", code: "D1760", gender: "both", description: "Gonadotropina coriónica humana beta. Marcador de embarazo y ciertos tumores testiculares y ováricos." },
       { name: "Urianálisis + sedimento", category: "Riñón, Vías urinarias", code: "6897", gender: "both", description: "Análisis completo de orina. Detecta infecciones, proteinuria, hematuria y células anormales." },
-      { name: "Sangre oculta en heces", category: "Cribado CCR", code: "M0010", gender: "both", description: "Detección de sangre microscópica en heces. Screening para cáncer colorrectal y pólipos." },
+      { name: "Sangre oculta en heces", category: "Cribado CCR", code: "M0010", gender: "both", description: "Detección de sangre microscópica en heces. Cribado para cáncer colorrectal y pólipos." },
       { name: "Alfa-feto (AFP)", category: "Tumor hepático", code: "B7900", gender: "both", description: "Alfafetoproteína. Marcador de cáncer hepático y tumores de células germinales." },
-      { name: "PSA total", category: "Próstata", code: "B5830", gender: "male", description: "Antígeno prostático específico total. Screening para cáncer de próstata e hiperplasia benigna." },
+      { name: "PSA total", category: "Próstata", code: "B5830", gender: "male", description: "Antígeno prostático específico total. Cribado para cáncer de próstata e hiperplasia benigna." },
       { name: "PSA libre", category: "Próstata", code: "B5840", gender: "male", description: "Fracción libre de PSA. Mejora especificidad para distinguir cáncer de hiperplasia benigna." },
       { name: "CEA", category: "Tumor digestivo", code: "B5110", gender: "both", description: "Antígeno carcinoembrionario. Marcador de cánceres digestivos, especialmente colorrectal." },
       { name: "CA 125", category: "Ovario", code: "B5080", gender: "both", description: "Marcador tumoral de cáncer de ovario. También elevado en endometriosis y otras condiciones." },
@@ -835,7 +835,7 @@ export const addOnPackages = {
   bioage: {
     id: 'bioage',
     name: 'Edad Biológica',
-    description: 'Evalúa edad biológica mediante test epigenético MyEpiAgeing y fertilidad con AMH/espermiograma para determinar tu edad reproductiva y biológica real. Guía estrategias anti-aging precisas.',
+    description: 'Evalúa edad biológica mediante prueba epigenética MyEpiAgeing y fertilidad con AMH/espermiograma para determinar tu edad reproductiva y biológica real. Guía estrategias antienvejecimiento precisas.',
     color: 'gradient-warm',
     bgColor: 'bg-warm-50',
     borderColor: 'border-warm',
@@ -844,11 +844,11 @@ export const addOnPackages = {
     benefits: [
       'Edad biológica epigenética',
       'Fertilidad y reproducción',
-      'Anti-aging personalizado',
-      'Longevity assessment'
+      'Antienvejecimiento personalizado',
+      'Evaluación de longevidad'
     ],
     biomarkers: [
-      { name: "MyEpiAgeing", category: "Edad epigenética", code: "OG001", gender: "both", description: "Test epigenético de edad biológica. Mide metilación del ADN para determinar edad biológica real." },
+      { name: "MyEpiAgeing", category: "Edad epigenética", code: "OG001", gender: "both", description: "Prueba epigenética de edad biológica. Mide metilación del ADN para determinar edad biológica real." },
       { name: "AMH", category: "Reserva ovárica", code: "D1001", gender: "female", description: "Hormona antimülleriana. Marcador de reserva ovárica y fertilidad femenina." },
       { name: "Espermiograma", category: "Fertilidad masculina", code: "B3340", gender: "male", description: "Análisis completo del semen utilizado para medir la edad biológica masculina. Evalúa concentración, motilidad y morfología espermática como marcadores de envejecimiento reproductivo." },
       { name: "Longitud telomérica", category: "Envejecimiento celular", code: "G1465", gender: "both", description: "Medición de la longitud de los telómeros. Biomarcador directo del envejecimiento celular y predictor de longevidad.", isOptional: true }
@@ -1047,9 +1047,9 @@ export const comparisonData = {
   },
   longevityAnalytics: {
     name: 'Longevity Analytics',
-    testCount: 130,
+    testCount: '130+',
     approach: 'Optimización - Mejora activa',
-    focus: 'Optimización de longevity',
+    focus: 'Optimización de longevidad',
     recommendations: 'Protocolos específicos de suplementación, nutrición y estilo de vida',
     frequency: 'Personalizado + seguimiento continuo'
   }
