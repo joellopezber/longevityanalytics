@@ -7,7 +7,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
-import { FaArrowRight, FaCheckCircle, FaPills, FaUtensils, FaRunning, FaSyringe, FaFlask, FaChartLine, FaUsers, FaRocket } from 'react-icons/fa';
+import { FaPills, FaUtensils, FaRunning, FaSyringe } from 'react-icons/fa';
 
 const HeroSection = () => {
   const { t } = useLanguage();

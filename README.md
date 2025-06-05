@@ -116,9 +116,9 @@ Esta es una aplicación web React diseñada como presentación comercial para em
 - **Inglés (EN)** - Traducción completa
 - **Francés (FR)** - Traducción completa
 
-### Arquitectura de Traducciones
+### Arquitectura de Traducciones (Optimizada ✅)
 
-La aplicación utiliza un sistema de traducciones centralizado con las siguientes características:
+La aplicación utiliza un **sistema único centralizado** de traducciones optimizado para mantenibilidad:
 
 #### LanguageContext
 ```javascript
@@ -141,23 +141,25 @@ const { t, currentLanguage, changeLanguage } = useLanguage();
 {t(`biomarkerCategories.${biomarker.category}`)}
 ```
 
-#### Estructura de Traducciones
+#### Estructura de Traducciones (Sistema Único)
 
 ```
-src/contexts/LanguageContext.js
-├── es: {}           # Español (idioma base)
+src/contexts/LanguageContext.js (ÚNICO PUNTO DE VERDAD)
+├── es: {}           # Español (idioma base)  
 ├── en: {}           # Inglés
 └── fr: {}           # Francés
-    ├── navbar: {}
-    ├── hero: {}
-    ├── systems: {}
-    ├── addOns: {}
-    ├── packages: {}
-    ├── process: {}
-    ├── biomarkerNames: {}      # 105+ nombres de biomarcadores
-    ├── biomarkerCategories: {} # 40+ categorías
-    └── biomarkers: {}          # Descripciones completas
+    ├── navbar: {}                  # Navegación
+    ├── hero: {}                    # Sección principal
+    ├── systems: {}                 # Sistemas médicos
+    ├── addOns: {}                  # Add-ons especializados
+    ├── packages: {}                # Paquetes de análisis
+    ├── process: {}                 # Proceso de trabajo
+    ├── biomarkerNames: {}          # 105+ nombres de biomarcadores
+    ├── biomarkerCategories: {}     # 40+ categorías especializadas
+    └── biomarkers: {}              # Descripciones completas técnicas
 ```
+
+**⚠️ IMPORTANTE**: No crear archivos duplicados en `/locales/` - usar exclusivamente `LanguageContext.js`
 
 ### Componentes de Traducción
 

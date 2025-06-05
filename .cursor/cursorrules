@@ -1,0 +1,49 @@
+# CURSOR RULES - Longevity Analytics
+
+## 🎯 Objetivo del Proyecto
+Aplicación React de presentación comercial para empresas de longevity con análisis clínicos especializados.
+
+## 📁 Estructura de Archivos Mantenible
+
+### Componentes
+- `src/components/` - Todos los componentes React
+- Nomenclatura: CamelCase (ej: `HeroSection.jsx`)
+- Encabezado obligatorio con descripción y propósito
+
+### Sistema de Traducciones
+- **ÚNICO SISTEMA**: `src/contexts/LanguageContext.js`
+- **NO USAR**: archivos JSON separados en locales/
+- **Uso**: `const { t } = useLanguage(); t('clave.subclave')`
+
+### Estilos
+- Clases CSS utilitarias existentes
+- Variables CSS custom properties
+- Sistema de colores: earth, cream, stone, taupe
+
+## 🔧 Reglas de Desarrollo
+
+### Importaciones
+- Eliminar imports no utilizados (causa warnings ESLint)
+- Verificar uso real de iconos React Icons antes de importar
+- Preferir SVG inline para iconos únicos
+
+### Traducciones
+- Nuevas claves SOLO en `LanguageContext.js`
+- Mantener consistencia entre es/en/fr
+- Usar fallbacks: `t('clave', 'texto por defecto')`
+
+### Performance
+- Mantener componentes funcionales
+- Usar `motion` de framer-motion moderadamente
+- Lazy loading para componentes grandes
+
+## ⚠️ Prohibiciones
+- NO crear archivos en `locales/` (sistema eliminado)
+- NO duplicar sistemas de traducciones
+- NO importar iconos sin usar
+- NO editar textos existentes sin validación
+
+## 🚀 Deploy
+- Build: `npm run build`
+- Deploy: `npm run deploy` (GitHub Pages)
+- Verificar always: build sin warnings ESLint 

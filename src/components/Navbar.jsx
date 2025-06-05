@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { FaGlobe, FaBars, FaChevronDown } from 'react-icons/fa';
+// Icons removed - using SVG and emojis instead
 
 const Navbar = () => {
   const { currentLanguage, changeLanguage, t } = useLanguage();

@@ -7,12 +7,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../contexts/LanguageContext';
-import { 
-  FaEnvelope, 
-  FaPhone, 
-  FaMapMarkerAlt, 
-  FaCalendarAlt
-} from 'react-icons/fa';
+import { FaEnvelope } from 'react-icons/fa';
 
 const CallToAction = () => {
   const { t } = useLanguage();
