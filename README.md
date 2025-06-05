@@ -71,6 +71,7 @@ Esta es una aplicación web React diseñada como presentación comercial para em
 - **React Icons** - Iconografía
 - **CSS Custom Properties** - Sistema de diseño
 - **Responsive Design** - Adaptable a todos los dispositivos
+- **Sistema de Traducciones** - Multiidioma (ES/EN/FR)
 
 ## Instalación y Ejecución
 
@@ -108,6 +109,161 @@ Esta es una aplicación web React diseñada como presentación comercial para em
 - `npm test` - Ejecuta las pruebas
 - `npm run eject` - Expone la configuración de webpack
 
+## Sistema de Traducciones
+
+### Idiomas Soportados
+- **Español (ES)** - Idioma principal y por defecto
+- **Inglés (EN)** - Traducción completa
+- **Francés (FR)** - Traducción completa
+
+### Arquitectura de Traducciones
+
+La aplicación utiliza un sistema de traducciones centralizado con las siguientes características:
+
+#### LanguageContext
+```javascript
+import { useLanguage } from './contexts/LanguageContext';
+
+const { t, currentLanguage, changeLanguage } = useLanguage();
+```
+
+#### Uso Básico
+```javascript
+// Traducciones simples
+{t('navbar.clinicalAnalysis')}
+{t('hero.title')}
+
+// Traducciones con fallback
+{t('biomarkers.H0000.description', 'Descripción por defecto')}
+
+// Biomarcadores (nombres y categorías)
+{t(`biomarkerNames.${biomarker.code}`)}
+{t(`biomarkerCategories.${biomarker.category}`)}
+```
+
+#### Estructura de Traducciones
+
+```
+src/contexts/LanguageContext.js
+├── es: {}           # Español (idioma base)
+├── en: {}           # Inglés
+└── fr: {}           # Francés
+    ├── navbar: {}
+    ├── hero: {}
+    ├── systems: {}
+    ├── addOns: {}
+    ├── packages: {}
+    ├── process: {}
+    ├── biomarkerNames: {}      # 105+ nombres de biomarcadores
+    ├── biomarkerCategories: {} # 40+ categorías
+    └── biomarkers: {}          # Descripciones completas
+```
+
+### Componentes de Traducción
+
+#### Selector de Idioma
+```javascript
+const { changeLanguage, currentLanguage } = useLanguage();
+
+<select value={currentLanguage} onChange={(e) => changeLanguage(e.target.value)}>
+  <option value="es">Español</option>
+  <option value="en">English</option>
+  <option value="fr">Français</option>
+</select>
+```
+
+#### Biomarcadores Multiidioma
+```javascript
+// Nombres de biomarcadores
+<h5>{t(`biomarkerNames.${biomarker.code}`, biomarker.name)}</h5>
+
+// Categorías de biomarcadores
+<p>{t(`biomarkerCategories.${biomarker.category}`, biomarker.category)}</p>
+
+// Descripciones de biomarcadores
+<p>{t(`biomarkers.${biomarker.code}.description`, biomarker.description)}</p>
+```
+
+### Añadir Nuevas Traducciones
+
+#### 1. Agregar Clave de Traducción
+```javascript
+// En LanguageContext.js
+es: {
+  nuevaSeccion: {
+    titulo: "Nuevo Título",
+    descripcion: "Nueva descripción"
+  }
+}
+```
+
+#### 2. Traducir a Otros Idiomas
+```javascript
+en: {
+  nuevaSeccion: {
+    titulo: "New Title", 
+    descripcion: "New description"
+  }
+},
+fr: {
+  nuevaSeccion: {
+    titulo: "Nouveau Titre",
+    descripcion: "Nouvelle description"
+  }
+}
+```
+
+#### 3. Usar en Componentes
+```javascript
+{t('nuevaSeccion.titulo')}
+{t('nuevaSeccion.descripcion')}
+```
+
+### Biomarcadores: Traducciones Especializadas
+
+#### Estructura de Datos
+```javascript
+biomarkerNames: {
+  "H0000": "Hemograma completo",     // ES
+  "B0000": "Glucosa en ayunas",     // ES
+  // ...105+ biomarcadores
+}
+
+biomarkerCategories: {
+  "Hematología, Hematopoyesis, Inmunidad": "Hematología, Hematopoyesis, Inmunidad",
+  "Metabolismo glucídico": "Metabolismo glucídico",
+  // ...40+ categorías
+}
+```
+
+#### Implementación en Componentes
+```javascript
+// MedicalSystemsExplorer.jsx - Ejemplo de uso
+<h5>{t(`biomarkerNames.${biomarker.code}`, biomarker.name)}</h5>
+<p>{t(`biomarkerCategories.${biomarker.category}`, biomarker.category)}</p>
+```
+
+### Sistema de Fallback
+
+El sistema incluye fallback automático:
+1. **Primario:** Idioma seleccionado
+2. **Secundario:** Español (idioma base)  
+3. **Terciario:** Valor por defecto proporcionado
+4. **Último:** Clave de traducción mostrada
+
+### Funciones Avanzadas
+
+#### Función t() Mejorada
+- ✅ Maneja strings y arrays
+- ✅ Fallback automático a español
+- ✅ Soporte para valores por defecto
+- ✅ Validación de tipos
+
+#### Cambio de Idioma Dinámico
+- ✅ Cambio instantáneo sin recarga
+- ✅ Estado persistente en la sesión
+- ✅ Animaciones suaves entre cambios
+
 ## Estructura de Archivos
 
 ```
@@ -117,7 +273,12 @@ src/
 │   ├── PackageComparison.jsx
 │   ├── AddOnExplorer.jsx
 │   ├── ProcessFlow.jsx
-│   └── CallToAction.jsx
+│   ├── CallToAction.jsx
+│   ├── Navbar.jsx
+│   └── Footer.jsx
+├── contexts/
+│   ├── LanguageContext.js          # Sistema de traducciones principal
+│   └── BiomarkerSelectionContext.js
 ├── data/
 │   └── biomarkers.js
 ├── styles/
@@ -159,6 +320,106 @@ Los datos están estructurados basándose en el CSV proporcionado, organizados e
 - Integrar servicios de laboratorio especializados
 - Escalar sus operaciones con partners confiables
 
+## Mejores Prácticas de Traducciones
+
+### ✅ Recomendaciones
+
+#### 1. Estructura de Claves
+```javascript
+// ✅ Bueno - Estructura jerárquica clara
+{t('hero.supplementation')}
+{t('systems.biomarkersIncludedEssential')}
+
+// ❌ Evitar - Claves planas muy específicas
+{t('heroSupplementationTitle')}
+{t('systemsBiomarkersIncludedEssentialText')}
+```
+
+#### 2. Reutilización de Traducciones
+```javascript
+// ✅ Bueno - Reutilizar traducciones existentes
+<h4>{t('hero.supplementation')}</h4>
+<p>{t('hero.supplementationDesc')}</p>
+
+// ❌ Evitar - Duplicar traducciones similares
+<h4>{t('packageComparison.supplementationTitle')}</h4>
+<p>{t('packageComparison.supplementationDescription')}</p>
+```
+
+#### 3. Biomarcadores Específicos
+```javascript
+// ✅ Bueno - Usar sistema especializado de biomarcadores
+{t(`biomarkerNames.${biomarker.code}`, biomarker.name)}
+{t(`biomarkerCategories.${biomarker.category}`, biomarker.category)}
+
+// ❌ Evitar - Hardcodear nombres
+<h5>{biomarker.name}</h5>
+<p>{biomarker.category}</p>
+```
+
+### Ejemplos de Implementación
+
+#### Componente Nuevo con Traducciones
+```javascript
+import React from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+
+const NuevoComponente = () => {
+  const { t } = useLanguage();
+  
+  return (
+    <div>
+      <h2>{t('nuevaSeccion.titulo')}</h2>
+      <p>{t('nuevaSeccion.descripcion')}</p>
+      
+      {/* Biomarcador con fallback */}
+      <h5>{t(`biomarkerNames.H0000`, 'Hemograma completo')}</h5>
+    </div>
+  );
+};
+```
+
+#### Selector de Idioma Personalizado
+```javascript
+import { useLanguage } from '../contexts/LanguageContext';
+
+const LanguageSelector = () => {
+  const { currentLanguage, changeLanguage } = useLanguage();
+  
+  const languages = [
+    { code: 'es', name: 'Español', flag: '🇪🇸' },
+    { code: 'en', name: 'English', flag: '🇺🇸' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' }
+  ];
+  
+  return (
+    <div className="language-selector">
+      {languages.map(lang => (
+        <button
+          key={lang.code}
+          onClick={() => changeLanguage(lang.code)}
+          className={currentLanguage === lang.code ? 'active' : ''}
+        >
+          {lang.flag} {lang.name}
+        </button>
+      ))}
+    </div>
+  );
+};
+```
+
+### Validación de Traducciones
+
+Para verificar que todas las traducciones están correctas:
+
+```bash
+# Ejecutar el script de validación (si existe)
+npm run validate-translations
+
+# Buscar claves faltantes en desarrollo
+# Las claves faltantes aparecerán en consola como warnings
+```
+
 ## Próximos Pasos
 
 1. **Integración con CRM** - Conectar formulario de contacto
@@ -166,6 +427,7 @@ Los datos están estructurados basándose en el CSV proporcionado, organizados e
 3. **API de Integración** - Conectores para plataformas existentes
 4. **Calculadora de Precios** - Herramienta de cotización automática
 5. **Casos de Estudio** - Testimonios y resultados reales
+6. **Traducciones Dinámicas** - Sistema de gestión de contenido multiidioma
 
 ## Contacto
 
