@@ -47,10 +47,28 @@ const translations = {
     },
     // Medical Systems Explorer
     systems: {
-      title: "Essential",
+      title: "Longevity Analytics",
       titleHighlight: "Análisis",
-      description: "El Essential proporciona la información que forma el eje central de tu salud, y la adición de Add-Ons especializados según tus objetivos específicos te permite personalizar y adaptar tu analítica.",
+      description: "Ofrecemos tres paquetes de análisis personalizados para adaptarnos mejor a las necesidades específicas de cada individuo: Essential para el análisis fundamental, Core para una evaluación intermedia especializada, y Advanced para la evaluación más completa y exhaustiva de tu salud y longevidad.",
       essentialDescription: "El Essential Analysis examina los biomarcadores fundamentales para dibujar una imagen precisa de tu estado de salud actual e incluye el cálculo de PhenoAge (edad biológica) basado en 9 biomarcadores validados científicamente. Con estos datos podemos anticipar riesgos silenciosos, establecer prioridades terapéuticas y definir si conviene añadir módulos adicionales (add on). Transformando la ciencia analítica en decisiones personalizadas y un plan de acción claro.",
+      // Tres perfiles de análisis
+      analysisProfiles: {
+        essential: {
+          title: "Essential",
+          highlight: "46 Biomarcadores",
+          description: "Perfecto para quienes buscan una visión general y la guía básica para la prevención de la salud. Ideal para comenzar el viaje hacia una mejor salud."
+        },
+        core: {
+          title: "Core",
+          highlight: "90+ Biomarcadores", 
+          description: "Diseñado para la optimización y el control de longevidad, dirigido a aquellos que van un paso más allá para entender profundamente su cuerpo."
+        },
+        advanced: {
+          title: "Advanced",
+          highlight: "120 Biomarcadores",
+          description: "Para personas que no dejan nada al azar y lo quieren tener todo controlado. La evaluación más completa y exhaustiva disponible."
+        }
+      },
       essentialPackage: "Essential Análisis",
       male: "Hombre",
       female: "Mujer",
@@ -60,6 +78,8 @@ const translations = {
       removeFromAnalysis: "Quitar del análisis",
       viewBiomarkers: "Ver Biomarcadores",
       hideBiomarkers: "Ocultar Biomarcadores",
+      viewAddOns: "Ver Add-Ons",
+      hideAddOns: "Ocultar Add-Ons",
       marketPrice: "P.V.P Mercado",
       ourPrice: "Nuestro Precio",
       youSave: "Ahorras",
@@ -1001,10 +1021,28 @@ const translations = {
     },
     // Medical Systems Explorer
     systems: {
-      title: "Essential",
+      title: "Longevity Analytics",
       titleHighlight: "Analysis",
-      description: "The Essential provides the information that forms the central axis of your health, and the addition of specialized Add-Ons according to your specific objectives allows you to personalize and adapt your analytics.",
+      description: "We offer three personalized analysis packages to better adapt to the specific needs of each individual: Essential for fundamental analysis, Core for specialized intermediate evaluation, and Advanced for the most complete and exhaustive evaluation of your health and longevity.",
       essentialDescription: "The Essential Analysis examines fundamental biomarkers to draw an accurate picture of your current health status and includes calculation of PhenoAge (biological age) based on 9 scientifically validated biomarkers. With this data we can anticipate silent risks, establish therapeutic priorities and define whether to add additional modules (add-ons). Transforming analytical science into personalized decisions and a clear action plan.",
+      // Tres perfiles de análisis
+      analysisProfiles: {
+        essential: {
+          title: "Essential",
+          highlight: "46 Biomarkers",
+          description: "Perfect for those seeking an overview and basic guidance for health prevention. Ideal for starting your journey towards better health."
+        },
+        core: {
+          title: "Core",
+          highlight: "90+ Biomarkers",
+          description: "Designed for optimization and longevity control, aimed at those who go one step further to deeply understand their body."
+        },
+        advanced: {
+          title: "Advanced", 
+          highlight: "120 Biomarkers",
+          description: "For people who leave nothing to chance and want to have everything under control. The most complete and exhaustive evaluation available."
+        }
+      },
       essentialPackage: "Essential Analysis",
       male: "Male",
       female: "Female",
@@ -1014,6 +1052,8 @@ const translations = {
       removeFromAnalysis: "Remove from analysis",
       viewBiomarkers: "View Biomarkers",
       hideBiomarkers: "Hide Biomarkers",
+      viewAddOns: "View Add-Ons",
+      hideAddOns: "Hide Add-Ons",
       marketPrice: "Market Price",
       ourPrice: "Our Price",
       youSave: "You Save",
@@ -1955,10 +1995,28 @@ const translations = {
     },
     // Medical Systems Explorer
     systems: {
-      title: "Analyse",
-      titleHighlight: "Essentielle",
-      description: "L'Essentiel fournit les informations qui forment l'axe central de votre santé, et l'ajout de modules spécialisés selon vos objectifs spécifiques vous permet de personnaliser et d'adapter votre analytique.",
+      title: "Longevity Analytics",
+      titleHighlight: "Analyse",
+      description: "Nous offrons trois paquets d'analyse personnalisés pour mieux nous adapter aux besoins spécifiques de chaque individu : Essentiel pour l'analyse fondamentale, Core pour une évaluation intermédiaire spécialisée, et Avancé pour l'évaluation la plus complète et exhaustive de votre santé et longévité.",
       essentialDescription: "L'Analyse Essentielle examine les biomarqueurs fondamentaux pour dresser une image précise de votre état de santé actuel et inclut le calcul de PhenoAge (âge biologique) basé sur 9 biomarqueurs scientifiquement validés. Avec ces données, nous pouvons anticiper les risques silencieux, établir des priorités thérapeutiques et définir s'il convient d'ajouter des modules supplémentaires (add-ons). Transformant la science analytique en décisions personnalisées et un plan d'action clair.",
+      // Tres perfiles de análisis
+      analysisProfiles: {
+        essential: {
+          title: "Essentiel",
+          highlight: "46 Biomarqueurs",
+          description: "Parfait pour ceux qui cherchent une vue d'ensemble et les conseils de base pour la prévention de la santé. Idéal pour commencer votre voyage vers une meilleure santé."
+        },
+        core: {
+          title: "Core",
+          highlight: "90+ Biomarqueurs",
+          description: "Conçu pour l'optimisation et le contrôle de la longévité, destiné à ceux qui vont un pas plus loin pour comprendre profondément leur corps."
+        },
+        advanced: {
+          title: "Avancé",
+          highlight: "120 Biomarqueurs", 
+          description: "Pour les personnes qui ne laissent rien au hasard et veulent tout avoir sous contrôle. L'évaluation la plus complète et exhaustive disponible."
+        }
+      },
       essentialPackage: "Analyse Essentielle",
       male: "Homme",
       female: "Femme",
@@ -1968,6 +2026,8 @@ const translations = {
       removeFromAnalysis: "Retirer de l'analyse",
       viewBiomarkers: "Voir les Biomarqueurs",
       hideBiomarkers: "Masquer les Biomarqueurs",
+      viewAddOns: "Voir les Modules",
+      hideAddOns: "Masquer les Modules",
       marketPrice: "Prix du Marché",
       ourPrice: "Notre Prix",
       youSave: "Vous Économisez",

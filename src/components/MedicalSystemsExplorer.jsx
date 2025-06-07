@@ -7,7 +7,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown, FaChevronUp, FaCheck, FaPlus, FaMinus } from 'react-icons/fa';
-import { getEssentialPackageForGender, getAddOnPackagesForGender } from '../data/biomarkers';
+// Imports de la nueva arquitectura (Essential, Core, Advanced)
+import { 
+  essentialPackage,
+  corePackage,
+  advancedPackage
+} from '../data/analysisPackages';
+// Imports de add-ons desde nueva arquitectura
+import { getAddOnPackagesForGender } from '../data/addOnPackages';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -15,6 +22,8 @@ const MedicalSystemsExplorer = () => {
   const { t } = useLanguage(); // Hook para traducciones
   const [selectedGender, setSelectedGender] = useState('male'); // Género por defecto
   const [expandedBiomarkers, setExpandedBiomarkers] = useState([]); // Ningún biomarcador expandido por defecto
+  const [selectedProfile, setSelectedProfile] = useState('essential'); // Perfil seleccionado por defecto
+  const [showAddOns, setShowAddOns] = useState(false); // Estado para mostrar/ocultar add-ons
   
   // Usar el contexto para las selecciones de biomarcadores
   const {
@@ -89,8 +98,10 @@ const MedicalSystemsExplorer = () => {
     getActualBiomarkerCount
   } = useBiomarkerSelection();
 
-  // Obtener datos filtrados por género
-  const essentialPackage = getEssentialPackageForGender(selectedGender);
+  // Obtener datos filtrados por género usando nueva arquitectura
+  const essentialData = essentialPackage.getForGender(selectedGender);
+  const coreData = corePackage.getForGender(selectedGender);
+  const advancedData = advancedPackage.getForGender(selectedGender);
   const addOnPackages = getAddOnPackagesForGender(selectedGender);
 
   // Función para obtener las características traducidas del Essential
@@ -118,6 +129,68 @@ const MedicalSystemsExplorer = () => {
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
     // No forzar la apertura del Essential al cambiar género
+  };
+
+  const handleProfileSelection = (profile) => {
+    setSelectedProfile(profile);
+    // Cerrar biomarcadores expandidos al cambiar perfil
+    setExpandedBiomarkers([]);
+  };
+
+  // Función para obtener datos del perfil seleccionado
+  const getSelectedProfileData = () => {
+    switch(selectedProfile) {
+      case 'essential':
+        return {
+          name: t('systems.analysisProfiles.essential.title'),
+          description: t('systems.essentialDescription'),
+          biomarkers: essentialData.biomarkers,
+          testCount: essentialData.testCount,
+          features: getEssentialFeatures(),
+          price: `${essentialData.price}€`, // Precio Prevenii (nuestro precio de venta)
+          pvp: `${essentialData.marketPrice}€` // Precio Market (PVP/precio referencial)
+        };
+      case 'core':
+        return {
+          name: t('systems.analysisProfiles.core.title'),
+          description: "El Core Analysis amplía el Essential con biomarcadores especializados para evaluación cardiovascular avanzada, perfil hormonal completo y marcadores inflamatorios específicos. Incluye análisis de estrés oxidativo y evaluación nutricional detallada.",
+          biomarkers: coreData.biomarkers,
+          testCount: coreData.testCount,
+          features: [
+            "Todo lo incluido en Essential",
+            "Perfil cardiovascular avanzado", 
+            "Hormonas completas (hombre/mujer)",
+            "Marcadores inflamatorios específicos",
+            "Estrés oxidativo y antioxidantes",
+            "Evaluación nutricional detallada",
+            "Marcadores tumorales básicos",
+            "Biomarcadores de envejecimiento"
+          ],
+          price: `${coreData.price}€`,
+          pvp: `${coreData.marketPrice}€`
+        };
+      case 'advanced':
+        return {
+          name: t('systems.analysisProfiles.advanced.title'),
+          description: "El Advanced Analysis es nuestra evaluación más completa, incluyendo todos los biomarcadores disponibles, análisis genético opcional, evaluación de microbioma, marcadores tumorales ampliados y assessment completo de longevidad.",
+          biomarkers: advancedData.biomarkers,
+          testCount: advancedData.testCount,
+          features: [
+            "Todo lo incluido en Core",
+            "Panel completo de metales pesados",
+            "Análisis de microbioma intestinal",
+            "Marcadores tumorales ampliados",
+            "Evaluación de longevidad avanzada",
+            "Perfil de coagulación completo",
+            "Biomarcadores de fertilidad",
+            "Assessment de estrés oxidativo completo"
+          ],
+          price: `${advancedData.price}€`,
+          pvp: `${advancedData.marketPrice}€`
+        };
+      default:
+        return getSelectedProfileData.call(this, 'essential');
+    }
   };
 
   // Función para toggle de Intolerancia Alimentaria
@@ -257,6 +330,15 @@ const MedicalSystemsExplorer = () => {
 
   const toggleOvaParasitesDigestivoSelection = () => {
     setSelectedOvaParasitesDigestivo(prev => !prev);
+  };
+
+  // Función para mostrar/ocultar Add-Ons
+  const toggleAddOnsView = () => {
+    setShowAddOns(prev => !prev);
+    // Si se ocultan los add-ons, cerrar también cualquier biomarcador expandido
+    if (showAddOns) {
+      setExpandedBiomarkers([]);
+    }
   };
 
 
@@ -406,8 +488,8 @@ const MedicalSystemsExplorer = () => {
           <div className="flex items-center gap-3 flex-1">
             <div className="w-3 h-3 gradient-earth rounded-full flex-shrink-0"></div>
             
-            {/* Selector específico para Intolerancia Alimentaria - Lado Izquierdo */}
-            {isIntolerancia && (
+            {/* Selector específico para Intolerancia Alimentaria - Lado Izquierdo - SOLO en add-ons */}
+            {isIntolerancia && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -430,8 +512,8 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
             
-            {/* Selector específico para Metaboloma (orina/heces) - Lado Izquierdo */}
-            {isMetaboloma && (
+            {/* Selector específico para Metaboloma (orina/heces) - Lado Izquierdo - SOLO en add-ons */}
+            {isMetaboloma && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -456,8 +538,8 @@ const MedicalSystemsExplorer = () => {
             
 
 
-            {/* Selectores para los nuevos tests genómicos */}
-            {isMyPharma && (
+            {/* Selectores para los nuevos tests genómicos - SOLO en add-ons */}
+            {isMyPharma && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -480,7 +562,7 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {isMyDetox && (
+            {isMyDetox && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -503,7 +585,7 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {isMyDiet && (
+            {isMyDiet && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -526,7 +608,7 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {isMyAgeing && (
+            {isMyAgeing && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -549,7 +631,7 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {isMySport && (
+            {isMySport && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -572,7 +654,7 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {isMySuplements && (
+            {isMySuplements && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -595,8 +677,8 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Lp(a) * */}
-            {isLpA && (
+            {/* Selector específico para Lp(a) * - SOLO en add-ons */}
+            {isLpA && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -621,8 +703,8 @@ const MedicalSystemsExplorer = () => {
 
 
 
-            {/* Selector específico para Longitud telomérica */}
-            {isLongitudTelomerica && (
+            {/* Selector específico para Longitud telomérica - SOLO en add-ons */}
+            {isLongitudTelomerica && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -647,8 +729,8 @@ const MedicalSystemsExplorer = () => {
 
 
 
-            {/* Selector específico para Ácidos grasos % */}
-            {isAcidosGrasos && (
+            {/* Selector específico para Ácidos grasos % - SOLO en add-ons */}
+            {isAcidosGrasos && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -671,8 +753,8 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Vitamina K1 */}
-            {isVitaminaK1 && (
+            {/* Selector específico para Vitamina K1 - SOLO en add-ons */}
+            {isVitaminaK1 && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -696,7 +778,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para IL-6 */}
-            {isIL6 && (
+            {isIL6 && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -720,7 +802,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para TNF-α */}
-            {isTNFα && (
+            {isTNFα && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -744,7 +826,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Helicobacter pylori IgG An */}
-            {isHelicobacter && (
+            {isHelicobacter && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -768,7 +850,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Estradiol en Hormonas */}
-            {isEstradiolHormonas && (
+            {isEstradiolHormonas && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -792,7 +874,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Estradiol en Endocrino */}
-            {isEstradiolEndocrino && (
+            {isEstradiolEndocrino && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -816,7 +898,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Prolactina en Hormonas */}
-            {isProlactinaHormonas && (
+            {isProlactinaHormonas && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -840,7 +922,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Prolactina en Endocrino */}
-            {isProlactinaEndocrino && (
+            {isProlactinaEndocrino && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -864,7 +946,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para LH en Hormonas */}
-            {isLHHormonas && (
+            {isLHHormonas && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -888,7 +970,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para LH en Endocrino */}
-            {isLHEndocrino && (
+            {isLHEndocrino && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -912,7 +994,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para FSH en Hormonas */}
-            {isFSHHormonas && (
+            {isFSHHormonas && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -936,7 +1018,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para FSH en Endocrino */}
-            {isFSHEndocrino && (
+            {isFSHEndocrino && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -960,7 +1042,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para FSH en Cancer */}
-            {isFSHCancer && (
+            {isFSHCancer && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -984,7 +1066,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Vitamina C en Estrés Oxidativo */}
-            {isVitaminaCOxidativeCell && (
+            {isVitaminaCOxidativeCell && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -1008,7 +1090,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Vitamina C en IV & Nutrientes */}
-            {isVitaminaCIVNutrients && (
+            {isVitaminaCIVNutrients && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -1032,7 +1114,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Urianálisis + sedimento en Digestivo */}
-            {isUrinalisisDigestivo && (
+            {isUrinalisisDigestivo && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -1056,7 +1138,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Ova & Parasites stool en Digestivo */}
-            {isOvaParasitesDigestivo && (
+            {isOvaParasitesDigestivo && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -1080,7 +1162,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para VSG en Endocrino */}
-            {isVSGEndocrino && (
+            {isVSGEndocrino && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -1104,7 +1186,7 @@ const MedicalSystemsExplorer = () => {
             )}
 
             {/* Selector específico para Vitamina D 1,25-OH en Endocrino */}
-            {isVitaminaD125OHEndocrino && (
+            {isVitaminaD125OHEndocrino && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
@@ -1138,7 +1220,7 @@ const MedicalSystemsExplorer = () => {
           </div>
           
           <div className="flex items-center gap-2">
-            {biomarker.description && (
+            {t(`biomarkers.${biomarker.code}.description`) && (
               <div className="bg-earth-100 p-1.5 rounded-full text-earth hover:bg-earth-200 transition-colors">
                 {isExpanded ? (
                   <FaChevronUp className="text-xs" />
@@ -1152,7 +1234,7 @@ const MedicalSystemsExplorer = () => {
         
         {/* Descripción expandible */}
         <AnimatePresence>
-          {isExpanded && biomarker.description && (
+          {isExpanded && t(`biomarkers.${biomarker.code}.description`) && (
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
@@ -1163,7 +1245,7 @@ const MedicalSystemsExplorer = () => {
               <div className="px-4 pb-3 bg-earth-50 border-t border-earth">
                 <div className="p-3 mt-2">
                   <p className="text-xs text-stone leading-relaxed italic">
-                    {t(`biomarkers.${biomarker.code}.description`, biomarker.description)}
+                    {t(`biomarkers.${biomarker.code}.description`)}
                   </p>
                 </div>
               </div>
@@ -1177,6 +1259,8 @@ const MedicalSystemsExplorer = () => {
   return (
     <section className="bg-soft-cream py-20" id="systems">
       <div className="container max-w-7xl">
+
+
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -1194,6 +1278,128 @@ const MedicalSystemsExplorer = () => {
           </div>
         </motion.div>
 
+        {/* Tres Perfiles de Análisis - Entre Header y Essential Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 items-stretch"
+        >
+          {/* Perfil 1: Essential */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            onClick={() => handleProfileSelection('essential')}
+            className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 h-72 flex flex-col ${
+              selectedProfile === 'essential' 
+                ? 'bg-earth-100 border-earth shadow-xl ring-2 ring-earth' 
+                : 'bg-warm-white border-earth hover:shadow-xl hover:border-warm'
+            }`}
+          >
+            <div className="text-center flex-1 flex flex-col justify-between">
+              <div>
+                <div className={`w-12 h-12 gradient-earth rounded-xl flex items-center justify-center mx-auto mb-4 ${
+                  selectedProfile === 'essential' ? 'shadow-lg' : ''
+                }`}>
+                  <span className="text-white text-xl font-bold">LA</span>
+                </div>
+                <h3 className={`text-xl font-bold mb-2 ${
+                  selectedProfile === 'essential' ? 'text-stone' : 'text-stone'
+                }`}>
+                  {t('systems.analysisProfiles.essential.title')}
+                </h3>
+                <div className={`text-2xl font-bold mb-3 ${
+                  selectedProfile === 'essential' ? 'text-earth' : 'text-earth'
+                }`}>
+                  {t('systems.analysisProfiles.essential.highlight')}
+                </div>
+              </div>
+              <p className={`text-sm leading-relaxed ${
+                selectedProfile === 'essential' ? 'text-taupe' : 'text-taupe'
+              }`}>
+                {t('systems.analysisProfiles.essential.description')}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Perfil 2: Core */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            onClick={() => handleProfileSelection('core')}
+            className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 h-72 flex flex-col ${
+              selectedProfile === 'core' 
+                ? 'bg-warm-100 border-warm shadow-xl ring-2 ring-warm' 
+                : 'bg-warm-white border-warm hover:shadow-xl hover:border-earth'
+            }`}
+          >
+            <div className="text-center flex-1 flex flex-col justify-between">
+              <div>
+                <div className={`w-12 h-12 gradient-earth rounded-xl flex items-center justify-center mx-auto mb-4 ${
+                  selectedProfile === 'core' ? 'shadow-lg' : ''
+                }`}>
+                  <span className="text-white text-xl font-bold">LA</span>
+                </div>
+                <h3 className={`text-xl font-bold mb-2 ${
+                  selectedProfile === 'core' ? 'text-stone' : 'text-stone'
+                }`}>
+                  {t('systems.analysisProfiles.core.title')}
+                </h3>
+                <div className={`text-2xl font-bold mb-3 ${
+                  selectedProfile === 'core' ? 'text-warm' : 'text-warm'
+                }`}>
+                  {t('systems.analysisProfiles.core.highlight')}
+                </div>
+              </div>
+              <p className={`text-sm leading-relaxed ${
+                selectedProfile === 'core' ? 'text-taupe' : 'text-taupe'
+              }`}>
+                {t('systems.analysisProfiles.core.description')}
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Perfil 3: Advanced */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            onClick={() => handleProfileSelection('advanced')}
+            className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 h-72 flex flex-col ${
+              selectedProfile === 'advanced' 
+                ? 'bg-earth-100 border-earth shadow-xl ring-2 ring-earth' 
+                : 'bg-warm-white border-earth hover:shadow-xl hover:border-warm'
+            }`}
+          >
+            <div className="text-center flex-1 flex flex-col justify-between">
+              <div>
+                <div className={`w-12 h-12 gradient-earth rounded-xl flex items-center justify-center mx-auto mb-4 ${
+                  selectedProfile === 'advanced' ? 'shadow-lg' : ''
+                }`}>
+                  <span className="text-white text-xl font-bold">LA</span>
+                </div>
+                <h3 className={`text-xl font-bold mb-2 ${
+                  selectedProfile === 'advanced' ? 'text-stone' : 'text-stone'
+                }`}>
+                  {t('systems.analysisProfiles.advanced.title')}
+                </h3>
+                <div className={`text-2xl font-bold mb-3 ${
+                  selectedProfile === 'advanced' ? 'text-earth' : 'text-earth'
+                }`}>
+                  {t('systems.analysisProfiles.advanced.highlight')}
+                </div>
+              </div>
+              <p className={`text-sm leading-relaxed ${
+                selectedProfile === 'advanced' ? 'text-taupe' : 'text-taupe'
+              }`}>
+                {t('systems.analysisProfiles.advanced.description')}
+              </p>
+            </div>
+          </motion.div>
+        </motion.div>
+
         {/* Essential Package - Card Principal de Doble Ancho */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -1204,99 +1410,100 @@ const MedicalSystemsExplorer = () => {
           <div className="bg-warm-white rounded-2xl shadow-xl overflow-hidden border-2 border-earth w-full">
             {/* Essential Header */}
             <div className="bg-earth-50 p-6 border-b-2 border-earth">
-              <div className="flex items-center justify-between">
-                {/* Contenido principal */}
-                <div className="flex items-center gap-6 flex-1">
-                  <div className="w-16 h-16 gradient-earth rounded-full flex items-center justify-center">
-                    <span className="text-white text-xl font-bold">EA</span>
+              {/* Header con ícono, título y precio en esquina superior derecha */}
+              <div className="flex items-start justify-between mb-6">
+                <div className="flex items-center gap-6">
+                  <div className="w-16 h-16 gradient-earth rounded-xl flex items-center justify-center">
+                    <span className="text-white text-xl font-bold">LA</span>
                   </div>
-                  <div>
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-2xl font-bold text-stone">
-                        {essentialPackage.name}
-                      </h3>
-                      
-                      {/* Gender Selector - Al lado del título Essential */}
-                      <div className="essential-gender-selector">
-                        <button
-                          onClick={() => handleGenderChange('male')}
-                          className={`
-                            essential-gender-button
-                            ${selectedGender === 'male' 
-                              ? 'bg-earth text-white shadow-sm' 
-                              : 'bg-earth-50 text-earth hover:bg-earth-100'
-                            }
-                          `}
-                        >
-                          <span>♂</span>
-                        </button>
-                        <button
-                          onClick={() => handleGenderChange('female')}
-                          className={`
-                            essential-gender-button
-                            ${selectedGender === 'female' 
-                              ? 'bg-warm text-white shadow-sm' 
-                              : 'bg-warm-50 text-warm hover:bg-warm-100'
-                            }
-                          `}
-                        >
-                          <span>♀</span>
-                        </button>
-                      </div>
-                    </div>
-                    <p className="text-taupe text-base mb-4 max-w-2xl">
-                      {t('systems.essentialDescription')}
-                    </p>
-                    <div className="flex items-center gap-6">
-                      <div className="flex flex-col">
-                        <div className="text-2xl font-bold text-earth">
-                          {(() => {
-                            const essentialPricing = essentialPackage.getPricing(selectedGender);
-                            return `${essentialPricing.price}€`;
-                          })()}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {t('systems.pvp')}: {(() => {
-                            const essentialPricing = essentialPackage.getPricing(selectedGender);
-                            return `${essentialPricing.costPrice}€`;
-                          })()}
-                        </div>
-                      </div>
-                      <div className="text-taupe">
-                        <span className="font-semibold text-sm">{essentialPackage.testCount} {t('systems.biomarkers')}</span>
-                      </div>
+                  <div className="flex items-center gap-3">
+                    <h3 className="text-2xl font-bold text-stone">
+                      {getSelectedProfileData().name}
+                    </h3>
+                    
+                    {/* Gender Selector - Al lado del título */}
+                    <div className="essential-gender-selector">
+                      <button
+                        onClick={() => handleGenderChange('male')}
+                        className={`
+                          essential-gender-button
+                          ${selectedGender === 'male' 
+                            ? 'bg-earth text-white shadow-sm' 
+                            : 'bg-earth-50 text-earth hover:bg-earth-100'
+                          }
+                        `}
+                      >
+                        <span>♂</span>
+                      </button>
+                      <button
+                        onClick={() => handleGenderChange('female')}
+                        className={`
+                          essential-gender-button
+                          ${selectedGender === 'female' 
+                            ? 'bg-warm text-white shadow-sm' 
+                            : 'bg-warm-50 text-warm hover:bg-warm-100'
+                          }
+                        `}
+                      >
+                        <span>♀</span>
+                      </button>
                     </div>
                   </div>
                 </div>
 
-                {/* Ver Biomarcadores Button - Mantener a la derecha */}
-                <button 
-                  onClick={() => toggleBiomarker('essential')}
-                  className="biomarkers-button-position flex items-center gap-2 bg-warm-white text-earth px-6 py-3 rounded-full font-semibold border-2 border-earth hover:bg-earth-50 hover:border-warm transition-all shadow-md text-sm"
-                >
-                  {t('systems.viewBiomarkers')}
-                  {expandedBiomarkers.includes('essential') ? (
-                    <FaChevronUp className="text-sm" />
-                  ) : (
-                    <FaChevronDown className="text-sm" />
-                  )}
-                </button>
+                {/* Precio en esquina superior derecha */}
+                <div className="text-right">
+                  <div className="text-2xl font-bold text-earth">
+                    {getSelectedProfileData().price}
+                  </div>
+                  <div className="text-sm text-gray-500">
+                    {t('systems.pvp')}: {getSelectedProfileData().pvp}
+                  </div>
+                  <div className="text-taupe text-sm font-semibold mt-1">
+                    {getSelectedProfileData().testCount} {t('systems.biomarkers')}
+                  </div>
+                </div>
+              </div>
+
+              {/* Descripción abajo */}
+              <div className="ml-22" style={{ marginRight: '224px' }}>
+                <p className="text-taupe text-base leading-relaxed">
+                  {getSelectedProfileData().description}
+                </p>
               </div>
 
               {/* Features Grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 ml-22">
-                {getEssentialFeatures().map((feature, index) => (
+                {getSelectedProfileData().features.map((feature, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <FaCheck className="text-earth text-sm" />
                     <span className="text-taupe text-sm">{feature}</span>
                   </div>
                 ))}
               </div>
+
             </div>
 
-            {/* Essential Biomarkers List */}
+            {/* Profile Actions - Mismo estilo que Add-Ons */}
+            <div className="p-6">
+              <div className="flex flex-col gap-3">
+                <button 
+                  onClick={() => toggleBiomarker(selectedProfile)}
+                  className="flex items-center justify-between w-full py-3 px-4 rounded-lg border-2 border-cream hover:bg-earth-50 hover:border-earth transition-all font-medium"
+                >
+                  <span className="text-stone font-semibold text-sm">{t('systems.viewBiomarkers')}</span>
+                  {expandedBiomarkers.includes(selectedProfile) ? (
+                    <FaChevronUp className="text-taupe text-sm" />
+                  ) : (
+                    <FaChevronDown className="text-taupe text-sm" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Profile Biomarkers List */}
             <AnimatePresence>
-              {expandedBiomarkers.includes('essential') && (
+              {expandedBiomarkers.includes(selectedProfile) && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
@@ -1307,11 +1514,11 @@ const MedicalSystemsExplorer = () => {
                   <div className="p-6 bg-earth-50">
                     <div className="bg-warm-white rounded-xl p-6 border-2 border-earth shadow-lg">
                       <h4 className="text-lg font-bold text-stone mb-6 flex items-center gap-2 text-center justify-center">
-                        {t('systems.biomarkersIncludedEssential')} ({essentialPackage.testCount} {t('systems.tests')})
+                        {t('systems.biomarkersOf')} {getSelectedProfileData().name} ({getSelectedProfileData().testCount} {t('systems.tests')})
                       </h4>
-                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
-                        {essentialPackage.biomarkers.map((biomarker, index) => (
-                          <BiomarkerCard key={biomarker.code} biomarker={biomarker} index={index} addOnId="essential" />
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-4">
+                        {getSelectedProfileData().biomarkers.map((biomarker, index) => (
+                          <BiomarkerCard key={biomarker.code} biomarker={biomarker} index={index} addOnId={null} />
                         ))}
                        </div>
                     </div>
@@ -1334,9 +1541,37 @@ const MedicalSystemsExplorer = () => {
             <p className="text-sm text-gray-600 text-center italic mt-8 max-w-2xl mx-auto">
               <em>* {t('systems.geneticPricesDisclaimer')}</em>
             </p>
+            
+            {/* Botón Ver Add-Ons - Mismo estilo que ver biomarcadores */}
+            <div className="p-6">
+              <div className="flex flex-col gap-3">
+                <button 
+                  onClick={toggleAddOnsView}
+                  className="flex items-center justify-between w-full py-3 px-4 rounded-lg border-2 border-cream hover:bg-earth-50 hover:border-earth transition-all font-medium"
+                >
+                  <span className="text-stone font-semibold text-sm">{showAddOns ? t('systems.hideAddOns') : t('systems.viewAddOns')}</span>
+                  {showAddOns ? (
+                    <FaChevronUp className="text-taupe text-sm" />
+                  ) : (
+                    <FaChevronDown className="text-taupe text-sm" />
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-8">
-            {Object.values(addOnPackages).map((addOn, index) => (
+          
+          {/* Grid de Add-Ons con animación */}
+          <AnimatePresence>
+            {showAddOns && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="overflow-hidden"
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-8">
+                  {Object.values(addOnPackages).map((addOn, index) => (
               <motion.div
                 key={addOn.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -1475,8 +1710,11 @@ const MedicalSystemsExplorer = () => {
                   </AnimatePresence>
                 </div>
               </motion.div>
-            ))}
-          </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* Bottom CTA */}
