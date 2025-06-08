@@ -1312,7 +1312,7 @@ const MedicalSystemsExplorer = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             onClick={() => handleProfileSelection('essential')}
-            className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 w-full h-80 flex flex-col ${
+            className={`package-profile-card cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 w-full h-80 flex flex-col ${
               selectedProfile === 'essential' 
                 ? 'bg-earth-100 border-earth shadow-xl ring-2 ring-earth' 
                 : 'bg-warm-white border-earth hover:shadow-xl hover:border-warm'
@@ -1350,7 +1350,7 @@ const MedicalSystemsExplorer = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.15 }}
             onClick={() => handleProfileSelection('performance')}
-            className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 w-full h-80 flex flex-col ${
+            className={`package-profile-card cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 w-full h-80 flex flex-col ${
               selectedProfile === 'performance' 
                 ? 'bg-earth-100 border-earth shadow-xl ring-2 ring-earth' 
                 : 'bg-warm-white border-earth hover:shadow-xl hover:border-warm'
@@ -1388,7 +1388,7 @@ const MedicalSystemsExplorer = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             onClick={() => handleProfileSelection('core')}
-            className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 w-full h-80 flex flex-col ${
+            className={`package-profile-card cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 w-full h-80 flex flex-col ${
               selectedProfile === 'core' 
                 ? 'bg-warm-100 border-warm shadow-xl ring-2 ring-warm' 
                 : 'bg-warm-white border-warm hover:shadow-xl hover:border-earth'
@@ -1426,7 +1426,7 @@ const MedicalSystemsExplorer = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
             onClick={() => handleProfileSelection('advanced')}
-            className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 w-full h-80 flex flex-col ${
+            className={`package-profile-card cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 w-full h-80 flex flex-col ${
               selectedProfile === 'advanced' 
                 ? 'bg-earth-100 border-earth shadow-xl ring-2 ring-earth' 
                 : 'bg-warm-white border-earth hover:shadow-xl hover:border-warm'
