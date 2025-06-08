@@ -30,6 +30,19 @@ export const ESSENTIAL_BIOMARKER_CODES_COMMON = [
 
 export const ESSENTIAL_BIOMARKER_CODES_MALE_ONLY = ['B6160']; // Testosterona total
 
+// Performance: Paquete enfocado en rendimiento deportivo (51 comunes + específicos por género)
+export const PERFORMANCE_BIOMARKER_CODES_COMMON = [
+  'H0000', 'H1420', 'B0000', 'B0200', 'B5600', 'B6510', 'B0270', 'B0750', 'B0020', 'B0030', 
+  'B0250', 'B1540', 'B1260', 'B1970', 'B0050', 'B0060', 'B0070', 'B0110', 'B0010', 'B0040', 
+  'B0170', 'B0180', 'B3110', 'T2590', 'B5120', 'B5290', 'B6020', 'B6160', 'B5850', 'B6040', 
+  'B6070', 'B6030', 'B6130', 'B2120', 'B0220', 'B3170', 'B5590', 'B7790', 'I2081', 'B0120', 
+  'B0100', 'B1600', 'B8060', 'T3920', 'B8050', 'B0130', 'B3210', 'B7260', 'B5370', 'B6180', 
+  'B6190', 'B5410', 'T1191', 'T2830', 'T1061'
+];
+
+export const PERFORMANCE_BIOMARKER_CODES_MALE_ONLY = ['D0601']; // Testosterona libre
+export const PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY = ['B5350', 'B5800', 'B5380', 'B5932']; // Estradiol, LH, FSH, Progesterona
+
 // Core: Códigos con ✅✅ en tabla Core (79 comunes + específicos por género)
 export const CORE_BIOMARKER_CODES_COMMON = [
   'H0000', 'H1420', 'B0000', 'B0200', 'B5600', 'B6510', 'B0020', 'B0030', 'B0250', 'B1540',
@@ -177,6 +190,21 @@ export const essentialPackage = createPackage({
   femaleOnlyCodes: []
 });
 
+// Paquete Performance
+export const performancePackage = createPackage({
+  id: 'performance',
+  name: 'Performance',
+  description: 'Paquete especializado en rendimiento deportivo y optimización física, incluyendo biomarcadores específicos para energía, recuperación y función muscular',
+  color: 'gradient-sport',
+  bgColor: 'bg-sport-50',
+  borderColor: 'border-sport',
+  textColor: 'text-sport',
+  targetAudience: 'Ideal para atletas y personas activas que buscan optimizar su rendimiento físico',
+  commonCodes: PERFORMANCE_BIOMARKER_CODES_COMMON,
+  maleOnlyCodes: PERFORMANCE_BIOMARKER_CODES_MALE_ONLY,
+  femaleOnlyCodes: PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY
+});
+
 // Paquete Core
 export const corePackage = createPackage({
   id: 'core',
@@ -212,6 +240,7 @@ export const advancedPackage = createPackage({
 // ================================
 
 export const essentialBiomarkers = essentialPackage.biomarkers;
+export const performanceBiomarkers = performancePackage.biomarkers;
 export const coreBiomarkers = corePackage.biomarkers;
 export const advancedBiomarkers = advancedPackage.biomarkers;
 
@@ -261,16 +290,18 @@ export const getPackageTestCount = (packageData, gender) => {
  */
 export const validatePackageCodes = () => {
   const allEssentialCodes = [...ESSENTIAL_BIOMARKER_CODES_COMMON, ...ESSENTIAL_BIOMARKER_CODES_MALE_ONLY];
+  const allPerformanceCodes = [...PERFORMANCE_BIOMARKER_CODES_COMMON, ...PERFORMANCE_BIOMARKER_CODES_MALE_ONLY, ...PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY];
   const allCoreCodes = [...CORE_BIOMARKER_CODES_COMMON, ...CORE_BIOMARKER_CODES_MALE_ONLY, ...CORE_BIOMARKER_CODES_FEMALE_ONLY];
   const allAdvancedCodes = [...ADVANCED_BIOMARKER_CODES_COMMON, ...ADVANCED_BIOMARKER_CODES_MALE_ONLY, ...ADVANCED_BIOMARKER_CODES_FEMALE_ONLY];
   
-  const allPackageCodes = [...allEssentialCodes, ...allCoreCodes, ...allAdvancedCodes];
+  const allPackageCodes = [...allEssentialCodes, ...allPerformanceCodes, ...allCoreCodes, ...allAdvancedCodes];
   const uniquePackageCodes = [...new Set(allPackageCodes)];
   
   return {
     isValid: true, // Simplificado - validación completa en biomarkersDict.js
     packages: {
       essential: allEssentialCodes.length,
+      performance: allPerformanceCodes.length,
       core: allCoreCodes.length,
       advanced: allAdvancedCodes.length
     },
@@ -285,6 +316,7 @@ export const validatePackageCodes = () => {
 const validation = validatePackageCodes();
 console.log('✅ Paquetes refactorizados cargados:', {
   essential: `C:${ESSENTIAL_BIOMARKER_CODES_COMMON.length} M:${ESSENTIAL_BIOMARKER_CODES_MALE_ONLY.length}`,
+  performance: `C:${PERFORMANCE_BIOMARKER_CODES_COMMON.length} M:${PERFORMANCE_BIOMARKER_CODES_MALE_ONLY.length} F:${PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY.length}`,
   core: `C:${CORE_BIOMARKER_CODES_COMMON.length} M:${CORE_BIOMARKER_CODES_MALE_ONLY.length} F:${CORE_BIOMARKER_CODES_FEMALE_ONLY.length}`,
   advanced: `C:${ADVANCED_BIOMARKER_CODES_COMMON.length} M:${ADVANCED_BIOMARKER_CODES_MALE_ONLY.length} F:${ADVANCED_BIOMARKER_CODES_FEMALE_ONLY.length}`,
   architecture: 'REFACTORIZADA ✅'

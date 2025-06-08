@@ -623,3 +623,39 @@ section[id] {
   outline: none !important;
   box-shadow: none !important;
 }
+
+/* ================================
+   TEMA SPORT - COLORES DEPORTIVOS
+   ================================ */
+
+/* Variables CSS para tema sport */
+:root {
+  --sport-primary: #FF6B35;    /* Naranja energético */
+  --sport-secondary: #F7931E;  /* Naranja dorado */
+  --sport-accent: #FF8C42;     /* Naranja claro */
+  --sport-dark: #E55A2B;       /* Naranja oscuro */
+}
+
+/* Colores de fondo sport */
+.bg-sport { background-color: var(--sport-primary); }
+.bg-sport-50 { background-color: rgba(255, 107, 53, 0.05); }
+.bg-sport-100 { background-color: rgba(255, 107, 53, 0.1); }
+.bg-sport-200 { background-color: rgba(255, 107, 53, 0.2); }
+.bg-sport-600 { background-color: var(--sport-dark); }
+
+/* Colores de texto sport */
+.text-sport { color: var(--sport-primary); }
+.text-sport-600 { color: var(--sport-dark); }
+
+/* Colores de borde sport */
+.border-sport { border-color: var(--sport-primary); }
+.border-sport-600 { border-color: var(--sport-dark); }
+
+/* Gradiente sport */
+.gradient-sport {
+  background: linear-gradient(135deg, var(--sport-primary) 0%, var(--sport-secondary) 100%);
+}
+
+/* Hover effects sport */
+.hover\:bg-sport-600:hover { background-color: var(--sport-dark); }
+.hover\:border-sport-600:hover { border-color: var(--sport-dark); }

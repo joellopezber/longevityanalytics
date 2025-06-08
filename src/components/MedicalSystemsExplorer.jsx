@@ -7,9 +7,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaChevronDown, FaChevronUp, FaCheck, FaPlus, FaMinus } from 'react-icons/fa';
-// Imports de la nueva arquitectura (Essential, Core, Advanced)
+// Imports de la nueva arquitectura (Essential, Performance, Core, Advanced)
 import { 
   essentialPackage,
+  performancePackage,
   corePackage,
   advancedPackage
 } from '../data/analysisPackages';
@@ -100,6 +101,7 @@ const MedicalSystemsExplorer = () => {
 
   // Obtener datos filtrados por género usando nueva arquitectura
   const essentialData = essentialPackage.getForGender(selectedGender);
+  const performanceData = performancePackage.getForGender(selectedGender);
   const coreData = corePackage.getForGender(selectedGender);
   const advancedData = advancedPackage.getForGender(selectedGender);
   const addOnPackages = getAddOnPackagesForGender(selectedGender);
@@ -149,6 +151,25 @@ const MedicalSystemsExplorer = () => {
           features: getEssentialFeatures(),
           price: `${essentialData.price}€`, // Precio Prevenii (nuestro precio de venta)
           pvp: `${essentialData.marketPrice}€` // Precio Market (PVP/precio referencial)
+        };
+      case 'performance':
+        return {
+          name: 'Performance',
+          description: 'Paquete especializado en rendimiento deportivo y optimización física, incluyendo biomarcadores específicos para energía, recuperación y función muscular',
+          biomarkers: performanceData.biomarkers,
+          testCount: performanceData.testCount,
+          features: [
+            "Todo lo incluido en Essential",
+            "Biomarcadores de rendimiento deportivo",
+            "Marcadores de recuperación muscular",
+            "Perfil energético y metabólico",
+            "Hormonas específicas para atletas",
+            "Evaluación de estrés físico",
+            "Marcadores de hidratación",
+            "Biomarcadores de fatiga"
+          ],
+          price: `${performanceData.price}€`,
+          pvp: `${performanceData.marketPrice}€`
         };
       case 'core':
         return {
@@ -1323,7 +1344,45 @@ const MedicalSystemsExplorer = () => {
             </div>
           </motion.div>
 
-          {/* Perfil 2: Core */}
+          {/* Perfil 2: Performance */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            onClick={() => handleProfileSelection('performance')}
+            className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 h-72 flex flex-col ${
+              selectedProfile === 'performance' 
+                ? 'bg-sport-100 border-sport shadow-xl ring-2 ring-sport' 
+                : 'bg-warm-white border-sport hover:shadow-xl hover:border-sport-600'
+            }`}
+          >
+            <div className="text-center flex-1 flex flex-col justify-between">
+              <div>
+                <div className={`w-12 h-12 gradient-sport rounded-xl flex items-center justify-center mx-auto mb-4 ${
+                  selectedProfile === 'performance' ? 'shadow-lg' : ''
+                }`}>
+                  <span className="text-white text-xl font-bold">⚡</span>
+                </div>
+                <h3 className={`text-xl font-bold mb-2 ${
+                  selectedProfile === 'performance' ? 'text-stone' : 'text-stone'
+                }`}>
+                  Performance
+                </h3>
+                <div className={`text-2xl font-bold mb-3 ${
+                  selectedProfile === 'performance' ? 'text-sport' : 'text-sport'
+                }`}>
+                  Rendimiento Deportivo
+                </div>
+              </div>
+              <p className={`text-sm leading-relaxed ${
+                selectedProfile === 'performance' ? 'text-taupe' : 'text-taupe'
+              }`}>
+                Optimización física y biomarcadores específicos para atletas y personas activas
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Perfil 3: Core */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1361,7 +1420,7 @@ const MedicalSystemsExplorer = () => {
             </div>
           </motion.div>
 
-          {/* Perfil 3: Advanced */}
+          {/* Perfil 4: Advanced */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
