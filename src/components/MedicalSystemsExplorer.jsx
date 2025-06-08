@@ -1299,12 +1299,12 @@ const MedicalSystemsExplorer = () => {
           </div>
         </motion.div>
 
-        {/* Tres Perfiles de Análisis - Entre Header y Essential Card */}
+        {/* Cuatro Perfiles de Análisis - Entre Header y Essential Card */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 items-stretch"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 items-stretch"
         >
           {/* Perfil 1: Essential */}
           <motion.div
@@ -1352,16 +1352,16 @@ const MedicalSystemsExplorer = () => {
             onClick={() => handleProfileSelection('performance')}
             className={`cursor-pointer rounded-2xl p-6 shadow-lg border-2 transition-all duration-300 hover:scale-105 h-72 flex flex-col ${
               selectedProfile === 'performance' 
-                ? 'bg-sport-100 border-sport shadow-xl ring-2 ring-sport' 
-                : 'bg-warm-white border-sport hover:shadow-xl hover:border-sport-600'
+                ? 'bg-earth-100 border-earth shadow-xl ring-2 ring-earth' 
+                : 'bg-warm-white border-earth hover:shadow-xl hover:border-warm'
             }`}
           >
             <div className="text-center flex-1 flex flex-col justify-between">
               <div>
-                <div className={`w-12 h-12 gradient-sport rounded-xl flex items-center justify-center mx-auto mb-4 ${
+                <div className={`w-12 h-12 gradient-earth rounded-xl flex items-center justify-center mx-auto mb-4 ${
                   selectedProfile === 'performance' ? 'shadow-lg' : ''
                 }`}>
-                  <span className="text-white text-xl font-bold">⚡</span>
+                  <span className="text-white text-xl font-bold">LA</span>
                 </div>
                 <h3 className={`text-xl font-bold mb-2 ${
                   selectedProfile === 'performance' ? 'text-stone' : 'text-stone'
@@ -1369,7 +1369,7 @@ const MedicalSystemsExplorer = () => {
                   Performance
                 </h3>
                 <div className={`text-2xl font-bold mb-3 ${
-                  selectedProfile === 'performance' ? 'text-sport' : 'text-sport'
+                  selectedProfile === 'performance' ? 'text-earth' : 'text-earth'
                 }`}>
                   Rendimiento Deportivo
                 </div>
