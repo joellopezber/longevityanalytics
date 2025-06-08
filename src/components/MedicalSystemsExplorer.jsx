@@ -1304,7 +1304,7 @@ const MedicalSystemsExplorer = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 items-stretch"
+          className="grid grid-cols-4 gap-6 mb-12 items-stretch"
         >
           {/* Perfil 1: Essential */}
           <motion.div
@@ -1371,7 +1371,7 @@ const MedicalSystemsExplorer = () => {
                 <div className={`text-2xl font-bold mb-3 ${
                   selectedProfile === 'performance' ? 'text-earth' : 'text-earth'
                 }`}>
-                  Rendimiento Deportivo
+                  {performanceData.testCount} Biomarcadores
                 </div>
               </div>
               <p className={`text-sm leading-relaxed ${
