@@ -19,64 +19,64 @@ import { calculatePackagePrice } from './priceCalculator.js';
 // DEFINICIÓN DE CÓDIGOS POR PAQUETE
 // ================================
 
-// Essential: Paquete básico de longevidad (44 códigos comunes + 1 masculino)
+// Essential: Paquete básico de longevidad (43 comunes + 1 masculino)
 export const ESSENTIAL_BIOMARKER_CODES_COMMON = [
-  'H0000', 'H1420', 'B0000', 'B0200', 'B5600', 'B6510', 'B0020', 'B0030', 'B0250', 'B1540',
-  'B1260', 'B1970', 'B0050', 'B0060', 'B0080', 'B0240', 'B0070', 'B0010', 'B0040', 'B0170',
-  'B0180', 'B3110', 'B3100', 'B5120', 'B5290', 'B6020', 'B5850', 'B6040', 'B6070',
-  'B6130', 'B3170', 'B5590', 'B0120', 'B0100', 'B1600', 'B8050', 'B0130', 'B3210', 'B7260',
-  'B5370', 'B6180', 'B6190', 'B5410'
+  'B0000', 'B0010', 'B0020', 'B0030', 'B0040', 'B0050', 'B0060', 'B0070', 'B0080', 'B0100',
+  'B0120', 'B0130', 'B0170', 'B0180', 'B0200', 'B0240', 'B0250', 'B1260', 'B1540', 'B1600',
+  'B1970', 'B3100', 'B3110', 'B3170', 'B3210', 'B5120', 'B5290', 'B5370', 'B5410', 'B5590',
+  'B5600', 'B5850', 'B6020', 'B6040', 'B6070', 'B6130', 'B6180', 'B6190', 'B6510', 'B7260',
+  'B8050', 'H0000', 'H1420'
 ];
 
-export const ESSENTIAL_BIOMARKER_CODES_MALE_ONLY = ['B6160']; // Testosterona total
+export const ESSENTIAL_BIOMARKER_CODES_MALE_ONLY = ['B6160']; // Testosterona total solo para hombres
+export const ESSENTIAL_BIOMARKER_CODES_FEMALE_ONLY = [];
 
-// Performance: Paquete enfocado en rendimiento deportivo (51 comunes + específicos por género)
+// Performance: Paquete enfocado en rendimiento deportivo (56 comunes + específicos por género)
 export const PERFORMANCE_BIOMARKER_CODES_COMMON = [
-  'H0000', 'H1420', 'B0000', 'B0200', 'B5600', 'B6510', 'B0270', 'B0750', 'B0020', 'B0030', 
-  'B0250', 'B1540', 'B1260', 'B1970', 'B0050', 'B0060', 'B0070', 'B0110', 'B0010', 'B0040', 
-  'B0170', 'B0180', 'B3110', 'T2590', 'B5120', 'B5290', 'B6020', 'B6160', 'B5850', 'B6040', 
-  'B6070', 'B6030', 'B6130', 'B2120', 'B0220', 'B3170', 'B5590', 'B7790', 'I2081', 'B0120', 
-  'B0100', 'B1600', 'B8060', 'T3920', 'B8050', 'B0130', 'B3210', 'B7260', 'B5370', 'B6180', 
-  'B6190', 'B5410', 'T1191', 'T2830', 'T1061'
+  'B0000', 'B0010', 'B0020', 'B0030', 'B0040', 'B0050', 'B0060', 'B0070', 'B0080', 'B0100',
+  'B0110', 'B0120', 'B0130', 'B0170', 'B0180', 'B0200', 'B0220', 'B0240', 'B0250', 'B0750',
+  'B1260', 'B1540', 'B1600', 'B1900', 'B1970', 'B2120', 'B3100', 'B3110', 'B3170', 'B3210',
+  'B5120', 'B5290', 'B5370', 'B5410', 'B5420', 'B5590', 'B5600', 'B5850', 'B6020', 'B6030',
+  'B6040', 'B6070', 'B6130', 'B6180', 'B6190', 'B6510', 'B7260', 'B7790', 'B8050', 'H0000',
+  'H1420', 'I2081', 'T1061', 'T1191', 'T2830', 'T3920'
 ];
 
-export const PERFORMANCE_BIOMARKER_CODES_MALE_ONLY = ['D0601']; // Testosterona libre
-export const PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY = ['B5350', 'B5800', 'B5380', 'B5932']; // Estradiol, LH, FSH, Progesterona
+export const PERFORMANCE_BIOMARKER_CODES_MALE_ONLY = ['B6160', 'D0601']; // Testosterona total y libre - Solo masculino
+export const PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY = ['B5350', 'B5380', 'B5800', 'B5932']; // Estradiol, FSH, LH, Progesterona - Solo femenino
 
-// Core: Códigos con ✅✅ en tabla Core (79 comunes + específicos por género)
+// Core: Códigos con ✅ en tabla Core (72 comunes + específicos por género)
 export const CORE_BIOMARKER_CODES_COMMON = [
-  'H0000', 'H1420', 'B0000', 'B0200', 'B5600', 'B6510', 'B0020', 'B0030', 'B0250', 'B1540',
-  'B1260', 'B1970', 'B0050', 'B0060', 'B0080', 'B0260', 'B0240', 'B0070', 'B1980', 'B0350',
-  'B0110', 'B0010', 'B0040', 'B0170', 'B0180', 'B3110', 'B3100', 'T2590', 'B5120', 'B5290',
-  'B5350', 'B5980', 'B5800', 'B5380', 'B6020', 'B6160', 'B5850', 'B6040', 'B6070', 'B6030',
-  'B6010', 'D0850', 'D0181', 'D1760', 'I6740', 'B6130', 'B3170', 'B5590', 'B7790', 'I2081',
-  'B0120', 'B0100', 'B1600', 'T0500', 'T3920', 'B8050', 'B0130', 'B3210', 'B7260', 'B5370',
-  'B6180', 'B6190', 'B5410', 'T0811', 'T2830', 'T1720', 'T1061', 'B7121', 'B3015', 'B3041',
-  'B5110', 'B5080', 'B5090', 'B5100', 'B8130', 'I5080', 'I5090', 'B8120', 'D1271', 'B7900',
-  'B8160', 'I0141', 'I5072', 'B6321', 'B6300', 'B7750', 'B3130', 'OG001'
+  'B0000', 'B0010', 'B0020', 'B0030', 'B0040', 'B0050', 'B0060', 'B0070', 'B0080', 'B0100',
+  'B0110', 'B0120', 'B0130', 'B0170', 'B0180', 'B0190', 'B0200', 'B0240', 'B0250', 'B0260',
+  'B0350', 'B1260', 'B1540', 'B1600', 'B1900', 'B1970', 'B1980', 'B3015', 'B3041', 'B3100',
+  'B3110', 'B3170', 'B3210', 'B5120', 'B5290', 'B5350', 'B5370', 'B5380', 'B5410', 'B5420',
+  'B5590', 'B5600', 'B5800', 'B5850', 'B5980', 'B6010', 'B6020', 'B6030', 'B6040', 'B6070',
+  'B6130', 'B6180', 'B6190', 'B6510', 'B7121', 'B7260', 'B7790', 'B8050', 'H0000', 'H0020',
+  'H1420', 'I2081', 'I5047', 'I6740', 'OG001', 'T0500', 'T0811', 'T1061', 'T1191', 'T2590',
+  'T2830', 'T3920'
 ];
 
-export const CORE_BIOMARKER_CODES_MALE_ONLY = ['D0601', 'B6480', 'B5830', 'B5840'];
-export const CORE_BIOMARKER_CODES_FEMALE_ONLY = ['B5932', 'D1001', 'B8110'];
+export const CORE_BIOMARKER_CODES_MALE_ONLY = ['B6160', 'B6480', 'D0601', 'D0850'];
+export const CORE_BIOMARKER_CODES_FEMALE_ONLY = ['B5932', 'D0181', 'D0780'];
 
-// Advanced: Paquete más completo (113 comunes + específicos por género)
+// Advanced: Paquete más completo (114 comunes + específicos por género)
 export const ADVANCED_BIOMARKER_CODES_COMMON = [
-  'H0000', 'H1420', 'B0000', 'B0200', 'B5600', 'B6510', 'B0270', 'B0750', 'H0050', 'H0850',
-  'H0860', 'B0020', 'B0030', 'B0250', 'B1540', 'B1260', 'B1970', 'B0050', 'B0060', 'B0080',
-  'B0260', 'B0240', 'B0070', 'B1980', 'B0350', 'B0110', 'B0010', 'B0040', 'B0170', 'B0180',
-  'B1900', 'B0190', 'B3110', 'B3100', 'B7700', 'T2590', 'D1111', 'I3291', 'B5120', 'B5290',
-  'B5800', 'B5380', 'B6020', 'B5850', 'I5047', 'B6040', 'B6070', 'B6030', 'B6010', 'D0181',
-  'D1760', 'I6740', 'B6130', 'B2120', 'B0220', 'B3170', 'B5590', 'H0020', 'B7790', 'I2081',
-  'T1572', 'B0120', 'B0100', 'B1600', 'B8060', 'T0500', 'T3920', 'B8050', 'B0130', 'B3210',
-  'B7260', 'B5370', 'B6180', 'D0560', 'B6190', 'B5410', 'T0811', 'T2841', 'T1191', 'T1200A',
-  'T1200B', 'T2830', 'T1720', 'T1061', 'B7121', 'B3015', 'B3041', 'T0302', 'T0150', 'T0960',
-  'T0480', '6897', 'M1190', 'M0010', 'B5110', 'B5080', 'B5090', 'B5100', 'B8130', 'I5080',
-  'I5090', 'B8120', 'D1271', 'B7900', 'B8160', 'I0141', 'I5072', 'B6321', 'B6300', 'B7750',
-  'B3130', 'AB001', 'OG001'
+  '6897', 'AB001', 'B0000', 'B0010', 'B0020', 'B0030', 'B0040', 'B0050', 'B0060', 'B0070',
+  'B0080', 'B0100', 'B0110', 'B0120', 'B0130', 'B0170', 'B0180', 'B0190', 'B0200', 'B0220',
+  'B0240', 'B0250', 'B0260', 'B0270', 'B0350', 'B0750', 'B1260', 'B1540', 'B1600', 'B1900',
+  'B1970', 'B1980', 'B2120', 'B3015', 'B3041', 'B3100', 'B3110', 'B3130', 'B3170', 'B3210',
+  'B5080', 'B5090', 'B5100', 'B5110', 'B5120', 'B5290', 'B5350', 'B5370', 'B5380', 'B5410',
+  'B5420', 'B5590', 'B5600', 'B5800', 'B5850', 'B5980', 'B6010', 'B6020', 'B6030', 'B6040',
+  'B6070', 'B6130', 'B6180', 'B6190', 'B6300', 'B6321', 'B6510', 'B7121', 'B7260', 'B7700',
+  'B7750', 'B7790', 'B7900', 'B8050', 'B8060', 'B8120', 'B8130', 'B8160', 'D0560', 'D1111',
+  'D1271', 'D1760', 'H0000', 'H0020', 'H0050', 'H0850', 'H0860', 'H1420', 'I0141', 'I2081',
+  'I3291', 'I5047', 'I5072', 'I5080', 'I5090', 'I6740', 'M0010', 'M1190', 'OG001', 'T0150',
+  'T0302', 'T0480', 'T0500', 'T0811', 'T0960', 'T1061', 'T1191', 'T1200', 'T1572', 'T1720',
+  'T2590', 'T2830', 'T2841', 'T3920'
 ];
 
-export const ADVANCED_BIOMARKER_CODES_MALE_ONLY = ['D0601', 'B6480', 'B6160', 'D0850', 'B3340', 'B5830', 'B5840'];
-export const ADVANCED_BIOMARKER_CODES_FEMALE_ONLY = ['B5350', 'B5980', 'B5932', 'D1001', 'D0780', 'B8110'];
+export const ADVANCED_BIOMARKER_CODES_MALE_ONLY = ['B5830', 'B5840', 'B6160', 'B6480', 'D0601', 'D0850'];
+export const ADVANCED_BIOMARKER_CODES_FEMALE_ONLY = ['B5932', 'B8110', 'D0181', 'D0780', 'D1001'];
 
 // ================================
 // FUNCIÓN FACTORY PARA PAQUETES
@@ -119,7 +119,8 @@ const createPackage = (config) => {
     targetAudience,
     commonCodes, 
     maleOnlyCodes = [], 
-    femaleOnlyCodes = [] 
+    femaleOnlyCodes = [],
+    recommendedAddOns = []
   } = config;
 
   // Construir biomarcadores base (todos los códigos para compatibilidad)
@@ -137,6 +138,7 @@ const createPackage = (config) => {
     icon: FaDna,
     targetAudience,
     biomarkers: baseBiomarkers,
+    recommendedAddOns,
     
     // Función de pricing dinámico usando priceCalculator.js
     getPricing: (gender = 'both') => {
@@ -146,8 +148,8 @@ const createPackage = (config) => {
       
       return {
         testCount: pricing.testCount,
-        price: Math.round(pricing.finalPrice),
-        costPrice: Math.round(pricing.marketPrice),
+        precio: pricing.precio,        // Usar nombres consistentes
+        pvp: pricing.pvp,             // Usar nombres consistentes
         pricePerTest: pricing.pricePerTest,
         details: pricing
       };
@@ -163,9 +165,13 @@ const createPackage = (config) => {
         ...this,
         biomarkers: genderBiomarkers,
         testCount: pricing.testCount,
-        price: Math.round(pricing.finalPrice),
-        marketPrice: Math.round(pricing.marketPrice),
-        pricePerTest: pricing.pricePerTest
+        precio: pricing.precio,       // Usar nombres consistentes
+        pvp: pricing.pvp,            // Usar nombres consistentes
+        pricePerTest: pricing.pricePerTest,
+        
+        // === COMPATIBILIDAD (deprecados) ===
+        price: pricing.precio,        // Para compatibilidad con frontend actual
+        marketPrice: pricing.pvp      // Para compatibilidad con frontend actual
       };
     }
   };
@@ -178,61 +184,107 @@ const createPackage = (config) => {
 // Paquete Essential
 export const essentialPackage = createPackage({
   id: 'essential',
-  name: 'Essential',
+  name: 'systems.analysisProfiles.essential.title',
   description: 'systems.essentialDescription',
   color: 'gradient-earth',
   bgColor: 'bg-earth-50',
   borderColor: 'border-earth',
   textColor: 'text-earth',
-  targetAudience: 'Ideal para clientes que inician su viaje de longevidad',
+  targetAudience: 'systems.essentialTargetAudience',
   commonCodes: ESSENTIAL_BIOMARKER_CODES_COMMON,
   maleOnlyCodes: ESSENTIAL_BIOMARKER_CODES_MALE_ONLY,
-  femaleOnlyCodes: []
+  femaleOnlyCodes: [],
+  recommendedAddOns: [
+    // Essential incluye TODOS los add-ons para máxima flexibilidad
+    'hormonas',
+    'endocrino', 
+    'antioxidantes',
+    'oxidative_cell',
+    'inflammation',
+    'cardiovascular',
+    'iv_nutrients',
+    'metals',
+    'immunity',
+    'digest',
+    'gut_gate',
+    'coagulation',
+    'bone_mineral',
+    'genome',
+    'cancer',
+    'bioage'
+  ]
 });
 
 // Paquete Performance
 export const performancePackage = createPackage({
   id: 'performance',
-  name: 'Performance',
-  description: 'Paquete especializado en rendimiento deportivo y optimización física, incluyendo biomarcadores específicos para energía, recuperación y función muscular',
+  name: 'systems.analysisProfiles.performance.title',
+  description: 'systems.performanceDescription',
   color: 'gradient-earth',
   bgColor: 'bg-earth-50',
   borderColor: 'border-earth',
   textColor: 'text-earth',
-  targetAudience: 'Ideal para atletas y personas activas que buscan optimizar su rendimiento físico',
+  targetAudience: 'systems.performanceTargetAudience',
   commonCodes: PERFORMANCE_BIOMARKER_CODES_COMMON,
   maleOnlyCodes: PERFORMANCE_BIOMARKER_CODES_MALE_ONLY,
-  femaleOnlyCodes: PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY
+  femaleOnlyCodes: PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY,
+  recommendedAddOns: [
+    // Performance: Add-ons específicos para deportistas y rendimiento
+    'iv_nutrients',     // Nutrientes esenciales para rendimiento
+    'oxidative_cell',   // Estrés oxidativo por ejercicio intenso
+    'bone_mineral',     // Salud ósea para deportistas
+    'coagulation',      // Función hemostática por actividad física
+    'cardiovascular',   // Salud cardíaca para atletas
+    'antioxidantes'     // Vitaminas para recuperación
+  ]
 });
 
 // Paquete Core
 export const corePackage = createPackage({
   id: 'core',
-  name: 'Core',
-  description: 'Paquete completo de biomarcadores fundamentales para análisis integral de longevidad',
+  name: 'systems.analysisProfiles.core.title',
+  description: 'systems.coreDescription',
   color: 'gradient-primary',
   bgColor: 'bg-primary-50',
   borderColor: 'border-primary',
   textColor: 'text-primary',
-  targetAudience: 'Para clientes que buscan un análisis completo y detallado',
+  targetAudience: 'systems.coreTargetAudience',
   commonCodes: CORE_BIOMARKER_CODES_COMMON,
   maleOnlyCodes: CORE_BIOMARKER_CODES_MALE_ONLY,
-  femaleOnlyCodes: CORE_BIOMARKER_CODES_FEMALE_ONLY
+  femaleOnlyCodes: CORE_BIOMARKER_CODES_FEMALE_ONLY,
+  recommendedAddOns: [
+    // Core: Add-ons de análisis intermedio y salud integral
+    'hormonas',         // Análisis hormonal completo
+    'immunity',         // Sistema inmunológico
+    'gut_gate',         // Permeabilidad intestinal
+    'metals',           // Detoxificación metales pesados
+    'endocrino',        // Eje hormonal avanzado
+    'inflammation',     // Marcadores inflamatorios
+    'digest'            // Función digestiva avanzada
+  ]
 });
 
 // Paquete Advanced
 export const advancedPackage = createPackage({
   id: 'advanced',
-  name: 'Advanced',
-  description: 'Paquete más completo con análisis avanzados de metales pesados, microbioma y biomarcadores especializados',
+  name: 'systems.analysisProfiles.advanced.title',
+  description: 'systems.advancedDescription',
   color: 'gradient-premium',
   bgColor: 'bg-premium-50',
   borderColor: 'border-premium',
   textColor: 'text-premium',
-  targetAudience: 'Para clientes que buscan el análisis más completo disponible',
+  targetAudience: 'systems.advancedTargetAudience',
   commonCodes: ADVANCED_BIOMARKER_CODES_COMMON,
   maleOnlyCodes: ADVANCED_BIOMARKER_CODES_MALE_ONLY,
-  femaleOnlyCodes: ADVANCED_BIOMARKER_CODES_FEMALE_ONLY
+  femaleOnlyCodes: ADVANCED_BIOMARKER_CODES_FEMALE_ONLY,
+  recommendedAddOns: [
+    // Advanced: Add-ons premium de longevidad y análisis genético avanzado
+    'cancer',           // Marcadores tumorales completos
+    'bioage',           // Edad biológica epigenética
+    'genome',           // Análisis genético completo
+    'oxidative_cell',   // Estrés oxidativo completo
+    'metals'            // Detoxificación avanzada
+  ]
 });
 
 // ================================
@@ -264,7 +316,8 @@ export const getPackageForGender = (packageData, gender) => {
   return {
     ...packageData,
     testCount: pricing.testCount,
-    price: pricing.price,
+    precio: pricing.precio,
+    pvp: pricing.pvp,
     pricePerTest: pricing.pricePerTest
   };
 };
@@ -278,6 +331,15 @@ export const getPackageForGender = (packageData, gender) => {
 export const getPackageTestCount = (packageData, gender) => {
   const pricing = packageData.getPricing(gender);
   return pricing.testCount;
+};
+
+/**
+ * Obtiene los add-ons recomendados para un paquete específico
+ * @param {object} packageData - Datos del paquete (essential, performance, core, advanced)
+ * @returns {Array} Array de IDs de add-ons recomendados
+ */
+export const getRecommendedAddOns = (packageData) => {
+  return packageData.recommendedAddOns || [];
 };
 
 // ================================
@@ -313,7 +375,6 @@ export const validatePackageCodes = () => {
 // INFORMACIÓN DE INICIALIZACIÓN
 // ================================
 
-const validation = validatePackageCodes();
 console.log('✅ Paquetes refactorizados cargados:', {
   essential: `C:${ESSENTIAL_BIOMARKER_CODES_COMMON.length} M:${ESSENTIAL_BIOMARKER_CODES_MALE_ONLY.length}`,
   performance: `C:${PERFORMANCE_BIOMARKER_CODES_COMMON.length} M:${PERFORMANCE_BIOMARKER_CODES_MALE_ONLY.length} F:${PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY.length}`,

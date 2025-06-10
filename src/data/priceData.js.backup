@@ -3,8 +3,8 @@
  * Datos de precios de biomarcadores por código
  * Estructura simplificada: solo código, precio (nuestro costo) y pvp (precio al público)
  * 
- * ACTUALIZADO DESDE: LongevityBiomarkers.csv
- * Fecha de actualización: 2025-01-22
+ * ACTUALIZADO AUTOMÁTICAMENTE DESDE: LongevityBiomarkers.csv
+ * Fecha de actualización: 2025-06-10
  * Total de biomarcadores: 137
  * 
  * Funciones principales:
@@ -146,7 +146,7 @@ const rawPriceData = [
   { code: "T0960", precio: "28,14 €", pvp: "42,50 €" },
   { code: "T1061", precio: "50,25 €", pvp: "70,35 €" },
   { code: "T1191", precio: "29,83 €", pvp: "31,00 €" },
-  { code: "T1200", precio: "42,61 €", pvp: "59,65 €" },
+  { code: "T1200", precio: "42,61 €", pvp: "59,66 €" },
   { code: "T1572", precio: "15,84 €", pvp: "18,60 €" },
   { code: "T1720", precio: "73,08 €", pvp: "74,50 €" },
   { code: "T2590", precio: "51,64 €", pvp: "72,29 €" },

@@ -12,7 +12,8 @@ import {
   essentialPackage,
   performancePackage,
   corePackage,
-  advancedPackage
+  advancedPackage,
+  getRecommendedAddOns
 } from '../data/analysisPackages';
 // Imports de add-ons desde nueva arquitectura
 import { getAddOnPackagesForGender } from '../data/addOnPackages';
@@ -120,6 +121,31 @@ const MedicalSystemsExplorer = () => {
     ];
   };
 
+  // Función para obtener add-ons recomendados del perfil seleccionado
+  const getRecommendedAddOnsForSelectedProfile = () => {
+    let profilePackage;
+    switch(selectedProfile) {
+      case 'essential':
+        profilePackage = essentialPackage;
+        break;
+      case 'performance':
+        profilePackage = performancePackage;
+        break;
+      case 'core':
+        profilePackage = corePackage;
+        break;
+      case 'advanced':
+        profilePackage = advancedPackage;
+        break;
+      default:
+        profilePackage = essentialPackage;
+    }
+
+    const recommendedIds = getRecommendedAddOns(profilePackage);
+    const filteredAddOns = recommendedIds.map(id => addOnPackages[id]).filter(Boolean);
+    return filteredAddOns;
+  };
+
   const toggleBiomarker = (biomarkerId) => {
     setExpandedBiomarkers(prev => 
       prev.includes(biomarkerId) 
@@ -149,68 +175,85 @@ const MedicalSystemsExplorer = () => {
           biomarkers: essentialData.biomarkers,
           testCount: essentialData.testCount,
           features: getEssentialFeatures(),
-          price: `${essentialData.price}€`, // Precio Prevenii (nuestro precio de venta)
-          pvp: `${essentialData.marketPrice}€` // Precio Market (PVP/precio referencial)
+          price: `${essentialData.precio}€`, // Precio Prevenii (nuestro precio de venta)
+          pvp: `${essentialData.pvp}€` // Precio Market (PVP/precio referencial)
         };
       case 'performance':
         return {
-          name: 'Performance',
-          description: 'Paquete especializado en rendimiento deportivo y optimización física, incluyendo biomarcadores específicos para energía, recuperación y función muscular',
+          name: t('systems.analysisProfiles.performance.title'),
+          description: t('systems.analysisProfiles.performance.description'),
           biomarkers: performanceData.biomarkers,
           testCount: performanceData.testCount,
-          features: [
-            "Todo lo incluido en Essential",
-            "Biomarcadores de rendimiento deportivo",
-            "Marcadores de recuperación muscular",
-            "Perfil energético y metabólico",
-            "Hormonas específicas para atletas",
-            "Evaluación de estrés físico",
-            "Marcadores de hidratación",
-            "Biomarcadores de fatiga"
-          ],
-          price: `${performanceData.price}€`,
-          pvp: `${performanceData.marketPrice}€`
+          features: (() => {
+            const translatedFeatures = t('systems.analysisProfiles.performance.features');
+            return Array.isArray(translatedFeatures) ? translatedFeatures : [
+              "Todo lo incluido en Essential",
+              "Biomarcadores de rendimiento deportivo",
+              "Marcadores de recuperación muscular", 
+              "Perfil energético y metabólico",
+              "Hormonas específicas para atletas",
+              "Evaluación de estrés físico",
+              "Marcadores de hidratación",
+              "Biomarcadores de fatiga"
+            ];
+          })(),
+          price: `${performanceData.precio}€`,
+          pvp: `${performanceData.pvp}€`
         };
       case 'core':
         return {
           name: t('systems.analysisProfiles.core.title'),
-          description: "El Core Analysis amplía el Essential con biomarcadores especializados para evaluación cardiovascular avanzada, perfil hormonal completo y marcadores inflamatorios específicos. Incluye análisis de estrés oxidativo y evaluación nutricional detallada.",
+          description: t('systems.analysisProfiles.core.description'),
           biomarkers: coreData.biomarkers,
           testCount: coreData.testCount,
-          features: [
-            "Todo lo incluido en Essential",
-            "Perfil cardiovascular avanzado", 
-            "Hormonas completas (hombre/mujer)",
-            "Marcadores inflamatorios específicos",
-            "Estrés oxidativo y antioxidantes",
-            "Evaluación nutricional detallada",
-            "Marcadores tumorales básicos",
-            "Biomarcadores de envejecimiento"
-          ],
-          price: `${coreData.price}€`,
-          pvp: `${coreData.marketPrice}€`
+          features: (() => {
+            const translatedFeatures = t('systems.analysisProfiles.core.features');
+            return Array.isArray(translatedFeatures) ? translatedFeatures : [
+              "Todo lo incluido en Essential",
+              "Perfil cardiovascular avanzado",
+              "Hormonas completas (hombre/mujer)",
+              "Marcadores inflamatorios específicos", 
+              "Estrés oxidativo y antioxidantes",
+              "Evaluación nutricional detallada",
+              "Marcadores tumorales básicos",
+              "Biomarcadores de envejecimiento"
+            ];
+          })(),
+          price: `${coreData.precio}€`,
+          pvp: `${coreData.pvp}€`
         };
       case 'advanced':
         return {
           name: t('systems.analysisProfiles.advanced.title'),
-          description: "El Advanced Analysis es nuestra evaluación más completa, incluyendo todos los biomarcadores disponibles, análisis genético opcional, evaluación de microbioma, marcadores tumorales ampliados y assessment completo de longevidad.",
+          description: t('systems.analysisProfiles.advanced.description'),
           biomarkers: advancedData.biomarkers,
           testCount: advancedData.testCount,
-          features: [
-            "Todo lo incluido en Core",
-            "Panel completo de metales pesados",
-            "Análisis de microbioma intestinal",
-            "Marcadores tumorales ampliados",
-            "Evaluación de longevidad avanzada",
-            "Perfil de coagulación completo",
-            "Biomarcadores de fertilidad",
-            "Assessment de estrés oxidativo completo"
-          ],
-          price: `${advancedData.price}€`,
-          pvp: `${advancedData.marketPrice}€`
+          features: (() => {
+            const translatedFeatures = t('systems.analysisProfiles.advanced.features');
+            return Array.isArray(translatedFeatures) ? translatedFeatures : [
+              "Todo lo incluido en Core",
+              "Panel completo de metales pesados",
+              "Análisis de microbioma intestinal",
+              "Marcadores tumorales ampliados",
+              "Evaluación de longevidad avanzada",
+              "Perfil de coagulación completo",
+              "Biomarcadores de fertilidad",
+              "Assessment de estrés oxidativo completo"
+            ];
+          })(),
+          price: `${advancedData.precio}€`,
+          pvp: `${advancedData.pvp}€`
         };
       default:
-        return getSelectedProfileData.call(this, 'essential');
+        return {
+          name: t('systems.analysisProfiles.essential.title'),
+          description: t('systems.essentialDescription'),
+          biomarkers: essentialData.biomarkers,
+          testCount: essentialData.testCount,
+          features: getEssentialFeatures(),
+          price: `${essentialData.precio}€`,
+          pvp: `${essentialData.pvp}€`
+        };
     }
   };
 
@@ -258,9 +301,6 @@ const MedicalSystemsExplorer = () => {
   const toggleLongitudTelomericaSelection = () => {
     setSelectedLongitudTelomerica(prev => !prev);
   };
-
-  // Función para toggle de Vitamina C
-
 
   // Función para toggle de Ácidos grasos %
   const toggleAcidosGrasosSelection = () => {
@@ -1366,18 +1406,18 @@ const MedicalSystemsExplorer = () => {
                 <h3 className={`text-xl font-bold mb-2 ${
                   selectedProfile === 'performance' ? 'text-stone' : 'text-stone'
                 }`}>
-                  Performance
+                  {t('systems.analysisProfiles.performance.title')}
                 </h3>
                 <div className={`text-2xl font-bold mb-3 ${
                   selectedProfile === 'performance' ? 'text-earth' : 'text-earth'
                 }`}>
-                  {performanceData.testCount} Biomarcadores
+                  {t('systems.analysisProfiles.performance.highlight')}
                 </div>
               </div>
               <p className={`text-sm leading-relaxed ${
                 selectedProfile === 'performance' ? 'text-taupe' : 'text-taupe'
               }`}>
-                Optimización física y biomarcadores específicos para atletas y personas activas
+                {t('systems.analysisProfiles.performance.description')}
               </p>
             </div>
           </motion.div>
@@ -1608,7 +1648,12 @@ const MedicalSystemsExplorer = () => {
                   onClick={toggleAddOnsView}
                   className="flex items-center justify-between w-full py-3 px-4 rounded-lg border-2 border-cream hover:bg-earth-50 hover:border-earth transition-all font-medium"
                 >
-                  <span className="text-stone font-semibold text-sm">{showAddOns ? t('systems.hideAddOns') : t('systems.viewAddOns')}</span>
+                  <span className="text-stone font-semibold text-sm">
+                    {showAddOns 
+                      ? t('systems.hideAddOns') 
+                      : `${t('systems.viewAddOns')} (${getRecommendedAddOnsForSelectedProfile().length} para ${t(`systems.analysisProfiles.${selectedProfile}.title`)})`
+                    }
+                  </span>
                   {showAddOns ? (
                     <FaChevronUp className="text-taupe text-sm" />
                   ) : (
@@ -1630,7 +1675,7 @@ const MedicalSystemsExplorer = () => {
                 className="overflow-hidden"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-start gap-8">
-                  {Object.values(addOnPackages).map((addOn, index) => (
+                  {getRecommendedAddOnsForSelectedProfile().map((addOn, index) => (
               <motion.div
                 key={addOn.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -1639,7 +1684,7 @@ const MedicalSystemsExplorer = () => {
                 className="bg-warm-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all border-2 border-cream hover:border-earth self-start"
               >
                 {/* Add-On Header */}
-                <div className={`${addOn.bgColor} ${addOn.borderColor} border-b p-6`}>
+                <div className={`${addOn.bgColor} ${addOn.borderColor} border-b p-6 relative`}>
                   <div className="flex items-center gap-4 mb-4">
                     <div className="text-2xl text-warm">
                       <addOn.icon />
@@ -1719,12 +1764,26 @@ const MedicalSystemsExplorer = () => {
 
                   {/* Benefits */}
                   <div className="space-y-2" style={{marginLeft: '32px'}}>
-                    {t(`addOnBenefits.${addOn.id}`).map((benefit, idx) => (
-                      <div key={idx} className="flex items-center gap-2">
-                        <FaCheck className={`${addOn.textColor} text-xs`} />
-                        <span className="text-taupe text-sm">{benefit}</span>
-                      </div>
-                    ))}
+                    {(() => {
+                      const benefits = t(`addOnBenefits.${addOn.id}`);
+                      // Verificar si benefits es un array válido
+                      if (Array.isArray(benefits)) {
+                        return benefits.map((benefit, idx) => (
+                          <div key={idx} className="flex items-center gap-2">
+                            <FaCheck className={`${addOn.textColor} text-xs`} />
+                            <span className="text-taupe text-sm">{benefit}</span>
+                          </div>
+                        ));
+                      } else {
+                        // Fallback si no es un array
+                        return (
+                          <div className="flex items-center gap-2">
+                            <FaCheck className={`${addOn.textColor} text-xs`} />
+                            <span className="text-taupe text-sm">{benefits || 'Beneficios no disponibles'}</span>
+                          </div>
+                        );
+                      }
+                    })()}
                   </div>
                 </div>
 
@@ -1735,7 +1794,7 @@ const MedicalSystemsExplorer = () => {
                       onClick={() => toggleBiomarker(addOn.id)}
                       className="flex items-center justify-between w-full py-3 px-4 rounded-lg border-2 border-cream hover:bg-earth-50 hover:border-earth transition-all font-medium"
                     >
-                                              <span className="text-stone font-semibold text-sm">{t('systems.viewBiomarkers')}</span>
+                      <span className="text-stone font-semibold text-sm">{t('systems.viewBiomarkers')}</span>
                       {expandedBiomarkers.includes(addOn.id) ? (
                         <FaChevronUp className="text-taupe text-sm" />
                       ) : (

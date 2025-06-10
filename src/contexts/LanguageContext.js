@@ -51,6 +51,16 @@ const translations = {
       titleHighlight: "Análisis",
       description: "Ofrecemos tres paquetes de análisis personalizados para adaptarnos mejor a las necesidades específicas de cada individuo: Essential para el análisis fundamental, Core para una evaluación intermedia especializada, y Advanced para la evaluación más completa y exhaustiva de tu salud y longevidad.",
       essentialDescription: "El Essential Analysis examina los biomarcadores fundamentales para dibujar una imagen precisa de tu estado de salud actual e incluye el cálculo de PhenoAge (edad biológica) basado en 9 biomarcadores validados científicamente. Con estos datos podemos anticipar riesgos silenciosos, establecer prioridades terapéuticas y definir si conviene añadir módulos adicionales (add on). Transformando la ciencia analítica en decisiones personalizadas y un plan de acción claro.",
+      performanceDescription: "Paquete especializado en rendimiento deportivo y optimización física, incluyendo biomarcadores específicos para energía, recuperación y función muscular. Diseñado para atletas y personas activas que buscan maximizar su potencial físico.",
+      coreDescription: "Paquete completo de biomarcadores fundamentales para análisis integral de longevidad. Incluye evaluación avanzada de sistemas metabólicos, hormonales, inflamatorios y de estrés oxidativo para optimización completa de la salud.",
+      advancedDescription: "Paquete más completo con análisis avanzados de metales pesados, microbioma y biomarcadores especializados. La evaluación más exhaustiva disponible para quienes buscan control total de su salud y longevidad.",
+      
+      // Target Audiences
+      essentialTargetAudience: "Ideal para clientes que inician su viaje de longevidad",
+      performanceTargetAudience: "Ideal para atletas y personas activas que buscan optimizar su rendimiento físico",
+      coreTargetAudience: "Para clientes que buscan un análisis completo y detallado",
+      advancedTargetAudience: "Para clientes que buscan el análisis más completo disponible",
+      
       // Tres perfiles de análisis
       analysisProfiles: {
         essential: {
@@ -58,15 +68,50 @@ const translations = {
           highlight: "46 Biomarcadores",
           description: "Perfecto para quienes buscan una visión general y la guía básica para la prevención de la salud. Ideal para comenzar el viaje hacia una mejor salud."
         },
+        performance: {
+          title: "Performance",
+          highlight: "60+ Biomarcadores",
+          description: "Especializado en rendimiento deportivo y optimización física. Incluye biomarcadores específicos para energía, recuperación y función muscular.",
+          features: [
+            "Todo lo incluido en Essential",
+            "Biomarcadores de rendimiento deportivo",
+            "Marcadores de recuperación muscular", 
+            "Perfil energético y metabólico",
+            "Hormonas específicas para atletas",
+            "Evaluación de estrés físico",
+            "Marcadores de hidratación",
+            "Biomarcadores de fatiga"
+          ]
+        },
         core: {
           title: "Core",
           highlight: "90+ Biomarcadores", 
-          description: "Diseñado para la optimización y el control de longevidad, dirigido a aquellos que van un paso más allá para entender profundamente su cuerpo."
+          description: "Diseñado para la optimización y el control de longevidad, dirigido a aquellos que van un paso más allá para entender profundamente su cuerpo.",
+          features: [
+            "Todo lo incluido en Essential",
+            "Perfil cardiovascular avanzado",
+            "Hormonas completas (hombre/mujer)",
+            "Marcadores inflamatorios específicos", 
+            "Estrés oxidativo y antioxidantes",
+            "Evaluación nutricional detallada",
+            "Marcadores tumorales básicos",
+            "Biomarcadores de envejecimiento"
+          ]
         },
         advanced: {
           title: "Advanced",
           highlight: "120 Biomarcadores",
-          description: "Para personas que no dejan nada al azar y lo quieren tener todo controlado. La evaluación más completa y exhaustiva disponible."
+          description: "Para personas que no dejan nada al azar y lo quieren tener todo controlado. La evaluación más completa y exhaustiva disponible.",
+          features: [
+            "Todo lo incluido en Core",
+            "Panel completo de metales pesados",
+            "Análisis de microbioma intestinal",
+            "Marcadores tumorales ampliados", 
+            "Evaluación de longevidad avanzada",
+            "Perfil de coagulación completo",
+            "Biomarcadores de fertilidad",
+            "Assessment de estrés oxidativo completo"
+          ]
         }
       },
       essentialPackage: "Essential Análisis",
@@ -946,7 +991,7 @@ const translations = {
         description: "Fracción libre de PSA. Mejora especificidad para distinguir cáncer de hiperplasia benigna."
       },
       "B5110": {
-        description: "Antígeno carcinoembrionario. Marcador de cánceres digestivos, especialmente colorrectal."
+        description: "Antígeno carcinoembrionario. Marqueur de cánceres digestivos, especialmente colorrectal."
       },
       "B5080": {
         description: "Marcador tumoral de cáncer de ovario. También elevado en endometriosis y otras condiciones."
@@ -961,34 +1006,34 @@ const translations = {
         description: "Marcador tumoral de cáncer de ovario más específico que CA125."
       },
       "B8130": {
-        description: "Antígeno de células escamosas. Marcador de carcinomas escamosos de cérvix, pulmón y esófago."
+        description: "Antígeno de células escamosas. Marqueur de carcinomas escamosos de cérvix, pulmón y esófago."
       },
       "I5080": {
-        description: "Proteína S-100. Marcador de melanoma y tumores del sistema nervioso."
+        description: "Proteína S-100. Marqueur de melanoma y tumores del sistema nervioso."
       },
       "I5090": {
-        description: "Enolasa neuroespecífica. Marcador de tumores neuroendocrinos y cáncer de pulmón de células pequeñas."
+        description: "Enolasa neuroespecífica. Marqueur de tumores neuroendocrinos y cáncer de pulmón de células pequeñas."
       },
       "B8120": {
-        description: "Fragmento de citoqueratina 21-1. Marcador de cáncer de pulmón no microcítico."
+        description: "Fragmento de citoqueratina 21-1. Marqueur de cáncer de pulmón no microcítico."
       },
       "D1271": {
-        description: "Marcador tumoral de cáncer gástrico y otros adenocarcinomas."
+        description: "Marqueur tumoral de cáncer gástrico y otros adenocarcinomas."
       },
       "B8160": {
-        description: "Pro-péptido liberador de gastrina. Marcador específico de cáncer de pulmón microcítico."
+        description: "Pro-péptido liberador de gastrina. Marqueur spécifique de cáncer de pulmón microcítico."
       },
       "OG001": {
-        description: "Test epigenético de edad biológica. Mide metilación del ADN para determinar la edad biológica real."
+        description: "Test epigenético de edad biológica. Mide metilación del ADN pour déterminer la edad biológica réelle."
       },
       "D1001": {
-        description: "Hormona antimülleriana. Marcador de reserva ovárica y fertilidad femenina."
+        description: "Hormona antimülleriana. Marqueur de réserve ovarienne et fertilité féminine."
       },
       "B3340": {
-        description: "Análisis completo del esperma utilizado para medir la edad biológica masculina. Evalúa concentración, motilidad y morfología espermática como marcadores de envejecimiento reproductivo."
+        description: "Analyse complète du sperme utilisée pour mesurer âge biologique masculin. Évalue concentration, motilité et morphologie spermatique comme marqueurs de vieillissement reproductif."
       },
       "G1465": {
-        description: "Medición de la longitud de los telómeros. Biomarcador directo del envejecimiento celular y predictor de longevidad."
+        description: "Mesure de longueur des télomères. Biomarqueur direct du vieillissement cellulaire et prédicteur de longévité."
       }
     }
   },
@@ -1025,6 +1070,16 @@ const translations = {
       titleHighlight: "Analysis",
       description: "We offer three personalized analysis packages to better adapt to the specific needs of each individual: Essential for fundamental analysis, Core for specialized intermediate evaluation, and Advanced for the most complete and exhaustive evaluation of your health and longevity.",
       essentialDescription: "The Essential Analysis examines fundamental biomarkers to draw an accurate picture of your current health status and includes calculation of PhenoAge (biological age) based on 9 scientifically validated biomarkers. With this data we can anticipate silent risks, establish therapeutic priorities and define whether to add additional modules (add-ons). Transforming analytical science into personalized decisions and a clear action plan.",
+      performanceDescription: "Specialized package for sports performance and physical optimization, including specific biomarkers for energy, recovery and muscle function. Designed for athletes and active people seeking to maximize their physical potential.",
+      coreDescription: "Complete package of fundamental biomarkers for comprehensive longevity analysis. Includes advanced evaluation of metabolic, hormonal, inflammatory and oxidative stress systems for complete health optimization.",
+      advancedDescription: "Most complete package with advanced analysis of heavy metals, microbiome and specialized biomarkers. The most exhaustive evaluation available for those seeking total control of their health and longevity.",
+      
+      // Target Audiences
+      essentialTargetAudience: "Ideal for clients starting their longevity journey",
+      performanceTargetAudience: "Ideal for athletes and active people seeking to optimize their physical performance",
+      coreTargetAudience: "For clients seeking a complete and detailed analysis",
+      advancedTargetAudience: "For clients seeking the most complete analysis available",
+      
       // Tres perfiles de análisis
       analysisProfiles: {
         essential: {
@@ -1032,15 +1087,50 @@ const translations = {
           highlight: "46 Biomarkers",
           description: "Perfect for those seeking an overview and basic guidance for health prevention. Ideal for starting your journey towards better health."
         },
+        performance: {
+          title: "Performance",
+          highlight: "60+ Biomarkers",
+          description: "Specialized in sports performance and physical optimization. Includes specific biomarkers for energy, recovery and muscle function.",
+          features: [
+            "Everything included in Essential",
+            "Sports performance biomarkers",
+            "Muscle recovery markers",
+            "Energy and metabolic profile",
+            "Athlete-specific hormones",
+            "Physical stress evaluation",
+            "Hydration markers",
+            "Fatigue biomarkers"
+          ]
+        },
         core: {
           title: "Core",
           highlight: "90+ Biomarkers",
-          description: "Designed for optimization and longevity control, aimed at those who go one step further to deeply understand their body."
+          description: "Designed for optimization and longevity control, aimed at those who go one step further to deeply understand their body.",
+          features: [
+            "Everything included in Essential",
+            "Advanced cardiovascular profile",
+            "Complete hormones (male/female)",
+            "Specific inflammatory markers",
+            "Oxidative stress and antioxidants",
+            "Detailed nutritional evaluation",
+            "Basic tumor markers",
+            "Aging biomarkers"
+          ]
         },
         advanced: {
           title: "Advanced", 
           highlight: "120 Biomarkers",
-          description: "For people who leave nothing to chance and want to have everything under control. The most complete and exhaustive evaluation available."
+          description: "For people who leave nothing to chance and want to have everything under control. The most complete and exhaustive evaluation available.",
+          features: [
+            "Everything included in Core",
+            "Complete heavy metals panel",
+            "Intestinal microbiome analysis",
+            "Extended tumor markers",
+            "Advanced longevity evaluation",
+            "Complete coagulation profile",
+            "Fertility biomarkers",
+            "Complete oxidative stress assessment"
+          ]
         }
       },
       essentialPackage: "Essential Analysis",
@@ -1526,49 +1616,49 @@ const translations = {
 
     // Biomarker Categories
     biomarkerCategories: {
-      "Hematología, Hematopoyesis, Inmunidad": "Hematology, Hematopoiesis, Immunity",
-      "Metabolismo glucídico": "Glucose Metabolism",
-      "Función hepática, Nutrición": "Hepatic Function, Nutrition",
-      "Resistencia insulínica": "Insulin Resistance",
-      "Función renal": "Renal Function",
-      "Purinas, Riñón": "Purines, Kidney",
-      "Filtrado glomerular": "Glomerular Filtration",
-      "Electrolitos": "Electrolytes",
-      "Hígado / Hueso": "Liver / Bone",
-      "Enzimas hepáticas": "Hepatic Enzymes",
-      "Hígado, Hemólisis": "Liver, Hemolysis",
+      "Hematología, Hematopoyesis, Inmunidad": "Hématologie, Hématopoïèse, Immunité",
+      "Metabolismo glucídico": "Métabolisme Glucidique",
+      "Función hepática, Nutrición": "Fonction Hépatique, Nutrition",
+      "Resistencia insulínica": "Résistance Insulinique",
+      "Función renal": "Fonction Rénale",
+      "Purinas, Riñón": "Purines, Rein",
+      "Filtrado glomerular": "Filtration Glomérulaire",
+      "Electrolitos": "Électrolytes",
+      "Hígado / Hueso": "Foie / Os",
+      "Enzimas hepáticas": "Enzymes Hépatiques",
+      "Hígado, Hemólisis": "Foie, Hémolyse",
       "Nutrición": "Nutrition",
-      "Colestasis": "Cholestasis",
-      "Perfil lipídico": "Lipid Profile",
-      "Riesgo CV": "CV Risk",
-      "Eje HHA": "HPA Axis",
-      "Andrógenos suprarrenales": "Adrenal Androgens",
-      "Transporte esteroides": "Steroid Transport",
-      "Hormona general": "General Hormone",
+      "Colestasis": "Cholestase",
+      "Perfil lipídico": "Profil Lipidique",
+      "Riesgo CV": "Risque CV",
+      "Eje HHA": "Axe HHS",
+      "Andrógenos suprarrenales": "Androgènes Surrénaliens",
+      "Transporte esteroides": "Transport Stéroïdes",
+      "Hormona general": "Hormone Générale",
       "Paratiroides": "Parathyroid",
       "Tiroides": "Thyroid",
-      "Inflamación cardiovascular": "Cardiovascular Inflammation",
-      "Metionina / CV": "Methionine / CV",
-      "Mineral óseo": "Bone Mineral",
-      "Mineral neuromuscular": "Neuromuscular Mineral",
+      "Inflamación cardiovascular": "Inflammation Cardiovasculaire",
+      "Metionina / CV": "Méthionine / CV",
+      "Mineral óseo": "Minéral Osseux",
+      "Mineral neuromuscular": "Minéral Neuromusculaire",
       "Inmunidad": "Immunity",
-      "Metabolismo hierro": "Iron Metabolism",
-      "Transporte hierro": "Iron Transport",
-      "Hierro": "Iron",
-      "Depósito hierro": "Iron Storage",
-      "Mineral-inmune": "Mineral-Immune",
-      "Hematopoyesis": "Hematopoiesis",
-      "Hormonas femeninas": "Female Hormones",
-      "Gonadotropina": "Gonadotropin",
-      "Hormona masculina": "Male Hormone",
-      "Andrógeno potente": "Potent Androgen",
-      "Hormona femenina": "Female Hormone",
-      "Suprarrenal": "Adrenal",
-      "Estrógeno menopáusico": "Menopausal Estrogen",
-      "Fertilidad masculina": "Male Fertility",
-      "Reserva ovárica": "Ovarian Reserve",
-      "Edad epigenética": "Epigenetic Age",
-      "Envejecimiento celular": "Cellular Aging"
+      "Metabolismo hierro": "Métabolisme Fer",
+      "Transporte hierro": "Transport Fer",
+      "Hierro": "Fer",
+      "Depósito hierro": "Dépôt Fer",
+      "Mineral-inmune": "Minéral-Immun",
+      "Hematopoyesis": "Hématopoïèse",
+      "Hormonas femeninas": "Hormones Féminines",
+      "Gonadotropina": "Gonadotrophine",
+      "Hormona masculina": "Hormone Masculine",
+      "Andrógeno potente": "Androgène Puissant",
+      "Hormona femenina": "Hormone Féminine",
+      "Suprarrenal": "Surrénalien",
+      "Estrógeno menopáusico": "Œstrogène Ménopausique",
+      "Fertilidad masculina": "Fertilité Masculine",
+      "Reserva ovárica": "Réserve Ovarienne",
+      "Edad epigenética": "Âge Épigénétique",
+      "Envejecimiento celular": "Vieillissement Cellulaire"
     },
 
     // Biomarkers Descriptions
@@ -1633,7 +1723,7 @@ const translations = {
         description: "Protein of atherogenic particles (LDL, VLDL). Better predictor of cardiovascular risk than LDL-cholesterol."
       },
       "B3100": {
-        description: "Apolipoprotein A1 - Main protein component of HDL particles. Facilitates reverse cholesterol transport. Cardiovascular protector."
+        description: "Apolipoprotein A1 - Main protein component of HDL particles. Facilita transporte reverso de colesterol. Protecteur cardiovasculaire."
       },
       "B5120": {
         description: "Cortisol - Primary stress hormone produced by adrenal glands. Regulates metabolism, immune response, and inflammation. Elevated levels indicate chronic stress or adrenal dysfunction."
@@ -1663,7 +1753,7 @@ const translations = {
         description: "High-sensitivity C-reactive protein. Marker of systemic inflammation and cardiovascular risk."
       },
       "B5590": {
-        description: "Homocysteine - Amino acid from methionine metabolism. Elevated levels indicate cardiovascular risk and deficiency of B6, B12, or folate vitamins."
+        description: "Homocysteine - Amino acid from methionine metabolism. Elevated levels indicate cardiovascular risk and deficiency of B6, B12, folate vitamins."
       },
       "B0120": {
         description: "Digestive enzyme from pancreas. Elevated indicates pancreatic dysfunction or acute pancreatitis."
@@ -1731,10 +1821,10 @@ const translations = {
       "B0260": { description: "Conjugated bilirubin. Specific marker of liver function and biliary obstruction."
       },
       "B1980": {
-        description: "Pancreatic enzyme that digests fats. Specific marker of exocrine pancreatic function."
+        description: "Enzyme pancréatique qui digère les graisses. Marqueur spécifique de fonction pancréatique exocrine."
       },
       "B0350": {
-        description: "Enzyme that digests carbohydrates. Produced by pancreas and salivary glands."
+        description: "Enzyme that digère les glucides. Produite par pancréas et glandes salivaires."
       },
       "B0110": {
         description: "Enzyme present in pancreas and salivary glands. Elevated indicates pancreatic inflammation or damage."
@@ -1863,7 +1953,7 @@ const translations = {
         description: "Antibodies against H. pylori. Detects gastric infection associated with ulcers and gastric cancer."
       },
       "B3130": {
-        description: "Auto-antibody present in rheumatoid arthritis and other autoimmune diseases."
+        description: "Autoanticuerpo present in rheumatoid arthritis and other autoimmune diseases."
       },
       "M1190": {
         description: "Parasitological stool examination. Detects intestinal parasites that affect digestive health."
@@ -1999,6 +2089,16 @@ const translations = {
       titleHighlight: "Analyse",
       description: "Nous offrons trois paquets d'analyse personnalisés pour mieux nous adapter aux besoins spécifiques de chaque individu : Essentiel pour l'analyse fondamentale, Core pour une évaluation intermédiaire spécialisée, et Avancé pour l'évaluation la plus complète et exhaustive de votre santé et longévité.",
       essentialDescription: "L'Analyse Essentielle examine les biomarqueurs fondamentaux pour dresser une image précise de votre état de santé actuel et inclut le calcul de PhenoAge (âge biologique) basé sur 9 biomarqueurs scientifiquement validés. Avec ces données, nous pouvons anticiper les risques silencieux, établir des priorités thérapeutiques et définir s'il convient d'ajouter des modules supplémentaires (add-ons). Transformant la science analytique en décisions personnalisées et un plan d'action clair.",
+      performanceDescription: "Paquet spécialisé pour la performance sportive et l'optimisation physique, incluant des biomarqueurs spécifiques pour l'énergie, la récupération et la fonction musculaire. Conçu pour les athlètes et personnes actives cherchant à maximiser leur potentiel physique.",
+      coreDescription: "Paquet complet de biomarqueurs fondamentaux pour une analyse intégrale de longévité. Inclut l'évaluation avancée des systèmes métaboliques, hormonaux, inflammatoires et de stress oxydatif pour l'optimisation complète de la santé.",
+      advancedDescription: "Paquet le plus complet avec analyses avancées de métaux lourds, microbiome et biomarqueurs spécialisés. L'évaluation la plus exhaustive disponible pour ceux qui cherchent un contrôle total de leur santé et longévité.",
+      
+      // Target Audiences
+      essentialTargetAudience: "Idéal pour les clients qui commencent leur voyage de longévité",
+      performanceTargetAudience: "Idéal pour les athlètes et personnes actives cherchant à optimiser leur performance physique",
+      coreTargetAudience: "Pour les clients cherchant une analyse complète et détaillée",
+      advancedTargetAudience: "Pour les clients cherchant l'analyse la plus complète disponible",
+      
       // Tres perfiles de análisis
       analysisProfiles: {
         essential: {
@@ -2006,15 +2106,50 @@ const translations = {
           highlight: "46 Biomarqueurs",
           description: "Parfait pour ceux qui cherchent une vue d'ensemble et les conseils de base pour la prévention de la santé. Idéal pour commencer votre voyage vers une meilleure santé."
         },
+        performance: {
+          title: "Performance",
+          highlight: "60+ Biomarqueurs",
+          description: "Spécialisé dans la performance sportive et l'optimisation physique. Inclut des biomarqueurs spécifiques pour l'énergie, la récupération et la fonction musculaire.",
+          features: [
+            "Tout inclus dans Essentiel",
+            "Biomarqueurs de performance sportive",
+            "Marqueurs de récupération musculaire",
+            "Profil énergétique et métabolique",
+            "Hormones spécifiques aux athlètes",
+            "Évaluation du stress physique",
+            "Marqueurs d'hydratation",
+            "Biomarqueurs de fatigue"
+          ]
+        },
         core: {
           title: "Core",
           highlight: "90+ Biomarqueurs",
-          description: "Conçu pour l'optimisation et le contrôle de la longévité, destiné à ceux qui vont un pas plus loin pour comprendre profondément leur corps."
+          description: "Conçu pour l'optimisation et le contrôle de la longévité, destiné à ceux qui vont un pas plus loin pour comprendre profondément leur corps.",
+          features: [
+            "Tout inclus dans Essentiel",
+            "Profil cardiovasculaire avancé",
+            "Hormones complètes (homme/femme)",
+            "Marqueurs inflammatoires spécifiques",
+            "Stress oxydatif et antioxydants",
+            "Évaluation nutritionnelle détaillée",
+            "Marqueurs tumoraux de base",
+            "Biomarqueurs de vieillissement"
+          ]
         },
         advanced: {
           title: "Avancé",
           highlight: "120 Biomarqueurs", 
-          description: "Pour les personnes qui ne laissent rien au hasard et veulent tout avoir sous contrôle. L'évaluation la plus complète et exhaustive disponible."
+          description: "Pour les personnes qui ne laissent rien au hasard et veulent tout avoir sous contrôle. L'évaluation la plus complète et exhaustive disponible.",
+          features: [
+            "Tout inclus dans Core",
+            "Panel complet de métaux lourds",
+            "Analyse de microbiome intestinal",
+            "Marqueurs tumoraux élargis",
+            "Évaluation de longévité avancée",
+            "Profil de coagulation complet",
+            "Biomarqueurs de fertilité",
+            "Évaluation complète du stress oxydatif"
+          ]
         }
       },
       essentialPackage: "Analyse Essentielle",

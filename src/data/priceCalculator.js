@@ -12,16 +12,14 @@
 
 import { getPriceByCode, validatePriceData } from './priceData.js';
 
-// Configuración de markup eliminada - ya no se utiliza markup en el sistema actual
-
 /**
  * Calcula el precio total de una lista de biomarcadores
  * @param {Array} biomarkers - Array de objetos biomarcador con código
- * @param {string} priceType - Tipo de precio ('prevenii' o 'market')
+ * @param {string} priceType - Tipo de precio ('precio' o 'pvp')
  * @param {string} gender - Género para filtrar biomarcadores ('male', 'female', 'both')
  * @returns {object} - Resultado con precio total y detalles
  */
-export const calculateBiomarkerListPrice = (biomarkers, priceType = 'prevenii', gender = 'both') => {
+export const calculateBiomarkerListPrice = (biomarkers, priceType = 'precio', gender = 'both') => {
   // Filtrar biomarcadores por género si es necesario
   const filteredBiomarkers = biomarkers.filter(biomarker => {
     if (!biomarker.gender || biomarker.gender === 'both') return true;
@@ -67,77 +65,76 @@ export const calculateBiomarkerListPrice = (biomarkers, priceType = 'prevenii', 
   };
 };
 
-// Función de descuentos por volumen eliminada - ahora el precio final es la suma exacta
-
-// Función applyMarkup eliminada - ya no se utiliza markup en el sistema actual
-
 /**
- * Calcula precio completo de un paquete - suma directa sin descuentos
- * Suma todos los biomarcadores individuales sin aplicar modificaciones
+ * Calcula precio completo de un paquete - SIMPLIFICADO
  * @param {Array} biomarkers - Lista de biomarcadores
  * @param {string} gender - Género ('male', 'female', 'both')
- * @param {string} packageType - Tipo de paquete ('essential', 'addon', 'premium')
- * @returns {object} - Precio completo con todos los cálculos
+ * @param {string} packageType - Tipo de paquete (solo para compatibilidad)
+ * @returns {object} - Precio simplificado con solo dos valores
  */
 export const calculatePackagePrice = (biomarkers, gender = 'both', packageType = 'essential') => {
-  // Calcular precio de costo (Prevenii) - ESTE ES EL PRECIO FINAL SIN DESCUENTOS
-  const costCalculation = calculateBiomarkerListPrice(biomarkers, 'prevenii', gender);
+  // Calcular precio de costo (nuestro precio) - suma de biomarcadores individuales
+  const costCalculation = calculateBiomarkerListPrice(biomarkers, 'precio', gender);
   
-  // Calcular precio de venta (Market/PVP) - SOLO REFERENCIAL
-  const marketCalculation = calculateBiomarkerListPrice(biomarkers, 'market', gender);
+  // Calcular precio de venta (PVP) - precio al público
+  const marketCalculation = calculateBiomarkerListPrice(biomarkers, 'pvp', gender);
   
-  // El precio final es exactamente la suma de precios Prevenii sin modificaciones
-  const finalPrice = costCalculation.totalPrice;
-  const marginAmount = marketCalculation.totalPrice - finalPrice;
-  const marginPercentage = marketCalculation.totalPrice > 0 ? 
-    Math.round((marginAmount / marketCalculation.totalPrice) * 100 * 100) / 100 : 0;
+  // SOLO DOS PRECIOS PRINCIPALES
+  const precio = Math.round(costCalculation.totalPrice * 100) / 100; // Nuestro costo
+  const pvp = Math.round(marketCalculation.totalPrice * 100) / 100;   // Precio al público
   
   return {
     packageType,
     gender,
     testCount: costCalculation.testCount,
-    costPrice: finalPrice, // Precio final = suma exacta de precios Prevenii
-    marketPrice: marketCalculation.totalPrice, // Precio Market original (PVP referencial)
-    finalPrice: finalPrice, // Precio final = suma exacta sin descuentos
-    pricePerTest: Math.round((finalPrice / costCalculation.testCount) * 100) / 100,
-    margin: {
-      amount: Math.round(marginAmount * 100) / 100,
-      percentage: marginPercentage
-    },
+    
+    // === PRECIOS PRINCIPALES ===
+    precio: precio,     // Nuestro precio (suma de precios de costo)
+    pvp: pvp,          // Precio al público (suma de pvp)
+    
+    // === CAMPOS AUXILIARES ===
+    pricePerTest: Math.round((precio / costCalculation.testCount) * 100) / 100,
     validation: costCalculation.validation,
-    breakdown: costCalculation.priceDetails
+    breakdown: costCalculation.priceDetails,
+    
+    // === COMPATIBILIDAD (deprecados) ===
+    basePrice: precio,     // Para compatibilidad - mismo que precio
+    finalPrice: precio,    // Para compatibilidad - mismo que precio
+    marketPrice: pvp,      // Para compatibilidad - mismo que pvp
+    costPrice: precio,     // Para compatibilidad - mismo que precio
+    markup: 0             // Siempre 0 tras eliminación
   };
 };
 
 /**
  * Calcula precios de add-on diferenciados por género
  * @param {Array} biomarkers - Lista de biomarcadores del add-on
- * @param {string} addOnType - Tipo de add-on para markup específico
+ * @param {string} addOnType - Tipo de add-on (solo para compatibilidad)
  * @returns {object} - Precios para ambos géneros
  */
 export const calculateAddOnPrice = (biomarkers, addOnType = 'addon') => {
-  const malePrice = calculatePackagePrice(biomarkers, 'male', addOnType);
-  const femalePrice = calculatePackagePrice(biomarkers, 'female', addOnType);
-  const bothPrice = calculatePackagePrice(biomarkers, 'both', addOnType);
+  const malePrice = calculatePackagePrice(biomarkers, 'male', `addon_${addOnType}`);
+  const femalePrice = calculatePackagePrice(biomarkers, 'female', `addon_${addOnType}`);
+  const bothPrice = calculatePackagePrice(biomarkers, 'both', `addon_${addOnType}`);
   
   return {
     male: {
-      price: malePrice.finalPrice,
+      price: malePrice.basePrice,
       testCount: malePrice.testCount,
       details: malePrice
     },
     female: {
-      price: femalePrice.finalPrice,
+      price: femalePrice.basePrice,
       testCount: femalePrice.testCount,
       details: femalePrice
     },
     both: {
-      price: bothPrice.finalPrice,
+      price: bothPrice.basePrice,
       testCount: bothPrice.testCount,
       details: bothPrice
     },
     // Precio promedio para display general
-    averagePrice: Math.round(((malePrice.finalPrice + femalePrice.finalPrice) / 2) * 100) / 100
+    averagePrice: Math.round(((malePrice.basePrice + femalePrice.basePrice) / 2) * 100) / 100
   };
 };
 
@@ -148,7 +145,7 @@ export const calculateAddOnPrice = (biomarkers, addOnType = 'addon') => {
  * @returns {object} - Desglose por categorías
  */
 export const getPriceBreakdown = (biomarkers, gender = 'both') => {
-  const calculation = calculateBiomarkerListPrice(biomarkers, 'prevenii', gender);
+  const calculation = calculateBiomarkerListPrice(biomarkers, 'precio', gender);
   
   // Agrupar por categoría
   const categoryBreakdown = calculation.priceDetails.reduce((acc, item) => {
@@ -249,6 +246,4 @@ export const validateAllPackagePrices = (packagesData) => {
   }
   
   return validationResults;
-};
-
-// Configuración PRICING_CONFIG eliminada - ya no se exporta 
+}; 

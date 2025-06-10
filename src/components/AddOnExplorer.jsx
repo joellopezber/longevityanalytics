@@ -19,7 +19,12 @@ import {
   FaMinus,
   FaLeaf
 } from 'react-icons/fa';
-import { addOnPackages as addOns, getPackageTestCount } from '../data/biomarkers';
+// Imports de la nueva arquitectura para add-ons
+import { 
+  addOnPackages as addOns, 
+  getPackageTestCount,
+  getAddOnPackagesForGender 
+} from '../data/addOnPackages';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 import { useLanguage } from '../contexts/LanguageContext';
 

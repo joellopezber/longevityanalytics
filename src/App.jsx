@@ -17,7 +17,7 @@ import { LanguageProvider } from './contexts/LanguageContext';
 import './styles/globals.css';
 
 // Importar exports para debugging (exporta paquetes a window)
-import './utils/debugExports';
+
 
 function App() {
   return (

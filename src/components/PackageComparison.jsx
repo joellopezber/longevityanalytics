@@ -6,12 +6,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaCheck, FaChartBar, FaStar, FaPlus } from 'react-icons/fa';
+// Imports de la nueva arquitectura
 import { 
-  getEssentialPackageForGender, 
-  getAddOnPackagesForGender, 
-  getPackageTestCount
-} from '../data/biomarkers';
+  getPackageForGender, 
+  essentialPackage
+} from '../data/analysisPackages';
 import { calculatePackagePrice } from '../data/priceCalculator';
+// Imports de add-ons desde nueva arquitectura
+import { addOnPackages } from '../data/addOnPackages';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 import { getPriceByCode } from '../data/priceData.js';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -43,14 +45,15 @@ const PackageComparison = () => {
     getActualBiomarkerCount
   } = useBiomarkerSelection();
 
-  // Obtener datos filtrados por género
-  const essentialPackage = getEssentialPackageForGender(selectedGender);
-  const addOnPackages = getAddOnPackagesForGender(selectedGender);
+  // Obtener datos filtrados por género usando nueva arquitectura
+  const essentialData = getPackageForGender(essentialPackage, selectedGender);
+  // USAR DIRECTAMENTE addOnPackages sin transformación
+  // const addOnPackagesFiltered = getAddOnPackagesForGender(selectedGender);
 
   // Calcular totales dinámicos
   const calculateTotals = () => {
     // Recopilar todos los biomarcadores para cálculo conjunto
-    let allBiomarkers = [...essentialPackage.biomarkers];
+    let allBiomarkers = [...essentialData.biomarkers];
     let selectedAddOnsList = [];
 
     // Agregar biomarcadores de add-ons seleccionados
@@ -330,9 +333,11 @@ const PackageComparison = () => {
 
               {/* Grid de Add-Ons */}
               <div className="space-y-8 max-h-96 overflow-y-auto px-2">
-                {Object.values(addOnPackages).map((addOn, index) => {
+                {Object.values(addOnPackages).filter(addOn => addOn && typeof addOn.getPricing === 'function').map((addOn, index) => {
                   const isSelected = selectedAddOns.includes(addOn.id);
-                  const testCount = getActualBiomarkerCount ? getActualBiomarkerCount(addOn.id, selectedGender) : getPackageTestCount(addOn, selectedGender);
+                  const testCount = getActualBiomarkerCount ? 
+                    getActualBiomarkerCount(addOn.id, selectedGender) : 
+                    (addOn.biomarkers ? addOn.biomarkers.length : 0);
                   
                   return (
                     <motion.div
@@ -373,36 +378,46 @@ const PackageComparison = () => {
                             <p className="text-xs text-taupe mb-2">{t(`addOns.${addOn.id}.description`)}</p>
                             <div className="flex items-center gap-4 text-xs">
                               {(() => {
-                                // Usar pricing directo del add-on
-                                const pricing = addOn.getPricing();
-                                
-                                // Obtener precio base según género
-                                let basePrice, basePvp;
-                                
-                                if (pricing[selectedGender]) {
-                                  basePrice = pricing[selectedGender].price;
-                                  basePvp = pricing[selectedGender].marketPrice;
-                                } else if (pricing.both) {
-                                  basePrice = pricing.both.price;
-                                  basePvp = pricing.both.marketPrice;
-                                } else {
-                                  basePrice = pricing.price;
-                                  basePvp = pricing.marketPrice;
+                                try {
+                                  // Usar pricing directo del add-on original
+                                  const pricing = addOn.getPricing(selectedGender);
+                                  
+                                  // Obtener precio base según género
+                                  let basePrice = 0, basePvp = 0;
+                                  
+                                  if (pricing[selectedGender]) {
+                                    basePrice = pricing[selectedGender].price || 0;
+                                    basePvp = pricing[selectedGender].marketPrice || 0;
+                                  } else if (pricing.both) {
+                                    basePrice = pricing.both.price || 0;
+                                    basePvp = pricing.both.marketPrice || 0;
+                                  } else {
+                                    basePrice = pricing.price || 0;
+                                    basePvp = pricing.marketPrice || 0;
+                                  }
+                                  
+                                  // Aplicar ajustes del contexto (Full Genome, Metaboloma, etc.)
+                                  const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
+                                  
+                                  return (
+                                    <div className="flex flex-col gap-1">
+                                      <span className="text-warm font-semibold">
+                                        {Math.round(adjustedPrices.price)}€
+                                      </span>
+                                      <span className="text-gray-500 text-xs">
+                                        {t('systems.pvp')}: {Math.round(adjustedPrices.pvp)}€
+                                      </span>
+                                    </div>
+                                  );
+                                } catch (error) {
+                                  console.error('Error calculando precio del add-on:', addOn.id, error);
+                                  return (
+                                    <div className="flex flex-col gap-1">
+                                      <span className="text-warm font-semibold">0€</span>
+                                      <span className="text-gray-500 text-xs">Error</span>
+                                    </div>
+                                  );
                                 }
-                                
-                                // Aplicar ajustes del contexto (Full Genome, Metaboloma, etc.)
-                                const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
-                                
-                                return (
-                                  <div className="flex flex-col gap-1">
-                                    <span className="text-warm font-semibold">
-                                      {Math.round(adjustedPrices.price)}€
-                                    </span>
-                                    <span className="text-gray-500 text-xs">
-                                      {t('systems.pvp')}: {Math.round(adjustedPrices.pvp)}€
-                                    </span>
-                                  </div>
-                                );
                               })()}
                               <span className="text-taupe">{testCount} {t('systems.biomarkers')}</span>
                             </div>

@@ -5,6 +5,8 @@
 
 import React, { createContext, useContext, useState } from 'react';
 import { getPriceByCode } from '../data/priceData.js';
+// Import desde nueva arquitectura de add-ons
+import { addOnPackages } from '../data/addOnPackages.js';
 
 const BiomarkerSelectionContext = createContext();
 
@@ -254,7 +256,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     const extras = calculateAdditionalPrices();
     
     switch (addOnId) {
-      case 'digest':
+      case 'digestion':
         return {
           price: basePrice + extras.digestExtra.price,
           pvp: basePvp + extras.digestExtra.pvp
@@ -304,6 +306,11 @@ export const BiomarkerSelectionProvider = ({ children }) => {
           price: basePrice + extras.hormonasExtra.price,
           pvp: basePvp + extras.hormonasExtra.pvp
         };
+      case 'antioxidantes':
+      case 'inflammation':
+      case 'metals':
+      case 'coagulation':
+      case 'bone_mineral':
       default:
         return { price: basePrice, pvp: basePvp };
     }
@@ -360,7 +367,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
         if (selectedHelicobacter) immunityOptional++;
         return immunityBase + immunityOptional;
 
-      case 'digest':
+      case 'digestion':
         const digestBase = 5; // Biomarcadores obligatorios
         let digestOptional = 0;
         if (selectedUrinalisisDigestivo) digestOptional++;
@@ -394,9 +401,23 @@ export const BiomarkerSelectionProvider = ({ children }) => {
         // Cancer tiene biomarcadores específicos por género
         return gender === 'male' ? 17 : 16; // Números fijos sin opcionales por ahora
 
+      case 'antioxidantes':
+        return 5; // Vitaminas antioxidantes fijas
+
+      case 'inflammation':
+        return 3; // Marcadores inflamatorios fijos
+
+      case 'metals':
+        return 4; // Metales pesados fijos
+
+      case 'coagulation':
+        return 3; // Sistema hemostático fijo
+
+      case 'bone_mineral':
+        return 4; // Metabolismo óseo fijo
+
       default:
         // Para add-ons sin biomarcadores opcionales, usar el conteo estático
-        const { addOnPackages } = require('../data/biomarkers');
         const addOn = addOnPackages[addOnId];
         if (addOn && addOn.biomarkers) {
           return addOn.biomarkers.filter(b => 

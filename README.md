@@ -1,444 +1,175 @@
-# Longevity Analytics - Presentación Web
+# 🧬 Longevity Analytics
 
-## Descripción del Proyecto
+![React](https://img.shields.io/badge/React-18.2.0-blue)
+![Tailwind](https://img.shields.io/badge/TailwindCSS-3.3.6-blue)
+![Build](https://img.shields.io/badge/Build-Passing-green)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-Esta es una aplicación web React diseñada como presentación comercial para empresas de longevity. La aplicación presenta servicios de análisis clínicos especializados en optimización de longevity, diferenciándose de la medicina tradicional y competidores como Function Health.
+**Aplicación web moderna para la exploración y configuración de análisis clínicos de longevidad**
 
-## Propósito
+Una plataforma interactiva que permite a los usuarios explorar diferentes perfiles analíticos y personalizar su selección con módulos especializados (add-ons), con soporte multiidioma y pricing dinámico.
 
-**Objetivo Principal:** Posicionar nuestra empresa como proveedor líder de análisis clínicos para empresas de longevity, ofreciendo:
+![Demo App](https://via.placeholder.com/800x400/1f2937/ffffff?text=Longevity+Analytics+Demo)
 
-- **130 biomarcadores** vs 19 de medicina tradicional
-- **Análisis especializado** en longevity y anti-aging
-- **Recomendaciones accionables** de suplementación, nutrición y estilo de vida
-- **Paquetes modulares** adaptables a diferentes necesidades
+## ✨ Características Principales
 
-## Diferenciación Competitiva
+### 🎯 **Sistema de Análisis Modular**
+- **4 Perfiles Principales**: Essential, Performance, Core, Advanced
+- **16 Add-Ons Especializados**: Módulos complementarios personalizables
+- **Análisis por Género**: Biomarcadores específicos y pricing diferenciado
+- **Recomendaciones Inteligentes**: Add-ons sugeridos según perfil seleccionado
 
-### vs Medicina Tradicional
-- **Enfoque:** Optimización activa vs diagnóstico reactivo
-- **Alcance:** 130 tests vs 19 tests promedio
-- **Resultado:** Protocolos de longevity vs tratamiento farmacológico
+### 🌍 **Internacionalización Completa**
+- **3 Idiomas**: Español, Inglés, Francés
+- **Contenido Dinámico**: Traducciones automáticas de textos, beneficios y características
+- **Sistema Robusto**: Manejo inteligente de traducciones faltantes
 
-### vs Function Health
-- **Especialización:** Enfoque específico en longevity vs prevención general
-- **Recomendaciones:** Protocolos específicos vs insights generales
-- **Flexibilidad:** Paquetes modulares vs paquete fijo
+### 💰 **Pricing Dinámico**
+- **Cálculo en Tiempo Real**: Precios actualizados según selecciones
+- **Sistema Dual**: Precio Prevenii (costo) vs Precio Market (PVP)
+- **Transparencia**: Desglose completo de biomarcadores incluidos
 
-## Estructura de la Aplicación
+### 🎨 **Interfaz Moderna**
+- **Responsive Design**: Optimizada para móvil, tablet y desktop
+- **Animaciones Suaves**: Framer Motion para transiciones profesionales
+- **UX Intuitiva**: Cards interactivas y feedback visual en tiempo real
 
-### Componentes Principales
+## 🚀 Inicio Rápido
 
-1. **HeroSection** - Presentación principal con propuesta de valor
-2. **PackageComparison** - Comparación entre paquetes Essential y Completo
-3. **AddOnExplorer** - Explorador interactivo de módulos especializados
-4. **ProcessFlow** - Explicación del proceso paso a paso
-5. **CallToAction** - Formulario de contacto para empresas
+### Requisitos Previos
+- Node.js 16+ (recomendado 18+)
+- npm 8+ o yarn 1.22+
 
-### Paquetes Ofrecidos
+### Instalación y Ejecución
 
-#### Essential (46 tests)
-- Metabolismo glucídico completo
-- Función renal y hepática
-- Perfil lipídico avanzado
-- Hormonas básicas
-- Tiroides completo
-- Minerales esenciales
-- Marcadores inflamatorios
-
-#### Completo (130 tests)
-- Todo el panel Essential
-- Biomarcadores especializados
-- Análisis antioxidante completo
-- Perfil hormonal avanzado
-- Metales pesados
-- Marcadores tumorales
-- Edad biológica
-
-### Add-Ons Especializados
-
-1. **Hormonas** (12 tests) - Optimización hormonal para anti-aging
-2. **Antioxidantes** (13 tests) - Defensa contra el envejecimiento
-3. **Cardiovascular** (8 tests) - Protección cardiovascular a largo plazo
-4. **Edad Biológica** (2 tests) - Medición directa de envejecimiento
-5. **Metales Pesados** (4 tests) - Detoxificación y carga tóxica
-6. **Marcadores Tumorales** (7 tests) - Detección temprana
-
-## Tecnologías Utilizadas
-
-- **React 18** - Framework principal
-- **Framer Motion** - Animaciones y transiciones
-- **React Icons** - Iconografía
-- **CSS Custom Properties** - Sistema de diseño
-- **Responsive Design** - Adaptable a todos los dispositivos
-- **Sistema de Traducciones** - Multiidioma (ES/EN/FR)
-
-## Instalación y Ejecución
-
-### Prerrequisitos
-- Node.js (versión 16 o superior)
-- npm o yarn
-
-### Pasos de Instalación
-
-1. **Clonar el repositorio**
    ```bash
-   git clone [url-del-repositorio]
-   cd longevity-analytics-presentation
-   ```
+# Clonar repositorio
+git clone <repository-url>
+cd Longevity_Analitycs
 
-2. **Instalar dependencias**
-   ```bash
+# Instalar dependencias
    npm install
-   ```
 
-3. **Ejecutar en modo desarrollo**
-   ```bash
+# Ejecutar en desarrollo
    npm start
-   ```
+# La aplicación se abrirá en http://localhost:3000
 
-4. **Abrir en el navegador**
-   ```
-   http://localhost:3000
-   ```
-
-### Scripts Disponibles
-
-- `npm start` - Ejecuta la aplicación en modo desarrollo
-- `npm run build` - Construye la aplicación para producción
-- `npm test` - Ejecuta las pruebas
-- `npm run eject` - Expone la configuración de webpack
-
-## Sistema de Traducciones
-
-### Idiomas Soportados
-- **Español (ES)** - Idioma principal y por defecto
-- **Inglés (EN)** - Traducción completa
-- **Francés (FR)** - Traducción completa
-
-### Arquitectura de Traducciones (Optimizada ✅)
-
-La aplicación utiliza un **sistema único centralizado** de traducciones optimizado para mantenibilidad:
-
-#### LanguageContext
-```javascript
-import { useLanguage } from './contexts/LanguageContext';
-
-const { t, currentLanguage, changeLanguage } = useLanguage();
+# Compilar para producción
+npm run build
 ```
 
-#### Uso Básico
-```javascript
-// Traducciones simples
-{t('navbar.clinicalAnalysis')}
-{t('hero.title')}
+## 🏗️ Arquitectura
 
-// Traducciones con fallback
-{t('biomarkers.H0000.description', 'Descripción por defecto')}
+### Stack Tecnológico
+- **Frontend**: React 18 + Hooks
+- **Styling**: Tailwind CSS 3.3
+- **Animaciones**: Framer Motion 10.16
+- **Iconos**: React Icons 4.12
+- **Build**: Create React App (Webpack + Babel)
 
-// Biomarcadores (nombres y categorías)
-{t(`biomarkerNames.${biomarker.code}`)}
-{t(`biomarkerCategories.${biomarker.category}`)}
-```
-
-#### Estructura de Traducciones (Sistema Único)
-
-```
-src/contexts/LanguageContext.js (ÚNICO PUNTO DE VERDAD)
-├── es: {}           # Español (idioma base)  
-├── en: {}           # Inglés
-└── fr: {}           # Francés
-    ├── navbar: {}                  # Navegación
-    ├── hero: {}                    # Sección principal
-    ├── systems: {}                 # Sistemas médicos
-    ├── addOns: {}                  # Add-ons especializados
-    ├── packages: {}                # Paquetes de análisis
-    ├── process: {}                 # Proceso de trabajo
-    ├── biomarkerNames: {}          # 105+ nombres de biomarcadores
-    ├── biomarkerCategories: {}     # 40+ categorías especializadas
-    └── biomarkers: {}              # Descripciones completas técnicas
-```
-
-**⚠️ IMPORTANTE**: No crear archivos duplicados en `/locales/` - usar exclusivamente `LanguageContext.js`
-
-### Componentes de Traducción
-
-#### Selector de Idioma
-```javascript
-const { changeLanguage, currentLanguage } = useLanguage();
-
-<select value={currentLanguage} onChange={(e) => changeLanguage(e.target.value)}>
-  <option value="es">Español</option>
-  <option value="en">English</option>
-  <option value="fr">Français</option>
-</select>
-```
-
-#### Biomarcadores Multiidioma
-```javascript
-// Nombres de biomarcadores
-<h5>{t(`biomarkerNames.${biomarker.code}`, biomarker.name)}</h5>
-
-// Categorías de biomarcadores
-<p>{t(`biomarkerCategories.${biomarker.category}`, biomarker.category)}</p>
-
-// Descripciones de biomarcadores
-<p>{t(`biomarkers.${biomarker.code}.description`, biomarker.description)}</p>
-```
-
-### Añadir Nuevas Traducciones
-
-#### 1. Agregar Clave de Traducción
-```javascript
-// En LanguageContext.js
-es: {
-  nuevaSeccion: {
-    titulo: "Nuevo Título",
-    descripcion: "Nueva descripción"
-  }
-}
-```
-
-#### 2. Traducir a Otros Idiomas
-```javascript
-en: {
-  nuevaSeccion: {
-    titulo: "New Title", 
-    descripcion: "New description"
-  }
-},
-fr: {
-  nuevaSeccion: {
-    titulo: "Nouveau Titre",
-    descripcion: "Nouvelle description"
-  }
-}
-```
-
-#### 3. Usar en Componentes
-```javascript
-{t('nuevaSeccion.titulo')}
-{t('nuevaSeccion.descripcion')}
-```
-
-### Biomarcadores: Traducciones Especializadas
-
-#### Estructura de Datos
-```javascript
-biomarkerNames: {
-  "H0000": "Hemograma completo",     // ES
-  "B0000": "Glucosa en ayunas",     // ES
-  // ...105+ biomarcadores
-}
-
-biomarkerCategories: {
-  "Hematología, Hematopoyesis, Inmunidad": "Hematología, Hematopoyesis, Inmunidad",
-  "Metabolismo glucídico": "Metabolismo glucídico",
-  // ...40+ categorías
-}
-```
-
-#### Implementación en Componentes
-```javascript
-// MedicalSystemsExplorer.jsx - Ejemplo de uso
-<h5>{t(`biomarkerNames.${biomarker.code}`, biomarker.name)}</h5>
-<p>{t(`biomarkerCategories.${biomarker.category}`, biomarker.category)}</p>
-```
-
-### Sistema de Fallback
-
-El sistema incluye fallback automático:
-1. **Primario:** Idioma seleccionado
-2. **Secundario:** Español (idioma base)  
-3. **Terciario:** Valor por defecto proporcionado
-4. **Último:** Clave de traducción mostrada
-
-### Funciones Avanzadas
-
-#### Función t() Mejorada
-- ✅ Maneja strings y arrays
-- ✅ Fallback automático a español
-- ✅ Soporte para valores por defecto
-- ✅ Validación de tipos
-
-#### Cambio de Idioma Dinámico
-- ✅ Cambio instantáneo sin recarga
-- ✅ Estado persistente en la sesión
-- ✅ Animaciones suaves entre cambios
-
-## Estructura de Archivos
-
+### Estructura del Proyecto
 ```
 src/
-├── components/
-│   ├── HeroSection.jsx
-│   ├── PackageComparison.jsx
-│   ├── AddOnExplorer.jsx
-│   ├── ProcessFlow.jsx
-│   ├── CallToAction.jsx
-│   ├── Navbar.jsx
-│   └── Footer.jsx
-├── contexts/
-│   ├── LanguageContext.js          # Sistema de traducciones principal
-│   └── BiomarkerSelectionContext.js
-├── data/
-│   └── biomarkers.js
-├── styles/
-│   └── globals.css
-├── App.jsx
-└── index.js
+├── components/          # Componentes React
+│   ├── MedicalSystemsExplorer.jsx  # Componente principal
+│   └── PackageComparison.jsx       # Comparador de paquetes
+├── contexts/           # Context API providers
+│   ├── LanguageContext.js          # Sistema de traducciones
+│   └── BiomarkerSelectionContext.js # Estado de selecciones
+├── data/              # Configuraciones y datos
+│   ├── biomarkersDict.js           # Diccionario de biomarcadores
+│   ├── analysisPackages.js         # Configuración de perfiles
+│   ├── addOnPackages.js            # Configuración de add-ons
+│   ├── priceData.js                # Datos de precios
+│   └── priceCalculator.js          # Lógica de cálculo
+├── styles/            # Estilos CSS personalizados
+└── images/            # Assets e imágenes
 ```
 
-## Datos de Biomarcadores
+## 📊 Sistema de Datos
 
-Los datos están estructurados basándose en el CSV proporcionado, organizados en:
+### Perfiles Analíticos
+| Perfil | Tests (M/W) | Add-Ons Recomendados | Enfoque |
+|--------|-------------|----------------------|---------|
+| **Essential** | 44/43 | Todos (16) disponibles | Análisis fundamental |
+| **Performance** | 58/60 | 6 específicos | Deportistas y rendimiento |
+| **Core** | 76/75 | 7 intermedios | Análisis completo |
+| **Advanced** | 120/119 | 5 especializados | Análisis premium |
 
-- **130 biomarcadores** categorizados por función biológica
-- **Paquetes base** (Essential y Completo)
-- **Add-ons especializados** con beneficios específicos
-- **Comparación competitiva** con medicina tradicional y Function Health
+### Add-Ons Especializados
+- 🧬 **Hormonas, Endocrino** - Análisis hormonal
+- 🛡️ **Antioxidantes, Estrés Oxidativo** - Sistema antioxidante
+- ❤️ **Cardiovascular, Inflamación** - Salud cardíaca
+- 🦴 **Salud Ósea, Coagulación** - Metabolismo óseo
+- 🧠 **Inmunidad, Digestión** - Sistemas corporales
+- 🧪 **Genética, Cáncer, Edad Biológica** - Análisis avanzados
 
-## Características de Diseño
+## 🔧 Configuración
 
-### Sistema de Colores
-- **Primario:** Tonos tierra (#8B7355, #A0845C) - Confianza y naturalidad
-- **Secundario:** Tierras cálidas (#9C8B7A, #B5A490) - Sofisticación y longevity
-- **Acentos:** Piedra, Taupe, Beige, Crema - Diferenciación de categorías
-
-### Tipografía
-- **Fuente:** Inter - Legibilidad y modernidad
-- **Jerarquía:** 5 niveles de tamaño con pesos variables
-
-### Animaciones
-- **Entrada:** Fade in con movimiento vertical
-- **Interacciones:** Hover effects y micro-animaciones
-- **Transiciones:** Suaves y profesionales
-
-## Público Objetivo
-
-**Empresas de Longevity** que buscan:
-- Diferenciarse con análisis únicos
-- Ofrecer valor agregado a sus clientes
-- Integrar servicios de laboratorio especializados
-- Escalar sus operaciones con partners confiables
-
-## Mejores Prácticas de Traducciones
-
-### ✅ Recomendaciones
-
-#### 1. Estructura de Claves
-```javascript
-// ✅ Bueno - Estructura jerárquica clara
-{t('hero.supplementation')}
-{t('systems.biomarkersIncludedEssential')}
-
-// ❌ Evitar - Claves planas muy específicas
-{t('heroSupplementationTitle')}
-{t('systemsBiomarkersIncludedEssentialText')}
+### Variables de Entorno
+```env
+# .env
+REACT_APP_ENV=production
+REACT_APP_VERSION=2.0.0
 ```
 
-#### 2. Reutilización de Traducciones
-```javascript
-// ✅ Bueno - Reutilizar traducciones existentes
-<h4>{t('hero.supplementation')}</h4>
-<p>{t('hero.supplementationDesc')}</p>
+### Extensiones VS Code Recomendadas
+- Tailwind CSS IntelliSense
+- Prettier - Code formatter
+- ESLint
+- Auto Rename Tag
 
-// ❌ Evitar - Duplicar traducciones similares
-<h4>{t('packageComparison.supplementationTitle')}</h4>
-<p>{t('packageComparison.supplementationDescription')}</p>
-```
+## 📚 Documentación
 
-#### 3. Biomarcadores Específicos
-```javascript
-// ✅ Bueno - Usar sistema especializado de biomarcadores
-{t(`biomarkerNames.${biomarker.code}`, biomarker.name)}
-{t(`biomarkerCategories.${biomarker.category}`, biomarker.category)}
+Para documentación completa y detallada, consulta la carpeta [`docs/`](./docs/):
 
-// ❌ Evitar - Hardcodear nombres
-<h5>{biomarker.name}</h5>
-<p>{biomarker.category}</p>
-```
+- 📖 **[Guía Completa](./docs/README.md)** - Índice general de documentación
+- 🏛️ **[Arquitectura](./docs/architecture/)** - Documentación técnica del sistema
+- 👩‍💻 **[Desarrollo](./docs/development/)** - Guías para desarrolladores
+- 🔄 **[Migración](./docs/migration/)** - Historial de cambios y migración v2
+- 🛠️ **[Troubleshooting](./docs/troubleshooting/)** - Solución de problemas
 
-### Ejemplos de Implementación
+## 🤝 Contribución
 
-#### Componente Nuevo con Traducciones
-```javascript
-import React from 'react';
-import { useLanguage } from '../contexts/LanguageContext';
+1. **Fork** el repositorio
+2. **Crea** una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. **Commit** tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** a la rama (`git push origin feature/AmazingFeature`)
+5. **Abre** un Pull Request
 
-const NuevoComponente = () => {
-  const { t } = useLanguage();
-  
-  return (
-    <div>
-      <h2>{t('nuevaSeccion.titulo')}</h2>
-      <p>{t('nuevaSeccion.descripcion')}</p>
-      
-      {/* Biomarcador con fallback */}
-      <h5>{t(`biomarkerNames.H0000`, 'Hemograma completo')}</h5>
-    </div>
-  );
-};
-```
+Por favor, lee las [guías de contribución](./docs/development/coding-standards.md) antes de contribuir.
 
-#### Selector de Idioma Personalizado
-```javascript
-import { useLanguage } from '../contexts/LanguageContext';
+## 📄 Licencia
 
-const LanguageSelector = () => {
-  const { currentLanguage, changeLanguage } = useLanguage();
-  
-  const languages = [
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' }
-  ];
-  
-  return (
-    <div className="language-selector">
-      {languages.map(lang => (
-        <button
-          key={lang.code}
-          onClick={() => changeLanguage(lang.code)}
-          className={currentLanguage === lang.code ? 'active' : ''}
-        >
-          {lang.flag} {lang.name}
-        </button>
-      ))}
-    </div>
-  );
-};
-```
+Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
 
-### Validación de Traducciones
+## 📊 Estado del Proyecto
 
-Para verificar que todas las traducciones están correctas:
+### ✅ Completado (v2.0.0)
+- [x] Arquitectura refactorizada y modular
+- [x] Sistema de traducciones completo (ES/EN/FR)
+- [x] 4 perfiles + 16 add-ons completamente funcionales
+- [x] Pricing dinámico con diferenciación por género
+- [x] Build optimizado sin warnings
+- [x] Documentación completa y organizada
+- [x] Interfaz responsive y moderna
 
-```bash
-# Ejecutar el script de validación (si existe)
-npm run validate-translations
+### 🔮 Futuras Mejoras
+- [ ] Testing automatizado con Jest/React Testing Library
+- [ ] API backend para persistencia de datos
+- [ ] Dashboard de administración
+- [ ] Analytics y tracking de uso
+- [ ] PWA (Progressive Web App)
+- [ ] Más idiomas (IT, DE, PT)
 
-# Buscar claves faltantes en desarrollo
-# Las claves faltantes aparecerán en consola como warnings
-```
+## 📞 Soporte
 
-## Próximos Pasos
-
-1. **Integración con CRM** - Conectar formulario de contacto
-2. **Dashboard de Partners** - Portal para empresas cliente
-3. **API de Integración** - Conectores para plataformas existentes
-4. **Calculadora de Precios** - Herramienta de cotización automática
-5. **Casos de Estudio** - Testimonios y resultados reales
-6. **Traducciones Dinámicas** - Sistema de gestión de contenido multiidioma
-
-## Contacto
-
-Para más información sobre este proyecto o para solicitar una demo:
-
-- **Email:** partnerships@longevityanalytics.com
-- **Teléfono:** +34 900 123 456
-- **Ubicación:** Madrid, España
+- 📚 **Documentación**: [`docs/`](./docs/)
+- 🐛 **Issues**: [GitHub Issues](../../issues)
+- 🔧 **Problemas comunes**: [Troubleshooting](./docs/troubleshooting/)
 
 ---
 
-**Nota:** Esta aplicación está diseñada específicamente para presentaciones B2B a empresas de longevity. El enfoque está en la diferenciación competitiva y la propuesta de valor única en el mercado de análisis clínicos especializados. 
+**Desarrollado con ❤️ para el futuro de la medicina personalizada**
+
+*Última actualización: Diciembre 2024 | Versión: v2.0.0* 
