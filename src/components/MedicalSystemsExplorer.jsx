@@ -13,10 +13,11 @@ import {
   performancePackage,
   corePackage,
   advancedPackage,
-  getRecommendedAddOns
+  getRecommendedAddOns,
+  getProfileCodes
 } from '../data/analysisPackages';
 // Imports de add-ons desde nueva arquitectura
-import { getAddOnPackagesForGender } from '../data/addOnPackages';
+import { getAddOnPackagesForGender, getAddOnPackagesForProfile } from '../data/addOnPackages';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -141,9 +142,20 @@ const MedicalSystemsExplorer = () => {
         profilePackage = essentialPackage;
     }
 
+    // NUEVO: Usar el sistema de filtrado contextual
+    // Obtener códigos del perfil base
+    const baseCodes = getProfileCodes(profilePackage, selectedGender);
+    
+    // Obtener add-ons filtrados sin duplicados CON EXCLUSIONES POR PERFIL
+    const filteredAddOns = getAddOnPackagesForProfile(selectedGender, baseCodes, selectedProfile);
+    
+    // Filtrar solo los add-ons recomendados para este perfil
     const recommendedIds = getRecommendedAddOns(profilePackage);
-    const filteredAddOns = recommendedIds.map(id => addOnPackages[id]).filter(Boolean);
-    return filteredAddOns;
+    const recommendedFilteredAddOns = recommendedIds
+      .map(id => filteredAddOns[id])
+      .filter(Boolean); // Solo incluir add-ons que existen y tienen biomarcadores únicos
+    
+    return recommendedFilteredAddOns;
   };
 
   const toggleBiomarker = (biomarkerId) => {
@@ -481,7 +493,7 @@ const MedicalSystemsExplorer = () => {
                 ? 'border-earth bg-earth-50 hover:border-warm'
                 : isMetaboloma
                   ? 'border-cream bg-warm-white hover:border-earth'
-                  : (isMyPharma && selectedMyPharma) || (isMyDetox && selectedMyDetox) || (isMyDiet && selectedMyDiet) || (isMyAgeing && selectedMyAgeing) || (isMySport && selectedMySport) || (isMySuplements && selectedMySuplements)
+                  : (isMyPharma && (selectedProfile === 'advanced' || selectedMyPharma)) || (isMyDetox && (selectedProfile === 'advanced' || selectedMyDetox)) || (isMyDiet && (selectedProfile === 'advanced' || selectedMyDiet)) || (isMyAgeing && (selectedProfile === 'advanced' || selectedMyAgeing)) || (isMySport && (selectedProfile === 'advanced' || selectedMySport)) || (isMySuplements && (selectedProfile === 'advanced' || selectedMySuplements))
                     ? 'border-earth bg-earth-50 hover:border-warm'
                     : (isMyPharma || isMyDetox || isMyDiet || isMyAgeing || isMySport || isMySuplements)
                       ? 'border-cream bg-warm-white hover:border-earth'
@@ -1273,7 +1285,7 @@ const MedicalSystemsExplorer = () => {
 
             
             <div className="flex-1">
-              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && selectedIntolerancia) || (isMetaboloma && selectedMetaboloma) || (isMyPharma && selectedMyPharma) || (isMyDetox && selectedMyDetox) || (isMyDiet && selectedMyDiet) || (isMyAgeing && selectedMyAgeing) || (isMySport && selectedMySport) || (isMySuplements && selectedMySuplements) || (isLpA && selectedLpA) || (isLongitudTelomerica && selectedLongitudTelomerica) || (isAcidosGrasos && selectedAcidosGrasos) || (isVitaminaK1 && selectedVitaminaK1) || (isIL6 && selectedIL6) || (isTNFα && selectedTNFα) || (isHelicobacter && selectedHelicobacter) || (isEstradiolHormonas && selectedEstradiolHormonas) || (isProlactinaHormonas && selectedProlactinaHormonas) || (isLHHormonas && selectedLHHormonas) || (isFSHHormonas && selectedFSHHormonas) || (isEstradiolEndocrino && selectedEstradiolEndocrino) || (isProlactinaEndocrino && selectedProlactinaEndocrino) || (isLHEndocrino && selectedLHEndocrino) || (isFSHEndocrino && selectedFSHEndocrino) || (isVSGEndocrino && selectedVSGEndocrino) || (isVitaminaD125OHEndocrino && selectedVitaminaD125OHEndocrino) || (isFSHCancer && selectedFSHCancer) || (isVitaminaCOxidativeCell && selectedVitaminaCOxidativeCell) || (isVitaminaCIVNutrients && selectedVitaminaCIVNutrients) || (isUrinalisisDigestivo && selectedUrinalisisDigestivo) || (isOvaParasitesDigestivo && selectedOvaParasitesDigestivo) ? 'text-earth' : 'text-stone'}`}>
+              <h5 className={`font-semibold text-sm mb-1 ${(isIntolerancia && selectedIntolerancia) || (isMetaboloma && selectedMetaboloma) || (isMyPharma && (selectedProfile === 'advanced' || selectedMyPharma)) || (isMyDetox && (selectedProfile === 'advanced' || selectedMyDetox)) || (isMyDiet && (selectedProfile === 'advanced' || selectedMyDiet)) || (isMyAgeing && (selectedProfile === 'advanced' || selectedMyAgeing)) || (isMySport && (selectedProfile === 'advanced' || selectedMySport)) || (isMySuplements && (selectedProfile === 'advanced' || selectedMySuplements)) || (isLpA && selectedLpA) || (isLongitudTelomerica && selectedLongitudTelomerica) || (isAcidosGrasos && selectedAcidosGrasos) || (isVitaminaK1 && selectedVitaminaK1) || (isIL6 && selectedIL6) || (isTNFα && selectedTNFα) || (isHelicobacter && selectedHelicobacter) || (isEstradiolHormonas && selectedEstradiolHormonas) || (isProlactinaHormonas && selectedProlactinaHormonas) || (isLHHormonas && selectedLHHormonas) || (isFSHHormonas && selectedFSHHormonas) || (isEstradiolEndocrino && selectedEstradiolEndocrino) || (isProlactinaEndocrino && selectedProlactinaEndocrino) || (isLHEndocrino && selectedLHEndocrino) || (isFSHEndocrino && selectedFSHEndocrino) || (isVSGEndocrino && selectedVSGEndocrino) || (isVitaminaD125OHEndocrino && selectedVitaminaD125OHEndocrino) || (isFSHCancer && selectedFSHCancer) || (isVitaminaCOxidativeCell && selectedVitaminaCOxidativeCell) || (isVitaminaCIVNutrients && selectedVitaminaCIVNutrients) || (isUrinalisisDigestivo && selectedUrinalisisDigestivo) || (isOvaParasitesDigestivo && selectedOvaParasitesDigestivo) ? 'text-earth' : 'text-stone'}`}>
                 {t(`biomarkerNames.${biomarker.code}`, biomarker.name)}
               </h5>
               <p className="text-xs text-taupe">{t(`biomarkerCategories.${biomarker.category}`, biomarker.category)}</p>
@@ -1757,8 +1769,21 @@ const MedicalSystemsExplorer = () => {
                         })()}
                       </div>
                     </div>
-                    <div className="text-taupe text-sm">
-                      {getActualBiomarkerCount(addOn.id, selectedGender)} {t('systems.tests')}
+                    <div className="flex flex-col items-end">
+                      <div className="text-taupe text-sm">
+                        {addOn.testCount || 0} {t('systems.tests')}
+                      </div>
+                      {/* Indicador de filtrado contextual */}
+                      {addOn.isFiltered && addOn.originalCodes && addOn.originalCodes.length > addOn.testCount && (
+                        <div className="flex items-center gap-1 mt-1">
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                          <span className="text-xs text-green-600 font-medium">
+                            Optimizado para {selectedProfile === 'essential' ? 'Essential' : 
+                              selectedProfile === 'performance' ? 'Performance' : 
+                              selectedProfile === 'core' ? 'Core' : 'Advanced'}
+                          </span>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -1815,7 +1840,7 @@ const MedicalSystemsExplorer = () => {
                       >
                         <div className="bg-earth-50 rounded-lg p-4 border-2 border-cream">
                           <h5 className="text-base font-bold text-stone mb-4 flex items-center gap-2 justify-center">
-                            {t('systems.biomarkersOf')} {t(`addOns.${addOn.id}.name`)} ({getActualBiomarkerCount(addOn.id, selectedGender)} {t('systems.tests')})
+                            {t('systems.biomarkersOf')} {t(`addOns.${addOn.id}.name`)} ({addOn.testCount || 0} {t('systems.tests')})
                           </h5>
                           <div className="space-y-2 max-h-60 overflow-y-auto">
                             {addOn.biomarkers.map((biomarker, idx) => (

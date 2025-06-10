@@ -136,8 +136,20 @@ export const BIOMARKERS_DICTIONARY = {
   "6897": { name: "Urianálisis + sedimento", category: "Función renal", gender: "both" },
   "M0010": { name: "Sangre oculta en heces", category: "Digestivo", gender: "both" },
   "M1190": { name: "Ova & Parasites stool", category: "Parasitología", gender: "both" },
+  "P3031": { name: "Permeabilidad intestinal avanzada", category: "Microbiota", gender: "both" },
   "AB001": { name: "Microbioma", category: "Microbiota", gender: "both" },
-  "OG001": { name: "MyEpiAgeing", category: "Epigenética", gender: "both" }
+  "AB002": { name: "Metaboloma intestinal", category: "Microbiota", gender: "both" },
+  
+  // === GENÉTICA Y EPIGENÉTICA ===
+  "OG001": { name: "MyEpiAgeing", category: "Epigenética", gender: "both" },
+  "G1465": { name: "Longitud telomérica", category: "Epigenética", gender: "both" },
+  
+  // === ANÁLISIS GENÓMICOS ===
+  "OG002": { name: "MyPharma", category: "Farmacogenética", gender: "both" },
+  "OG003": { name: "MyDetox", category: "Detoxificación genética", gender: "both" },
+  "OG004": { name: "MyDiet", category: "Nutrigenética", gender: "both" },
+  "OG005": { name: "MySport", category: "Genética deportiva", gender: "both" },
+  "OG006": { name: "MySupplements", category: "Suplementación genética", gender: "both" }
 };
 
 // ================================

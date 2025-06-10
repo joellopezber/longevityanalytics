@@ -192,7 +192,7 @@ const translations = {
       },
       genome: {
         name: "Genoma",
-        description: "Tests genéticos personalizados opcionales (farmacogenética, detoxificación, nutrición, envejecimiento, deporte) para medicina de precisión basada en tu perfil genético único."
+        description: "Tests genéticos personalizados completos (farmacogenética, detoxificación, nutrición, deporte, suplementación) para medicina de precisión basada en tu perfil genético único. MySupplements disponible como opcional adicional."
       },
       coagulation: {
         name: "Coagulación",
@@ -504,6 +504,7 @@ const translations = {
       "B6180": "Vitamina D (25-OH)",
       "B6190": "Vitamina B12",
       "B5410": "Folato",
+      "B5420": "Hormona de crecimiento (hGH)",
       "B5350": "Estradiol",
       "B5980": "Prolactina",
       "B5800": "LH",
@@ -613,6 +614,7 @@ const translations = {
       "Perfil lipídico": "Perfil lipídico",
       "Riesgo CV": "Riesgo CV",
       "Eje HHA": "Eje HHA",
+      "Eje GH/IGF": "Eje GH/IGF",
       "Andrógenos suprarrenales": "Andrógenos suprarrenales",
       "Transporte esteroides": "Transporte esteroides",
       "Hormona general": "Hormona general",
@@ -767,7 +769,10 @@ const translations = {
         description: "Metabolito de hormona femenina. Indica metabolismo de estrógenos y equilibrio hormonal."
       },
       "B5410": {
-        description: "Hormona del crecimiento. Esencial para crecimiento, masa muscular y metabolismo."
+        description: "Vitamina B9 (folato). Esencial para síntesis de ADN, división celular y formación de glóbulos rojos. Importante durante embarazo para prevenir defectos del tubo neural."
+      },
+      "B5420": {
+        description: "Hormona de crecimiento humana. Esencial para crecimiento, regeneración de tejidos, masa muscular y metabolismo. Marcador clave de función hipofisaria y potencial de longevidad."
       },
       "B5350": {
         description: "Principal hormona sexual femenina. Regula ciclo menstrual, salud ósea y protección cardiovascular."
@@ -948,23 +953,20 @@ const translations = {
       "AB002": {
         description: "Perfil de metabolitos en orina y heces. Evalúa vías metabólicas y funcionalidad del microbioma."
       },
-      "GP001": {
-        description: "Farmacogenómica general. Analiza variantes genéticas que afectan la respuesta a medicamentos para personalizar tratamientos y evitar efectos adversos."
+      "OG002": {
+        description: "Análisis farmacogenético personalizado. Determina respuesta individual a medicamentos basada en variantes genéticas."
       },
-      "GD001": {
-        description: "Análisis genético de detoxificación. Evalúa capacidad genética para eliminar toxinas y metabolizar xenobióticos."
+      "OG003": {
+        description: "Análisis genético de detoxificación. Evalúa capacidad individual para metabolizar y eliminar toxinas."
       },
-      "GN001": {
-        description: "Análisis genético nutricional. Identifica variantes que afectan metabolismo de macronutrientes y micronutrientes."
+      "OG004": {
+        description: "Análisis nutrigenético personalizado. Identifica necesidades dietéticas específicas basadas en el perfil genético."
       },
-      "GA001": {
-        description: "Análisis genético del envejecimiento. Evalúa predisposición genética al envejecimiento y longevidad."
+      "OG005": {
+        description: "Genética deportiva personalizada. Optimiza entrenamiento y rendimiento basado en predisposiciones genéticas."
       },
-      "GS001": {
-        description: "Análisis genético deportivo. Optimiza entrenamiento y rendimiento basado en perfil genético."
-      },
-      "GU001": {
-        description: "Análisis genético de suplementación. Personaliza suplementos basado en necesidades genéticas individuales."
+      "OG006": {
+        description: "Análisis genético de suplementación. Personaliza suplementos nutricionales según necesidades genéticas individuales."
       },
       "H0050": {
         description: "Proteína de coagulación y marcador inflamatorio. Elevado indica riesgo trombótico e inflamación."
@@ -1024,13 +1026,28 @@ const translations = {
         description: "Pro-péptido liberador de gastrina. Marqueur spécifique de cáncer de pulmón microcítico."
       },
       "OG001": {
-        description: "Test epigenético de edad biológica. Mide metilación del ADN pour déterminer la edad biológica réelle."
+        description: "Test épigénétique d'âge biologique. Mesure la méthylation de l'ADN pour déterminer l'âge biologique réel."
+      },
+      "OG002": {
+        description: "Analyse pharmacogénétique personnalisée. Détermine la réponse individuelle aux médicaments basée sur les variantes génétiques."
+      },
+      "OG003": {
+        description: "Analyse génétique de détoxification. Évalue la capacité individuelle à métaboliser et éliminer les toxines."
+      },
+      "OG004": {
+        description: "Analyse nutrigénétique personnalisée. Identifie les besoins diététiques spécifiques basés sur le profil génétique."
+      },
+      "OG005": {
+        description: "Génétique sportive personnalisée. Optimise l'entraînement et la performance basés sur les prédispositions génétiques."
+      },
+      "OG006": {
+        description: "Analyse génétique de supplémentation. Personnalise les suppléments nutritionnels selon les besoins génétiques individuels."
       },
       "D1001": {
-        description: "Hormona antimülleriana. Marqueur de réserve ovarienne et fertilité féminine."
+        description: "Hormone anti-müllerienne. Marqueur de réserve ovarienne et fertilité féminine."
       },
       "B3340": {
-        description: "Analyse complète du sperme utilisée pour mesurer âge biologique masculin. Évalue concentration, motilité et morphologie spermatique comme marqueurs de vieillissement reproductif."
+        description: "Analyse complète du sperme utilisée pour mesurer l'âge biologique masculin. Évalue concentration, motilité et morphologie spermatique comme marqueurs de vieillissement reproductif."
       },
       "G1465": {
         description: "Mesure de longueur des télomères. Biomarqueur direct du vieillissement cellulaire et prédicteur de longévité."
@@ -1211,7 +1228,7 @@ const translations = {
       },
       genome: {
         name: "Genome",
-        description: "Optional personalized genetic tests (pharmacogenetics, detoxification, nutrition, aging, sports) for precision medicine based on your unique genetic profile."
+        description: "Complete personalized genetic tests (pharmacogenetics, detoxification, nutrition, sports, supplementation) for precision medicine based on your unique genetic profile. MySupplements available as additional optional."
       },
       coagulation: {
         name: "Coagulation",
@@ -1522,7 +1539,8 @@ const translations = {
       "B5370": "Ferritin",
       "B6180": "Vitamin D (25-OH)",
       "B6190": "Vitamin B12",
-      "B5410": "Folate",
+      "B5410": "Folate", 
+      "B5420": "Growth Hormone (hGH)",
       "B5350": "Estradiol",
       "B5980": "Prolactin",
       "B5800": "LH",
@@ -1786,7 +1804,10 @@ const translations = {
         description: "Female hormone metabolite. Indicates estrogen metabolism and hormonal balance."
       },
       "B5410": {
-        description: "Growth hormone. Essential for growth, muscle mass and metabolism."
+        description: "Vitamin B9 (folate). Essential for DNA synthesis, cell division and red blood cell formation. Important during pregnancy to prevent neural tube defects."
+      },
+      "B5420": {
+        description: "Human growth hormone. Essential for growth, tissue regeneration, muscle mass and metabolism. Key marker of pituitary function and longevity potential."
       },
       "B5350": {
         description: "Main female sex hormone. Regulates menstrual cycle, bone health and cardiovascular protection."
@@ -2045,6 +2066,21 @@ const translations = {
       "OG001": {
         description: "Epigenetic biological age test. Measures DNA methylation to determine real biological age."
       },
+      "OG002": {
+        description: "Personalized pharmacogenetic analysis. Determines individual response to medications based on genetic variants."
+      },
+      "OG003": {
+        description: "Genetic detoxification analysis. Evaluates individual capacity to metabolize and eliminate toxins."
+      },
+      "OG004": {
+        description: "Personalized nutrigenetic analysis. Identifies specific dietary needs based on genetic profile."
+      },
+      "OG005": {
+        description: "Personalized sports genetics. Optimizes training and performance based on genetic predispositions."
+      },
+      "OG006": {
+        description: "Genetic supplementation analysis. Personalizes nutritional supplements based on individual genetic needs."
+      },
       "D1001": {
         description: "Anti-Müllerian hormone. Marker of ovarian reserve and female fertility."
       },
@@ -2230,7 +2266,7 @@ const translations = {
       },
       genome: {
         name: "Génome",
-        description: "Tests génétiques personnalisés optionnels (pharmacogénétique, détoxification, nutrition, vieillissement, sport) pour une médecine de précision basée sur votre profil génétique unique."
+        description: "Tests génétiques personnalisés complets (pharmacogénétique, détoxification, nutrition, sport, supplémentation) pour une médecine de précision basée sur votre profil génétique unique. MySupplements disponible comme option additionnelle."
       },
       coagulation: {
         name: "Coagulation",
@@ -2542,6 +2578,7 @@ const translations = {
       "B6180": "Vitamine D (25-OH)",
       "B6190": "Vitamine B12",
       "B5410": "Folates",
+      "B5420": "Hormone de Croissance (hGH)",
       "B5350": "Estradiol",
       "B5980": "Prolactine",
       "B5800": "LH",
@@ -2805,7 +2842,10 @@ const translations = {
         description: "Métabolite d'hormone féminine. Indique métabolisme des œstrogènes et équilibre hormonal."
       },
       "B5410": {
-        description: "Hormone de croissance. Essentielle pour croissance, masse musculaire et métabolisme."
+        description: "Vitamine B9 (folate). Essentielle pour synthèse ADN, division cellulaire et formation globules rouges. Importante pendant grossesse pour prévenir défauts tube neural."
+      },
+      "B5420": {
+        description: "Hormone de croissance humaine. Essentielle pour croissance, régénération tissulaire, masse musculaire et métabolisme. Marqueur clé de fonction hypophysaire et potentiel de longévité."
       },
       "B5350": {
         description: "Principale hormone sexuelle féminine. Régule cycle menstruel, santé osseuse et protection cardiovasculaire."
@@ -2986,23 +3026,20 @@ const translations = {
       "AB002": {
         description: "Profil de métabolites dans urine et selles. Évalue voies métaboliques et fonctionnalité du microbiome."
       },
-      "GP001": {
-        description: "Pharmacogénomique générale. Analyse variantes génétiques qui affectent réponse aux médicaments pour personnaliser traitements et éviter effets indésirables."
+      "OG002": {
+        description: "Analyse pharmacogénétique personnalisée. Détermine la réponse individuelle aux médicaments basée sur les variantes génétiques."
       },
-      "GD001": {
-        description: "Analyse génétique de détoxification. Évalue capacité génétique à éliminer toxines et métaboliser xénobiotiques."
+      "OG003": {
+        description: "Analyse génétique de détoxification. Évalue la capacité individuelle à métaboliser et éliminer les toxines."
       },
-      "GN001": {
-        description: "Analyse génétique nutritionnelle. Identifie variantes qui affectent métabolisme des macronutriments et micronutriments."
+      "OG004": {
+        description: "Analyse nutrigénétique personnalisée. Identifie les besoins diététiques spécifiques basés sur le profil génétique."
       },
-      "GA001": {
-        description: "Analyse génétique du vieillissement. Évalue prédisposition génétique au vieillissement et longévité."
+      "OG005": {
+        description: "Génétique sportive personnalisée. Optimise l'entraînement et la performance basés sur les prédispositions génétiques."
       },
-      "GS001": {
-        description: "Analyse génétique sportive. Optimise entraînement et performance basé sur profil génétique."
-      },
-      "GU001": {
-        description: "Analyse génétique de supplémentation. Personnalise suppléments basés sur besoins génétiques individuels."
+      "OG006": {
+        description: "Analyse génétique de supplémentation. Personnalise les suppléments nutritionnels selon les besoins génétiques individuels."
       },
       "H0050": {
         description: "Protéine de coagulation et marqueur inflammatoire. Élevé indique un risque thrombotique et inflammation."

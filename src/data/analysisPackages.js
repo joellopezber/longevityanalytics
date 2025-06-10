@@ -229,13 +229,23 @@ export const performancePackage = createPackage({
   maleOnlyCodes: PERFORMANCE_BIOMARKER_CODES_MALE_ONLY,
   femaleOnlyCodes: PERFORMANCE_BIOMARKER_CODES_FEMALE_ONLY,
   recommendedAddOns: [
-    // Performance: Add-ons específicos para deportistas y rendimiento
-    'iv_nutrients',     // Nutrientes esenciales para rendimiento
-    'oxidative_cell',   // Estrés oxidativo por ejercicio intenso
-    'bone_mineral',     // Salud ósea para deportistas
-    'coagulation',      // Función hemostática por actividad física
-    'cardiovascular',   // Salud cardíaca para atletas
-    'antioxidantes'     // Vitaminas para recuperación
+    // Performance: Add-ons con alto valor para deportistas (basado en análisis de duplicados)
+    'hormonas',         // 5/12 biomarcadores únicos - hormones específicas deportistas
+    'cardiovascular',   // 3/8 biomarcadores únicos - Lp(a), omega-3, vit K1
+    'metals',           // 4/4 biomarcadores únicos - detox para deportistas
+    'endocrino',        // 2/3 biomarcadores únicos para optimización hormonal
+    'iv_nutrients',     // 4/5 biomarcadores únicos - nutrientes específicos para rendimiento
+    'antioxidantes',    // 3/5 biomarcadores únicos - vitaminas A, E gamma, beta-caroteno
+    'oxidative_cell',   // 3/4 biomarcadores únicos de estrés oxidativo
+    'bone_mineral',     // 4/4 biomarcadores únicos - salud ósea específica para deportistas
+    'inflammation',     // 1/3 biomarcadores únicos - VSG para monitoreo inflamatorio
+    'digest',           // 4/4 biomarcadores únicos - salud digestiva para deportistas
+    'immunity',         // 6/6 biomarcadores únicos - sistema inmune para deportistas
+    'gut_gate',         // 4/4 biomarcadores únicos - permeabilidad intestinal
+    'coagulation',      // 3/3 biomarcadores únicos - coagulación para deportistas
+    'cancer',           // 17/19 biomarcadores únicos - screening preventivo
+    'bioage',           // 4/4 biomarcadores únicos - edad biológica para deportistas
+    'genome'            // 5/5 biomarcadores únicos - análisis genético deportivo
   ]
 });
 
@@ -244,23 +254,27 @@ export const corePackage = createPackage({
   id: 'core',
   name: 'systems.analysisProfiles.core.title',
   description: 'systems.coreDescription',
-  color: 'gradient-primary',
-  bgColor: 'bg-primary-50',
-  borderColor: 'border-primary',
-  textColor: 'text-primary',
+  color: 'gradient-warm',
+  bgColor: 'bg-warm-50',
+  borderColor: 'border-warm',
+  textColor: 'text-warm',
   targetAudience: 'systems.coreTargetAudience',
   commonCodes: CORE_BIOMARKER_CODES_COMMON,
   maleOnlyCodes: CORE_BIOMARKER_CODES_MALE_ONLY,
   femaleOnlyCodes: CORE_BIOMARKER_CODES_FEMALE_ONLY,
   recommendedAddOns: [
-    // Core: Add-ons de análisis intermedio y salud integral
-    'hormonas',         // Análisis hormonal completo
-    'immunity',         // Sistema inmunológico
-    'gut_gate',         // Permeabilidad intestinal
-    'metals',           // Detoxificación metales pesados
-    'endocrino',        // Eje hormonal avanzado
-    'inflammation',     // Marcadores inflamatorios
-    'digest'            // Función digestiva avanzada
+    // Core: Add-ons con valor real después del análisis de duplicados
+    'cardiovascular',   // 3/3 biomarcadores únicos - aún aporta valor
+    'metals',           // 4/4 biomarcadores únicos - no incluido en Core
+    'antioxidantes',    // 3/5 biomarcadores únicos - vitaminas A, E gamma, beta-caroteno
+    'immunity',         // Biomarcadores únicos de inmunidad
+    'digest',           // Análisis digestivo completo único
+    'gut_gate',         // Permeabilidad intestinal única
+    'coagulation',      // Biomarcadores únicos de coagulación
+    'bone_mineral',     // Biomarcadores únicos de metabolismo óseo
+    'cancer',           // Marcadores tumorales únicos
+    'bioage',           // Tests de edad biológica únicos
+    'genome'            // Opcional - tests genéticos
   ]
 });
 
@@ -269,21 +283,19 @@ export const advancedPackage = createPackage({
   id: 'advanced',
   name: 'systems.analysisProfiles.advanced.title',
   description: 'systems.advancedDescription',
-  color: 'gradient-premium',
-  bgColor: 'bg-premium-50',
-  borderColor: 'border-premium',
-  textColor: 'text-premium',
+  color: 'gradient-cool',
+  bgColor: 'bg-cool-50',
+  borderColor: 'border-cool',
+  textColor: 'text-cool',
   targetAudience: 'systems.advancedTargetAudience',
   commonCodes: ADVANCED_BIOMARKER_CODES_COMMON,
   maleOnlyCodes: ADVANCED_BIOMARKER_CODES_MALE_ONLY,
   femaleOnlyCodes: ADVANCED_BIOMARKER_CODES_FEMALE_ONLY,
   recommendedAddOns: [
-    // Advanced: Add-ons premium de longevidad y análisis genético avanzado
-    'cancer',           // Marcadores tumorales completos
-    'bioage',           // Edad biológica epigenética
-    'genome',           // Análisis genético completo
-    'oxidative_cell',   // Estrés oxidativo completo
-    'metals'            // Detoxificación avanzada
+    // Advanced: Add-ons que aún aportan valor después del análisis de exclusiones
+    'genome',           // 6 tests genéticos únicos - análisis farmacogenético completo  
+    'gut_gate',         // 2 tests únicos - permeabilidad intestinal avanzada + metaboloma
+    'bioage'            // 1-2 tests únicos - longitud telomérica (+ específicos por género)
   ]
 });
 
@@ -340,6 +352,51 @@ export const getPackageTestCount = (packageData, gender) => {
  */
 export const getRecommendedAddOns = (packageData) => {
   return packageData.recommendedAddOns || [];
+};
+
+/**
+ * Obtiene códigos de biomarcadores de un perfil según género
+ * @param {object} profile - El perfil (essential, performance, core, advanced)
+ * @param {string} gender - Género ('male', 'female', 'both')
+ * @returns {Array} Códigos de biomarcadores del perfil
+ */
+export const getProfileCodes = (profile, gender = 'both') => {
+  let baseCodes = [];
+  
+  if (profile.hasGenderDifferences) {
+    switch (gender) {
+      case 'male':
+        baseCodes = [...profile.commonCodes, ...profile.maleOnlyCodes];
+        break;
+      case 'female':
+        baseCodes = [...profile.commonCodes, ...profile.femaleOnlyCodes];
+        break;
+      case 'both':
+      default:
+        baseCodes = [...profile.commonCodes, ...profile.maleOnlyCodes, ...profile.femaleOnlyCodes];
+        break;
+    }
+  } else {
+    baseCodes = profile.commonCodes;
+  }
+  
+  return baseCodes;
+};
+
+/**
+ * Obtiene información sobre qué add-ons están recomendados para un perfil
+ * Esta función debe usarse junto con getAddOnPackagesForProfile de addOnPackages.js
+ * para obtener los add-ons filtrados sin duplicados
+ * @param {object} profile - El perfil (essential, performance, core, advanced)
+ * @returns {object} Información sobre add-ons recomendados
+ */
+export const getProfileAddOnInfo = (profile) => {
+  return {
+    profileId: profile.id,
+    recommendedAddOns: profile.recommendedAddOns || [],
+    totalBiomarkers: profile.commonCodes.length + profile.maleOnlyCodes.length + profile.femaleOnlyCodes.length,
+    hasGenderDifferences: profile.hasGenderDifferences
+  };
 };
 
 // ================================
