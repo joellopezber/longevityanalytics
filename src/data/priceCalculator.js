@@ -7,7 +7,6 @@
  * - calculateBiomarkerListPrice: Calcula precio de lista de biomarcadores
  * - calculatePackagePrice: Calcula precio de un paquete completo
  * - calculateAddOnPrice: Calcula precio de add-ons por género
- * - getPriceBreakdown: Obtiene desglose detallado de precios
  */
 
 import { getPriceByCode, validatePriceData } from './priceData.js';
@@ -99,10 +98,10 @@ export const calculatePackagePrice = (biomarkers, gender = 'both', packageType =
     
     // === COMPATIBILIDAD (deprecados) ===
     basePrice: precio,     // Para compatibilidad - mismo que precio
-    finalPrice: precio,    // Para compatibilidad - mismo que precio
     marketPrice: pvp,      // Para compatibilidad - mismo que pvp
     costPrice: precio,     // Para compatibilidad - mismo que precio
     markup: 0             // Siempre 0 tras eliminación
+    // finalPrice eliminado - solo se usaba en comparePrices que fue eliminada
   };
 };
 
@@ -138,112 +137,8 @@ export const calculateAddOnPrice = (biomarkers, addOnType = 'addon') => {
   };
 };
 
-/**
- * Obtiene desglose detallado de precios por categorías
- * @param {Array} biomarkers - Lista de biomarcadores
- * @param {string} gender - Género para filtrar
- * @returns {object} - Desglose por categorías
- */
-export const getPriceBreakdown = (biomarkers, gender = 'both') => {
-  const calculation = calculateBiomarkerListPrice(biomarkers, 'precio', gender);
-  
-  // Agrupar por categoría
-  const categoryBreakdown = calculation.priceDetails.reduce((acc, item) => {
-    const category = item.category || 'Sin categoría';
-    if (!acc[category]) {
-      acc[category] = {
-        tests: [],
-        totalPrice: 0,
-        testCount: 0
-      };
-    }
-    
-    acc[category].tests.push(item);
-    acc[category].totalPrice += item.price;
-    acc[category].testCount += 1;
-    
-    return acc;
-  }, {});
-  
-  // Calcular porcentajes
-  Object.keys(categoryBreakdown).forEach(category => {
-    const categoryData = categoryBreakdown[category];
-    categoryData.totalPrice = Math.round(categoryData.totalPrice * 100) / 100;
-    categoryData.percentage = Math.round((categoryData.totalPrice / calculation.totalPrice) * 100);
-    categoryData.averagePerTest = Math.round((categoryData.totalPrice / categoryData.testCount) * 100) / 100;
-  });
-  
-  return {
-    totalPrice: calculation.totalPrice,
-    totalTests: calculation.testCount,
-    categories: categoryBreakdown,
-    validation: calculation.validation
-  };
-};
+// getPriceBreakdown - ELIMINADA: No se usa en ningún lugar
 
-/**
- * Compara precios entre diferentes configuraciones
- * @param {Array} configurations - Array de configuraciones a comparar
- * @returns {object} - Comparación de precios
- */
-export const comparePrices = (configurations) => {
-  const results = configurations.map(config => {
-    const { biomarkers, gender, packageType, name } = config;
-    const calculation = calculatePackagePrice(biomarkers, gender, packageType);
-    
-    return {
-      name: name || `${packageType}-${gender}`,
-      ...calculation
-    };
-  });
-  
-  // Encontrar el más económico y más caro
-  const prices = results.map(r => r.finalPrice);
-  const cheapest = results.find(r => r.finalPrice === Math.min(...prices));
-  const mostExpensive = results.find(r => r.finalPrice === Math.max(...prices));
-  
-  return {
-    results,
-    comparison: {
-      cheapest,
-      mostExpensive,
-      priceRange: {
-        min: Math.min(...prices),
-        max: Math.max(...prices),
-        difference: Math.max(...prices) - Math.min(...prices)
-      }
-    }
-  };
-};
+// comparePrices - ELIMINADA: No se usa en ningún lugar
 
-/**
- * Valida precios de todos los paquetes del sistema
- * @param {object} packagesData - Datos de paquetes del sistema
- * @returns {object} - Reporte de validación completo
- */
-export const validateAllPackagePrices = (packagesData) => {
-  const validationResults = {};
-  
-  // Validar Essential
-  if (packagesData.essential) {
-    validationResults.essential = calculatePackagePrice(
-      packagesData.essential.biomarkers, 
-      'both', 
-      'essential'
-    );
-  }
-  
-  // Validar Add-ons
-  if (packagesData.addOns) {
-    validationResults.addOns = {};
-    Object.keys(packagesData.addOns).forEach(addOnKey => {
-      const addOn = packagesData.addOns[addOnKey];
-      validationResults.addOns[addOnKey] = calculateAddOnPrice(
-        addOn.biomarkers, 
-        'addon'
-      );
-    });
-  }
-  
-  return validationResults;
-}; 
+// validateAllPackagePrices - ELIMINADA: No se usa en ningún lugar 

@@ -9,9 +9,9 @@ import { getPriceByCode } from '../data/priceData.js';
 import { addOnPackages } from '../data/addOnPackages.js';
 // Import del nuevo sistema simplificado de biomarcadores
 import { 
-  calculateDynamicBiomarkerCount,
+  // calculateDynamicBiomarkerCount,  // No usado directamente en el contexto
   getManuallySelectedBiomarkers,
-  ADD_ON_BIOMARKERS_CONFIG,
+  // ADD_ON_BIOMARKERS_CONFIG,  // Re-exportado desde index.js
   getInitialStateValue 
 } from '../data/biomarkersConfig.js';
 // Import del sistema de paquetes y precios dinámicos
@@ -206,7 +206,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
   // Perfil seleccionado (essential, performance, core, advanced)
   const [selectedProfile, setSelectedProfileState] = useState('essential'); // Perfil por defecto
   const [gender, setGender] = useState('male'); // Género por defecto
-  const [user, setUser] = useState(null); // Usuario actual
+  const [user] = useState(null); // Usuario actual (setUser no usado por ahora)
   
   // Estados para biomarcadores seleccionados (sistema existente)
   const [selectedBiomarkers, setSelectedBiomarkers] = useState([]);
@@ -234,19 +234,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     advanced: advancedPackage.getPricing(gender)
   };
 
-  // Función para calcular precio total
-  const getTotalPrice = () => {
-    const currentProfilePricing = profiles[selectedProfile]?.getPricing(gender);
-    const basePrice = currentProfilePricing?.precio || 0;
-    const additionalPrices = calculateAdditionalPrices();
-    return basePrice + additionalPrices.price;
-  };
-
-  // Función para calcular precio de add-on individual
-  const calculateAddOnPrice = (addOnId) => {
-    // Implementación básica - se puede expandir según necesidades
-    return getAdjustedAddOnPrice(addOnId, 0, 0);
-  };
+  // Función para calcular precio total - ELIMINADA: No se usa en ningún lugar
 
   // Función para calcular precios adicionales basados en selecciones
   const calculateAdditionalPrices = () => {
@@ -815,93 +803,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     }
   };
 
-  // NUEVO: Función helper para migración gradual al sistema formal de opcionales
-  const getEnhancedBiomarkerCount = (addOnId, gender = 'both') => {
-    // Si el add-on tiene configuración formal, usar el nuevo sistema
-    if (ADD_ON_BIOMARKERS_CONFIG[addOnId]) {
-      const selectedStates = {
-        selectedMyPharma,
-        selectedMyDetox,
-        selectedMyDiet,
-        selectedMyAgeing,
-        selectedMySport,
-        selectedMySuplements,
-        selectedLpA,
-        selectedIL6,
-        selectedTNFα,
-        selectedVitaminaK1,
-        selectedAcidosGrasos,
-        selectedVitaminaCIVNutrients,
-        selectedVitaminaCOxidativeCell,
-        selectedHelicobacter,
-        selectedIntolerancia,
-        selectedMetaboloma,
-        selectedLongitudTelomerica,
-        selectedEstradiolHormonas,
-        selectedProlactinaHormonas,
-        selectedLHHormonas,
-        selectedFSHHormonas,
-        selectedEstradiolEndocrino,
-        selectedProlactinaEndocrino,
-        selectedLHEndocrino,
-        selectedFSHEndocrino,
-        selectedVSGEndocrino,
-        selectedVitaminaD125OHEndocrino,
-        // Estados de Cancer
-        selectedSangreOcultaCancer,
-        selectedUrinalisisCancer,
-        selectedCEACancer,
-        selectedCA125Cancer,
-        selectedCA153Cancer,
-        selectedCA199Cancer,
-        selectedSCCCancer,
-        selectedProteina100Cancer,
-        selectedNSECancer,
-        selectedCYFRA21Cancer,
-        selectedCA724Cancer,
-        selectedAFPCancer,
-        selectedProGRPCancer,
-        selectedBetaHCGCancer,
-        selectedPSATotalCancer,
-        selectedPSALibreCancer,
-        selectedHE4Cancer,
-        selectedOmega3Digestivo,
-        selectedLipasaDigestivo,
-        selectedAmilasaDigestivo,
-        selectedBilirrubinaDirectaDigestivo,
-        selectedRetinol,
-        selectedAlfaTocoferol,
-        selectedGammaTocoferol,
-        selectedBetaCaroteno,
-        selectedCoenzimaQ10,
-        selectedGlutationReductasa,
-        selectedGlutationPeroxidasa,
-        selectedG6PD,
-        selectedSelenio,
-        selectedVSGInflammation,
-        selectedIL6Inflammation,
-        selectedTNFαInflammation,
-        selectedCalcitriolBoneMineral,
-        selectedALPOseaBoneMineral,
-        selectedCTXBoneMineral,
-        selectedCalcioIonicoBoneMineral,
-        selectedFibrinogenoCoagulation,
-        selectedAPTTCoagulation,
-        selectedINRCoagulation,
-        // Estados de BioAge
-        selectedMyEpiAgeingBioAge,
-        selectedLongitudTelomericaBioAge,
-        selectedEspermiogramaBioAge,
-        selectedAMHBioAge
-      };
-      
-      console.log(`🔄 Usando sistema formal para ${addOnId}:`, calculateDynamicBiomarkerCount(addOnId, selectedStates, gender));
-      return calculateDynamicBiomarkerCount(addOnId, selectedStates, gender);
-    }
-    
-    // Fallback al sistema actual para add-ons sin migrar
-    return getActualBiomarkerCount(addOnId, gender);
-  };
+  // getEnhancedBiomarkerCount - ELIMINADA: No se usa en ningún lugar del proyecto
 
   // Función para calcular número real de biomarcadores seleccionados por add-on (SISTEMA ACTUAL)
   const getActualBiomarkerCount = (addOnId, gender = 'both') => {
@@ -1154,9 +1056,7 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     profiles: profiles,
     profilePrices: profilePrices,
     
-    // Funciones principales
-    getTotalPrice,
-    calculateAddOnPrice,
+    // Funciones principales - getTotalPrice y calculateAddOnPrice eliminadas por no usarse
     
     // ================================================================
     // ESTADOS DE BIOMARCADORES ESPECÍFICOS
@@ -1419,8 +1319,8 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     calculateAdditionalPrices,
     getAdjustedAddOnPrice,
     getSelectionSummary,
-    getActualBiomarkerCount,
-    getEnhancedBiomarkerCount // NUEVO: Sistema formal de opcionales
+    getActualBiomarkerCount
+    // getEnhancedBiomarkerCount eliminada por no usarse
   };
 
   return (

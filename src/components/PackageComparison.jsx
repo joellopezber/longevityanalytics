@@ -1,15 +1,19 @@
 /**
  * PackageComparison.jsx
  * Configurador interactivo: Essential + Add-Ons seleccionables
+ * NUEVO DISEÑO: Grid de Add-Ons arriba + Resumen horizontal abajo
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { FaCheck, FaChartBar, FaStar, FaPlus } from 'react-icons/fa';
+import { FaCheck, FaChartBar, FaStar } from 'react-icons/fa';
 // Imports de la nueva arquitectura
 import { 
   getPackageForGender, 
-  essentialPackage
+  essentialPackage,
+  performancePackage,
+  corePackage,
+  advancedPackage
 } from '../data/analysisPackages';
 import { calculatePackagePrice } from '../data/priceCalculator';
 // Imports de add-ons desde nueva arquitectura
@@ -17,16 +21,21 @@ import { addOnPackages } from '../data/addOnPackages';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 import { getPriceByCode } from '../data/priceData.js';
 import { useLanguage } from '../contexts/LanguageContext';
+import { 
+  getActiveBiomarkers, 
+  ADD_ON_BIOMARKERS_CONFIG 
+} from '../data/biomarkersConfig';
 
 const PackageComparison = () => {
-  const [selectedGender, setSelectedGender] = useState('male');
-  const [selectedAddOns, setSelectedAddOns] = useState([]); // Array de IDs de Add-Ons seleccionados
-
   // Hook para traducciones
   const { t } = useLanguage();
 
   // Usar el contexto para obtener las selecciones de biomarcadores
-  const { 
+  const biomarkerContext = useBiomarkerSelection();
+  const {
+    // Estados principales
+    selectedProfile,
+    gender: selectedGender,
     getSelectionSummary,
     selectedIntolerancia,
     selectedMetaboloma,
@@ -41,23 +50,66 @@ const PackageComparison = () => {
     selectedLongitudTelomerica,
     selectedAcidosGrasos,
     selectedVitaminaK1,
-    getAdjustedAddOnPrice,
     getActualBiomarkerCount
-  } = useBiomarkerSelection();
+  } = biomarkerContext;
 
-  // Obtener datos filtrados por género usando nueva arquitectura
-  const essentialData = getPackageForGender(essentialPackage, selectedGender);
-  // USAR DIRECTAMENTE addOnPackages sin transformación
-  // const addOnPackagesFiltered = getAddOnPackagesForGender(selectedGender);
+  // Función para obtener el paquete según el perfil seleccionado
+  const getSelectedPackageData = () => {
+    switch(selectedProfile) {
+      case 'performance':
+        return getPackageForGender(performancePackage, selectedGender);
+      case 'core':
+        return getPackageForGender(corePackage, selectedGender);
+      case 'advanced':
+        return getPackageForGender(advancedPackage, selectedGender);
+      case 'essential':
+      default:
+        return getPackageForGender(essentialPackage, selectedGender);
+    }
+  };
 
-  // Calcular totales dinámicos
+  // Obtener datos filtrados por género y perfil seleccionado
+  const selectedProfileData = getSelectedPackageData();
+
+  // Función para detectar qué add-ons están activos basándose en biomarcadores seleccionados
+  const getActiveAddOns = () => {
+    const activeAddOns = [];
+    
+    // Usar todo el contexto para obtener todos los estados de selección
+    const selectedStates = biomarkerContext;
+
+    // Verificar cada add-on para ver si tiene biomarcadores activos
+    Object.keys(ADD_ON_BIOMARKERS_CONFIG).forEach(addOnId => {
+      const activeBiomarkers = getActiveBiomarkers(addOnId, selectedStates);
+      if (activeBiomarkers.length > 0) {
+        // Encontrar el add-on en los datos y agregarlo con información adicional
+        const addOnData = addOnPackages[addOnId];
+        if (addOnData) {
+          activeAddOns.push({
+            id: addOnId,
+            title: addOnData.name, // Esto será una clave de traducción como 'addOns.hormonas.name'
+            activeBiomarkersCount: activeBiomarkers.length,
+            activeBiomarkers: activeBiomarkers
+          });
+        }
+      }
+    });
+
+    return activeAddOns;
+  };
+
+  // Calcular totales dinámicos usando detección automática
   const calculateTotals = () => {
+    // Obtener add-ons activos automáticamente
+    const activeAddOns = getActiveAddOns();
+    const activeAddOnIds = activeAddOns.map(addon => addon.id);
+    
     // Recopilar todos los biomarcadores para cálculo conjunto
-    let allBiomarkers = [...essentialData.biomarkers];
+    let allBiomarkers = [...selectedProfileData.biomarkers];
     let selectedAddOnsList = [];
 
-    // Agregar biomarcadores de add-ons seleccionados
-    selectedAddOns.forEach(addOnId => {
+    // Agregar biomarcadores de add-ons detectados automáticamente
+    activeAddOnIds.forEach(addOnId => {
       const addOn = addOnPackages[addOnId];
       if (addOn) {
         // Filtrar biomarcadores por género si es necesario
@@ -71,15 +123,29 @@ const PackageComparison = () => {
       }
     });
 
+    // CALCULAR NÚMERO REAL DE BIOMARCADORES
+    // 1. Perfil base seleccionado
+    let totalBiomarkersCount = selectedProfileData.biomarkers.length;
+    
+    // 2. Add-ons detectados automáticamente (usando función que cuenta dinámicamente)
+    activeAddOnIds.forEach(addOnId => {
+      if (getActualBiomarkerCount) {
+        totalBiomarkersCount += getActualBiomarkerCount(addOnId, selectedGender);
+      }
+    });
+    
+    // 3. Biomarcadores personalizados adicionales (getSelectionSummary)
+    totalBiomarkersCount += getSelectionSummary().length;
+
     // Calcular precio total sumando todos los biomarcadores (sin descuentos automáticos)
-    const totalCalculation = calculatePackagePrice(allBiomarkers, selectedGender, 'essential');
+    const totalCalculation = calculatePackagePrice(allBiomarkers, selectedGender, selectedProfile);
     
     // Aplicar ajustes del contexto (Intolerancia, Metaboloma, etc.)
     // PRECIO FINAL = Suma exacta de tarifas Prevenii (sin descuentos automáticos)
     let adjustedPrice = totalCalculation.costPrice; // Usar costPrice (suma exacta Prevenii)
     let adjustedPvpPrice = totalCalculation.marketPrice; // Market como PVP referencial
     
-    selectedAddOns.forEach(addOnId => {
+    activeAddOnIds.forEach(addOnId => {
       if (addOnId === 'digest' && selectedIntolerancia) {
         adjustedPrice += getPriceByCode('P3031', 'prevenii');
         adjustedPvpPrice += getPriceByCode('P3031', 'market');
@@ -141,7 +207,7 @@ const PackageComparison = () => {
     });
 
     return {
-      totalBiomarkers: totalCalculation.testCount,
+      totalBiomarkers: totalBiomarkersCount, // Usar conteo real calculado manualmente
       totalPrice: Math.round(adjustedPrice),
       totalPvpPrice: Math.round(adjustedPvpPrice),
       selectedAddOnsList,
@@ -151,38 +217,10 @@ const PackageComparison = () => {
 
   const { totalBiomarkers, totalPrice, totalPvpPrice } = calculateTotals();
 
-  // Toggle Add-On selection
-  const toggleAddOn = (addOnId) => {
-    setSelectedAddOns(prev => 
-      prev.includes(addOnId) 
-        ? prev.filter(id => id !== addOnId)
-        : [...prev, addOnId]
-    );
-  };
 
-  // Generar lista de inclusiones dinámicas
-  const getDynamicIncludes = () => {
-    const baseIncludes = [
-      t('packageComparison.glucidMetabolism'),
-      t('packageComparison.renalHepaticFunction'),
-      t('packageComparison.advancedLipidProfile'),
-      t('packageComparison.basicHormones'),
-      t('packageComparison.completeThyroid'),
-      t('packageComparison.essentialMinerals'),
-      t('packageComparison.inflammatoryMarkers'),
-      t('packageComparison.biologicalAgeCalculation')
-    ];
-
-    const addOnIncludes = selectedAddOns.map(addOnId => {
-      const addOn = addOnPackages[addOnId];
-      return addOn ? `+ ${addOn.name}` : '';
-    }).filter(Boolean);
-
-    return [...baseIncludes, ...addOnIncludes];
-  };
 
   return (
-    <section id="paquetes" className="section bg-soft-cream">
+    <section id="paquetes" className="pt-20 pb-8 bg-soft-cream">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -198,237 +236,116 @@ const PackageComparison = () => {
           </p>
         </motion.div>
 
-        {/* Configurador: Essential + Add-Ons */}
-        <div className="grid lg:grid-cols-2 max-w-7xl mx-auto package-cards-container">
+        {/* NUEVO DISEÑO: Layout vertical con resumen horizontal */}
+        <div className="max-w-7xl mx-auto space-y-8">
           
-          {/* CARD ESSENTIAL - Izquierda */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="relative bg-warm-white rounded-2xl shadow-xl overflow-hidden border-2 border-earth hover:border-warm transition-all duration-300 hover:shadow-2xl package-card"
-          >
-            <div className="p-8">
-              {/* Header del Essential */}
-              <div className="text-center mb-8">
-                <div className="flex items-center justify-center gap-4 mb-6">
-                  <h3 className="text-3xl font-bold text-stone">{t('packages.essential')}</h3>
-                  
-                  {/* Gender Selector */}
-                  <div className="essential-gender-selector">
-                    <button
-                      onClick={() => setSelectedGender('male')}
-                      className={`essential-gender-button ${
-                        selectedGender === 'male' 
-                          ? 'bg-earth text-white shadow-sm' 
-                          : 'bg-earth-50 text-earth hover:bg-earth-100'
-                      }`}
-                    >
-                      <span>♂</span>
-                    </button>
-                    <button
-                      onClick={() => setSelectedGender('female')}
-                      className={`essential-gender-button ${
-                        selectedGender === 'female' 
-                          ? 'bg-warm text-white shadow-sm' 
-                          : 'bg-warm-50 text-warm hover:bg-warm-100'
-                      }`}
-                    >
-                      <span>♀</span>
-                    </button>
-                  </div>
-                </div>
-                
-                <p className="text-lg text-taupe mb-6 leading-relaxed">
-                  {t('systems.essentialDescription')}
-                </p>
 
-                {/* Contador dinámico de biomarcadores */}
-                <div className="flex flex-col items-center justify-center gap-0 mb-6 px-6 py-3 rounded-full bg-earth-50 border-2 border-earth">
-                  <span className="text-4xl font-bold text-stone leading-none">{totalBiomarkers}</span>
-                  <span className="text-lg text-taupe font-medium leading-none -mt-1">{t('systems.biomarkers')}</span>
-                </div>
 
-                {/* Precio dinámico */}
-                <div className="text-3xl font-bold mb-2 text-earth">{totalPrice}€</div>
-                <div className="text-sm text-gray-500 mb-2">
-                  {t('systems.pvp')}: {Math.round(totalPvpPrice)}€
-                </div>
-                <div className="text-sm text-taupe mb-4">
-                  {selectedAddOns.length === 0 
-                    ? t('packageComparison.basePriceEssential') 
-                    : t('packageComparison.essentialPlusAddOns')
-                        .replace('{count}', selectedAddOns.length)
-                        .replace('{plural}', selectedAddOns.length > 1 ? 's' : '')
-                  }
-                </div>
-              </div>
+          
 
-              {/* Inclusiones dinámicas */}
-              <div className="mb-8">
-                <h4 className="font-bold text-stone mb-6 text-lg">{t('packageComparison.includes')}</h4>
-                <div className="grid gap-3 max-h-80 overflow-y-auto">
-                  {getDynamicIncludes().map((feature, idx) => (
-                    <div key={idx} className={`
-                      flex items-center gap-3 p-3 rounded-lg border
-                      ${feature.startsWith('+') 
-                        ? 'bg-warm-50 border-warm' 
-                        : 'bg-earth-50 border-earth'
-                      }
-                    `}>
-                      <div className={`w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 ${
-                        feature.startsWith('+') ? 'bg-warm' : 'bg-earth'
-                      }`}>
-                        {feature.startsWith('+') ? (
-                          <FaPlus className="text-white text-xs" />
-                        ) : (
-                          <FaCheck className="text-white text-xs" />
-                        )}
-                      </div>
-                      <span className={`font-medium text-sm ${
-                        feature.startsWith('+') ? 'text-warm font-semibold' : 'text-taupe'
-                      }`}>
-                        {feature}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* CONFIGURADOR ADD-ONS - Derecha */}
+          {/* RESUMEN DE CONFIGURACIÓN DEL ANÁLISIS */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative bg-warm-white rounded-2xl shadow-xl overflow-hidden border-2 border-warm transition-all duration-300 hover:shadow-2xl package-card self-start"
+            className="bg-gradient-to-r from-warm-white to-cream rounded-2xl shadow-xl border-2 border-warm p-8"
           >
-            <div className="p-8">
-              {/* Header del Configurador */}
-              <div className="text-center mb-8">
-                <h3 className="text-3xl font-bold text-stone mb-3">{t('packages.addons')}</h3>
-                <p className="text-lg text-taupe mb-6 leading-relaxed">
-                  {t('packageComparison.selectSpecializedModules')}
+            {/* DISEÑO COMPACTO HORIZONTAL */}
+            <div className="flex flex-wrap lg:flex-nowrap items-center justify-between gap-6">
+              
+              {/* 1. Perfil Analítico Elegido - Izquierda */}
+              <div className="flex-shrink-0">
+                <h3 className="text-xl font-bold text-stone mb-1">
+                  Perfil Analítico
+                </h3>
+                <p className="text-lg text-warm font-semibold">
+                  {(() => {
+                    const activeAddOns = getActiveAddOns();
+                    const profileName = selectedProfile.charAt(0).toUpperCase() + selectedProfile.slice(1);
+                    return activeAddOns.length > 0 
+                      ? `${profileName} + ${activeAddOns.length} Add-On${activeAddOns.length > 1 ? 's' : ''}`
+                      : profileName;
+                  })()}
                 </p>
+                {getSelectionSummary().length > 0 && (
+                  <p className="text-sm text-green-600">
+                    Con personalizaciones
+                  </p>
+                )}
               </div>
 
-              {/* Resumen de biomarcadores individuales seleccionados */}
-              {getSelectionSummary().length > 0 && (
-                <div className="mb-6 p-4 bg-warm-50 border border-warm rounded-lg">
-                  <h5 className="text-sm font-semibold text-warm mb-2 text-center">
-                    {t('packageComparison.additionalBiomarkers')}
-                  </h5>
-                  <div className="space-y-1" style={{paddingLeft: '24px'}}>
-                    <ul className="list-disc space-y-1">
-                      {getSelectionSummary().map((biomarker, idx) => (
-                        <li key={idx} className="text-xs text-stone">
-                          {biomarker}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+              {/* 2. Número de Biomarcadores */}
+              <div className="flex-shrink-0 text-center">
+                <div className="text-3xl font-bold text-warm mb-1">{totalBiomarkers}</div>
+                <div className="text-sm text-taupe uppercase tracking-wide">
+                  {t('systems.biomarkers')}
                 </div>
-              )}
+                {getSelectionSummary().length > 0 && (
+                  <div className="text-xs text-green-600 mt-1">
+                    +{getSelectionSummary().length} extra
+                  </div>
+                )}
+              </div>
 
-              {/* Grid de Add-Ons */}
-              <div className="space-y-8 max-h-96 overflow-y-auto px-2">
-                {Object.values(addOnPackages).filter(addOn => addOn && typeof addOn.getPricing === 'function').map((addOn, index) => {
-                  const isSelected = selectedAddOns.includes(addOn.id);
-                  const testCount = getActualBiomarkerCount ? 
-                    getActualBiomarkerCount(addOn.id, selectedGender) : 
-                    (addOn.biomarkers ? addOn.biomarkers.length : 0);
+              {/* 3. Precio */}
+              <div className="flex-shrink-0 text-center">
+                <div className="text-3xl font-bold text-stone mb-1">{totalPrice}€</div>
+                <div className="text-sm text-taupe line-through">
+                  PVP: {totalPvpPrice}€
+                </div>
+                <div className="text-xs text-warm font-semibold uppercase tracking-wide">
+                  Precio Prevenii
+                </div>
+              </div>
+
+              {/* 4. Add-Ons Añadidos - Derecha */}
+              <div className="flex-grow min-w-0">
+                <h4 className="text-sm font-bold text-stone mb-2 uppercase tracking-wide">
+                  Add-Ons Incluidos:
+                </h4>
+                {(() => {
+                  const activeAddOns = getActiveAddOns();
+                  
+                  if (activeAddOns.length === 0) {
+                    return (
+                      <p className="text-sm text-taupe italic">Ninguno</p>
+                    );
+                  }
                   
                   return (
-                    <motion.div
-                      key={addOn.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.05 }}
-                      className={`
-                        border-2 rounded-xl p-6 cursor-pointer transition-all duration-300 mb-4
-                        ${isSelected 
-                          ? 'border-warm bg-warm-50 shadow-md' 
-                          : 'border-cream bg-white hover:border-warm hover:bg-warm-50'
-                        }
-                      `}
-                      onClick={() => toggleAddOn(addOn.id)}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 flex-1">
-                          {/* Checkbox visual */}
-                          <div className={`
-                            w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all
-                            ${isSelected 
-                              ? 'bg-warm border-warm' 
-                              : 'border-cream hover:border-warm'
-                            }
-                          `}>
-                            {isSelected && <FaCheck className="text-white text-xs" />}
-                          </div>
-                          
-                          {/* Info del Add-On */}
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-1">
-                              <div className="text-lg text-warm">
-                                <addOn.icon />
-                              </div>
-                              <h4 className="font-bold text-stone text-sm">{addOn.name}</h4>
-                            </div>
-                            <p className="text-xs text-taupe mb-2">{t(`addOns.${addOn.id}.description`)}</p>
-                            <div className="flex items-center gap-4 text-xs">
-                              {(() => {
-                                try {
-                                  // Usar pricing directo del add-on original
-                                  const pricing = addOn.getPricing(selectedGender);
-                                  
-                                  // Obtener precio base según género
-                                  let basePrice = 0, basePvp = 0;
-                                  
-                                  if (pricing[selectedGender]) {
-                                    basePrice = pricing[selectedGender].price || 0;
-                                    basePvp = pricing[selectedGender].marketPrice || 0;
-                                  } else if (pricing.both) {
-                                    basePrice = pricing.both.price || 0;
-                                    basePvp = pricing.both.marketPrice || 0;
-                                  } else {
-                                    basePrice = pricing.price || 0;
-                                    basePvp = pricing.marketPrice || 0;
-                                  }
-                                  
-                                  // Aplicar ajustes del contexto (Full Genome, Metaboloma, etc.)
-                                  const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
-                                  
-                                  return (
-                                    <div className="flex flex-col gap-1">
-                                      <span className="text-warm font-semibold">
-                                        {Math.round(adjustedPrices.price)}€
-                                      </span>
-                                      <span className="text-gray-500 text-xs">
-                                        {t('systems.pvp')}: {Math.round(adjustedPrices.pvp)}€
-                                      </span>
-                                    </div>
-                                  );
-                                } catch (error) {
-                                  console.error('Error calculando precio del add-on:', addOn.id, error);
-                                  return (
-                                    <div className="flex flex-col gap-1">
-                                      <span className="text-warm font-semibold">0€</span>
-                                      <span className="text-gray-500 text-xs">Error</span>
-                                    </div>
-                                  );
-                                }
-                              })()}
-                              <span className="text-taupe">{testCount} {t('systems.biomarkers')}</span>
-                            </div>
-                          </div>
+                    <div className="flex flex-wrap gap-2">
+                      {activeAddOns.map(addon => (
+                        <div key={addon.id} className="flex items-center gap-1 bg-warm-50 rounded-full px-3 py-1 text-xs">
+                          <FaCheck className="text-warm" />
+                          <span className="text-stone font-medium">
+                            {t(addon.title)}
+                          </span>
+                          <span className="text-warm-600 ml-1">
+                            ({addon.activeBiomarkersCount} biomarcadores)
+                          </span>
                         </div>
-                      </div>
-                    </motion.div>
+                      ))}
+                    </div>
                   );
-                })}
+                })()}
               </div>
             </div>
+
+            {/* Biomarcadores Adicionales Personalizados */}
+            {getSelectionSummary().length > 0 && (
+              <div className="mt-6 pt-6 border-t border-warm-200">
+                <h5 className="font-semibold text-warm mb-3">
+                  {t('packageComparison.additionalBiomarkers')}
+                </h5>
+                <div className="grid md:grid-cols-3 gap-2">
+                  {getSelectionSummary().map((biomarker, idx) => (
+                    <div key={idx} className="text-sm text-stone bg-white rounded-lg px-3 py-1 border">
+                      {biomarker}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </motion.div>
         </div>
 
@@ -487,6 +404,8 @@ const PackageComparison = () => {
             </div>
           </div>
         </motion.div>
+
+
       </div>
     </section>
   );

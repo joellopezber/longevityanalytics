@@ -17,7 +17,7 @@ import {
   getProfileCodes
 } from '../data/analysisPackages';
 // Imports de add-ons desde nueva arquitectura
-import { getAddOnPackagesForGender, getAddOnPackagesForProfile } from '../data/addOnPackages';
+import { /* getAddOnPackagesForGender, */ getAddOnPackagesForProfile } from '../data/addOnPackages';
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -30,23 +30,23 @@ const MedicalSystemsExplorer = () => {
   
   // Usar el contexto para las selecciones de biomarcadores
   const {
-    user,
-    selectedBiomarkers,
-    setSelectedBiomarkers,
-    activeBiomarkers,
-    setActiveBiomarkers,
-    biomarkerDetails,
+    // user,  // No usado por ahora
+    // selectedBiomarkers,  // No usado por ahora
+    // setSelectedBiomarkers,  // No usado por ahora
+    // activeBiomarkers,  // No usado por ahora
+    // setActiveBiomarkers,  // No usado por ahora
+    // biomarkerDetails,  // No usado por ahora
     selectedProfile,
     setSelectedProfile,
-    profilePrices,
-    profiles,
-    gender,
-    setGender,
-    calculateAdditionalPrices,
-    getTotalPrice,
-    getEnhancedBiomarkerCount,
-    getActualBiomarkerCount,
-    calculateAddOnPrice,
+    // profilePrices,  // No usado por ahora
+    // profiles,  // No usado por ahora
+    // gender,  // No usado por ahora (se usa selectedGender)
+    // setGender,  // No usado por ahora (se usa handleGenderChange)
+    // calculateAdditionalPrices,  // No usado por ahora
+    // getTotalPrice,  // No usado por ahora
+    // getEnhancedBiomarkerCount,  // No usado por ahora  
+    // getActualBiomarkerCount,  // No usado por ahora
+    // calculateAddOnPrice,  // No usado por ahora
     selectedIntolerancia,
     setSelectedIntolerancia,
     selectedMetaboloma,
@@ -373,7 +373,7 @@ const MedicalSystemsExplorer = () => {
   const performanceData = performancePackage.getForGender(selectedGender);
   const coreData = corePackage.getForGender(selectedGender);
   const advancedData = advancedPackage.getForGender(selectedGender);
-  const addOnPackages = getAddOnPackagesForGender(selectedGender);
+  // const addOnPackages = getAddOnPackagesForGender(selectedGender); // No usado directamente
 
   // Función para obtener las características traducidas del Essential
   const getEssentialFeatures = () => {
@@ -1241,7 +1241,7 @@ const MedicalSystemsExplorer = () => {
     const isIGFBP3Endocrino = isIGFBP3 && addOnId === "endocrino";
     const isACTHEndocrino = isACTH && addOnId === "endocrino";
     
-    const isFSHCancer = isFSH && addOnId === "cancer";
+    // const isFSHCancer = isFSH && addOnId === "cancer"; // No usado
     
     const isVitaminaCOxidativeCell = biomarker.name === "Vitamina C" && addOnId === "oxidative_cell";
     const isVitaminaCIVNutrients = biomarker.name === "Vitamina C" && addOnId === "iv_nutrients";
@@ -4234,7 +4234,7 @@ const MedicalSystemsExplorer = () => {
         </motion.div>
 
         {/* Add-Ons Grid */}
-        <div className="mb-16">
+        <div className="mb-8">
           <div className="bg-warm-white rounded-xl p-6 shadow-lg border-2 border-warm mb-8">
             <h3 className="text-2xl font-bold text-stone mb-3 text-center">
               {t('systems.addOnsSpecialized')}
@@ -4454,21 +4454,6 @@ const MedicalSystemsExplorer = () => {
             )}
           </AnimatePresence>
         </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-center"
-        >
-          <div className="gradient-earth rounded-2xl p-8 text-white shadow-xl border-2 border-warm">
-            <h3 className="text-2xl font-bold mb-4 text-center" dangerouslySetInnerHTML={{ __html: t('systems.ctaTitle') }}>
-            </h3>
-            <p className="text-white text-opacity-90 mb-6 max-w-2xl mx-auto text-base text-center leading-relaxed" dangerouslySetInnerHTML={{ __html: t('systems.ctaDescription') }}>
-            </p>
-          </div>
-        </motion.div>
       </div>
     </section>
   );

@@ -394,9 +394,9 @@ const translations = {
     },
     // Package Comparison Component
     packageComparison: {
-      title: "Configura tu",
-      titleHighlight: "Análisis Personalizado",
-      description: "Comienza con el Essential y añade los Add-Ons que necesites. Precio y biomarcadores se actualizan automáticamente.",
+      title: "Resumen de",
+      titleHighlight: "Configuración Seleccionada",
+      description: "Tu paquete de análisis personalizado con los add-ons seleccionados. Revisa tu configuración antes de proceder al siguiente paso.",
       essential: "Essential",
       addons: "Add-Ons",
       totalBiomarkers: "biomarcadores totales",
@@ -419,7 +419,7 @@ const translations = {
       selectedAddOns: "Add-Ons seleccionados:",
       totalPrice: "Precio Total",
       includes: "Incluye:",
-      selectSpecializedModules: "Selecciona los módulos especializados que necesites. Cada Add-On se suma al Essential para una evaluación más profunda.",
+      selectSpecializedModules: "Selecciona los módulos especializados que necesites. Los precios se ajustan automáticamente según tus selecciones individuales de biomarcadores. Cada Add-On se suma al Essential para una evaluación más profunda.",
       additionalBiomarkers: "Biomarcadores adicionales seleccionados:",
       basePriceEssential: "Precio base Essential",
       essentialPlusAddOns: "Essential + {count} Add-On{plural}",
