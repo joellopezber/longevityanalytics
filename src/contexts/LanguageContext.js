@@ -536,8 +536,8 @@ const translations = {
       "B3041": "G6PD",
       "B7790": "Interleucina-6",
       "I2081": "TNF-alfa",
-      "B0270": "Ácido cólico",
-      "B8060": "Adiponectina",
+      "B0270": "Osmolalidad sérica",
+      "B8060": "Cobre",
       "T0500": "Cromo",
       "T2590": "Ácidos grasos omega-3",
       "T1720": "Vitamina K1",
@@ -548,13 +548,13 @@ const translations = {
       "D1111": "Fosfatasa alcalina ósea",
       "I3291": "CTX (C-telopéptido)",
       "T1572": "Calcio iónico",
-      "B0750": "Lactato",
-      "B1900": "LDL-C directo",
-      "B0190": "Apolipoproteína B",
+      "B0750": "Ácido láctico",
+      "B1900": "LDL directo",
+      "B0190": "VLDL",
       "B7700": "Lp(a)",
-      "I5047": "Cistatina C",
+      "I5047": "Cistatina-C",
       "B2120": "CK-MB",
-      "B0220": "Ceruloplasmina",
+      "B0220": "CPK total",
       "I0141": "ANA",
       "I5072": "Anti-CCP",
       "B6321": "Anti-tiroglobulina",
@@ -562,7 +562,7 @@ const translations = {
       "B7750": "H. pylori IgG",
       "B3130": "Factor reumatoide",
       "M1190": "Parásitos en heces",
-      "P3031": "Panel alimentario IgG",
+      "P3031": "Intolerancia alimentaria",
       "AB001": "Microbioma intestinal",
       "AB002": "Metaboloma",
       "GP001": "Farmacogenética",
@@ -867,10 +867,10 @@ const translations = {
         description: "Factor de necrosis tumoral alfa. Citocina proinflamatoria potente. Implicada en envejecimiento y enfermedades crónicas."
       },
       "B0270": {
-        description: "Ácido biliar primario. Refleja función hepática y capacidad de síntesis de ácidos biliares."
+        description: "Concentración total de partículas osmóticamente activas en suero. Evalúa equilibrio hídrico, función renal y estado de hidratación."
       },
       "B8060": {
-        description: "Marcador antiinflamatorio. Indica capacidad de resolución inflamatoria."
+        description: "Oligoelemento esencial para síntesis de hemoglobina, función enzimática y metabolismo del hierro. Cofactor de múltiples enzimas antioxidantes."
       },
       "T0500": {
         description: "Oligoelemento que mejora sensibilidad a insulina y metabolismo de glucosa. Importante en diabetes."
@@ -909,7 +909,7 @@ const translations = {
         description: "LDL colesterol medido directamente. Más preciso que el calculado en casos de triglicéridos elevados."
       },
       "B0190": {
-        description: "Proteína transportadora de colesterol. Refleja factores de riesgo cardiovascular genéticos."
+        description: "Lipoproteína de muy baja densidad. Transporta triglicéridos y se asocia con riesgo cardiovascular."
       },
       "B7700": {
         description: "Lipoproteína aterogénica genéticamente determinada. Factor de riesgo cardiovascular independiente."
@@ -921,7 +921,7 @@ const translations = {
         description: "Creatina quinasa específica del miocardio. Marcador de daño cardíaco e infarto."
       },
       "B0220": {
-        description: "Proteína transportadora de hierro. Refleja reservas de hierro y capacidad de síntesis hepática."
+        description: "Creatina fosfoquinasa total. Enzima muscular que se eleva en daño muscular, infarto o ejercicio intenso."
       },
       "I0141": {
         description: "Anticuerpos antinucleares. Screening para enfermedades autoinmunes sistémicas como lupus."
@@ -993,7 +993,7 @@ const translations = {
         description: "Fracción libre de PSA. Mejora especificidad para distinguir cáncer de hiperplasia benigna."
       },
       "B5110": {
-        description: "Antígeno carcinoembrionario. Marqueur de cánceres digestivos, especialmente colorrectal."
+        description: "Antígeno carcinoembrionario. Marcador de cánceres digestivos, especialmente colorrectal."
       },
       "B5080": {
         description: "Marcador tumoral de cáncer de ovario. También elevado en endometriosis y otras condiciones."
@@ -1008,49 +1008,35 @@ const translations = {
         description: "Marcador tumoral de cáncer de ovario más específico que CA125."
       },
       "B8130": {
-        description: "Antígeno de células escamosas. Marqueur de carcinomas escamosos de cérvix, pulmón y esófago."
+        description: "Antígeno de células escamosas. Marcador de carcinomas escamosos de cérvix, pulmón y esófago."
       },
       "I5080": {
-        description: "Proteína S-100. Marqueur de melanoma y tumores del sistema nervioso."
+        description: "Proteína S-100. Marcador de melanoma y tumores del sistema nervioso."
       },
       "I5090": {
-        description: "Enolasa neuroespecífica. Marqueur de tumores neuroendocrinos y cáncer de pulmón de células pequeñas."
+        description: "Enolasa neuroespecífica. Marcador de tumores neuroendocrinos y cáncer de pulmón de células pequeñas."
       },
       "B8120": {
-        description: "Fragmento de citoqueratina 21-1. Marqueur de cáncer de pulmón no microcítico."
+        description: "Fragmento de citoqueratina 21-1. Marcador de cáncer de pulmón no microcítico."
       },
       "D1271": {
-        description: "Marqueur tumoral de cáncer gástrico y otros adenocarcinomas."
+        description: "Marcador tumoral de cáncer gástrico y otros adenocarcinomas."
       },
       "B8160": {
-        description: "Pro-péptido liberador de gastrina. Marqueur spécifique de cáncer de pulmón microcítico."
+        description: "Pro-péptido liberador de gastrina. Marcador específico de cáncer de pulmón microcítico."
       },
-      "OG001": {
-        description: "Test épigénétique d'âge biologique. Mesure la méthylation de l'ADN pour déterminer l'âge biologique réel."
-      },
-      "OG002": {
-        description: "Analyse pharmacogénétique personnalisée. Détermine la réponse individuelle aux médicaments basée sur les variantes génétiques."
-      },
-      "OG003": {
-        description: "Analyse génétique de détoxification. Évalue la capacité individuelle à métaboliser et éliminer les toxines."
-      },
-      "OG004": {
-        description: "Analyse nutrigénétique personnalisée. Identifie les besoins diététiques spécifiques basés sur le profil génétique."
-      },
-      "OG005": {
-        description: "Génétique sportive personnalisée. Optimise l'entraînement et la performance basés sur les prédispositions génétiques."
-      },
-      "OG006": {
-        description: "Analyse génétique de supplémentation. Personnalise les suppléments nutritionnels selon les besoins génétiques individuels."
-      },
+
       "D1001": {
-        description: "Hormone anti-müllerienne. Marqueur de réserve ovarienne et fertilité féminine."
+        description: "Hormona antimülleriana. Marcador de reserva ovárica y fertilidad femenina."
       },
       "B3340": {
-        description: "Analyse complète du sperme utilisée pour mesurer l'âge biologique masculin. Évalue concentration, motilité et morphologie spermatique comme marqueurs de vieillissement reproductif."
+        description: "Análisis completo del esperma utilizado para medir la edad biológica masculina. Evalúa concentración, motilidad y morfología espermática como marcadores de envejecimiento reproductivo."
       },
       "G1465": {
-        description: "Mesure de longueur des télomères. Biomarqueur direct du vieillissement cellulaire et prédicteur de longévité."
+        description: "Medición de longitud de telómeros. Biomarcador directo del envejecimiento celular y predictor de longevidad."
+      },
+      "OG001": {
+        description: "Test epigenético de edad biológica. Mide metilación del ADN para determinar edad biológica real."
       }
     }
   },
@@ -1572,8 +1558,8 @@ const translations = {
       "B3041": "G6PD",
       "B7790": "Interleukin-6",
       "I2081": "TNF-alpha",
-      "B0270": "Cholic Acid",
-      "B8060": "Adiponectin",
+      "B0270": "Serum Osmolality",
+      "B8060": "Copper",
       "T0500": "Chromium",
       "T2590": "Omega-3 Fatty Acids",
       "T1720": "Vitamin K1",
@@ -1902,10 +1888,10 @@ const translations = {
         description: "Tumor necrosis factor alpha. Potent pro-inflammatory cytokine. Involved in aging and chronic diseases."
       },
       "B0270": {
-        description: "Primary bile acid. Reflects liver function and bile acid synthesis capacity."
+        description: "Total concentration of osmotically active particles in serum. Evaluates water balance, kidney function and hydration status."
       },
       "B8060": {
-        description: "Anti-inflammatory marker. Indicates inflammatory resolution capacity."
+        description: "Essential trace element for hemoglobin synthesis, enzymatic function and iron metabolism. Cofactor of multiple antioxidant enzymes."
       },
       "T0500": {
         description: "Trace element that improves insulin sensitivity and glucose metabolism. Important in diabetes."
@@ -2610,8 +2596,8 @@ const translations = {
       "B3041": "G6PD",
       "B7790": "Interleukine-6",
       "I2081": "TNF-alpha",
-      "B0270": "Acide Cholique",
-      "B8060": "Adiponectine",
+      "B0270": "Osmolalité Sérique",
+      "B8060": "Cuivre",
       "T0500": "Chrome",
       "T2590": "Acides Gras Omega-3",
       "T1720": "Vitamine K1",
@@ -2940,10 +2926,10 @@ const translations = {
         description: "Facteur de nécrose tumorale alpha. Cytokine pro-inflammatoire puissante. Impliquée dans vieillissement et maladies chroniques."
       },
       "B0270": {
-        description: "Acide biliaire primaire. Reflète fonction hépatique et capacité de synthèse d'acides biliaires."
+        description: "Concentration totale de particules osmotiquement actives dans le sérum. Évalue l'équilibre hydrique, fonction rénale et état d'hydratation."
       },
       "B8060": {
-        description: "Marqueur anti-inflammatoire. Indique capacité de résolution inflammatoire."
+        description: "Oligo-élément essentiel pour synthèse d'hémoglobine, fonction enzymatique et métabolisme du fer. Cofacteur de multiples enzymes antioxydantes."
       },
       "T0500": {
         description: "Oligo-élément qui améliore sensibilité à insuline et métabolisme du glucose. Important en diabète."

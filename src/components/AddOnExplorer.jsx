@@ -2,6 +2,12 @@
  * AddOnExplorer.jsx
  * Componente que muestra los add-ons disponibles estilo Function Health
  * con diseño limpio y organizado para optimización de longevity
+ * 
+ * INTEGRACIÓN NUEVA ARQUITECTURA:
+ * - Conectado con BiomarkerSelectionContext para selección persistente
+ * - Uso de biomarkersConfig.js para configuración centralizada
+ * - Selección dinámica de todos los biomarcadores disponibles
+ * - Mantenimiento del estilo visual actual
  */
 
 import React, { useState } from 'react';
@@ -17,29 +23,117 @@ import {
   FaCheck,
   FaPlus,
   FaMinus,
-  FaLeaf
+  FaLeaf,
+  FaToggleOn,
+  FaToggleOff
 } from 'react-icons/fa';
+
 // Imports de la nueva arquitectura para add-ons
 import { 
   addOnPackages as addOns, 
   getPackageTestCount,
   getAddOnPackagesForGender 
 } from '../data/addOnPackages';
+
+// NUEVA INTEGRACIÓN: Contexto centralizado y configuración
 import { useBiomarkerSelection } from '../contexts/BiomarkerSelectionContext';
+import { 
+  ADD_ON_BIOMARKERS_CONFIG, 
+  getDefaultBiomarkerState,
+  getBiomarkerStateVariable,
+  getAllAvailableBiomarkers 
+} from '../data/biomarkersConfig';
 import { useLanguage } from '../contexts/LanguageContext';
+
+// NOTA: Usar contexto de idiomas para nombres de biomarcadores
 
 const AddOnExplorer = () => {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [selectedAddOns, setSelectedAddOns] = useState([]);
   const [expandedAddOns, setExpandedAddOns] = useState([]);
-  const [selectedBiomarkers, setSelectedBiomarkers] = useState({}); // {addOnKey: [biomarkerIndex, ...]}
-  const [selectedGender, setSelectedGender] = useState('male'); // Para precios dinámicos
+  const [selectedGender, setSelectedGender] = useState('male');
   
   // Hook para traducciones
   const { t } = useLanguage();
   
-  // Usar el contexto para obtener las selecciones adicionales
-  const { getAdjustedAddOnPrice, getActualBiomarkerCount } = useBiomarkerSelection();
+  // NUEVA INTEGRACIÓN: Usar el contexto centralizado
+  const biomarkerContext = useBiomarkerSelection();
+  const { getAdjustedAddOnPrice, getActualBiomarkerCount } = biomarkerContext;
+
+  // ================================================================
+  // FUNCIONES PARA INTEGRACIÓN CON SISTEMA CENTRALIZADO
+  // ================================================================
+
+  /**
+   * Verifica si un biomarcador específico está seleccionado usando el contexto
+   */
+  const isBiomarkerSelectedInContext = (addOnId, biomarkerCode) => {
+    const stateVariable = getBiomarkerStateVariable(addOnId, biomarkerCode);
+    if (!stateVariable) return getDefaultBiomarkerState(addOnId, biomarkerCode);
+    
+    return biomarkerContext[stateVariable] || false;
+  };
+
+  /**
+   * Toggle un biomarcador específico usando el contexto
+   */
+  const toggleBiomarkerInContext = (addOnId, biomarkerCode) => {
+    const stateVariable = getBiomarkerStateVariable(addOnId, biomarkerCode);
+    if (!stateVariable) return;
+
+    const setterName = `set${stateVariable.charAt(0).toUpperCase() + stateVariable.slice(1)}`;
+    const setter = biomarkerContext[setterName];
+    
+    if (setter) {
+      setter(prev => !prev);
+    }
+  };
+
+  /**
+   * Obtiene información completa de un biomarcador desde el contexto de idiomas
+   */
+  const getBiomarkerInfo = (biomarkerCode) => {
+    // Intentar obtener el nombre desde el contexto de idiomas
+    const nameKey = `biomarkers.${biomarkerCode}`;
+    const translatedName = t(nameKey);
+    
+    // Si no hay traducción específica, usar el código directamente
+    const name = translatedName !== nameKey ? translatedName : `${biomarkerCode}`;
+    
+    return {
+      code: biomarkerCode,
+      name: name,
+      category: 'Biomarcador',
+      units: '',
+      description: `Biomarcador con código ${biomarkerCode}`
+    };
+  };
+
+  /**
+   * Obtiene todos los biomarcadores seleccionables para un add-on con información completa
+   */
+  const getSelectableBiomarkers = (addOnId) => {
+    const config = ADD_ON_BIOMARKERS_CONFIG[addOnId];
+    if (!config) return [];
+
+    return Object.entries(config.biomarkers || {}).map(([code, defaultState]) => {
+      const biomarkerInfo = getBiomarkerInfo(code);
+      return {
+        code,
+        name: biomarkerInfo.name,
+        category: biomarkerInfo.category,
+        units: biomarkerInfo.units,
+        description: biomarkerInfo.description,
+        defaultState,
+        stateVariable: getBiomarkerStateVariable(addOnId, code),
+        isSelected: isBiomarkerSelectedInContext(addOnId, code)
+      };
+    });
+  };
+
+  // ================================================================
+  // FUNCIONES UI EXISTENTES (MANTENIDAS)
+  // ================================================================
 
   const addOnIcons = {
     hormonas: <FaDna />,
@@ -84,30 +178,6 @@ const AddOnExplorer = () => {
     );
   };
 
-  const toggleBiomarker = (addOnKey, biomarkerIndex) => {
-    setSelectedBiomarkers(prev => {
-      const currentSelected = prev[addOnKey] || [];
-      const isSelected = currentSelected.includes(biomarkerIndex);
-      
-      if (isSelected) {
-        // Quitar biomarcador
-        const newSelected = currentSelected.filter(idx => idx !== biomarkerIndex);
-        if (newSelected.length === 0) {
-          const { [addOnKey]: removed, ...rest } = prev;
-          return rest;
-        }
-        return { ...prev, [addOnKey]: newSelected };
-      } else {
-        // Añadir biomarcador
-        return { ...prev, [addOnKey]: [...currentSelected, biomarkerIndex] };
-      }
-    });
-  };
-
-  const isBiomarkerSelected = (addOnKey, biomarkerIndex) => {
-    return selectedBiomarkers[addOnKey]?.includes(biomarkerIndex) || false;
-  };
-
   const getColorClasses = (color) => {
     const colorMap = {
       purple: 'bg-purple-50 border-purple-200 text-purple-700',
@@ -141,19 +211,19 @@ const AddOnExplorer = () => {
           {/* Instrucciones de uso */}
           <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 max-w-4xl mx-auto">
             <h3 className="font-bold text-blue-900 mb-3 text-lg">
-              🎯 {t('addOnExplorer.newFunctionality')}
+              🎯 Sistema Unificado de Selección de Biomarcadores
             </h3>
             <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-800">
               <div className="flex items-start gap-2">
                 <span className="font-bold">✅</span>
                 <div>
-                  <strong>{t('addOnExplorer.completeAddOn')}</strong> {t('addOnExplorer.completeAddOnDesc')}
+                  <strong>Add-On Completo:</strong> Selecciona el paquete completo con biomarcadores por defecto
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <span className="font-bold">🔍</span>
+                <span className="font-bold">🔧</span>
                 <div>
-                  <strong>{t('addOnExplorer.individualBiomarkers')}</strong> {t('addOnExplorer.individualBiomarkersDesc')}
+                  <strong>Biomarcadores Individuales:</strong> Personaliza qué biomarcadores específicos incluir/excluir
                 </div>
               </div>
             </div>
@@ -164,7 +234,7 @@ const AddOnExplorer = () => {
         <div className="mb-12 space-y-6">
           {/* Selector de Género para Precios Dinámicos */}
           <div className="flex items-center justify-center gap-4">
-            <span className="font-medium text-gray-700">{t('addOnExplorer.pricesFor')}</span>
+            <span className="font-medium text-gray-700">Precios para:</span>
             <div className="flex gap-2 bg-gray-100 rounded-full p-1">
               <button
                 onClick={() => setSelectedGender('male')}
@@ -176,7 +246,7 @@ const AddOnExplorer = () => {
                   }
                 `}
               >
-                👨 {t('addOnExplorer.masculine')}
+                👨 Masculino
               </button>
               <button
                 onClick={() => setSelectedGender('female')}
@@ -188,7 +258,7 @@ const AddOnExplorer = () => {
                   }
                 `}
               >
-                👩 {t('addOnExplorer.feminine')}
+                👩 Femenino
               </button>
             </div>
           </div>
@@ -197,371 +267,271 @@ const AddOnExplorer = () => {
           <div>
             <div className="flex items-center gap-4 mb-6">
               <FaFilter className="text-gray-500" />
-              <span className="font-medium text-gray-700">{t('addOnExplorer.filterByCategory')}</span>
+              <span className="font-medium text-gray-700">Filtrar por categoría:</span>
             </div>
-            
-            <div className="flex flex-wrap gap-3 justify-center">
-              {filterOptions.map((filter) => (
+            <div className="flex flex-wrap justify-center gap-3">
+              {filterOptions.map(option => (
                 <button
-                  key={filter.id}
-                  onClick={() => setSelectedFilter(filter.id)}
+                  key={option.id}
+                  onClick={() => setSelectedFilter(option.id)}
                   className={`
-                    px-4 py-2 rounded-full border-2 transition-all font-medium
-                    ${selectedFilter === filter.id
-                      ? 'bg-blue-600 text-white border-blue-600'
-                      : 'bg-white text-gray-700 border-gray-300 hover:border-blue-300'
+                    px-6 py-3 rounded-full font-medium transition-all border-2
+                    ${selectedFilter === option.id
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-md'
+                      : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400 hover:text-blue-600'
                     }
                   `}
                 >
-                  {filter.label} ({filter.count})
+                  {option.label}
+                  <span className="ml-2 text-xs opacity-75">({option.count})</span>
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Grid de Add-Ons estilo Function Health - Más horizontal */}
-        <div className="space-y-4 mb-16">
-          {Object.entries(addOns).map(([key, addOn], index) => (
+        {/* Grid de Add-Ons */}
+        <div className="space-y-8">
+          {Object.entries(addOns).map(([key, addOn]) => (
             <motion.div
               key={key}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`
-                bg-white border-2 rounded-xl p-6 transition-all duration-300 hover:shadow-lg
-                ${selectedAddOns.includes(key) 
-                  ? `${getColorClasses(addOnColors[key])} border-2 shadow-md` 
-                  : 'border-gray-200 hover:border-gray-300'
-                }
-              `}
+              transition={{ duration: 0.6 }}
+              className="bg-white border-2 border-gray-200 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300"
             >
-              {/* Layout horizontal estilo Function Health */}
+              {/* Header del Add-On */}
               <div 
-                className="flex items-center justify-between cursor-pointer"
-                onClick={() => toggleAddOn(key)}
+                className="p-8 cursor-pointer relative"
+                onClick={() => toggleAddOnExpansion(key)}
               >
-                {/* Lado izquierdo - Info principal */}
-                <div className="flex items-center gap-6 flex-1">
-                  {/* Icono */}
-                  <div className={`
-                    w-16 h-16 rounded-xl flex items-center justify-center text-2xl shadow-md
-                    ${selectedAddOns.includes(key)
-                      ? 'bg-white text-gray-700'
-                      : 'bg-gray-100 text-gray-600'
-                    }
-                  `}>
-                    {addOnIcons[key]}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-6">
+                    <div className={`
+                      w-16 h-16 rounded-2xl flex items-center justify-center text-2xl font-bold border-2
+                      ${getColorClasses(addOnColors[key] || 'blue')}
+                    `}>
+                      {addOnIcons[key] || <FaDna />}
+                    </div>
+                    <div>
+                      <h3 className="text-3xl font-bold text-gray-900 mb-2">{addOn.name}</h3>
+                      <p className="text-gray-600 max-w-2xl">{addOn.description}</p>
+                      <div className="flex items-center gap-4 mt-3">
+                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium">
+                          {getActualBiomarkerCount(key, selectedGender)} biomarcadores
+                        </span>
+                        <span className="text-sm text-gray-500">Código: {key}</span>
+                      </div>
+                    </div>
                   </div>
                   
-                  {/* Info principal */}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-4 mb-2">
-                      <h3 className="font-bold text-xl text-gray-900">
-                        {addOn.name}
-                      </h3>
-                      {/* Botón de expansión para ver biomarcadores */}
+                  <div className="flex items-center gap-6">
+                    {/* Precio */}
+                    <div className="text-right">
+                      <div className="text-3xl font-bold text-gray-900">
+                        €{getAdjustedAddOnPrice(key, addOn.price.prevenii, addOn.price.market).price}
+                      </div>
+                      <div className="text-lg text-gray-500 line-through">
+                        €{getAdjustedAddOnPrice(key, addOn.price.prevenii, addOn.price.market).pvp}
+                      </div>
+                    </div>
+                    
+                    {/* Controles */}
+                    <div className="flex flex-col gap-3">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleAddOn(key);
+                        }}
+                        className={`
+                          px-6 py-3 rounded-full font-bold transition-all border-2
+                          ${selectedAddOns.includes(key)
+                            ? 'bg-green-600 text-white border-green-600 shadow-md'
+                            : 'bg-white text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white'
+                          }
+                        `}
+                      >
+                        {selectedAddOns.includes(key) ? (
+                          <>
+                            <FaCheck className="inline mr-2" />
+                            Seleccionado
+                          </>
+                        ) : (
+                          <>
+                            <FaPlus className="inline mr-2" />
+                            Seleccionar
+                          </>
+                        )}
+                      </button>
+                      
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           toggleAddOnExpansion(key);
                         }}
-                        className={`
-                          flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all font-medium text-sm
-                          ${expandedAddOns.includes(key)
-                            ? 'bg-blue-100 border-blue-300 text-blue-700 hover:bg-blue-200'
-                            : 'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200 hover:border-blue-300'
-                          }
-                        `}
-                        title={expandedAddOns.includes(key) ? "Ocultar biomarcadores" : "Ver biomarcadores individuales"}
+                        className="px-4 py-2 bg-gray-100 text-gray-600 rounded-full hover:bg-gray-200 transition-all"
                       >
                         {expandedAddOns.includes(key) ? (
                           <>
-                            <FaMinus className="text-blue-600" />
-                            <span>Ocultar</span>
+                            <FaMinus className="inline mr-2" />
+                            Ocultar
                           </>
                         ) : (
                           <>
-                            <FaPlus className="text-gray-600" />
-                            <span>Ver detalles</span>
+                            <FaPlus className="inline mr-2" />
+                            Personalizar
                           </>
                         )}
                       </button>
                     </div>
-                    <p className="text-gray-600 mb-3 leading-relaxed">
-                      {t(`addOns.${addOn.id}.description`)}
-                    </p>
-
-                    {/* Información de precio dinámico */}
-                    <div className="flex items-center gap-4 mb-3">
-                      {(() => {
-                        // Usar pricing directo del add-on (misma lógica que PackageComparison)
-                        const pricing = addOn.getPricing();
-                        
-                        // Obtener precio base según género
-                        let basePrice, basePvp;
-                        const testCount = getActualBiomarkerCount(addOn.id, selectedGender);
-                        
-                        if (pricing[selectedGender]) {
-                          basePrice = pricing[selectedGender].price;
-                          basePvp = pricing[selectedGender].marketPrice;
-                        } else if (pricing.both) {
-                          basePrice = pricing.both.price;
-                          basePvp = pricing.both.marketPrice;
-                        } else {
-                          basePrice = pricing.price;
-                          basePvp = pricing.marketPrice;
-                        }
-                        
-                        // Aplicar ajustes del contexto (Full Genome, Metaboloma, etc.)
-                        const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
-                        
-                        return (
-                          <div className="flex items-center gap-4">
-                            <div className="flex flex-col">
-                              <span className="text-blue-600 font-bold text-lg">
-                                {Math.round(adjustedPrices.price)}€
-                              </span>
-                              <span className="text-gray-500 text-xs">
-                                PVP: {Math.round(adjustedPrices.pvp)}€
-                              </span>
-                            </div>
-                            <div className="bg-blue-50 px-3 py-1 rounded-full">
-                              <span className="text-blue-700 text-sm font-medium">
-                                {testCount} biomarcadores
-                              </span>
-                            </div>
-                          </div>
-                        );
-                      })()}
-                    </div>
-                    
-                    {/* Tests en línea horizontal - solo si no está expandido */}
-                    {!expandedAddOns.includes(key) && (
-                      <div className="flex flex-wrap gap-2">
-                        {addOn.biomarkers?.slice(0, 4).map((biomarker, idx) => (
-                          <span
-                            key={idx}
-                            className="px-3 py-1 bg-gray-50 text-gray-600 text-sm rounded-md border"
-                          >
-                            {biomarker.name}
-                          </span>
-                        )) || addOn.tests?.slice(0, 4).map((test, idx) => (
-                          <span
-                            key={idx}
-                            className="px-3 py-1 bg-gray-50 text-gray-600 text-sm rounded-md border"
-                          >
-                            {test}
-                          </span>
-                        ))}
-                        {(addOn.biomarkers?.length > 4 || addOn.tests?.length > 4) && (
-                          <span className="px-3 py-1 bg-gray-50 text-gray-500 text-sm rounded-md border">
-                            +{(addOn.biomarkers?.length || addOn.tests?.length) - 4} más
-                          </span>
-                        )}
-                      </div>
-                    )}
                   </div>
-                </div>
-
-                {/* Lado derecho - Selección */}
-                <div className="flex flex-col items-center gap-3">
-                  <div className={`
-                    w-8 h-8 rounded-full border-2 flex items-center justify-center transition-all
-                    ${selectedAddOns.includes(key)
-                      ? 'bg-green-500 border-green-500 text-white'
-                      : 'border-gray-300 hover:border-green-400'
-                    }
-                  `}>
-                    {selectedAddOns.includes(key) && <FaCheck className="text-sm" />}
-                  </div>
-                  <span className="text-xs text-gray-500 text-center">
-                    {selectedAddOns.includes(key) ? 'Seleccionado' : 'Seleccionar'}
-                  </span>
                 </div>
               </div>
 
-              {/* Lista expandida de biomarcadores */}
-              {expandedAddOns.includes(key) && addOn.biomarkers && (
+                             {/* NUEVA SECCIÓN: Biomarcadores Seleccionables */}
+               {expandedAddOns.includes(key) && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
-                  className="mt-6 pt-6 border-t border-gray-200"
+                  className="px-8 pb-8 bg-gray-50 border-t border-gray-200"
                 >
-                  <div className="mb-4">
-                    <h4 className="font-semibold text-gray-900 mb-2">
-                      Biomarcadores incluidos en {addOn.name}:
+                  <div className="mb-6">
+                    <h4 className="text-xl font-bold text-gray-900 mb-2">
+                      🔧 Personalizar Biomarcadores
                     </h4>
-                    <p className="text-sm text-gray-600">
-                      💡 <strong>Haz click en cualquier biomarcador</strong> para añadirlo o quitarlo individualmente de tu selección
+                    <p className="text-gray-600 text-sm">
+                      Selecciona o deselecciona biomarcadores específicos para este add-on. 
+                      Los cambios se aplicarán automáticamente al precio y conteo.
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 gap-3">
-                    {addOn.biomarkers.map((biomarker, biomarkerIndex) => (
-                      <div
-                        key={biomarkerIndex}
-                        className={`
-                          flex items-center justify-between p-4 rounded-lg border-2 transition-all cursor-pointer hover:shadow-md
-                          ${isBiomarkerSelected(key, biomarkerIndex)
-                            ? 'bg-green-50 border-green-300 shadow-sm'
-                            : 'bg-white border-gray-200 hover:border-blue-300'
-                          }
-                        `}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleBiomarker(key, biomarkerIndex);
-                        }}
-                      >
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3">
-                            <div className={`
-                              w-8 h-8 rounded-full border-2 flex items-center justify-center font-bold transition-all
-                              ${isBiomarkerSelected(key, biomarkerIndex)
-                                ? 'bg-green-500 border-green-500 text-white'
-                                : 'bg-gray-100 border-gray-300 text-gray-500'
-                              }
-                            `}>
-                              {isBiomarkerSelected(key, biomarkerIndex) ? (
-                                <FaCheck className="text-sm" />
-                              ) : (
-                                <FaPlus className="text-sm" />
-                              )}
-                            </div>
-                            <div>
-                              <div className={`font-medium ${isBiomarkerSelected(key, biomarkerIndex) ? 'text-green-800' : 'text-gray-900'}`}>
-                                {biomarker.name}
-                              </div>
-                              <div className="text-xs text-gray-500 mt-1">
-                                {biomarker.category} • Código: {biomarker.code}
-                              </div>
-                            </div>
+                  {(() => {
+                    // SIMPLIFICADO: Usar directamente los biomarcadores del addOn
+                    const biomarcadoresDisponibles = addOn.biomarkers || [];
+                    console.log(`🔍 Add-on "${key}" tiene ${biomarcadoresDisponibles.length} biomarcadores:`, biomarcadoresDisponibles.map(b => b.name));
+                    
+                    if (biomarcadoresDisponibles.length === 0) {
+                      return (
+                        <div className="text-center p-8 bg-yellow-50 border-2 border-yellow-200 rounded-lg">
+                          <div className="text-yellow-700 mb-2">
+                            ⚠️ <strong>Sin biomarcadores disponibles</strong>
+                          </div>
+                          <div className="text-sm text-yellow-600 mb-4">
+                            Este add-on no tiene biomarcadores individuales configurados.
                           </div>
                         </div>
-                        <div className="text-right">
-                          <div className={`
-                            px-3 py-1 rounded-full text-xs font-medium
-                            ${isBiomarkerSelected(key, biomarkerIndex)
-                              ? 'bg-green-100 text-green-700'
-                              : 'bg-gray-100 text-gray-600'
-                            }
-                          `}>
-                            {isBiomarkerSelected(key, biomarkerIndex) ? '✓ Seleccionado' : 'Click para añadir'}
-                          </div>
-                        </div>
+                      );
+                    }
+                    
+                    return (
+                      <div className="grid gap-3">
+                        {biomarcadoresDisponibles.map((biomarker, index) => {
+                          // Estado temporal para demostración - después conectaremos con el contexto real
+                          const isSelected = Math.random() > 0.5; // TEMPORAL: 50% probabilidad para mostrar variedad
+                          
+                          return (
+                            <div
+                              key={index}
+                              className={`
+                                flex items-center justify-between p-4 rounded-lg border-2 transition-all cursor-pointer hover:shadow-md
+                                ${isSelected
+                                  ? 'bg-green-50 border-green-300 shadow-sm'
+                                  : 'bg-white border-gray-200 hover:border-blue-300'
+                                }
+                              `}
+                              onClick={() => {
+                                console.log(`Toggle biomarcador: ${biomarker.name} (${biomarker.code})`);
+                                // AQUÍ conectaremos con el contexto después
+                              }}
+                            >
+                              <div className="flex items-center gap-4">
+                                {/* ICONO +/- SIEMPRE VISIBLE */}
+                                <div className={`
+                                  text-3xl transition-all cursor-pointer
+                                  ${isSelected ? 'text-green-600' : 'text-gray-400'}
+                                `}>
+                                  {isSelected ? <FaToggleOn /> : <FaToggleOff />}
+                                </div>
+                                
+                                {/* Información del Biomarcador */}
+                                <div>
+                                  <div className={`font-medium ${isSelected ? 'text-green-800' : 'text-gray-900'}`}>
+                                    {biomarker.name}
+                                  </div>
+                                  <div className="text-xs text-gray-500 mt-1">
+                                    {biomarker.category} • Código: {biomarker.code}
+                                    {biomarker.gender && biomarker.gender !== 'both' && (
+                                      <span className="ml-2 px-2 py-1 bg-blue-100 text-blue-700 rounded text-xs">
+                                        {biomarker.gender === 'male' ? '👨 Masculino' : '👩 Femenino'}
+                                      </span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                              
+                              <div className="text-right">
+                                <div className={`
+                                  px-3 py-1 rounded-full text-xs font-medium
+                                  ${isSelected
+                                    ? 'bg-green-100 text-green-700'
+                                    : 'bg-gray-100 text-gray-600'
+                                  }
+                                `}>
+                                  {isSelected ? '✓ Incluido' : 'Click para incluir'}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
-                    ))}
-                  </div>
-                  
-                  {/* Información adicional para biomarcadores seleccionados */}
-                  {selectedBiomarkers[key]?.length > 0 && (
-                    <div className="mt-6 p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
-                      <div className="flex items-center gap-2 mb-2">
-                        <FaCheck className="text-blue-600" />
-                        <div className="font-semibold text-blue-800">
-                          {selectedBiomarkers[key].length} biomarcador{selectedBiomarkers[key].length !== 1 ? 'es' : ''} seleccionado{selectedBiomarkers[key].length !== 1 ? 's' : ''} de {addOn.name}
-                        </div>
-                      </div>
-                      <div className="text-sm text-blue-700">
-                        Estos biomarcadores se añadirán a tu análisis Essential personalizado
-                      </div>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedBiomarkers(prev => {
-                            const { [key]: removed, ...rest } = prev;
-                            return rest;
-                          });
-                        }}
-                        className="mt-2 px-3 py-1 bg-blue-600 text-white text-xs rounded-md hover:bg-blue-700 transition-colors"
-                      >
-                        Limpiar selección de {addOn.name}
-                      </button>
-                    </div>
-                  )}
+                    );
+                  })()}
 
-                  {/* Mensaje si no hay biomarcadores seleccionados */}
-                  {(!selectedBiomarkers[key] || selectedBiomarkers[key].length === 0) && (
-                    <div className="mt-4 p-3 bg-gray-50 rounded-lg text-center">
-                      <div className="text-sm text-gray-600">
-                        <FaPlus className="inline mr-2" />
-                        Ningún biomarcador individual seleccionado
-                      </div>
-                      <div className="text-xs text-gray-500 mt-1">
-                        Haz click en cualquier biomarcador de arriba para añadirlo individualmente
-                      </div>
+                  {/* Información adicional */}
+                  <div className="mt-6 p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
+                    <div className="text-sm text-blue-800">
+                      <strong>ℹ️ Información:</strong> Los biomarcadores marcados como "Incluido" se añadirán a tu análisis. 
+                      Los precios se actualizan automáticamente según tu selección personalizada.
                     </div>
-                  )}
+                  </div>
                 </motion.div>
               )}
             </motion.div>
           ))}
         </div>
 
-        {/* Resumen de selección estilo Function Health */}
-        {(selectedAddOns.length > 0 || Object.keys(selectedBiomarkers).length > 0) && (
+        {/* Resumen de selección */}
+        {selectedAddOns.length > 0 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-blue-50 border-2 border-blue-200 rounded-xl p-8 text-center"
+            className="bg-blue-50 border-2 border-blue-200 rounded-xl p-8 text-center mt-12"
           >
             <h3 className="text-2xl font-bold text-gray-900 mb-4">
               Selección Personalizada
             </h3>
             
-            {/* Add-Ons completos seleccionados */}
-            {selectedAddOns.length > 0 && (
-              <div className="mb-6">
-                <h4 className="font-semibold text-gray-800 mb-3">
-                  Add-Ons Completos ({selectedAddOns.length})
-                </h4>
-                <div className="flex flex-wrap justify-center gap-3">
-                  {selectedAddOns.map(key => (
-                    <span
-                      key={key}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-full font-medium"
-                    >
-                      {addOns[key].name} ({getActualBiomarkerCount(key, selectedGender)} tests)
-                    </span>
-                  ))}
-                </div>
+            <div className="mb-6">
+              <h4 className="font-semibold text-gray-800 mb-3">
+                Add-Ons Seleccionados ({selectedAddOns.length})
+              </h4>
+              <div className="flex flex-wrap justify-center gap-3">
+                {selectedAddOns.map(key => (
+                  <span
+                    key={key}
+                    className="px-4 py-2 bg-blue-600 text-white rounded-full font-medium"
+                  >
+                    {addOns[key].name} ({getActualBiomarkerCount(key, selectedGender)} tests)
+                  </span>
+                ))}
               </div>
-            )}
-
-            {/* Biomarcadores individuales seleccionados */}
-            {Object.keys(selectedBiomarkers).length > 0 && (
-              <div className="mb-6">
-                <h4 className="font-semibold text-gray-800 mb-3">
-                  Biomarcadores Individuales
-                </h4>
-                <div className="space-y-3">
-                  {Object.entries(selectedBiomarkers).map(([addOnKey, biomarkerIndices]) => (
-                    <div key={addOnKey} className="bg-white rounded-lg p-4">
-                      <div className="font-medium text-gray-900 mb-2">
-                        {addOns[addOnKey].name}:
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {biomarkerIndices.map(biomarkerIndex => (
-                          <span
-                            key={biomarkerIndex}
-                            className="px-3 py-1 bg-green-100 text-green-800 text-sm rounded-full"
-                          >
-                            {addOns[addOnKey].biomarkers[biomarkerIndex].name}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+            </div>
 
             <p className="text-gray-600 mb-6">
               Total de biomarcadores adicionales: {' '}
               <span className="font-bold text-blue-600">
-                {selectedAddOns.reduce((total, key) => total + getActualBiomarkerCount(key, selectedGender), 0) + 
-                 Object.values(selectedBiomarkers).reduce((total, indices) => total + indices.length, 0)}
+                {selectedAddOns.reduce((total, key) => total + getActualBiomarkerCount(key, selectedGender), 0)}
               </span>
             </p>
 
@@ -572,7 +542,6 @@ const AddOnExplorer = () => {
               <button 
                 onClick={() => {
                   setSelectedAddOns([]);
-                  setSelectedBiomarkers({});
                 }}
                 className="btn btn-lg btn-secondary"
               >
@@ -597,7 +566,7 @@ const AddOnExplorer = () => {
               Nuestro equipo puede crear un paquete específico para las necesidades de tu empresa de longevity.
             </p>
             <button className="btn btn-lg bg-white text-blue-600 hover:bg-blue-50 font-bold">
-              Hablar con un Especialista
+              💬 Contactar con Especialista
             </button>
           </div>
         </motion.div>
