@@ -7,6 +7,7 @@
 import { buildBiomarkersFromCodes } from '../biomarkersDict.js';
 import { calculateAddOnPrice } from '../priceCalculator.js';
 import { getProfileExclusions } from './codes.js';
+import { getActiveBiomarkers } from '../biomarkersConfig.js';
 
 // ================================
 // FUNCIONES UTILITARIAS
@@ -111,10 +112,25 @@ export const createAddOnPackage = (config) => {
     biomarkers: baseBiomarkers,
     
     // Función de pricing dinámico
-    getPricing: function(gender = 'both') {
+    getPricing: function(gender = 'both', selectedStates = {}) {
+      // NUEVO: Usar solo biomarcadores activos según biomarkersConfig.js
+      const activeCodes = getActiveBiomarkers(id, selectedStates);
+      
+      if (activeCodes.length === 0) {
+        // Si no hay biomarcadores seleccionados, precio = 0
+        return {
+          price: 0,
+          marketPrice: 0,
+          testCount: 0,
+          details: { basePrice: 0, marketPrice: 0, testCount: 0 }
+        };
+      }
+      
       if (hasGenderDifferences) {
-        const genderCodes = generateAddOnCodesForGender(codes, maleOnlyCodes, femaleOnlyCodes, gender);
-        const genderBiomarkers = buildBiomarkersFromCodes(genderCodes);
+        // Filtrar códigos activos por género
+        const allGenderCodes = generateAddOnCodesForGender(codes, maleOnlyCodes, femaleOnlyCodes, gender);
+        const activeGenderCodes = activeCodes.filter(code => allGenderCodes.includes(code));
+        const genderBiomarkers = buildBiomarkersFromCodes(activeGenderCodes);
         const pricing = calculateAddOnPrice(genderBiomarkers, id);
         
         return {
@@ -136,12 +152,14 @@ export const createAddOnPackage = (config) => {
           details: pricing
         };
       } else {
-        // Add-on unisex
-        const pricing = calculateAddOnPrice(baseBiomarkers, id);
+        // Add-on unisex - usar solo biomarcadores activos
+        const activeBiomarkers = buildBiomarkersFromCodes(activeCodes);
+        const pricing = calculateAddOnPrice(activeBiomarkers, id);
+        
         return {
           price: pricing.both?.price,
           marketPrice: pricing.both?.details?.marketPrice,
-          testCount: codes.length,
+          testCount: activeCodes.length,
           details: pricing
         };
       }

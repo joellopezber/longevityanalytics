@@ -53,8 +53,7 @@ const MedicalSystemsExplorer = () => {
     setSelectedMetaboloma,
     selectedLpA,
     setSelectedLpA,
-    selectedAcidosGrasos,
-    setSelectedAcidosGrasos,
+
     selectedEstradiolHormonas,
     setSelectedEstradiolHormonas,
     selectedProlactinaHormonas,
@@ -203,10 +202,7 @@ const MedicalSystemsExplorer = () => {
     setSelectedEspermiogramaBioAge,
     selectedAMHBioAge,
     setSelectedAMHBioAge,
-    selectedUrinalisisDigestivo,
-    setSelectedUrinalisisDigestivo,
-    selectedOvaParasitesDigestivo,
-    setSelectedOvaParasitesDigestivo,
+
     selectedRetinol,
     setSelectedRetinol,
     selectedAlfaTocoferol,
@@ -247,8 +243,130 @@ const MedicalSystemsExplorer = () => {
     setSelectedLpACardiovascular,
     selectedCistatinaCardiovascular,
     setSelectedCistatinaCardiovascular,
+    // Estados específicos para Digestivo
+    selectedOmega3Digestivo,
+    setSelectedOmega3Digestivo,
+    selectedLipasaDigestivo,
+    setSelectedLipasaDigestivo,
+    selectedAmilasaDigestivo,
+    setSelectedAmilasaDigestivo,
+    selectedBilirrubinaDirectaDigestivo,
+    setSelectedBilirrubinaDirectaDigestivo,
     getAdjustedAddOnPrice
   } = useBiomarkerSelection();
+
+  // Función para obtener todos los estados del contexto para el nuevo sistema de precios
+  const getAllSelectedStates = () => {
+    return {
+      // Genome add-on
+      selectedMyPharma: selectedMyPharmaGenome,
+      selectedMyDetox: selectedMyDetoxGenome,
+      selectedMyDiet: selectedMyDietGenome,
+      selectedMyAgeing: selectedMyAgeingGenome,
+      selectedMySuplements: selectedMySuplementsGenome,
+      // Hormonas add-on - CORREGIDO: usar nombres exactos de biomarkersConfig.js
+      selectedEstradiolHormonas: selectedEstradiolHormonas,
+      selectedFSHHormonas: selectedFSHHormonas,
+      selectedHormonaCrecimientoHormonas: selectedHormonaCrecimientoHormonas,
+      selectedLHHormonas: selectedLHHormonas,
+      selectedProlactinaHormonas: selectedProlactinaHormonas,
+      selectedTestosteronaBiodispHormonas: selectedTestosteronaBiodispHormonas,
+      selectedTestosteronaLibreHormonas: selectedTestosteronaLibreHormonas,
+      selectedDHTHormonas: selectedDHTHormonas,
+      selectedProgesterona: selectedProgesterona,
+      selectedTestosteronaTotal: selectedTestosteronaTotal,
+      selected17OHProgesterona: selected17OHProgesterona,
+      selectedEstrona: selectedEstrona,
+      // Endocrino add-on
+      selectedIGF1Endocrino: selectedIGF1Endocrino,
+      selectedIGFBP3Endocrino: selectedIGFBP3Endocrino,
+      selectedACTHEndocrino: selectedACTHEndocrino,
+      // Cardiovascular add-on
+      selectedLDHCardiovascular: selectedLDHCardiovascular,
+      selectedAcidoLacticoCardiovascular: selectedAcidoLacticoCardiovascular,
+      selectedCKMBCardiovascular: selectedCKMBCardiovascular,
+      selectedCPKTotalCardiovascular: selectedCPKTotalCardiovascular,
+      selectedLDLDirectoCardiovascular: selectedLDLDirectoCardiovascular,
+      selectedVLDLCardiovascular: selectedVLDLCardiovascular,
+      selectedLpACardiovascular: selectedLpACardiovascular,
+      selectedCistatinaCardiovascular: selectedCistatinaCardiovascular,
+      // Antioxidantes add-on
+      selectedRetinol: selectedRetinol,
+      selectedAlfaTocoferol: selectedAlfaTocoferol,
+      selectedGammaTocoferol: selectedGammaTocoferol,
+      selectedBetaCaroteno: selectedBetaCaroteno,
+      selectedCoenzimaQ10: selectedCoenzimaQ10,
+      // IV Nutrients add-on
+      selectedCromoIVNutrients: selectedCromoIVNutrients,
+      selectedCobreIVNutrients: selectedCobreIVNutrients,
+      selectedOsmolalidadIVNutrients: selectedOsmolalidadIVNutrients,
+      selectedVitaminaK1IVNutrients: selectedVitaminaK1IVNutrients,
+      selectedVitaminaCIVNutrients: selectedVitaminaCIVNutrients,
+      // Metals add-on
+      selectedMercurioHeavyMetals: selectedMercurioHeavyMetals,
+      selectedPlomoHeavyMetals: selectedPlomoHeavyMetals,
+      selectedArsenicoHeavyMetals: selectedArsenicoHeavyMetals,
+      selectedCadmioHeavyMetals: selectedCadmioHeavyMetals,
+      // Oxidative Cell add-on
+      selectedGlutationReductasa: selectedGlutationReductasa,
+      selectedGlutationPeroxidasa: selectedGlutationPeroxidasa,
+      selectedG6PD: selectedG6PD,
+      selectedSelenio: selectedSelenio,
+      // Inflammation add-on
+      selectedVSGInflammation: selectedVSGInflammation,
+      selectedIL6Inflammation: selectedIL6Inflammation,
+      selectedTNFαInflammation: selectedTNFαInflammation,
+      // Immunity add-on
+      selectedANAImmunity: selectedANAImmunity,
+      selectedAntiCCPImmunity: selectedAntiCCPImmunity,
+      selectedAntiTiroglobulinaImmunity: selectedAntiTiroglobulinaImmunity,
+      selectedAntiTPOImmunity: selectedAntiTPOImmunity,
+      selectedFactorReumatoideImmunity: selectedFactorReumatoideImmunity,
+      selectedHelicobacterImmunity: selectedHelicobacterImmunity,
+      // Digestion add-on
+      selectedOmega3Digestivo: selectedOmega3Digestivo,
+      selectedLipasaDigestivo: selectedLipasaDigestivo,
+      selectedAmilasaDigestivo: selectedAmilasaDigestivo,
+      selectedBilirrubinaDirectaDigestivo: selectedBilirrubinaDirectaDigestivo,
+      // Gut Gate add-on
+      selectedParasitosGutGate: selectedParasitosGutGate,
+      selectedIntolerancia: selectedIntolerancia,
+      selectedMicrobiomaGutGate: selectedMicrobiomaGutGate,
+      selectedMetabolomaGutGate: selectedMetabolomaGutGate,
+      // Bone Mineral add-on
+      selectedCalcitriolBoneMineral: selectedCalcitriolBoneMineral,
+      selectedALPOseaBoneMineral: selectedALPOseaBoneMineral,
+      selectedCTXBoneMineral: selectedCTXBoneMineral,
+      selectedCalcioIonicoBoneMineral: selectedCalcioIonicoBoneMineral,
+      // Coagulation add-on
+      selectedFibrinogenoCoagulation: selectedFibrinogenoCoagulation,
+      selectedAPTTCoagulation: selectedAPTTCoagulation,
+      selectedINRCoagulation: selectedINRCoagulation,
+      // BioAge add-on
+      selectedMyEpiAgeingBioAge: selectedMyEpiAgeingBioAge,
+      selectedLongitudTelomericaBioAge: selectedLongitudTelomericaBioAge,
+      selectedEspermiogramaBioAge: selectedEspermiogramaBioAge,
+      selectedAMHBioAge: selectedAMHBioAge,
+      // Cancer add-on
+      selectedSangreOcultaCancer: selectedSangreOcultaCancer,
+      selectedUrinalisisCancer: selectedUrinalisisCancer,
+      selectedCEACancer: selectedCEACancer,
+      selectedCA125Cancer: selectedCA125Cancer,
+      selectedCA153Cancer: selectedCA153Cancer,
+      selectedCA199Cancer: selectedCA199Cancer,
+      selectedSCCCancer: selectedSCCCancer,
+      selectedProteina100Cancer: selectedProteina100Cancer,
+      selectedNSECancer: selectedNSECancer,
+      selectedCYFRA21Cancer: selectedCYFRA21Cancer,
+      selectedCA724Cancer: selectedCA724Cancer,
+      selectedAFPCancer: selectedAFPCancer,
+      selectedProGRPCancer: selectedProGRPCancer,
+      selectedBetaHCGCancer: selectedBetaHCGCancer,
+      selectedPSATotalCancer: selectedPSATotalCancer,
+      selectedPSALibreCancer: selectedPSALibreCancer,
+      selectedHE4Cancer: selectedHE4Cancer
+    };
+  };
 
   // Obtener datos filtrados por género usando nueva arquitectura
   const essentialData = essentialPackage.getForGender(selectedGender);
@@ -315,15 +433,162 @@ const MedicalSystemsExplorer = () => {
     );
   };
 
+  // ================================================================
+  // FUNCIÓN PARA RESETEAR TODOS LOS BIOMARCADORES SELECCIONADOS
+  // ================================================================
+  const resetAllSelectedBiomarkers = () => {
+    // Reset Hormonas add-on
+    setSelectedEstradiolHormonas(false);
+    setSelectedProlactinaHormonas(false);
+    setSelectedLHHormonas(false);
+    setSelectedFSHHormonas(false);
+    setSelectedHormonaCrecimientoHormonas(false);
+    setSelectedTestosteronaBiodispHormonas(false);
+    setSelectedTestosteronaLibreHormonas(false);
+    setSelectedDHTHormonas(false);
+    setSelectedProgesterona(false);
+    setSelectedTestosteronaTotal(false);
+    setSelected17OHProgesterona(false);
+    setSelectedEstrona(false);
+    
+    // Reset Endocrino add-on
+    setSelectedEstradiolEndocrino(false);
+    setSelectedProlactinaEndocrino(false);
+    setSelectedLHEndocrino(false);
+    setSelectedFSHEndocrino(false);
+    setSelectedVSGEndocrino(false);
+    setSelectedVitaminaD125OHEndocrino(false);
+    setSelectedIGF1Endocrino(false);
+    setSelectedIGFBP3Endocrino(false);
+    setSelectedACTHEndocrino(false);
+    
+    // Reset Cardiovascular add-on
+    setSelectedLDHCardiovascular(false);
+    setSelectedAcidoLacticoCardiovascular(false);
+    setSelectedCKMBCardiovascular(false);
+    setSelectedCPKTotalCardiovascular(false);
+    setSelectedLDLDirectoCardiovascular(false);
+    setSelectedVLDLCardiovascular(false);
+    setSelectedLpACardiovascular(false);
+    setSelectedCistatinaCardiovascular(false);
+    
+    // Reset Antioxidantes add-on
+    setSelectedRetinol(false);
+    setSelectedAlfaTocoferol(false);
+    setSelectedGammaTocoferol(false);
+    setSelectedBetaCaroteno(false);
+    setSelectedCoenzimaQ10(false);
+    
+    // Reset IV Nutrients add-on
+    setSelectedCromoIVNutrients(false);
+    setSelectedCobreIVNutrients(false);
+    setSelectedOsmolalidadIVNutrients(false);
+    setSelectedVitaminaK1IVNutrients(false);
+    setSelectedVitaminaCIVNutrients(false);
+    
+    // Reset Heavy Metals add-on
+    setSelectedMercurioHeavyMetals(false);
+    setSelectedPlomoHeavyMetals(false);
+    setSelectedArsenicoHeavyMetals(false);
+    setSelectedCadmioHeavyMetals(false);
+    
+    // Reset Oxidative Cell add-on
+    setSelectedGlutationReductasa(false);
+    setSelectedGlutationPeroxidasa(false);
+    setSelectedG6PD(false);
+    setSelectedSelenio(false);
+    
+    // Reset Inflammation add-on
+    setSelectedVSGInflammation(false);
+    setSelectedIL6Inflammation(false);
+    setSelectedTNFαInflammation(false);
+    
+    // Reset Immunity add-on
+    setSelectedANAImmunity(false);
+    setSelectedAntiCCPImmunity(false);
+    setSelectedAntiTiroglobulinaImmunity(false);
+    setSelectedAntiTPOImmunity(false);
+    setSelectedFactorReumatoideImmunity(false);
+    setSelectedHelicobacterImmunity(false);
+    
+    // Reset Digestion add-on
+    setSelectedOmega3Digestivo(false);
+    setSelectedLipasaDigestivo(false);
+    setSelectedAmilasaDigestivo(false);
+    setSelectedBilirrubinaDirectaDigestivo(false);
+    
+    // Reset Gut Gate add-on
+    setSelectedParasitosGutGate(false);
+    setSelectedIntolerancia(false);
+    setSelectedMicrobiomaGutGate(false);
+    setSelectedMetabolomaGutGate(false);
+    
+    // Reset Bone Mineral add-on
+    setSelectedCalcitriolBoneMineral(false);
+    setSelectedALPOseaBoneMineral(false);
+    setSelectedCTXBoneMineral(false);
+    setSelectedCalcioIonicoBoneMineral(false);
+    
+    // Reset Coagulation add-on
+    setSelectedFibrinogenoCoagulation(false);
+    setSelectedAPTTCoagulation(false);
+    setSelectedINRCoagulation(false);
+    
+    // Reset BioAge add-on
+    setSelectedMyEpiAgeingBioAge(false);
+    setSelectedLongitudTelomericaBioAge(false);
+    setSelectedEspermiogramaBioAge(false);
+    setSelectedAMHBioAge(false);
+    
+    // Reset Cancer add-on
+    setSelectedSangreOcultaCancer(false);
+    setSelectedUrinalisisCancer(false);
+    setSelectedCEACancer(false);
+    setSelectedCA125Cancer(false);
+    setSelectedCA153Cancer(false);
+    setSelectedCA199Cancer(false);
+    setSelectedSCCCancer(false);
+    setSelectedProteina100Cancer(false);
+    setSelectedNSECancer(false);
+    setSelectedCYFRA21Cancer(false);
+    setSelectedCA724Cancer(false);
+    setSelectedAFPCancer(false);
+    setSelectedProGRPCancer(false);
+    setSelectedBetaHCGCancer(false);
+    setSelectedPSATotalCancer(false);
+    setSelectedPSALibreCancer(false);
+    setSelectedHE4Cancer(false);
+    
+    // Reset Genome add-on
+    setSelectedMyPharmaGenome(false);
+    setSelectedMyDetoxGenome(false);
+    setSelectedMyDietGenome(false);
+    setSelectedMyAgeingGenome(false);
+    setSelectedMySuplementsGenome(false);
+    
+    // Reset otros biomarcadores básicos
+    setSelectedLpA(false);
+    setSelectedMetaboloma(false);
+    
+    console.log('🔄 Todos los biomarcadores han sido reseteados');
+  };
+
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
-    // No forzar la apertura del Essential al cambiar género
+    // NUEVO: Resetear todos los biomarcadores seleccionados al cambiar género
+    resetAllSelectedBiomarkers();
+    // Cerrar biomarcadores expandidos
+    setExpandedBiomarkers([]);
+    console.log(`👤 Género cambiado a: ${gender} - Biomarcadores reseteados`);
   };
 
   const handleProfileSelection = (profile) => {
     setSelectedProfile(profile);
+    // NUEVO: Resetear todos los biomarcadores seleccionados al cambiar perfil
+    resetAllSelectedBiomarkers();
     // Cerrar biomarcadores expandidos al cambiar perfil
     setExpandedBiomarkers([]);
+    console.log(`📊 Perfil cambiado a: ${profile} - Biomarcadores reseteados`);
   };
 
   // Función para obtener datos del perfil seleccionado
@@ -438,9 +703,7 @@ const MedicalSystemsExplorer = () => {
 
 
   // Función para toggle de Ácidos grasos %
-  const toggleAcidosGrasosSelection = () => {
-    setSelectedAcidosGrasos(prev => !prev);
-  };
+
 
 
 
@@ -762,13 +1025,21 @@ const MedicalSystemsExplorer = () => {
     setSelectedMySuplementsGenome(prev => !prev);
   };
 
-  // Funciones toggle para Digestivo específicas
-  const toggleUrinalisisDigestivoSelection = () => {
-    setSelectedUrinalisisDigestivo(prev => !prev);
+  // Funciones toggle para Digestivo específicas - biomarcadores reales
+  const toggleOmega3DigestivoSelection = () => {
+    setSelectedOmega3Digestivo(prev => !prev);
   };
 
-  const toggleOvaParasitesDigestivoSelection = () => {
-    setSelectedOvaParasitesDigestivo(prev => !prev);
+  const toggleLipasaDigestivoSelection = () => {
+    setSelectedLipasaDigestivo(prev => !prev);
+  };
+
+  const toggleAmilasaDigestivoSelection = () => {
+    setSelectedAmilasaDigestivo(prev => !prev);
+  };
+
+  const toggleBilirrubinaDirectaDigestivoSelection = () => {
+    setSelectedBilirrubinaDirectaDigestivo(prev => !prev);
   };
 
   // Funciones toggle para Antioxidantes
@@ -892,7 +1163,7 @@ const MedicalSystemsExplorer = () => {
     const isLpA = biomarker.name === "Lp(a) *";
 
 
-    const isAcidosGrasos = biomarker.name === "Ácidos grasos %";
+
 
     const isEstradiol = biomarker.name === "Estradiol";
     const isProlactina = biomarker.name === "Prolactina";
@@ -900,8 +1171,6 @@ const MedicalSystemsExplorer = () => {
     const isFSH = biomarker.name === "FSH";
     const isVSG = biomarker.name === "VSG";
     const isVitaminaD125OH = biomarker.name === "Vitamina D 1,25-OH";
-    const isUrinalisis = biomarker.name === "Urianálisis + sedimento";
-    const isOvaParasites = biomarker.name === "Ova & Parasites stool";
     
     // Nuevos biomarcadores faltantes de Hormonas
     const isHormonaCrecimiento = biomarker.name === "Hormona de crecimiento (hGH)";
@@ -1039,8 +1308,11 @@ const MedicalSystemsExplorer = () => {
     const isEspermiogramaBioAge = biomarker.code === "B3340" && addOnId === "bioage";
     const isAMHBioAge = biomarker.code === "D1001" && addOnId === "bioage";
     
-    const isUrinalisisDigestivo = isUrinalisis && addOnId === "digest";
-    const isOvaParasitesDigestivo = isOvaParasites && addOnId === "digest";
+    // Identificadores específicos para Digestion basados en códigos
+    const isOmega3Digestivo = biomarker.code === "T2590" && addOnId === "digestion";
+    const isLipasaDigestivo = biomarker.code === "B1980" && addOnId === "digestion";
+    const isAmilasaDigestivo = biomarker.code === "B0350" && addOnId === "digestion";
+    const isBilirrubinaDirectaDigestivo = biomarker.code === "B0260" && addOnId === "digestion";
 
     // Helper function para determinar si un biomarcador está seleccionado
     const isBiomarkerSelected = () => {
@@ -1053,7 +1325,7 @@ const MedicalSystemsExplorer = () => {
              (isMySuplementsGenome && selectedMySuplementsGenome) || 
              (isLpA && selectedLpA) || 
       
-             (isAcidosGrasos && selectedAcidosGrasos) || 
+ 
       
              (isEstradiolHormonas && selectedEstradiolHormonas) || 
              (isProlactinaHormonas && selectedProlactinaHormonas) || 
@@ -1117,8 +1389,10 @@ const MedicalSystemsExplorer = () => {
              (isPSATotalCancer && selectedPSATotalCancer) ||
              (isPSALibreCancer && selectedPSALibreCancer) ||
              (isHE4Cancer && selectedHE4Cancer) ||
-             (isUrinalisisDigestivo && selectedUrinalisisDigestivo) || 
-             (isOvaParasitesDigestivo && selectedOvaParasitesDigestivo) ||
+             (isOmega3Digestivo && selectedOmega3Digestivo) || 
+             (isLipasaDigestivo && selectedLipasaDigestivo) ||
+             (isAmilasaDigestivo && selectedAmilasaDigestivo) ||
+             (isBilirrubinaDirectaDigestivo && selectedBilirrubinaDirectaDigestivo) ||
              (isProgesterona && selectedProgesterona) ||
              (isTestosteronaTotal && selectedTestosteronaTotal) ||
              (is17OHProgesterona && selected17OHProgesterona) ||
@@ -1366,28 +1640,7 @@ const MedicalSystemsExplorer = () => {
 
 
             {/* Selector específico para Ácidos grasos % - SOLO en add-ons */}
-            {isAcidosGrasos && addOnId && (
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleAcidosGrasosSelection();
-                }}
-                className={`
-                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
-                  ${selectedAcidosGrasos
-                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
-                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
-                  }
-                `}
-                title={selectedAcidosGrasos ? "Quitar del análisis" : "Añadir al análisis"}
-              >
-                {selectedAcidosGrasos ? (
-                  <FaMinus className="text-xs" />
-                ) : (
-                  <FaPlus className="text-xs" />
-                )}
-              </button>
-            )}
+
 
 
 
@@ -2634,23 +2887,23 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Urianálisis + sedimento en Digestivo */}
-            {isUrinalisisDigestivo && addOnId && (
+            {/* Selector específico para Ácidos grasos omega-3 en Digestivo */}
+            {isOmega3Digestivo && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleUrinalisisDigestivoSelection();
+                  toggleOmega3DigestivoSelection();
                 }}
                 className={`
                   w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
-                  ${selectedUrinalisisDigestivo
+                  ${selectedOmega3Digestivo
                     ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
                     : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
                   }
                 `}
-                title={selectedUrinalisisDigestivo ? "Quitar del análisis" : "Añadir al análisis"}
+                title={selectedOmega3Digestivo ? "Quitar del análisis" : "Añadir al análisis"}
               >
-                {selectedUrinalisisDigestivo ? (
+                {selectedOmega3Digestivo ? (
                   <FaMinus className="text-xs" />
                 ) : (
                   <FaPlus className="text-xs" />
@@ -2658,23 +2911,71 @@ const MedicalSystemsExplorer = () => {
               </button>
             )}
 
-            {/* Selector específico para Ova & Parasites stool en Digestivo */}
-            {isOvaParasitesDigestivo && addOnId && (
+            {/* Selector específico para Lipasa en Digestivo */}
+            {isLipasaDigestivo && addOnId && (
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  toggleOvaParasitesDigestivoSelection();
+                  toggleLipasaDigestivoSelection();
                 }}
                 className={`
                   w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
-                  ${selectedOvaParasitesDigestivo
+                  ${selectedLipasaDigestivo
                     ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
                     : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
                   }
                 `}
-                title={selectedOvaParasitesDigestivo ? "Quitar del análisis" : "Añadir al análisis"}
+                title={selectedLipasaDigestivo ? "Quitar del análisis" : "Añadir al análisis"}
               >
-                {selectedOvaParasitesDigestivo ? (
+                {selectedLipasaDigestivo ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Amilasa en Digestivo */}
+            {isAmilasaDigestivo && addOnId && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleAmilasaDigestivoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedAmilasaDigestivo
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedAmilasaDigestivo ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedAmilasaDigestivo ? (
+                  <FaMinus className="text-xs" />
+                ) : (
+                  <FaPlus className="text-xs" />
+                )}
+              </button>
+            )}
+
+            {/* Selector específico para Bilirrubina directa en Digestivo */}
+            {isBilirrubinaDirectaDigestivo && addOnId && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleBilirrubinaDirectaDigestivoSelection();
+                }}
+                className={`
+                  w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all font-bold text-xs flex-shrink-0
+                  ${selectedBilirrubinaDirectaDigestivo
+                    ? 'bg-white border-earth text-earth hover:bg-earth-50 hover:border-warm'
+                    : 'bg-earth border-earth text-white hover:bg-warm shadow-md'
+                  }
+                `}
+                title={selectedBilirrubinaDirectaDigestivo ? "Quitar del análisis" : "Añadir al análisis"}
+              >
+                {selectedBilirrubinaDirectaDigestivo ? (
                   <FaMinus className="text-xs" />
                 ) : (
                   <FaPlus className="text-xs" />
@@ -4021,8 +4322,9 @@ const MedicalSystemsExplorer = () => {
                     <div className="flex flex-col">
                       <div className="text-2xl font-bold text-earth">
                         {(() => {
-                          // Obtener precios dinámicos del add-on
-                          const addOnPricing = addOn.getPricing();
+                          // NUEVO: Obtener precios dinámicos usando el nuevo sistema
+                          const selectedStates = getAllSelectedStates();
+                          const addOnPricing = addOn.getPricing(selectedGender, selectedStates);
                           
                           let basePrice = 0;
                           if (addOnPricing.male && addOnPricing.female) {
@@ -4033,15 +4335,16 @@ const MedicalSystemsExplorer = () => {
                             basePrice = addOnPricing.price;
                           }
                           
-                          // Usar el contexto para aplicar ajustes dinámicos
+                          // Aplicar ajustes adicionales del contexto (si los hay)
                           const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, 0);
                           return `${Math.round(adjustedPrices.price)}€`;
                         })()}
                       </div>
                       <div className="text-sm text-gray-500">
                         {t('systems.pvp')}: {(() => {
-                          // Obtener precios dinámicos del add-on
-                          const addOnPricing = addOn.getPricing();
+                          // NUEVO: Obtener precios dinámicos usando el nuevo sistema
+                          const selectedStates = getAllSelectedStates();
+                          const addOnPricing = addOn.getPricing(selectedGender, selectedStates);
                           
                           let basePrice = 0;
                           let basePvp = 0;
@@ -4055,7 +4358,7 @@ const MedicalSystemsExplorer = () => {
                             basePvp = addOnPricing.marketPrice;
                           }
                           
-                          // Usar el contexto para aplicar ajustes dinámicos
+                          // Aplicar ajustes adicionales del contexto (si los hay)
                           const adjustedPrices = getAdjustedAddOnPrice(addOn.id, basePrice, basePvp);
                           return `${Math.round(adjustedPrices.pvp)}€`;
                         })()}

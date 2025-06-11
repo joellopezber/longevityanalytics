@@ -26,161 +26,169 @@
 export const ADD_ON_BIOMARKERS_CONFIG = {
   genome: {
     biomarkers: {
-      'OG002': true,   // MyPharma - SÍ seleccionado por defecto
-      'OG003': true,   // MyDetox - SÍ seleccionado por defecto  
-      'OG004': true,   // MyDiet - SÍ seleccionado por defecto
-      'OG005': true,   // MyAgeing - SÍ seleccionado por defecto
-      'OG006': true    // MySuplements - SÍ seleccionado por defecto
+      'OG002': false,   // MyPharma - Solo se suma si se selecciona manualmente
+      'OG003': false,   // MyDetox - Solo se suma si se selecciona manualmente  
+      'OG004': false,   // MyDiet - Solo se suma si se selecciona manualmente
+      'OG005': false,   // MyAgeing - Solo se suma si se selecciona manualmente
+      'OG006': false    // MySuplements - Solo se suma si se selecciona manualmente
     }
   },
   hormonas: {
     biomarkers: {
-      'B5350': true,   // Estradiol - SÍ seleccionado por defecto
-      'B5380': true,   // FSH - SÍ seleccionado por defecto
-      'B5420': true,   // Hormona de crecimiento (hGH) - SÍ seleccionado por defecto
-      'B5800': true,   // LH - SÍ seleccionado por defecto
-      'B5980': true,   // Prolactina - SÍ seleccionado por defecto
-      'B6480': true,   // Testosterona biodisp. - SÍ seleccionado por defecto
-      'D0601': true,   // Testosterona libre - SÍ seleccionado por defecto
-      'D0850': true,   // DHT - SÍ seleccionado por defecto
-      // Biomarcadores específicos femeninos
-      'B5932': true,   // Progesterona - SÍ seleccionado por defecto
-      'B6160': true,   // Testosterona total - SÍ seleccionado por defecto
-      'D0181': true,   // 17-OH-Progesterona - SÍ seleccionado por defecto
-      'D0780': true    // Estrona - SÍ seleccionado por defecto
+      // ============================================
+      // BIOMARCADORES OPCIONALES (precio base = 0€)
+      // ============================================
+      'B5350': false,   // Estradiol - Solo se suma si se selecciona manualmente
+      'B5380': false,   // FSH - Solo se suma si se selecciona manualmente
+      'B5420': false,   // Hormona de crecimiento (hGH) - Solo se suma si se selecciona manualmente
+      'B5800': false,   // LH - Solo se suma si se selecciona manualmente
+      'B5980': false,   // Prolactina - Solo se suma si se selecciona manualmente
+      
+      // ============================================
+      // BIOMARCADORES ESPECÍFICOS POR GÉNERO (OPCIONALES)
+      // ============================================
+      'B6480': false,   // Testosterona biodisp. - Solo se suma si se selecciona manualmente
+      'D0601': false,   // Testosterona libre - Solo se suma si se selecciona manualmente
+      'D0850': false,   // DHT - Solo se suma si se selecciona manualmente
+      
+      // Biomarcadores específicos femeninos (OPCIONALES)
+      'B5932': false,   // Progesterona - Solo se suma si se selecciona manualmente
+      'B6160': false,   // Testosterona total - Solo se suma si se selecciona manualmente
+      'D0181': false,   // 17-OH-Progesterona - Solo se suma si se selecciona manualmente
+      'D0780': false    // Estrona - Solo se suma si se selecciona manualmente
     }
   },
   endocrino: {
     biomarkers: {
-      'B6030': true,   // IGF-1 - SÍ seleccionado por defecto
-      'B6010': true,   // IGFBP-3 - SÍ seleccionado por defecto
-      'I6740': true    // ACTH - SÍ seleccionado por defecto
+      'B6030': false,   // IGF-1 - Solo se suma si se selecciona manualmente
+      'B6010': false,   // IGFBP-3 - Solo se suma si se selecciona manualmente
+      'I6740': false    // ACTH - Solo se suma si se selecciona manualmente
     }
   },
   cardiovascular: {
     biomarkers: {
-      'B0110': true,   // LDH - SÍ seleccionado por defecto
-      'B0750': true,   // Ácido láctico - SÍ seleccionado por defecto
-      'B2120': true,   // CK-MB - SÍ seleccionado por defecto
-      'B0220': true,   // CPK total - SÍ seleccionado por defecto
-      'B1900': true,   // LDL directo - SÍ seleccionado por defecto
-      'B0190': true,   // VLDL - SÍ seleccionado por defecto
-      'B7700': true,   // Lp(a) * - SÍ seleccionado por defecto
-      'I5047': true    // Cistatina-C - SÍ seleccionado por defecto
+      'B0110': false,   // LDH - Solo se suma si se selecciona manualmente
+      'B0750': false,   // Ácido láctico - Solo se suma si se selecciona manualmente
+      'B2120': false,   // CK-MB - Solo se suma si se selecciona manualmente
+      'B0220': false,   // CPK total - Solo se suma si se selecciona manualmente
+      'B1900': false,   // LDL directo - Solo se suma si se selecciona manualmente
+      'B0190': false,   // VLDL - Solo se suma si se selecciona manualmente
+      'B7700': false,   // Lp(a) * - Solo se suma si se selecciona manualmente
+      'I5047': false    // Cistatina-C - Solo se suma si se selecciona manualmente
     }
   },
   antioxidantes: {
     biomarkers: {
-      'T0811': true,   // Retinol (Vitamina A) - SÍ seleccionado por defecto
-      'T1191': true,   // Alfa-tocoferol (Vit E) - SÍ seleccionado por defecto
-      'T2841': true,   // Gamma-tocoferol (Vit E) - SÍ seleccionado por defecto
-      'T1200': true,   // Beta-caroteno - SÍ seleccionado por defecto
-      'T2830': true    // Coenzima Q10 - SÍ seleccionado por defecto
+      'T0811': false,   // Retinol (Vitamina A) - Solo se suma si se selecciona manualmente
+      'T1191': false,   // Alfa-tocoferol (Vit E) - Solo se suma si se selecciona manualmente
+      'T2841': false,   // Gamma-tocoferol (Vit E) - Solo se suma si se selecciona manualmente
+      'T1200': false,   // Beta-caroteno - Solo se suma si se selecciona manualmente
+      'T2830': false    // Coenzima Q10 - Solo se suma si se selecciona manualmente
     }
   },
   iv_nutrients: {
     biomarkers: {
-      'T0500': true,   // Cromo (Oligoelemento) - SÍ seleccionado por defecto
-      'B8060': true,   // Cobre - SÍ seleccionado por defecto
-      'B0270': true,   // Osmolalidad sérica - SÍ seleccionado por defecto
-      'T1720': true,   // Vitamina K1 - SÍ seleccionado por defecto
-      'T1061': true    // Vitamina C - SÍ seleccionado por defecto
+      'T0500': false,   // Cromo (Oligoelemento) - Solo se suma si se selecciona manualmente
+      'B8060': false,   // Cobre - Solo se suma si se selecciona manualmente
+      'B0270': false,   // Osmolalidad sérica - Solo se suma si se selecciona manualmente
+      'T1720': false,   // Vitamina K1 - Solo se suma si se selecciona manualmente
+      'T1061': false    // Vitamina C - Solo se suma si se selecciona manualmente
     }
   },
   metals: {
     biomarkers: {
-      'T0302': true,   // Mercurio - SÍ seleccionado por defecto
-      'T0150': true,   // Plomo - SÍ seleccionado por defecto
-      'T0960': true,   // Arsénico - SÍ seleccionado por defecto
-      'T0480': true    // Cadmio - SÍ seleccionado por defecto
+      'T0302': false,   // Mercurio - Solo se suma si se selecciona manualmente
+      'T0150': false,   // Plomo - Solo se suma si se selecciona manualmente
+      'T0960': false,   // Arsénico - Solo se suma si se selecciona manualmente
+      'T0480': false    // Cadmio - Solo se suma si se selecciona manualmente
     }
   },
   oxidative_cell: {
     biomarkers: {
-      'B7121': true,   // Glutatión reductasa - SÍ seleccionado por defecto
-      'B3015': true,   // Glutatión peroxidasa - SÍ seleccionado por defecto
-      'B3041': true,   // G6PD - SÍ seleccionado por defecto
-      'T3920': true    // Selenio - SÍ seleccionado por defecto
+      'B7121': false,   // Glutatión reductasa - Solo se suma si se selecciona manualmente
+      'B3015': false,   // Glutatión peroxidasa - Solo se suma si se selecciona manualmente
+      'B3041': false,   // G6PD - Solo se suma si se selecciona manualmente
+      'T3920': false    // Selenio - Solo se suma si se selecciona manualmente
     }
   },
   inflammation: {
     biomarkers: {
-      'H0020': true,   // VSG - SÍ seleccionado por defecto
-      'B7790': true,   // IL-6 - SÍ seleccionado por defecto
-      'I2081': true    // TNF-α - SÍ seleccionado por defecto
+      'H0020': false,   // VSG - Solo se suma si se selecciona manualmente
+      'B7790': false,   // IL-6 - Solo se suma si se selecciona manualmente
+      'I2081': false    // TNF-α - Solo se suma si se selecciona manualmente
     }
   },
   immunity: {
     biomarkers: {
-      'I0141': true,   // ANA (Autoinmunidad) - SÍ seleccionado por defecto
-      'I5072': true,   // Anti-CCP (Artritis) - SÍ seleccionado por defecto
-      'B6321': true,   // Anti-tiroglobulina (Tiroides) - SÍ seleccionado por defecto
-      'B6300': true,   // Anti-TPO (Tiroides) - SÍ seleccionado por defecto
-      'B3130': true,   // Factor reumatoide - SÍ seleccionado por defecto
-      'B7750': true    // H. pylori IgG (Infección) - SÍ seleccionado por defecto
+      'I0141': false,   // ANA (Autoinmunidad) - Solo se suma si se selecciona manualmente
+      'I5072': false,   // Anti-CCP (Artritis) - Solo se suma si se selecciona manualmente
+      'B6321': false,   // Anti-tiroglobulina (Tiroides) - Solo se suma si se selecciona manualmente
+      'B6300': false,   // Anti-TPO (Tiroides) - Solo se suma si se selecciona manualmente
+      'B3130': false,   // Factor reumatoide - Solo se suma si se selecciona manualmente
+      'B7750': false    // H. pylori IgG (Infección) - Solo se suma si se selecciona manualmente
     }
   },
   digestion: {
     biomarkers: {
-      'T2590': true,   // Urianálisis + sedimento - SÍ seleccionado por defecto
-      'B1980': true,   // Amilasa - SÍ seleccionado por defecto
-      'B0350': true,   // Lipasa - SÍ seleccionado por defecto
-      'B0260': true    // Elastasa - SÍ seleccionado por defecto
+      'T2590': false,   // Urianálisis + sedimento - Solo se suma si se selecciona manualmente
+      'B1980': false,   // Amilasa - Solo se suma si se selecciona manualmente
+      'B0350': false,   // Lipasa - Solo se suma si se selecciona manualmente
+      'B0260': false    // Elastasa - Solo se suma si se selecciona manualmente
     }
   },
   gut_gate: {
     biomarkers: {
-      'M1190': true,   // Parásitos en heces (Parasitología) - SÍ seleccionado por defecto
-      'P3031': true,   // Intolerancia alimentaria (Intolerancia Igg) - SÍ seleccionado por defecto
-      'AB001': true,   // Microbioma intestinal (Microbiota) - SÍ seleccionado por defecto
-      'AB002': true    // Metaboloma (Microbiota) - SÍ seleccionado por defecto
+      'M1190': false,   // Parásitos en heces (Parasitología) - Solo se suma si se selecciona manualmente
+      'P3031': false,   // Intolerancia alimentaria (Intolerancia Igg) - Solo se suma si se selecciona manualmente
+      'AB001': false,   // Microbioma intestinal (Microbiota) - Solo se suma si se selecciona manualmente
+      'AB002': false    // Metaboloma (Microbiota) - Solo se suma si se selecciona manualmente
     }
   },
   bone_mineral: {
     biomarkers: {
-      'D0560': true,   // Calcitriol (Vit D [1,25-OH]) - SÍ seleccionado por defecto
-      'D1111': true,   // ALP ósea - SÍ seleccionado por defecto
-      'I3291': true,   // CTX - SÍ seleccionado por defecto
-      'T1572': true    // Calcio iónico - SÍ seleccionado por defecto
+      'D0560': false,   // Calcitriol (Vit D [1,25-OH]) - Solo se suma si se selecciona manualmente
+      'D1111': false,   // ALP ósea - Solo se suma si se selecciona manualmente
+      'I3291': false,   // CTX - Solo se suma si se selecciona manualmente
+      'T1572': false    // Calcio iónico - Solo se suma si se selecciona manualmente
     }
   },
   coagulation: {
     biomarkers: {
-      'H0050': true,   // Fibrinógeno - SÍ seleccionado por defecto
-      'H0850': true,   // Cefalina-APTT - SÍ seleccionado por defecto
-      'H0860': true    // INR (Protrombina) - SÍ seleccionado por defecto
+      'H0050': false,   // Fibrinógeno - Solo se suma si se selecciona manualmente
+      'H0850': false,   // Cefalina-APTT - Solo se suma si se selecciona manualmente
+      'H0860': false    // INR (Protrombina) - Solo se suma si se selecciona manualmente
     }
   },
   bioage: {
     biomarkers: {
-      'OG001': true,   // MyEpiAgeing* - SÍ seleccionado por defecto
-      'G1465': true,   // Longitud telomérica - SÍ seleccionado por defecto
-      'B3340': true,   // Espermiograma - SÍ seleccionado por defecto
-      'D1001': true    // AMH - SÍ seleccionado por defecto
+      'OG001': false,   // MyEpiAgeing* - Solo se suma si se selecciona manualmente
+      'G1465': false,   // Longitud telomérica - Solo se suma si se selecciona manualmente
+      'B3340': false,   // Espermiograma - Solo se suma si se selecciona manualmente
+      'D1001': false    // AMH - Solo se suma si se selecciona manualmente
     }
   },
   cancer: {
     biomarkers: {
       // Biomarcadores comunes para ambos géneros
-      'M0010': true,   // Sangre oculta en heces - SÍ seleccionado por defecto
-      '6897': true,    // Urianálisis + sedimento - SÍ seleccionado por defecto
-      'B5110': true,   // CEA - SÍ seleccionado por defecto
-      'B5080': true,   // CA 125 - SÍ seleccionado por defecto
-      'B5090': true,   // CA 15.3 - SÍ seleccionado por defecto
-      'B5100': true,   // CA 19-9 - SÍ seleccionado por defecto
-      'B8130': true,   // Células escamosas Ag (SCC) - SÍ seleccionado por defecto
-      'I5080': true,   // Proteina s-100 - SÍ seleccionado por defecto
-      'I5090': true,   // NSE - SÍ seleccionado por defecto
-      'B8120': true,   // CYFRA 21-1 - SÍ seleccionado por defecto
-      'D1271': true,   // CA 72-4 - SÍ seleccionado por defecto
-      'B7900': true,   // Alfa-feto (AFP) - SÍ seleccionado por defecto
-      'B8160': true,   // Péptido liberador gastrina (ProGRP) - SÍ seleccionado por defecto
-      'D1760': true,   // β-HCG - SÍ seleccionado por defecto
+      'M0010': false,   // Sangre oculta en heces - Solo se suma si se selecciona manualmente
+      '6897': false,    // Urianálisis + sedimento - Solo se suma si se selecciona manualmente
+      'B5110': false,   // CEA - Solo se suma si se selecciona manualmente
+      'B5080': false,   // CA 125 - Solo se suma si se selecciona manualmente
+      'B5090': false,   // CA 15.3 - Solo se suma si se selecciona manualmente
+      'B5100': false,   // CA 19-9 - Solo se suma si se selecciona manualmente
+      'B8130': false,   // Células escamosas Ag (SCC) - Solo se suma si se selecciona manualmente
+      'I5080': false,   // Proteina s-100 - Solo se suma si se selecciona manualmente
+      'I5090': false,   // NSE - Solo se suma si se selecciona manualmente
+      'B8120': false,   // CYFRA 21-1 - Solo se suma si se selecciona manualmente
+      'D1271': false,   // CA 72-4 - Solo se suma si se selecciona manualmente
+      'B7900': false,   // Alfa-feto (AFP) - Solo se suma si se selecciona manualmente
+      'B8160': false,   // Péptido liberador gastrina (ProGRP) - Solo se suma si se selecciona manualmente
+      'D1760': false,   // β-HCG - Solo se suma si se selecciona manualmente
       // Biomarcadores específicos masculinos
-      'B5830': true,   // PSA total - SÍ seleccionado por defecto
-      'B5840': true,   // PSA libre - SÍ seleccionado por defecto
+      'B5830': false,   // PSA total - Solo se suma si se selecciona manualmente
+      'B5840': false,   // PSA libre - Solo se suma si se selecciona manualmente
       // Biomarcadores específicos femeninos
-      'B8110': true    // Proteína Epididimal Humana 4 (HE4) - SÍ seleccionado por defecto
+      'B8110': false    // Proteína Epididimal Humana 4 (HE4) - Solo se suma si se selecciona manualmente
     }
   }
 };
@@ -203,7 +211,6 @@ export const BIOMARKER_CODE_TO_STATE_MAP = {
   
   // IV & Nutrients
   'T1720': 'selectedVitaminaK1',
-  'T2590': 'selectedAcidosGrasos', // Para IV Nutrients
   
   // Immunity
   'B7750': 'selectedHelicobacter',
@@ -300,7 +307,10 @@ export const CONTEXT_SPECIFIC_STATE_MAP = {
     'T0480': 'selectedCadmioHeavyMetals'
   },
   digestion: {
-    'T2590': 'selectedUrinalisisDigestivo' // Diferente significado que en iv_nutrients
+    'T2590': 'selectedOmega3Digestivo',
+    'B1980': 'selectedLipasaDigestivo',
+    'B0350': 'selectedAmilasaDigestivo',
+    'B0260': 'selectedBilirrubinaDirectaDigestivo'
   },
   immunity: {
     'I0141': 'selectedANAImmunity',
@@ -426,7 +436,10 @@ export const getBiomarkerStateVariable = (addOnId, biomarkerCode) => {
  */
 export const getActiveBiomarkers = (addOnId, selectedStates = {}) => {
   const config = ADD_ON_BIOMARKERS_CONFIG[addOnId];
-  if (!config) return [];
+  if (!config) {
+    console.warn(`⚠️ No hay configuración para add-on: ${addOnId}`);
+    return [];
+  }
   
   const activeBiomarkers = [];
   

@@ -140,7 +140,7 @@ export const essentialPackage = createPackage({
   femaleOnlyCodes: ESSENTIAL_BIOMARKER_CODES_FEMALE_ONLY,
   recommendedAddOns: [
     'hormonas', 'endocrino', 'antioxidantes', 'oxidative_cell', 'inflammation',
-    'cardiovascular', 'iv_nutrients', 'metals', 'immunity', 'digest',
+    'cardiovascular', 'iv_nutrients', 'metals', 'immunity', 'digestion',
     'gut_gate', 'coagulation', 'bone_mineral', 'genome', 'cancer', 'bioage'
   ]
 });
@@ -161,7 +161,7 @@ export const performancePackage = createPackage({
   recommendedAddOns: [
     'hormonas', 'cardiovascular', 'metals', 'endocrino', 'iv_nutrients',
     'antioxidantes', 'oxidative_cell', 'bone_mineral', 'inflammation',
-    'digest', 'immunity', 'gut_gate', 'coagulation', 'cancer', 'bioage', 'genome'
+    'digestion', 'immunity', 'gut_gate', 'coagulation', 'cancer', 'bioage', 'genome'
   ]
 });
 
@@ -179,7 +179,7 @@ export const corePackage = createPackage({
   maleOnlyCodes: CORE_BIOMARKER_CODES_MALE_ONLY,
   femaleOnlyCodes: CORE_BIOMARKER_CODES_FEMALE_ONLY,
   recommendedAddOns: [
-    'cardiovascular', 'metals', 'antioxidantes', 'immunity', 'digest',
+    'cardiovascular', 'metals', 'antioxidantes', 'immunity', 'digestion',
     'gut_gate', 'coagulation', 'bone_mineral', 'cancer', 'bioage', 'genome'
   ]
 });

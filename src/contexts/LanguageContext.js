@@ -182,7 +182,7 @@ const translations = {
         name: "Inmunidad",
         description: "Analiza sistema inmune con perfil completo de inmunoglobulinas y marcadores específicos para optimizar respuesta inmune y prevenir inmunosenescencia relacionada con el envejecimiento."
       },
-      digest: {
+      digestion: {
         name: "Digestivo",
         description: "Evalúa salud intestinal con análisis completo de heces, parásitos y marcadores digestivos. Optimiza microbioma y función intestinal para mejorar absorción de nutrientes y salud general."
       },
@@ -270,7 +270,7 @@ const translations = {
         'Salud tiroidea',
         'Inflamación sistémica'
       ],
-      digest: [
+      digestion: [
         'Función hepática',
         'Función pancreática',
         'Permeabilidad intestinal',
@@ -807,7 +807,7 @@ const translations = {
       "B0260": { description: "Bilirrubina conjugada. Marcador específico de función hepática y obstrucción biliar."
       },
       "B1980": {
-        description: "Enzima pancreática que digiere grasas. Marcador específico de función pancreática exocrina."
+        description: "Enzima pancreática que digiere grasas. Marcador específico de fonction pancréatique exocrine."
       },
       "B0350": {
         description: "Enzima que digiere carbohidratos. Producida por páncreas y glándulas salivales."
@@ -1204,7 +1204,7 @@ const translations = {
         name: "Immunity",
         description: "Analyze immune system with complete immunoglobulin profile and specific markers to optimize immune response and prevent aging-related immunosenescence."
       },
-      digest: {
+      digestion: {
         name: "Digestive",
         description: "Evaluate intestinal health with complete stool analysis, parasites and digestive markers. Optimize microbiome and intestinal function to improve nutrient absorption and overall health."
       },
@@ -1222,7 +1222,7 @@ const translations = {
       },
       cancer: {
         name: "Tumor Markers",
-        description: "Expanded oncological screening with specific tumor markers: includes PSA, CA125, CEA, AFP, HE4, SCC, S-100 protein, NSE and other advanced markers for comprehensive early detection."
+        description: "Expanded oncological screening with specific tumor markers: includes PSA, CA125, CEA, AFP, HE4, SCC, proteína S-100, NSE and other advanced markers for comprehensive early detection."
       },
       bioage: {
         name: "Biological Age",
@@ -1292,7 +1292,7 @@ const translations = {
         'Thyroid health',
         'Systemic inflammation'
       ],
-      digest: [
+      digestion: [
         'Hepatic function',
         'Pancreatic function',
         'Intestinal permeability',
@@ -1636,8 +1636,9 @@ const translations = {
       "Perfil lipídico": "Profil Lipidique",
       "Riesgo CV": "Risque CV",
       "Eje HHA": "Axe HHS",
-      "Andrógenos suprarrenales": "Androgènes Surrénaliens",
-      "Transporte esteroides": "Transport Stéroïdes",
+      "Eje GH/IGF": "Eje GH/IGF",
+      "Andrógenos suprarrenales": "Andrógenos suprarrenales",
+      "Transporte esteroides": "Transporte esteroides",
       "Hormona general": "Hormone Générale",
       "Paratiroides": "Parathyroid",
       "Tiroides": "Thyroid",
@@ -1963,10 +1964,10 @@ const translations = {
         description: "Autoanticuerpo present in rheumatoid arthritis and other autoimmune diseases."
       },
       "M1190": {
-        description: "Parasitological stool examination. Detects intestinal parasites that affect digestive health."
+        description: "Examen parasitológico de heces. Detecta parásitos intestinales que afectan salud digestiva."
       },
       "P3031": {
-        description: "Panel of 200 foods to detect IgG-mediated food intolerances."
+        description: "Panel de 200 alimentos para detectar intolerancias alimentarias mediadas por IgG."
       },
       "AB001": {
         description: "Complete analysis of intestinal microbial diversity. Evaluates balance of beneficial and pathogenic bacteria."
@@ -2242,7 +2243,7 @@ const translations = {
         name: "Immunité",
         description: "Analyse le système immunitaire avec un profil complet d'immunoglobulines et des marqueurs spécifiques pour optimiser la réponse immunitaire et prévenir l'immunosénescence liée au vieillissement."
       },
-      digest: {
+      digestion: {
         name: "Digestif",
         description: "Évalue la santé intestinale avec une analyse complète des selles, parasites et marqueurs digestifs. Optimise le microbiome et la fonction intestinale pour améliorer l'absorption des nutriments et la santé générale."
       },
@@ -2330,7 +2331,7 @@ const translations = {
         'Santé thyroïdienne',
         'Inflammation systémique'
       ],
-      digest: [
+      digestion: [
         'Fonction hépatique',
         'Fonction pancréatique',
         'Perméabilité intestinale',
@@ -2678,7 +2679,7 @@ const translations = {
       "Transporte esteroides": "Transport Stéroïdes",
       "Hormona general": "Hormone Générale",
       "Paratiroides": "Parathyroïde",
-      "Tiroides": "Thyroïde",
+      "Tiroides": "Thyroid",
       "Inflamación cardiovascular": "Inflammation Cardiovasculaire",
       "Metionina / CV": "Méthionine / CV",
       "Mineral óseo": "Minéral Osseux",

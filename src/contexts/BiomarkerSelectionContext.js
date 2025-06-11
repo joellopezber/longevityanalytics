@@ -14,6 +14,13 @@ import {
   ADD_ON_BIOMARKERS_CONFIG,
   getInitialStateValue 
 } from '../data/biomarkersConfig.js';
+// Import del sistema de paquetes y precios dinámicos
+import { 
+  essentialPackage, 
+  performancePackage, 
+  corePackage, 
+  advancedPackage 
+} from '../data/analysisProfiles/index.js';
 
 const BiomarkerSelectionContext = createContext();
 
@@ -158,9 +165,11 @@ export const BiomarkerSelectionProvider = ({ children }) => {
   const [selectedAPTTCoagulation, setSelectedAPTTCoagulation] = useState(() => getInitialStateValue('selectedAPTTCoagulation'));
   const [selectedINRCoagulation, setSelectedINRCoagulation] = useState(() => getInitialStateValue('selectedINRCoagulation'));
   
-  // Estados específicos para digestivo
-  const [selectedUrinalisisDigestivo, setSelectedUrinalisisDigestivo] = useState(() => getInitialStateValue('selectedUrinalisisDigestivo'));
-  const [selectedOvaParasitesDigestivo, setSelectedOvaParasitesDigestivo] = useState(() => getInitialStateValue('selectedOvaParasitesDigestivo'));
+  // Estados específicos para digestivo - Biomarcadores reales del add-on
+  const [selectedOmega3Digestivo, setSelectedOmega3Digestivo] = useState(() => getInitialStateValue('selectedOmega3Digestivo'));
+  const [selectedLipasaDigestivo, setSelectedLipasaDigestivo] = useState(() => getInitialStateValue('selectedLipasaDigestivo'));
+  const [selectedAmilasaDigestivo, setSelectedAmilasaDigestivo] = useState(() => getInitialStateValue('selectedAmilasaDigestivo'));
+  const [selectedBilirrubinaDirectaDigestivo, setSelectedBilirrubinaDirectaDigestivo] = useState(() => getInitialStateValue('selectedBilirrubinaDirectaDigestivo'));
   
   // Estados específicos para add-on Antioxidantes
   const [selectedRetinol, setSelectedRetinol] = useState(() => getInitialStateValue('selectedRetinol'));
@@ -190,6 +199,54 @@ export const BiomarkerSelectionProvider = ({ children }) => {
   const [selectedLpACardiovascular, setSelectedLpACardiovascular] = useState(() => getInitialStateValue('selectedLpACardiovascular'));
   const [selectedCistatinaCardiovascular, setSelectedCistatinaCardiovascular] = useState(() => getInitialStateValue('selectedCistatinaCardiovascular'));
 
+  // ================================================================
+  // ESTADOS PRINCIPALES PARA SELECCIÓN DE PERFILES Y USUARIO
+  // ================================================================
+  // Estados básicos para la aplicación principal
+  // Perfil seleccionado (essential, performance, core, advanced)
+  const [selectedProfile, setSelectedProfileState] = useState('essential'); // Perfil por defecto
+  const [gender, setGender] = useState('male'); // Género por defecto
+  const [user, setUser] = useState(null); // Usuario actual
+  
+  // Estados para biomarcadores seleccionados (sistema existente)
+  const [selectedBiomarkers, setSelectedBiomarkers] = useState([]);
+  const [activeBiomarkers, setActiveBiomarkers] = useState([]);
+  
+  // Estado para detalles de biomarcadores
+  const [biomarkerDetails] = useState({});
+
+  // ================================================================
+  // PERFILES ANALÍTICOS - IMPORTADOS DESDE SISTEMA EXISTENTE
+  // ================================================================
+  // Los precios se calculan automáticamente en analysisProfiles/packages.js
+  const profiles = {
+    essential: essentialPackage,
+    performance: performancePackage,
+    core: corePackage,
+    advanced: advancedPackage
+  };
+
+  // Función para obtener precios de perfiles (usando el sistema existente)
+  const profilePrices = {
+    essential: essentialPackage.getPricing(gender),
+    performance: performancePackage.getPricing(gender),
+    core: corePackage.getPricing(gender),
+    advanced: advancedPackage.getPricing(gender)
+  };
+
+  // Función para calcular precio total
+  const getTotalPrice = () => {
+    const currentProfilePricing = profiles[selectedProfile]?.getPricing(gender);
+    const basePrice = currentProfilePricing?.precio || 0;
+    const additionalPrices = calculateAdditionalPrices();
+    return basePrice + additionalPrices.price;
+  };
+
+  // Función para calcular precio de add-on individual
+  const calculateAddOnPrice = (addOnId) => {
+    // Implementación básica - se puede expandir según necesidades
+    return getAdjustedAddOnPrice(addOnId, 0, 0);
+  };
 
   // Función para calcular precios adicionales basados en selecciones
   const calculateAdditionalPrices = () => {
@@ -210,20 +267,24 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     let coagulationExtra = { price: 0, pvp: 0 };
     let cancerExtra = { price: 0, pvp: 0 };
 
-    // Digestivo - Intolerancia Alimentaria + Urianálisis + Ova & Parasites
+    // Digestivo - 4 biomarcadores específicos del add-on
     let digestPrice = 0;
     let digestPvp = 0;
-    if (selectedIntolerancia) {
-      digestPrice += getPriceByCode('P3031', 'prevenii');
-      digestPvp += getPriceByCode('P3031', 'market');
+    if (selectedOmega3Digestivo) {
+      digestPrice += getPriceByCode('T2590', 'prevenii');
+      digestPvp += getPriceByCode('T2590', 'market');
     }
-    if (selectedUrinalisisDigestivo) {
-      digestPrice += getPriceByCode('6897', 'prevenii');
-      digestPvp += getPriceByCode('6897', 'market');
+    if (selectedLipasaDigestivo) {
+      digestPrice += getPriceByCode('B1980', 'prevenii');
+      digestPvp += getPriceByCode('B1980', 'market');
     }
-    if (selectedOvaParasitesDigestivo) {
-      digestPrice += getPriceByCode('M1190', 'prevenii');
-      digestPvp += getPriceByCode('M1190', 'market');
+    if (selectedAmilasaDigestivo) {
+      digestPrice += getPriceByCode('B0350', 'prevenii');
+      digestPvp += getPriceByCode('B0350', 'market');
+    }
+    if (selectedBilirrubinaDirectaDigestivo) {
+      digestPrice += getPriceByCode('B0260', 'prevenii');
+      digestPvp += getPriceByCode('B0260', 'market');
     }
     digestExtra = { price: digestPrice, pvp: digestPvp };
 
@@ -804,8 +865,10 @@ export const BiomarkerSelectionProvider = ({ children }) => {
         selectedPSATotalCancer,
         selectedPSALibreCancer,
         selectedHE4Cancer,
-        selectedUrinalisisDigestivo,
-        selectedOvaParasitesDigestivo,
+        selectedOmega3Digestivo,
+        selectedLipasaDigestivo,
+        selectedAmilasaDigestivo,
+        selectedBilirrubinaDirectaDigestivo,
         selectedRetinol,
         selectedAlfaTocoferol,
         selectedGammaTocoferol,
@@ -905,13 +968,13 @@ export const BiomarkerSelectionProvider = ({ children }) => {
         if (selectedHelicobacterImmunity) immunityOptional++;
         return immunityBase + immunityOptional;
 
-      case 'digestion':
-        const digestBase = 5; // Biomarcadores obligatorios
-        let digestOptional = 0;
-        if (selectedUrinalisisDigestivo) digestOptional++;
-        if (selectedOvaParasitesDigestivo) digestOptional++;
-        if (selectedIntolerancia) digestOptional++;
-        return digestBase + digestOptional;
+              case 'digestion':
+          let digestTotal = 0;
+          if (selectedOmega3Digestivo) digestTotal++;
+          if (selectedLipasaDigestivo) digestTotal++;
+          if (selectedAmilasaDigestivo) digestTotal++;
+          if (selectedBilirrubinaDirectaDigestivo) digestTotal++;
+          return digestTotal;
 
       case 'gut_gate':
         const gutGateBase = 0; // Todos los biomarcadores son opcionales, no hay obligatorios
@@ -1046,8 +1109,10 @@ export const BiomarkerSelectionProvider = ({ children }) => {
       selectedFSHEndocrino,
       selectedVSGEndocrino,
       selectedVitaminaD125OHEndocrino,
-      selectedUrinalisisDigestivo,
-      selectedOvaParasitesDigestivo,
+      selectedOmega3Digestivo,
+      selectedLipasaDigestivo,
+      selectedAmilasaDigestivo,
+      selectedBilirrubinaDirectaDigestivo,
       selectedRetinol,
       selectedAlfaTocoferol,
       selectedGammaTocoferol,
@@ -1071,6 +1136,31 @@ export const BiomarkerSelectionProvider = ({ children }) => {
   };
 
   const value = {
+    // ================================================================
+    // ESTADOS PRINCIPALES DE LA APLICACIÓN
+    // ================================================================
+    // Estados básicos para perfiles y usuario
+    selectedProfile,
+    // Exponemos un setter claro y estable para el perfil analítico
+    setSelectedProfile: setSelectedProfileState,
+    gender,
+    setGender,
+    user,
+    selectedBiomarkers,
+    setSelectedBiomarkers,
+    activeBiomarkers,
+    setActiveBiomarkers,
+    biomarkerDetails,
+    profiles: profiles,
+    profilePrices: profilePrices,
+    
+    // Funciones principales
+    getTotalPrice,
+    calculateAddOnPrice,
+    
+    // ================================================================
+    // ESTADOS DE BIOMARCADORES ESPECÍFICOS
+    // ================================================================
     // Estados
     selectedIntolerancia,
     setSelectedIntolerancia,
@@ -1206,10 +1296,14 @@ export const BiomarkerSelectionProvider = ({ children }) => {
     selectedVitaminaCIVNutrients,
     setSelectedVitaminaCIVNutrients,
     // Estados específicos para Digestivo
-    selectedUrinalisisDigestivo,
-    setSelectedUrinalisisDigestivo,
-    selectedOvaParasitesDigestivo,
-    setSelectedOvaParasitesDigestivo,
+    selectedOmega3Digestivo,
+    setSelectedOmega3Digestivo,
+    selectedLipasaDigestivo,
+    setSelectedLipasaDigestivo,
+    selectedAmilasaDigestivo,
+    setSelectedAmilasaDigestivo,
+    selectedBilirrubinaDirectaDigestivo,
+    setSelectedBilirrubinaDirectaDigestivo,
     // Estados específicos para Antioxidantes
     selectedRetinol,
     setSelectedRetinol,
