@@ -9,62 +9,47 @@ export default function HowToTakeControl() {
   const steps = [
     {
       number: "01",
-      title: "Obtenemos datos precisos",
-      subtitle: "La foto actual de tu cuerpo",
+      title: "Capturamos tus datos",
+      subtitle: "La foto actual y completa de tu salud",
       description: "Analizamos más de 150 biomarcadores que nos dan una visión completa de tu estado de salud actual. No adivinamos, medimos.",
       icon: "🧬",
       color: "from-blue-500 to-blue-600",
       bgColor: "bg-blue-50",
       details: [
-        "Biomarcadores de función hormonal",
-        "Marcadores de inflamación y estrés oxidativo", 
-        "Función cardiovascular y metabólica",
-        "Niveles de vitaminas y minerales"
+        "Analizar >150 biomarcadores",
+        "Evaluar función hormonal, cardiovascular y metabólica",
+        "Detectar inflamación y estrés oxidativo",
+        "Identificar deficiencias de vitaminas/minerales"
       ]
     },
     {
       number: "02", 
-      title: "Diseñamos tu plan personalizado",
-      subtitle: "Basado en TUS datos únicos",
+      title: "Diseñamos tu estrategia",
+      subtitle: "Un plan 100% adaptado a tus objetivos y biología",
       description: "Con la información precisa de tu cuerpo, creamos un plan específico para ti. No genérico, no para 'la mayoría', para TI.",
       icon: "🎯",
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50",
       details: [
         "Protocolo de suplementación personalizado",
-        "Guía nutricional específica para tu metabolismo",
-        "Recomendaciones de estilo de vida adaptadas",
-        "Timing óptimo para cada intervención"
+        "Guía nutricional para tu metabolismo",
+        "Rutina de ejercicio a medida",
+        "Cronobiología del timing óptimo"
       ]
     },
     {
       number: "03",
-      title: "Actúas con eficiencia",
-      subtitle: "Cada acción tiene propósito",
-      description: "Ya no pierdes tiempo ni dinero en estrategias genéricas. Cada decisión que tomas está respaldada por datos de TU cuerpo.",
-      icon: "⚡",
+      title: "Implementas & mides",
+      subtitle: "Ejecutas acciones con propósito y ves su impacto real",
+      description: "Ya no pierdes tiempo ni dinero en estrategias genéricas. Cada decisión que tomas está respaldada por datos y puedes medir su impacto real.",
+      icon: "📈",
       color: "from-purple-500 to-purple-600", 
       bgColor: "bg-purple-50",
       details: [
-        "Suplementos que TU cuerpo necesita realmente",
-        "Alimentos que optimizan TU bioquímica",
-        "Ejercicios que benefician TU fisiología",
-        "Seguimiento de TU progreso específico"
-      ]
-    },
-    {
-      number: "04",
-      title: "Ves la repercusión real",
-      subtitle: "Cambios medibles y objetivos",
-      description: "No es fe ciega. Medimos el impacto de cada cambio en tu salud con nuevos análisis que muestran tu progreso real.",
-      icon: "📈",
-      color: "from-orange-500 to-orange-600",
-      bgColor: "bg-orange-50", 
-      details: [
-        "Mejoras objetivas en biomarcadores",
-        "Optimización de función hormonal",
-        "Reducción de marcadores de inflamación",
-        "Aumento de energía y vitalidad medibles"
+        "Tomar decisiones basadas en datos",
+        "Monitorizar mejoras en biomarcadores",
+        "Ajustar intervenciones en ciclos de 90 días",
+        "Evidenciar energía, vitalidad y longevidad"
       ]
     }
   ];
