@@ -159,7 +159,7 @@ export default function Header() {
                   className="block w-full bg-gradient-to-r from-green-700 to-green-600 text-white px-4 py-3 rounded-lg font-medium hover:from-green-800 hover:to-green-700 transition-all text-center"
                   onClick={closeMobileMenu}
                 >
-                  🧬 Empezar mi Análisis de Longevidad
+                  Empezar mi Análisis de Longevidad
                 </Link>
               </div>
             </nav>

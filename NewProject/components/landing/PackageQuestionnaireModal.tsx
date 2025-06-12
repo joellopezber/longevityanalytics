@@ -97,7 +97,7 @@ export default function PackageQuestionnaireModal({
           <div className="p-6 border-b border-gray-200">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold text-gray-900">
-                🎯 Tu Paquete Recomendado
+                Tu Paquete Recomendado
               </h2>
               <button
                 onClick={onClose}
