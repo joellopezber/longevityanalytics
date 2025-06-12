@@ -54,7 +54,7 @@ export default function Header() {
           {/* CTA Button */}
           <div className="flex items-center space-x-4">
             <Button variant="longevity" size="md">
-              Empezar Análisis
+              Selecionar Análisis
             </Button>
           </div>
 

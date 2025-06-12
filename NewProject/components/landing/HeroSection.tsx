@@ -5,7 +5,11 @@
 
 'use client';
 
+import { useState } from 'react';
+import PackageQuestionnaireModal from '@/components/landing/PackageQuestionnaireModal';
+
 export default function HeroSection() {
+  const [showPackageSelector, setShowPackageSelector] = useState(false);
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -13,11 +17,7 @@ export default function HeroSection() {
           
           {/* Content */}
           <div className="text-center lg:text-left">
-            <div className="mb-6">
-              <span className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
-                Análisis Avanzado de Longevidad
-              </span>
-            </div>
+
             
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
               Toma el Control de tu{' '}
@@ -26,7 +26,7 @@ export default function HeroSection() {
               </span>
             </h1>
             
-            <div className="space-y-6 mb-8">
+            <div className="space-y-8 mb-12">
               <p className="text-xl text-gray-600 max-w-2xl">
                 En un mundo donde la medicina reactiva domina, nosotros creemos en el poder de la 
                 <strong className="text-gray-800"> medicina preventiva y personalizada</strong>. 
@@ -39,7 +39,7 @@ export default function HeroSection() {
                 rendimiento y bienestar a largo plazo.
               </p>
               
-              <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg">
+              <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg mt-10">
                 <p className="text-green-800 font-medium">
                   "La longevidad no se trata solo de vivir más años, sino de vivir mejor cada año que tienes."
                 </p>
@@ -49,7 +49,7 @@ export default function HeroSection() {
 
             
             {/* Value Propositions */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 mt-12">
               <div className="flex items-start space-x-3">
                 <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <div className="w-2 h-2 bg-green-600 rounded-full"></div>
@@ -93,12 +93,12 @@ export default function HeroSection() {
             
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <a 
-                href="/paquetes"
+              <button 
+                onClick={() => setShowPackageSelector(true)}
                 className="bg-gradient-to-r from-green-700 to-green-600 text-white px-8 py-4 rounded-lg font-medium text-lg hover:from-green-800 hover:to-green-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-center"
               >
                 Descubre tu Paquete Ideal
-              </a>
+              </button>
               <a 
                 href="/proceso"
                 className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-medium text-lg hover:bg-gray-50 transition-all text-center"
@@ -115,7 +115,6 @@ export default function HeroSection() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 bg-gradient-to-br from-green-700 to-green-600 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xl">🧬</span>
                     </div>
                     <div>
                       <h3 className="font-semibold text-gray-900">Análisis Personalizado</h3>
@@ -195,6 +194,16 @@ export default function HeroSection() {
           
         </div>
       </div>
+
+      {/* Modal de Cuestionario de Paquetes */}
+      <PackageQuestionnaireModal
+        isOpen={showPackageSelector}
+        onClose={() => setShowPackageSelector(false)}
+        onRecommendation={(result) => {
+          // El modal manejará el resultado internamente
+          console.log('Paquete recomendado:', result.recommendedPackage);
+        }}
+      />
     </section>
   );
 } 

@@ -33,7 +33,7 @@ export function ProfileBiomarkersModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden">
+      <div className="bg-white rounded-2xl max-w-6xl w-full max-h-[95vh] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="bg-gradient-to-r from-green-600 to-green-700 text-white p-6">
           <div className="flex items-center justify-between">
@@ -55,8 +55,8 @@ export function ProfileBiomarkersModal({
         </div>
 
         {/* Estadísticas */}
-        <div className="p-6 border-b">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="p-4 border-b flex-shrink-0">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="text-center p-3 bg-blue-50 rounded-lg">
               <div className="text-2xl font-bold text-blue-600">{stats.totalBiomarkers}</div>
               <div className="text-xs text-gray-600">Total Biomarcadores</div>
@@ -78,53 +78,34 @@ export function ProfileBiomarkersModal({
           </div>
         </div>
 
-        {/* Información */}
-        <div className="p-6 border-b bg-blue-50">
-          <div className="flex items-start space-x-3">
-            <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="font-semibold text-blue-900 mb-1">Biomarcadores Fijos</h3>
-              <p className="text-sm text-blue-800">
-                Los biomarcadores mostrados aquí están incluidos de forma fija en el perfil {profileName}. 
-                Estos no se pueden personalizar, a diferencia de los add-ons que sí permiten excluir biomarcadores opcionales.
-              </p>
-            </div>
-          </div>
-        </div>
+
 
         {/* Filtros por categoría */}
-        <div className="p-6 border-b">
+        <div className="p-4 border-b">
           <div className="flex flex-wrap gap-2">
             <Button
               variant={selectedCategory === 'all' ? 'primary' : 'secondary'}
               size="sm"
               onClick={() => setSelectedCategory('all')}
             >
-              Todas las categorías ({biomarkers.length})
+              Todas las categorías
             </Button>
-            {categories.map(category => {
-              const count = biomarkers.filter(b => b.category === category).length;
-              return (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? 'primary' : 'secondary'}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  {category} ({count})
-                </Button>
-              );
-            })}
+            {categories.slice(0, 8).map(category => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? 'primary' : 'secondary'}
+                size="sm"
+                onClick={() => setSelectedCategory(category)}
+              >
+                {category}
+              </Button>
+            ))}
           </div>
         </div>
 
         {/* Lista de biomarcadores */}
-        <div className="p-6 max-h-96 overflow-y-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+        <div className="flex-1 overflow-y-auto p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
             {filteredBiomarkers.map((biomarker, index) => (
               <div 
                 key={`${biomarker.code}-${index}`}
@@ -161,17 +142,7 @@ export function ProfileBiomarkersModal({
           )}
         </div>
 
-        {/* Footer */}
-        <div className="p-6 border-t bg-gray-50">
-          <div className="flex justify-between items-center">
-            <div className="text-sm text-gray-600">
-              Mostrando {filteredBiomarkers.length} de {biomarkers.length} biomarcadores
-            </div>
-            <Button onClick={onClose}>
-              Cerrar
-            </Button>
-          </div>
-        </div>
+
       </div>
     </div>
   );

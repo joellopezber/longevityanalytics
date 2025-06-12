@@ -78,7 +78,7 @@ export default function Header() {
               href="/configurador"
               className="bg-gradient-to-r from-green-700 to-green-600 text-white px-6 py-2 rounded-lg font-medium hover:from-green-800 hover:to-green-700 transition-all inline-block"
             >
-              Empezar Análisis
+              Seleccionar Análisis
             </Link>
           </div>
 

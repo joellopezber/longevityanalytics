@@ -72,11 +72,10 @@ export default function PackagesSection() {
             Ahora es tu momento: <span className="text-green-700">Sin datos no hay control</span>
           </h2>
           <h3 className="text-2xl font-semibold text-gray-700 mb-6">
-            Elige tu paquete
+           Pasa a la acción!
           </h3>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Cada paquete está diseñado con un propósito claro en función de tus objetivos y necesidades específicas. 
-            Toma el control de tu salud con datos precisos y análisis especializados.
+            Cada analítica está diseñada con un objetivo preventivo y un propósito claro: nuestro panel ampliado de biomarcadores detecta alteraciones invisibles para un chequeo convencional, anticipándose a los síntomas y ayudándote a prolongar tu longevidad.
           </p>
           
           {/* Gender Selector */}
@@ -127,12 +126,12 @@ export default function PackagesSection() {
               <div 
                 key={pkg.id}
                 className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-green-200 overflow-hidden group ${
-                  pkg.id === 'advanced' ? 'ring-2 ring-green-500 ring-opacity-20' : ''
+                  pkg.isPopular ? 'ring-2 ring-green-500 ring-opacity-20' : ''
                 }`}
               >
                 {/* Header */}
                 <div className={`${pkg.bgColor} p-6 text-center relative`}>
-                  {pkg.id === 'advanced' && (
+                  {pkg.isPopular && (
                     <div className="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
                       MÁS POPULAR
                     </div>
@@ -234,8 +233,8 @@ export default function PackagesSection() {
               ¿No estás seguro de qué paquete elegir?
             </h3>
             <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-              Nuestro configurador inteligente te ayudará a encontrar el paquete perfecto 
-              basado en tus objetivos de salud y necesidades específicas.
+              Te ayudamos a encontrar el paquete perfecto para ti
+              , basado en tus objetivos de salud y necesidades específicas.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <a 
@@ -269,9 +268,8 @@ export default function PackagesSection() {
         isOpen={showPackageSelector}
         onClose={() => setShowPackageSelector(false)}
         onRecommendation={(result) => {
-          // Redirigir al configurador con el paquete recomendado
-          setShowPackageSelector(false);
-          window.location.href = `/configurador?package=${result.recommendedPackage}`;
+          // El modal manejará el resultado internamente
+          console.log('Paquete recomendado:', result.recommendedPackage);
         }}
       />
     </section>

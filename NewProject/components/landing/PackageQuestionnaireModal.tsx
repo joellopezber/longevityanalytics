@@ -222,8 +222,14 @@ export default function PackageQuestionnaireModal({
               <button
                 onClick={() => {
                   onClose();
-                  // Scroll to packages section
-                  document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' });
+                  // Verificar si estamos en la página de procesos
+                  if (window.location.pathname === '/proceso') {
+                    // En la página de procesos, ir a la página de paquetes
+                    window.location.href = '/paquetes';
+                  } else {
+                    // En la landing, hacer scroll a la sección de paquetes
+                    document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' });
+                  }
                 }}
                 className="flex-1 border-2 border-gray-300 text-gray-700 py-3 px-6 rounded-lg font-medium hover:bg-gray-50 transition-colors"
               >

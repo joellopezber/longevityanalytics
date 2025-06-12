@@ -67,24 +67,24 @@ export default function HowToTakeControl() {
       number: "01",
       title: "Conoces tu estado real",
       subtitle: "Descubres exactamente dónde estás ahora",
-      description: "Por primera vez en tu vida tienes datos precisos sobre tu cuerpo. Dejas de adivinar qué te pasa y obtienes una fotografía completa y objetiva de tu salud actual. Con más de 150 biomarcadores conoces tus fortalezas, debilidades y oportunidades de mejora específicas.",
+      description: "Obten datos precisos sobre tu cuerpo. Dejas de adivinar qué te pasa y obtienes una fotografía completa y objetiva de tu salud actual. Con más de 150 biomarcadores conoces tus fortalezas, debilidades y oportunidades de mejora específicas.",
       icon: "🧬",
       color: "from-blue-500 to-blue-600",
       bgColor: "bg-blue-50"
     },
     {
       number: "02", 
-      title: "Defines tu plan personalizado",
-      subtitle: "Creas una estrategia 100% adaptada a ti",
-      description: "Con tus datos en la mano, diseñas un plan específico para tus objetivos y tu biología única. No sigues consejos genéricos ni tendencias de moda. Cada decisión que tomas sobre suplementos, nutrición y ejercicio está respaldada por evidencia concreta de tu propio cuerpo.",
+      title: "Recibe tu hoja de ruta",
+      subtitle: "Interpretamos tus datos y creamos una estrategia para ti",
+      description: "Con tus datos en la mano, diseñamos un plan específico para tus objetivos y tu biología única. No sigues consejos genéricos ni tendencias de moda. Cada decisión que tomas sobre suplementos, nutrición y ejercicio está respaldada por evidencia proporcionada de tu propio cuerpo.",
       icon: "🎯",
       color: "from-green-500 to-green-600",
       bgColor: "bg-green-50"
     },
     {
       number: "03",
-      title: "Implementas & mides",
-      subtitle: "Ejecutas acciones con propósito y ves su impacto real",
+      title: "Implementa tus acciones correctivas",
+      subtitle: "Ejecutas acciones con propósito y tienen un impacto real",
       description: "Aplicas tu estrategia personalizada y monitorizas los resultados objetivamente. Cada intervención que haces tiene un propósito claro y puedes medir su efectividad real. Ajustas tu plan basándote en datos, no en sensaciones, y ves tu progreso de forma tangible.",
       icon: "📈",
       color: "from-purple-500 to-purple-600", 
@@ -166,7 +166,7 @@ export default function HowToTakeControl() {
           </div>
           
           <div className="relative h-64 flex items-center justify-center">
-            <div className="relative w-full max-w-6xl mx-auto">
+            <div className="relative w-full max-w-7xl mx-auto">
               {/* Mobile version - 3 cards */}
               <div className="block md:hidden">
                 {getVisibleTestimonials(true).map((testimonial, index) => {
@@ -182,8 +182,8 @@ export default function HowToTakeControl() {
                         isCenter 
                           ? '-translate-x-1/2 -translate-y-1/2 scale-100 z-20' 
                           : isLeft
-                          ? '-translate-x-full -translate-y-1/2 scale-75 z-10 -ml-16 hover:scale-80'
-                          : '-translate-y-1/2 scale-75 z-10 ml-16 hover:scale-80'
+                          ? '-translate-x-full -translate-y-1/2 scale-75 z-10 -ml-24 hover:scale-80'
+                          : '-translate-y-1/2 scale-75 z-10 ml-24 hover:scale-80'
                       }`}
                       style={{
                         opacity: isCenter ? 1 : 0.6,
@@ -221,15 +221,15 @@ export default function HowToTakeControl() {
                   const getCardStyle = () => {
                     switch(position) {
                       case -2:
-                        return '-translate-x-full -translate-y-1/2 scale-50 z-5 -ml-40 hover:scale-55';
+                        return '-translate-x-full -translate-y-1/2 scale-50 z-5 -ml-64 hover:scale-55';
                       case -1:
-                        return '-translate-x-full -translate-y-1/2 scale-75 z-10 -ml-20 hover:scale-80';
+                        return '-translate-x-full -translate-y-1/2 scale-75 z-10 -ml-32 hover:scale-80';
                       case 0:
                         return '-translate-x-1/2 -translate-y-1/2 scale-100 z-20';
                       case 1:
-                        return '-translate-y-1/2 scale-75 z-10 ml-20 hover:scale-80';
+                        return '-translate-y-1/2 scale-75 z-10 ml-32 hover:scale-80';
                       case 2:
-                        return '-translate-y-1/2 scale-50 z-5 ml-40 hover:scale-55';
+                        return '-translate-y-1/2 scale-50 z-5 ml-64 hover:scale-55';
                       default:
                         return '';
                     }
@@ -295,7 +295,7 @@ export default function HowToTakeControl() {
         <div className="mt-16 text-center">
           <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-8 text-white">
             <h3 className="text-2xl font-bold mb-4">
-              El resultado: Eficiencia total en tu salud
+              Ahora es tu momento: Sin datos no hay acción!.
             </h3>
             <p className="text-green-100 mb-6 max-w-3xl mx-auto">
               No más suplementos innecesarios. No más dietas que no funcionan para ti. 

@@ -3,6 +3,8 @@
  * Datos de paquetes para la sección de landing sin dependencias complejas
  */
 
+import React from 'react';
+
 export interface SimplePackage {
   id: string;
   name: string;
@@ -12,7 +14,8 @@ export interface SimplePackage {
   color: string;
   bgColor: string;
   textColor: string;
-  icon: string;
+  icon: React.ReactElement;
+  isPopular?: boolean;
   biomarkersCount: {
     male: number;
     female: number;
@@ -38,7 +41,11 @@ export const PACKAGES_DATA: SimplePackage[] = [
     color: 'blue',
     bgColor: 'bg-blue-50',
     textColor: 'text-blue-700',
-    icon: '🔍',
+    icon: (
+      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M19 8h-2v3h-3v2h3v3h2v-3h3v-2h-3V8zM4 6h5v2h2V6h1V4H9V1H7v3H4v2zm0 4h8v1H4v-1zm0 2h8v1H4v-1zm0 2h8v1H4v-1z"/>
+      </svg>
+    ),
     biomarkersCount: {
       male: 45,
       female: 47,
@@ -72,7 +79,11 @@ export const PACKAGES_DATA: SimplePackage[] = [
     color: 'purple',
     bgColor: 'bg-purple-50',
     textColor: 'text-purple-700',
-    icon: '⚡',
+    icon: (
+      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/>
+      </svg>
+    ),
     biomarkersCount: {
       male: 85,
       female: 88,
@@ -106,7 +117,12 @@ export const PACKAGES_DATA: SimplePackage[] = [
     color: 'green',
     bgColor: 'bg-green-50',
     textColor: 'text-green-700',
-    icon: '🧬',
+    isPopular: true,
+    icon: (
+      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M9.5 14.25l-5.584 2.718 1.84 3.837C7.234 20.405 9.53 20 12 20c2.47 0 4.766.405 6.244.805l1.84-3.837L14.5 14.25c-1.17.33-2.328.33-3.5 0zM12 14.5c1.438 0 2.562.5 2.562.5L16 13.5c0-1.5-1.79-2.5-4-2.5s-4 1-4 2.5L9.438 15S10.562 14.5 12 14.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.41 0 8 3.59 8 8 0 1.85-.63 3.55-1.69 4.9z"/>
+      </svg>
+    ),
     biomarkersCount: {
       male: 120,
       female: 125,
@@ -140,7 +156,11 @@ export const PACKAGES_DATA: SimplePackage[] = [
     color: 'amber',
     bgColor: 'bg-amber-50',
     textColor: 'text-amber-700',
-    icon: '🎯',
+    icon: (
+      <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+      </svg>
+    ),
     biomarkersCount: {
       male: 200,
       female: 205,
