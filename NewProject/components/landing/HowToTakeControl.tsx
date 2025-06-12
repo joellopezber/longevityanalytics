@@ -51,9 +51,11 @@ export default function HowToTakeControl() {
     return () => clearInterval(timer);
   }, [testimonials.length]);
 
-  const getVisibleTestimonials = () => {
+  const getVisibleTestimonials = (isMobile = false) => {
     const result = [];
-    for (let i = -1; i <= 1; i++) {
+    const range = isMobile ? 1 : 2; // Mobile: 3 cards (-1,0,1), Desktop: 5 cards (-2,-1,0,1,2)
+    
+    for (let i = -range; i <= range; i++) {
       const index = (currentIndex + i + testimonials.length) % testimonials.length;
       result.push({ ...testimonials[index], position: i });
     }
@@ -63,48 +65,30 @@ export default function HowToTakeControl() {
   const steps = [
     {
       number: "01",
-      title: "Capturamos tus datos",
-      subtitle: "La foto actual y completa de tu salud",
-      description: "Analizamos más de 150 biomarcadores que nos dan una visión completa de tu estado de salud actual. No adivinamos, medimos.",
+      title: "Conoces tu estado real",
+      subtitle: "Descubres exactamente dónde estás ahora",
+      description: "Por primera vez en tu vida tienes datos precisos sobre tu cuerpo. Dejas de adivinar qué te pasa y obtienes una fotografía completa y objetiva de tu salud actual. Con más de 150 biomarcadores conoces tus fortalezas, debilidades y oportunidades de mejora específicas.",
       icon: "🧬",
       color: "from-blue-500 to-blue-600",
-      bgColor: "bg-blue-50",
-      details: [
-        "Analizar >150 biomarcadores",
-        "Evaluar función hormonal, cardiovascular y metabólica",
-        "Detectar inflamación y estrés oxidativo",
-        "Identificar deficiencias de vitaminas/minerales"
-      ]
+      bgColor: "bg-blue-50"
     },
     {
       number: "02", 
-      title: "Diseñamos tu estrategia",
-      subtitle: "Un plan 100% adaptado a tus objetivos y biología",
-      description: "Con la información precisa de tu cuerpo, creamos un plan específico para ti. No genérico, no para 'la mayoría', para TI.",
+      title: "Defines tu plan personalizado",
+      subtitle: "Creas una estrategia 100% adaptada a ti",
+      description: "Con tus datos en la mano, diseñas un plan específico para tus objetivos y tu biología única. No sigues consejos genéricos ni tendencias de moda. Cada decisión que tomas sobre suplementos, nutrición y ejercicio está respaldada por evidencia concreta de tu propio cuerpo.",
       icon: "🎯",
       color: "from-green-500 to-green-600",
-      bgColor: "bg-green-50",
-      details: [
-        "Protocolo de suplementación personalizado",
-        "Guía nutricional para tu metabolismo",
-        "Rutina de ejercicio a medida",
-        "Cronobiología del timing óptimo"
-      ]
+      bgColor: "bg-green-50"
     },
     {
       number: "03",
       title: "Implementas & mides",
       subtitle: "Ejecutas acciones con propósito y ves su impacto real",
-      description: "Ya no pierdes tiempo ni dinero en estrategias genéricas. Cada decisión que tomas está respaldada por datos y puedes medir su impacto real.",
+      description: "Aplicas tu estrategia personalizada y monitorizas los resultados objetivamente. Cada intervención que haces tiene un propósito claro y puedes medir su efectividad real. Ajustas tu plan basándote en datos, no en sensaciones, y ves tu progreso de forma tangible.",
       icon: "📈",
       color: "from-purple-500 to-purple-600", 
-      bgColor: "bg-purple-50",
-      details: [
-        "Tomar decisiones basadas en datos",
-        "Monitorizar mejoras en biomarcadores",
-        "Ajustar intervenciones en ciclos de 90 días",
-        "Evidenciar energía, vitalidad y longevidad"
-      ]
+      bgColor: "bg-purple-50"
     }
   ];
 
@@ -152,15 +136,6 @@ export default function HowToTakeControl() {
                 <p className="text-gray-700 text-lg leading-relaxed">
                   {step.description}
                 </p>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {step.details.map((detail, detailIndex) => (
-                    <div key={detailIndex} className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-sm text-gray-600">{detail}</span>
-                    </div>
-                  ))}
-                </div>
               </div>
 
               {/* Visual */}
@@ -191,28 +166,90 @@ export default function HowToTakeControl() {
           </div>
           
           <div className="relative h-64 flex items-center justify-center">
-            <div className="relative w-full max-w-4xl mx-auto">
-              {getVisibleTestimonials().map((testimonial, index) => {
-                const { position } = testimonial;
-                const isCenter = position === 0;
-                const isLeft = position === -1;
-                const isRight = position === 1;
-                
-                return (
-                  <div
-                    key={`${testimonial.name}-${currentIndex}`}
-                    className={`absolute top-1/2 left-1/2 transform transition-all duration-700 ease-in-out cursor-pointer ${
-                      isCenter 
-                        ? '-translate-x-1/2 -translate-y-1/2 scale-100 z-20' 
-                        : isLeft
-                        ? '-translate-x-full -translate-y-1/2 scale-75 z-10 -ml-20 hover:scale-80'
-                        : '-translate-y-1/2 scale-75 z-10 ml-20 hover:scale-80'
-                    }`}
-                    style={{
-                      opacity: isCenter ? 1 : 0.6,
-                    }}
-                    onClick={() => !isCenter && setCurrentIndex((currentIndex + position + testimonials.length) % testimonials.length)}
-                  >
+            <div className="relative w-full max-w-6xl mx-auto">
+              {/* Mobile version - 3 cards */}
+              <div className="block md:hidden">
+                {getVisibleTestimonials(true).map((testimonial, index) => {
+                  const { position } = testimonial;
+                  const isCenter = position === 0;
+                  const isLeft = position === -1;
+                  const isRight = position === 1;
+                  
+                  return (
+                    <div
+                      key={`${testimonial.name}-${currentIndex}-mobile`}
+                      className={`absolute top-1/2 left-1/2 transform transition-all duration-700 ease-in-out cursor-pointer ${
+                        isCenter 
+                          ? '-translate-x-1/2 -translate-y-1/2 scale-100 z-20' 
+                          : isLeft
+                          ? '-translate-x-full -translate-y-1/2 scale-75 z-10 -ml-16 hover:scale-80'
+                          : '-translate-y-1/2 scale-75 z-10 ml-16 hover:scale-80'
+                      }`}
+                      style={{
+                        opacity: isCenter ? 1 : 0.6,
+                      }}
+                      onClick={() => !isCenter && setCurrentIndex((currentIndex + position + testimonials.length) % testimonials.length)}
+                    >
+                      <div className={`bg-white rounded-2xl shadow-lg p-6 w-80 ${
+                        isCenter ? 'shadow-2xl' : 'shadow-md'
+                      }`}>
+                        <div className="flex items-center mb-4">
+                          <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold mr-3 ${
+                            isCenter ? 'bg-green-600' : 'bg-gray-400'
+                          }`}>
+                            {testimonial.avatar}
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                            <p className="text-sm text-gray-600">{testimonial.role}</p>
+                          </div>
+                        </div>
+                        <blockquote className="text-gray-700 text-sm leading-relaxed">
+                          "{testimonial.text}"
+                        </blockquote>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Desktop version - 5 cards */}
+              <div className="hidden md:block">
+                {getVisibleTestimonials(false).map((testimonial, index) => {
+                  const { position } = testimonial;
+                  const isCenter = position === 0;
+                  const getCardStyle = () => {
+                    switch(position) {
+                      case -2:
+                        return '-translate-x-full -translate-y-1/2 scale-50 z-5 -ml-40 hover:scale-55';
+                      case -1:
+                        return '-translate-x-full -translate-y-1/2 scale-75 z-10 -ml-20 hover:scale-80';
+                      case 0:
+                        return '-translate-x-1/2 -translate-y-1/2 scale-100 z-20';
+                      case 1:
+                        return '-translate-y-1/2 scale-75 z-10 ml-20 hover:scale-80';
+                      case 2:
+                        return '-translate-y-1/2 scale-50 z-5 ml-40 hover:scale-55';
+                      default:
+                        return '';
+                    }
+                  };
+                  
+                  const getOpacity = () => {
+                    if (isCenter) return 1;
+                    if (Math.abs(position) === 1) return 0.6;
+                    return 0.3;
+                  };
+                  
+                  return (
+                    <div
+                      key={`${testimonial.name}-${currentIndex}-desktop`}
+                      className={`absolute top-1/2 left-1/2 transform transition-all duration-700 ease-in-out cursor-pointer ${getCardStyle()}`}
+                      style={{
+                        opacity: getOpacity(),
+                      }}
+                      onClick={() => !isCenter && setCurrentIndex((currentIndex + position + testimonials.length) % testimonials.length)}
+                    >
                     <div className={`bg-white rounded-2xl shadow-lg p-6 w-80 ${
                       isCenter ? 'shadow-2xl' : 'shadow-md'
                     }`}>
@@ -236,6 +273,7 @@ export default function HowToTakeControl() {
               })}
             </div>
           </div>
+        </div>
           
           {/* Navigation dots */}
           <div className="flex justify-center mt-8 space-x-2">
