@@ -1,3 +1,30 @@
+# Longevity Analytics Landing
+
+Este proyecto contiene la nueva landing page de Longevity Analytics con evidencia científica actualizada y componentes modernos.
+
+## 🚀 Estado del Despliegue
+- ✅ GitHub Pages configurado  
+- ✅ Workflow automático activo
+- 🌐 URL: https://joellopezber.github.io/longevityanalytics/
+
+## Desarrollo Local
+
+```bash
+cd NewProject
+npm install
+npm run dev
+```
+
+## Estructura del Proyecto
+
+- `components/landing/` - Componentes principales de la landing
+- `lib/data/` - Datos y configuraciones
+- `app/` - Páginas y layouts de Next.js
+
+## GitHub Pages
+
+El proyecto está configurado para desplegarse automáticamente a GitHub Pages usando GitHub Actions cada vez que se hace push a la branch main.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

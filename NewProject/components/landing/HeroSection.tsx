@@ -173,7 +173,7 @@ export default function HeroSection() {
             
             {/* Stats moved to right column */}
             <div className="relative z-10 mt-20">
-              <div className="grid grid-cols-2 gap-4 text-center">
+              <div className="grid grid-cols-4 gap-4 text-center">
                 <div>
                   <div className="text-xl font-bold text-green-700">+150</div>
                   <div className="text-sm text-gray-600">Biomarcadores</div>
