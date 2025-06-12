@@ -47,8 +47,8 @@ export default function PackagesPreview() {
           Essential • Performance • Core • Advanced
         </p>
         <p className="text-lg text-gray-600 mb-12 max-w-3xl mx-auto">
-          Cada paquete está diseñado para diferentes necesidades y objetivos de salud. 
-          Desde seguimiento básico hasta análisis completos de longevidad.
+          Cada paquete está diseñado con un propósito claro en función de tus objetivos y necesidades específicas. 
+          Toma el control de tu salud con datos precisos y análisis especializados.
         </p>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">

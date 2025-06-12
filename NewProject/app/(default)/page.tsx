@@ -4,7 +4,7 @@
  */
 
 import { Suspense } from 'react';
-import { HeroSection, WhyTakeControl, PackagesSection } from '@/components/landing';
+import { HeroSection, WhyTakeControl, PackagesSection, TestimonialsCarousel } from '@/components/landing';
 import HowToTakeControl from '@/components/landing/HowToTakeControl';
 import { SuccessNotification } from '@/components/ui/SuccessNotification';
 
@@ -15,6 +15,7 @@ export default function Home() {
         <SuccessNotification />
       </Suspense>
       <HeroSection />
+      <TestimonialsCarousel />
       <WhyTakeControl />
       <HowToTakeControl />
       

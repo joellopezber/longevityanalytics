@@ -69,11 +69,14 @@ export default function PackagesSection() {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-            Nuestros Paquetes de <span className="text-green-700">Análisis</span>
+            Ahora es tu momento: <span className="text-green-700">Sin datos no hay control</span>
           </h2>
+          <h3 className="text-2xl font-semibold text-gray-700 mb-6">
+            Elige tu paquete
+          </h3>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-            Cada paquete está diseñado para diferentes necesidades y objetivos de salud. 
-            Desde seguimiento básico hasta análisis completos de longevidad.
+            Cada paquete está diseñado con un propósito claro en función de tus objetivos y necesidades específicas. 
+            Toma el control de tu salud con datos precisos y análisis especializados.
           </p>
           
           {/* Gender Selector */}
