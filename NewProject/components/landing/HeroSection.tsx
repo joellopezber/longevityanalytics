@@ -173,7 +173,7 @@ export default function HeroSection() {
             
             {/* Stats moved to right column */}
             <div className="relative z-10 mt-20">
-              <div className="grid grid-cols-4 gap-4 text-center">
+              <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
                   <div className="text-xl font-bold text-green-700">+150</div>
                   <div className="text-sm text-gray-600">Biomarcadores</div>
@@ -188,11 +188,6 @@ export default function HeroSection() {
                   <div className="text-xl font-bold text-green-700">+250</div>
                   <div className="text-sm text-gray-600">Puntos de Extracción</div>
                   <div className="text-xs text-gray-500">Cobertura total</div>
-                </div>
-                <div>
-                  <div className="text-xl font-bold text-green-700">72h</div>
-                  <div className="text-sm text-gray-600">Resultados</div>
-                  <div className="text-xs text-gray-500">Análisis detallado</div>
                 </div>
               </div>
             </div>

@@ -420,63 +420,7 @@ export default function WhyTakeControl() {
             ))}
           </div>
           
-          {/* Resumen Científico */}
-          <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-2xl p-8 md:p-12">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                Evidencia Científica: <span className="text-green-700">La Nueva Era de la Medicina Preventiva</span>
-              </h3>
-              <p className="text-lg text-gray-700 max-w-4xl mx-auto">
-                La medicina de longevidad y el biohacking científico van más allá de la prevención tradicional, 
-                utilizando biomarcadores avanzados para optimizar la salud y extender la vida saludable.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">15+</span>
-                </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Relojes Epigenéticos</h4>
-                <p className="text-sm text-gray-700">
-                  Biomarcadores que miden y pueden revertir la edad biológica
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">70%</span>
-                </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Prevención de Demencias</h4>
-                <p className="text-sm text-gray-700">
-                  Reducción potencial con biomarcadores de neuroprotección
-                </p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-white text-2xl font-bold">5-10</span>
-                </div>
-                <h4 className="font-semibold text-gray-900 mb-2">Años de Detección Temprana</h4>
-                <p className="text-sm text-gray-700">
-                  Ventaja temporal en detección de cáncer con biopsias líquidas
-                </p>
-              </div>
-            </div>
-            
-            <div className="mt-8 text-center">
-              <div className="bg-white rounded-lg p-6 shadow-sm">
-                <p className="text-gray-700 text-lg">
-                  <span className="font-semibold text-green-700">"La medicina de longevidad"</span> 
-                  basada en biomarcadores avanzados no solo detecta enfermedades, sino que 
-                  <span className="font-semibold"> optimiza activamente la salud y revierte el envejecimiento biológico.</span>
-                </p>
-                <cite className="text-sm text-gray-500 block mt-2">
-                  - Estudios publicados en 2024-2025 en revistas de alto impacto
-                </cite>
-              </div>
-            </div>
-          </div>
+
         </div>
       </section>
       
