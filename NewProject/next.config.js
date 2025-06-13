@@ -2,9 +2,13 @@
 
 // Configuración condicional para desarrollo local vs GitHub Pages
 const isGithubPages = process.env.NODE_ENV === 'production' && process.env.GITHUB_ACTIONS;
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 const nextConfig = {
-  output: 'export',
+  // Solo usar export estático para GitHub Pages, no para desarrollo
+  ...(isGithubPages && {
+    output: 'export',
+  }),
   trailingSlash: true,
   images: {
     unoptimized: true

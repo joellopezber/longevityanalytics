@@ -47,9 +47,9 @@ export const PACKAGES_DATA: SimplePackage[] = [
       </svg>
     ),
     biomarkersCount: {
-      male: 45,
-      female: 47,
-      both: 43
+      male: 44,
+      female: 43,
+      both: 87
     },
     addOnsCount: 16,
     pricing: {

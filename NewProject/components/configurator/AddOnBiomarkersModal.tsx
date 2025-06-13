@@ -40,10 +40,8 @@ export function AddOnBiomarkersModal({ isOpen, onClose, addOn }: AddOnBiomarkers
   // Obtener biomarcadores del add-on
   const allBiomarkers = getBiomarkersByAddOn(addOn.id);
   
-  // Filtrar por género solo si no es 'both'
-  const genderFilteredBiomarkers = selectedGender === 'both' 
-    ? allBiomarkers 
-    : filterBiomarkersByGender(allBiomarkers, selectedGender as 'male' | 'female');
+  // Filtrar por género
+  const genderFilteredBiomarkers = filterBiomarkersByGender(allBiomarkers, selectedGender);
   
   // Separar esenciales y opcionales
   const essentialBiomarkers = getEssentialBiomarkers(genderFilteredBiomarkers);

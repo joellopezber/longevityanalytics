@@ -1,12 +1,13 @@
 /**
  * PACKAGES SECTION COMPONENT
- * Sección completa de paquetes con datos reales y funcionalidad avanzada
+ * Sección completa de paquetes con datos reales desde API
+ * MIGRADO PARA USAR API EN LUGAR DE DATOS HARDCODEADOS
  */
 
 'use client';
 
-import { useState } from 'react';
-import { PACKAGES_DATA, type SimplePackage } from '@/lib/data/packages-simple';
+import { useState, useEffect } from 'react';
+import { profilesAPI } from '@/lib/api-client';
 import { ProfileBiomarkersModal } from './ProfileBiomarkersModal';
 import PackageQuestionnaireModal from './PackageQuestionnaireModal';
 
@@ -26,6 +27,24 @@ export default function PackagesSection() {
     profileName: ''
   });
   const [showPackageSelector, setShowPackageSelector] = useState(false);
+  const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Cargar perfiles desde la API
+  useEffect(() => {
+    const loadProfiles = async () => {
+      try {
+        const profilesData = await profilesAPI.getAll();
+        setProfiles(profilesData);
+      } catch (error) {
+        console.error('Error loading profiles:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfiles();
+  }, []);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-ES', {
@@ -36,13 +55,116 @@ export default function PackagesSection() {
     }).format(price);
   };
 
-  const getPackagePrice = (pkg: SimplePackage, gender: Gender) => {
-    return pkg.pricing[gender];
+  // Función para obtener datos del perfil desde la API
+  const getProfileData = (profileId: string) => {
+    const profile = profiles.find(p => p.id === profileId);
+    if (!profile) return { 
+      biomarkers: 0, 
+      pricing: { precio: 0, pvp: 0 },
+      name: '',
+      description: ''
+    };
+    
+    return {
+      biomarkers: profile.biomarkersCount?.[selectedGender] || 0,
+      pricing: profile.pricing?.[selectedGender] || { precio: 0, pvp: 0 },
+      name: profile.name || '',
+      description: profile.description || ''
+    };
   };
 
-  const getBiomarkersCount = (pkg: SimplePackage, gender: Gender) => {
-    return pkg.biomarkersCount[gender];
-  };
+  // Datos de los paquetes con información estática
+  const packagesInfo = [
+    {
+      id: 'essential',
+      name: 'Essential',
+      title: 'Seguimiento Básico',
+      description: 'Análisis fundamental para el seguimiento básico de tu salud y bienestar general.',
+      color: 'blue',
+      bgColor: 'bg-blue-50',
+      textColor: 'text-blue-700',
+      icon: (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 8h-2v3h-3v2h3v3h2v-3h3v-2h-3V8zM4 6h5v2h2V6h1V4H9V1H7v3H4v2zm0 4h8v1H4v-1zm0 2h8v1H4v-1zm0 2h8v1H4v-1z"/>
+        </svg>
+      ),
+      addOnsCount: 16,
+      features: [
+        'Perfil lipídico completo',
+        'Función hepática',
+        'Función renal',
+        'Hemograma completo',
+        'Marcadores inflamatorios básicos'
+      ]
+    },
+    {
+      id: 'performance',
+      name: 'Performance',
+      title: 'Rendimiento Deportivo',
+      description: 'Optimización del rendimiento físico y cognitivo para deportistas y profesionales activos.',
+      color: 'purple',
+      bgColor: 'bg-purple-50',
+      textColor: 'text-purple-700',
+      icon: (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/>
+        </svg>
+      ),
+      addOnsCount: 16,
+      features: [
+        'Perfil hormonal deportivo',
+        'Marcadores de recuperación',
+        'Análisis de estrés oxidativo',
+        'Vitaminas y minerales',
+        'Función cardiovascular avanzada'
+      ]
+    },
+    {
+      id: 'core',
+      name: 'Core',
+      title: 'Centros de Longevidad',
+      description: 'Análisis integral diseñado para centros especializados en medicina de longevidad.',
+      color: 'green',
+      bgColor: 'bg-green-50',
+      textColor: 'text-green-700',
+      isPopular: true,
+      icon: (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M9.5 14.25l-5.584 2.718 1.84 3.837C7.234 20.405 9.53 20 12 20c2.47 0 4.766.405 6.244.805l1.84-3.837L14.5 14.25c-1.17.33-2.328.33-3.5 0zM12 14.5c1.438 0 2.562.5 2.562.5L16 13.5c0-1.5-1.79-2.5-4-2.5s-4 1-4 2.5L9.438 15S10.562 14.5 12 14.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.41 0 8 3.59 8 8 0 1.85-.63 3.55-1.69 4.9z"/>
+        </svg>
+      ),
+      addOnsCount: 11,
+      features: [
+        'Análisis epigenético',
+        'Marcadores de envejecimiento',
+        'Perfil hormonal completo',
+        'Función mitocondrial',
+        'Biomarcadores de longevidad'
+      ]
+    },
+    {
+      id: 'advanced',
+      name: 'Advanced',
+      title: 'Análisis Completo',
+      description: 'El análisis más completo disponible, sin dejar nada al azar en tu salud.',
+      color: 'amber',
+      bgColor: 'bg-amber-50',
+      textColor: 'text-amber-700',
+      icon: (
+        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+        </svg>
+      ),
+      addOnsCount: 3,
+      features: [
+        'Análisis genético completo',
+        'Microbioma intestinal',
+        'Marcadores tumorales',
+        'Edad biológica',
+        'Perfil completo de metales pesados'
+      ]
+    }
+  ];
 
   const handleViewBiomarkers = (profileId: string, profileName: string) => {
     setModalState({
@@ -107,10 +229,27 @@ export default function PackagesSection() {
 
         {/* Packages Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {PACKAGES_DATA.map((pkg) => {
-            const pricing = getPackagePrice(pkg, selectedGender);
-            const biomarkersCount = getBiomarkersCount(pkg, selectedGender);
-            const discount = Math.round(((pricing.pvp - pricing.price) / pricing.pvp) * 100);
+          {loading ? (
+            // Loading skeleton
+            Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="bg-white rounded-2xl shadow-lg border-2 border-gray-100 overflow-hidden animate-pulse">
+                <div className="bg-gray-200 p-6 h-32"></div>
+                <div className="p-6 space-y-4">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                  <div className="space-y-2">
+                    <div className="h-3 bg-gray-200 rounded"></div>
+                    <div className="h-3 bg-gray-200 rounded w-5/6"></div>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            packagesInfo.map((pkg) => {
+              const profileData = getProfileData(pkg.id);
+              const pricing = profileData.pricing;
+              const biomarkersCount = profileData.biomarkers;
+              const discount = pricing.pvp > 0 ? Math.round(((pricing.pvp - pricing.precio) / pricing.pvp) * 100) : 0;
 
             return (
               <div 
@@ -134,7 +273,7 @@ export default function PackagesSection() {
                   <div className="space-y-1">
                     <div className="flex items-center justify-center space-x-2">
                       <span className="text-2xl font-bold text-gray-900">
-                        {formatPrice(pricing.price)}
+                        {formatPrice(pricing.precio)}
                       </span>
                       {discount > 0 && (
                         <span className="text-sm text-gray-500 line-through">
@@ -173,7 +312,7 @@ export default function PackagesSection() {
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-600">Precio por test:</span>
                       <span className={`font-semibold ${pkg.textColor}`}>
-                        {formatPrice(pricing.price / biomarkersCount)}
+                        {biomarkersCount > 0 ? formatPrice(pricing.precio / biomarkersCount) : '...'}
                       </span>
                     </div>
                   </div>
@@ -213,7 +352,8 @@ export default function PackagesSection() {
                 </div>
               </div>
             );
-          })}
+          })
+          )}
         </div>
 
         {/* Bottom CTA */}

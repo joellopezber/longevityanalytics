@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 export default function SavedOrdersPage() {
   const router = useRouter();
   const { orders, deleteOrder, updateOrderStatus } = useOrdersStore();
-  const { setPackage, setGender, selectedAddOns, reset } = useConfiguratorStore();
+  const { setProfile, setGender, selectedAddOns, reset } = useConfiguratorStore();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-ES', {
@@ -61,7 +61,7 @@ export default function SavedOrdersPage() {
   const handleContinueOrder = (order: any) => {
     // Cargar la configuración en el store
     reset();
-    setPackage(order.package);
+    setProfile(order.package);
     setGender(order.gender);
     
     // Cargar add-ons (esto requeriría más lógica para restaurar completamente)

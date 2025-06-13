@@ -20,12 +20,12 @@ const STEPS = [
 ];
 
 export default function PackageConfigurator() {
-  const { currentStep, selectedPackage, nextStep, prevStep, reset } = useConfiguratorStore();
+  const { currentStep, selectedProfile, nextStep, prevStep, reset } = useConfiguratorStore();
 
   const canProceedToNext = () => {
     switch (currentStep) {
       case 1:
-        return selectedPackage !== null;
+        return selectedProfile !== null;
       case 2:
         return true; // Gender is always selected (default: 'both')
       case 3:
@@ -150,7 +150,7 @@ export default function PackageConfigurator() {
 // Componente de resumen en la sidebar
 function ConfigurationSummary() {
   const { 
-    selectedPackage, 
+    selectedProfile, 
     selectedGender, 
     selectedAddOns, 
     totalBiomarkers, 
@@ -181,9 +181,9 @@ function ConfigurationSummary() {
       
       {/* Package */}
       <div>
-        <h4 className="text-sm font-medium text-gray-500 mb-1">Paquete</h4>
+        <h4 className="text-sm font-medium text-gray-500 mb-1">Perfil</h4>
         <p className="text-gray-900">
-          {selectedPackage ? selectedPackage.name : 'No seleccionado'}
+          {selectedProfile ? selectedProfile.name : 'No seleccionado'}
         </p>
       </div>
 
@@ -212,7 +212,7 @@ function ConfigurationSummary() {
       </div>
 
       {/* Totals */}
-      {selectedPackage && (
+      {selectedProfile && (
         <div className="border-t pt-4 mt-4">
           <div className="space-y-2">
             <div className="flex justify-between">

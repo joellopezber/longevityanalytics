@@ -1,20 +1,58 @@
 /**
  * CONFIGURATOR STORE
  * Estado global para el configurador de paquetes usando Zustand
+ * Integrado con nuestro sistema centralizado de datos y API
  */
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { SimplePackage } from '@/lib/data/packages-simple';
-import type { SimpleAddOn } from '@/lib/data/addons-simple';
+import { 
+  profilesAPI,
+  addonsAPI,
+  pricingAPI,
+  getCompleteConfiguration,
+  getRecommendedAddons
+} from '@/lib/api-client';
 
-export type Gender = 'male' | 'female' | 'both';
+export type Gender = 'male' | 'female';
+
+// Tipos actualizados para nuestro sistema centralizado
+export interface Profile {
+  id: string;
+  name: string;
+  description: string;
+  biomarkers: string[];
+  pricing: {
+    male: { precio: number; pvp: number; };
+    female: { precio: number; pvp: number; };
+  };
+  biomarkersCount: {
+    male: number;
+    female: number;
+  };
+}
+
+export interface AddOn {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  biomarkers: string[];
+  pricing: {
+    male: { precio: number; pvp: number; };
+    female: { precio: number; pvp: number; };
+  };
+  biomarkersCount: {
+    male: number;
+    female: number;
+  };
+}
 
 export interface ConfiguratorState {
   // Estado actual
-  selectedPackage: SimplePackage | null;
+  selectedProfile: Profile | null;
   selectedGender: Gender;
-  selectedAddOns: SimpleAddOn[];
+  selectedAddOns: AddOn[];
   excludedBiomarkers: { [addonId: string]: string[] }; // biomarcadores excluidos por add-on
   currentStep: number;
   
@@ -24,10 +62,14 @@ export interface ConfiguratorState {
   totalPvp: number;
   savings: number;
   
+  // Loading states
+  isLoading: boolean;
+  error: string | null;
+  
   // Acciones
-  setPackage: (pkg: SimplePackage) => void;
+  setProfile: (profile: Profile) => void;
   setGender: (gender: Gender) => void;
-  toggleAddOn: (addon: SimpleAddOn) => void;
+  toggleAddOn: (addon: AddOn) => void;
   removeAddOn: (addonId: string) => void;
   clearAddOns: () => void;
   toggleBiomarkerExclusion: (addonId: string, biomarkerId: string) => void;
@@ -37,16 +79,20 @@ export interface ConfiguratorState {
   prevStep: () => void;
   reset: () => void;
   
-  // Funciones de cálculo
-  calculateTotals: () => void;
-  getCompatibleAddOns: () => SimpleAddOn[];
+  // Funciones de cálculo usando API
+  calculateTotals: () => Promise<void>;
+  getCompatibleAddOns: () => Promise<AddOn[]>;
   isAddOnSelected: (addonId: string) => boolean;
   canAddMoreAddOns: () => boolean;
+  
+  // Funciones de API
+  loadProfiles: () => Promise<Profile[]>;
+  loadAddOns: () => Promise<AddOn[]>;
 }
 
 const INITIAL_STATE = {
-  selectedPackage: null,
-  selectedGender: 'both' as Gender,
+  selectedProfile: null,
+  selectedGender: 'male' as Gender,
   selectedAddOns: [],
   excludedBiomarkers: {},
   currentStep: 1,
@@ -54,6 +100,8 @@ const INITIAL_STATE = {
   totalPrice: 0,
   totalPvp: 0,
   savings: 0,
+  isLoading: false,
+  error: null,
 };
 
 export const useConfiguratorStore = create<ConfiguratorState>()(
@@ -61,8 +109,8 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
     (set, get) => ({
       ...INITIAL_STATE,
 
-      setPackage: (pkg: SimplePackage) => {
-        set({ selectedPackage: pkg });
+      setProfile: (profile: Profile) => {
+        set({ selectedProfile: profile, selectedAddOns: [], excludedBiomarkers: {} });
         get().calculateTotals();
       },
 
@@ -71,7 +119,7 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
         get().calculateTotals();
       },
 
-      toggleAddOn: (addon: SimpleAddOn) => {
+      toggleAddOn: (addon: AddOn) => {
         const { selectedAddOns, isAddOnSelected } = get();
         
         if (isAddOnSelected(addon.id)) {
@@ -154,10 +202,11 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
         set(INITIAL_STATE);
       },
 
-      calculateTotals: () => {
-        const { selectedPackage, selectedGender, selectedAddOns, excludedBiomarkers } = get();
+      // Cálculo usando nuestro sistema centralizado
+      calculateTotals: async () => {
+        const { selectedProfile, selectedGender, selectedAddOns, excludedBiomarkers } = get();
         
-        if (!selectedPackage) {
+        if (!selectedProfile) {
           set({
             totalBiomarkers: 0,
             totalPrice: 0,
@@ -167,88 +216,69 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
           return;
         }
 
-        // Calcular totales del paquete
-        const packagePricing = selectedPackage.pricing[selectedGender];
-        const packageBiomarkers = selectedPackage.biomarkersCount[selectedGender];
-        
-        // Calcular totales de add-ons considerando biomarcadores excluidos
-        let addOnsTotalPrice = 0;
-        let addOnsTotalPvp = 0;
-        let addOnsTotalBiomarkers = 0;
-        
-        selectedAddOns.forEach(addon => {
-          const excludedForThisAddon = excludedBiomarkers[addon.id] || [];
-          const excludedCount = excludedForThisAddon.length;
-          
-          // Calcular precio base del add-on
-          const basePrice = addon.pricing[selectedGender].price;
-          const basePvp = addon.pricing[selectedGender].pvp;
-          const baseBiomarkers = addon.biomarkersCount[selectedGender];
-          
-          // Si hay biomarcadores excluidos, calcular descuento
-          if (excludedCount > 0) {
-            // Importar dinámicamente para calcular descuento por biomarcadores excluidos
-            try {
-              const { getBiomarkersForAddOn } = require('@/lib/data/addon-biomarkers');
-              const allBiomarkers = getBiomarkersForAddOn(addon.id, selectedGender);
-              
-              if (allBiomarkers.length > 0) {
-                // Calcular precio de biomarcadores excluidos
-                const excludedPrice = excludedForThisAddon.reduce((total, biomarkerId) => {
-                  const biomarker = allBiomarkers.find(b => b.id === biomarkerId);
-                  return total + (biomarker?.price || 0);
-                }, 0);
-                
-                const excludedPvp = excludedForThisAddon.reduce((total, biomarkerId) => {
-                  const biomarker = allBiomarkers.find(b => b.id === biomarkerId);
-                  return total + (biomarker?.pvp || 0);
-                }, 0);
-                
-                // Aplicar descuento
-                addOnsTotalPrice += Math.max(0, basePrice - excludedPrice);
-                addOnsTotalPvp += Math.max(0, basePvp - excludedPvp);
-                addOnsTotalBiomarkers += Math.max(0, baseBiomarkers - excludedCount);
-              } else {
-                // Si no hay datos de biomarcadores, usar valores base
-                addOnsTotalPrice += basePrice;
-                addOnsTotalPvp += basePvp;
-                addOnsTotalBiomarkers += baseBiomarkers;
-              }
-            } catch (error) {
-              // Fallback si hay error al importar
-              addOnsTotalPrice += basePrice;
-              addOnsTotalPvp += basePvp;
-              addOnsTotalBiomarkers += baseBiomarkers;
-            }
-          } else {
-            // Sin exclusiones, usar valores completos
-            addOnsTotalPrice += basePrice;
-            addOnsTotalPvp += basePvp;
-            addOnsTotalBiomarkers += baseBiomarkers;
-          }
-        });
+        try {
+          set({ isLoading: true, error: null });
 
-        // Totales finales
-        const totalPrice = packagePricing.price + addOnsTotalPrice;
-        const totalPvp = packagePricing.pvp + addOnsTotalPvp;
-        const totalBiomarkers = packageBiomarkers + addOnsTotalBiomarkers;
-        const savings = totalPvp - totalPrice;
+          // Usar nuestra API de pricing para cálculos exactos
+          const pricingData = await pricingAPI.calculateIncremental(
+            selectedProfile.id,
+            selectedAddOns.map(a => a.id),
+            selectedGender
+          );
 
-        set({
-          totalBiomarkers,
-          totalPrice,
-          totalPvp,
-          savings
-        });
+          set({
+            totalBiomarkers: pricingData.totalBiomarkers,
+            totalPrice: pricingData.totalPrecio,
+            totalPvp: pricingData.totalPvp,
+            savings: pricingData.totalPvp - pricingData.totalPrecio,
+            isLoading: false
+          });
+
+        } catch (error) {
+          console.error('Error calculating totals:', error);
+          
+          // Fallback: cálculo manual básico
+          const profilePricing = selectedProfile.pricing[selectedGender];
+          const profileBiomarkers = selectedProfile.biomarkersCount[selectedGender];
+          
+          let addOnsTotalPrice = 0;
+          let addOnsTotalPvp = 0;
+          let addOnsTotalBiomarkers = 0;
+          
+          selectedAddOns.forEach(addon => {
+            const excludedCount = (excludedBiomarkers[addon.id] || []).length;
+            const addonPricing = addon.pricing[selectedGender];
+            const addonBiomarkers = addon.biomarkersCount[selectedGender];
+            
+            addOnsTotalPrice += addonPricing.precio;
+            addOnsTotalPvp += addonPricing.pvp;
+            addOnsTotalBiomarkers += Math.max(0, addonBiomarkers - excludedCount);
+          });
+
+          set({
+            totalBiomarkers: profileBiomarkers + addOnsTotalBiomarkers,
+            totalPrice: profilePricing.precio + addOnsTotalPrice,
+            totalPvp: profilePricing.pvp + addOnsTotalPvp,
+            savings: (profilePricing.pvp + addOnsTotalPvp) - (profilePricing.precio + addOnsTotalPrice),
+            isLoading: false,
+            error: 'Error en cálculo automático, usando cálculo básico'
+          });
+        }
       },
 
-      getCompatibleAddOns: () => {
-        const { selectedPackage } = get();
-        if (!selectedPackage) return [];
+      // Obtener add-ons compatibles usando nuestra API
+      getCompatibleAddOns: async () => {
+        const { selectedProfile, selectedGender } = get();
+        if (!selectedProfile) return [];
         
-        // Importar dinámicamente para evitar dependencias circulares
-        const { getAddOnsByPackage } = require('@/lib/data/addons-simple');
-        return getAddOnsByPackage(selectedPackage.id);
+        try {
+          // Usar la API de add-ons para obtener todos los disponibles
+          const addOns = await addonsAPI.getAll({ gender: selectedGender });
+          return addOns as AddOn[];
+        } catch (error) {
+          console.error('Error loading compatible add-ons:', error);
+          return [];
+        }
       },
 
       isAddOnSelected: (addonId: string) => {
@@ -259,12 +289,36 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
       canAddMoreAddOns: () => {
         const { selectedAddOns } = get();
         return selectedAddOns.length < 10; // Límite máximo de add-ons
+      },
+
+      // Cargar perfiles usando nuestra API
+      loadProfiles: async () => {
+        try {
+          const profiles = await profilesAPI.getAll();
+          return profiles;
+        } catch (error) {
+          console.error('Error loading profiles:', error);
+          set({ error: 'Error cargando perfiles' });
+          return [];
+        }
+      },
+
+      // Cargar add-ons usando nuestra API
+      loadAddOns: async () => {
+        try {
+          const addOns = await addonsAPI.getAll();
+          return addOns;
+        } catch (error) {
+          console.error('Error loading add-ons:', error);
+          set({ error: 'Error cargando add-ons' });
+          return [];
+        }
       }
     }),
     {
       name: 'longevity-configurator',
       partialize: (state) => ({
-        selectedPackage: state.selectedPackage,
+        selectedProfile: state.selectedProfile,
         selectedGender: state.selectedGender,
         selectedAddOns: state.selectedAddOns,
         excludedBiomarkers: state.excludedBiomarkers,

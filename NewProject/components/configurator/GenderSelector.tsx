@@ -8,7 +8,7 @@
 import { useConfiguratorStore, type Gender } from '@/lib/store/useConfiguratorStore';
 
 export function GenderSelector() {
-  const { selectedGender, setGender, selectedPackage } = useConfiguratorStore();
+  const { selectedGender, setGender, selectedProfile } = useConfiguratorStore();
 
   const genderOptions: { value: Gender; label: string; description: string; icon: string }[] = [
     {
@@ -45,8 +45,8 @@ export function GenderSelector() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {genderOptions.map((option) => {
           const isSelected = selectedGender === option.value;
-          const packagePricing = selectedPackage?.pricing[option.value];
-          const biomarkersCount = selectedPackage?.biomarkersCount[option.value];
+          const packagePricing = selectedProfile?.pricing[option.value];
+          const biomarkersCount = selectedProfile?.biomarkersCount[option.value];
           
           return (
             <div
@@ -81,7 +81,7 @@ export function GenderSelector() {
               </div>
 
               {/* Package Info */}
-              {selectedPackage && packagePricing && biomarkersCount && (
+              {selectedProfile && packagePricing && biomarkersCount && (
                 <div className="space-y-3">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-600">
@@ -92,9 +92,9 @@ export function GenderSelector() {
                   
                   <div className="text-center">
                     <div className="text-xl font-bold text-gray-900">
-                      {formatPrice(packagePricing.price)}
+                      {formatPrice(packagePricing.precio)}
                     </div>
-                    {packagePricing.pvp > packagePricing.price && (
+                    {packagePricing.pvp > packagePricing.precio && (
                       <div className="text-sm text-gray-500 line-through">
                         {formatPrice(packagePricing.pvp)}
                       </div>

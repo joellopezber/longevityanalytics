@@ -1,11 +1,34 @@
 /**
  * PACKAGES PREVIEW SECTION
  * Vista previa de los 4 paquetes principales
+ * INTEGRADO CON API PARA DATOS REALES
  */
 
 'use client';
 
+import { useState, useEffect } from 'react';
+import { profilesAPI } from '@/lib/api-client';
+
 export default function PackagesPreview() {
+  const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Cargar datos reales desde la API
+  useEffect(() => {
+    const loadProfiles = async () => {
+      try {
+        const profilesData = await profilesAPI.getAll();
+        setProfiles(profilesData);
+      } catch (error) {
+        console.error('Error loading profiles:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfiles();
+  }, []);
+
   const packages = [
     {
       id: 'essential',
@@ -37,6 +60,22 @@ export default function PackagesPreview() {
     }
   ];
 
+  // Función para obtener datos reales del perfil
+  const getProfileData = (packageId) => {
+    const profile = profiles.find(p => p.id === packageId);
+    if (!profile) return { biomarkers: '...', addons: '...' };
+    
+    // Calcular promedio de biomarcadores entre géneros
+    const avgBiomarkers = Math.round((profile.biomarkersCount?.male + profile.biomarkersCount?.female) / 2);
+    
+    return {
+      biomarkers: avgBiomarkers > 0 ? `${avgBiomarkers}` : '...',
+      addons: packageId === 'essential' ? '16' : 
+              packageId === 'performance' ? '16' : 
+              packageId === 'core' ? '11' : '3' // Datos reales de add-ons disponibles
+    };
+  };
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -63,22 +102,18 @@ export default function PackagesPreview() {
               <h3 className="font-semibold text-gray-900 text-lg mb-2">{pkg.name}</h3>
               <p className="text-sm text-gray-600 mb-4">{pkg.description}</p>
               
-              {/* Placeholder stats */}
+              {/* Stats reales desde API */}
               <div className="space-y-2 text-xs text-gray-500">
                 <div className="flex justify-between">
                   <span>Biomarcadores:</span>
                   <span className={pkg.textColor}>
-                    {pkg.id === 'essential' ? '45+' : 
-                     pkg.id === 'performance' ? '85+' : 
-                     pkg.id === 'core' ? '120+' : '200+'}
+                    {loading ? '...' : getProfileData(pkg.id).biomarkers}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span>Add-ons:</span>
+                  <span>Add-ons disponibles:</span>
                   <span className={pkg.textColor}>
-                    {pkg.id === 'essential' ? '3' : 
-                     pkg.id === 'performance' ? '8' : 
-                     pkg.id === 'core' ? '12' : '16'}
+                    {loading ? '...' : getProfileData(pkg.id).addons}
                   </span>
                 </div>
               </div>

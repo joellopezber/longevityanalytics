@@ -1,4 +1,20 @@
+/**
+ * priceData.js
+ * Datos de precios de biomarcadores por código
+ * Estructura simplificada: solo código, precio (nuestro costo) y pvp (precio al público)
+ * 
+ * ACTUALIZADO DESDE: LongevityBiomarkers.csv
+ * Fecha de actualización: 2025-01-22
+ * Total de biomarcadores: 137
+ * 
+ * Funciones principales:
+ * - parsePrice: Convierte formato europeo "4,02 €" a número
+ * - priceMap: Mapa de códigos a precios (precio y pvp)
+ * - getPriceByCode: Obtiene precio de un biomarcador por código
+ * - validatePriceData: Valida integridad de datos de precios
+ */
 
+// Datos de precios actualizados desde CSV de referencia - Solo códigos y precios
 PriceData = [
   { code: "6897", precio: "8,08 €", pvp: "9,30 €" },
   { code: "AB001", precio: "273,90 €", pvp: "299,00 €" },
@@ -138,3 +154,115 @@ PriceData = [
   { code: "T2841", precio: "27,46 €", pvp: "31,00 €" },
   { code: "T3920", precio: "29,05 €", pvp: "32,54 €" }
 ];
+
+/**
+ * Convierte precio en formato europeo "4,02 €" a número decimal
+ * @param {string} priceString - Precio en formato "4,02 €"
+ * @returns {number} - Precio como número decimal
+ */
+export const parsePrice = (priceString) => {
+  if (!priceString || priceString === "0,00 €") return 0;
+  
+  // Remover símbolo € y espacios, reemplazar coma por punto
+  const cleanPrice = priceString
+    .replace(/€/g, '')
+    .replace(/\s/g, '')
+    .replace(/,/g, '.');
+  
+  const parsed = parseFloat(cleanPrice);
+  return isNaN(parsed) ? 0 : parsed;
+};
+
+/**
+ * Mapa de códigos de biomarcadores a precios
+ * Estructura: { código: { precio: number, pvp: number } }
+ */
+export const priceMap = rawPriceData.reduce((map, item) => {
+  map[item.code] = {
+    precio: parsePrice(item.precio),
+    pvp: parsePrice(item.pvp)
+  };
+  return map;
+}, {});
+
+/**
+ * Obtiene precio de un biomarcador por código
+ * @param {string} code - Código del biomarcador
+ * @param {string} priceType - Tipo de precio ('precio' o 'pvp')
+ * @returns {number} - Precio del biomarcador
+ */
+export const getPriceByCode = (code, priceType = 'precio') => {
+  const priceData = priceMap[code];
+  if (!priceData) {
+    console.warn(`Precio no encontrado para código: ${code}`);
+    return 0;
+  }
+  return priceData[priceType] || 0;
+};
+
+/**
+ * Obtiene información completa de precio por código
+ * @param {string} code - Código del biomarcador
+ * @returns {object|null} - Objeto con precios, o null si no existe
+ */
+export const getPriceDataByCode = (code) => {
+  return priceMap[code] || null;
+};
+
+/**
+ * Valida que todos los códigos de una lista tengan precios
+ * @param {Array} codes - Array de códigos de biomarcadores
+ * @returns {object} - Resultado de validación con códigos faltantes
+ */
+export const validatePriceData = (codes) => {
+  const missingCodes = codes.filter(code => !priceMap[code]);
+  const validCodes = codes.filter(code => priceMap[code]);
+  
+  return {
+    isValid: missingCodes.length === 0,
+    missingCodes,
+    validCodes,
+    totalCodes: codes.length,
+    validCount: validCodes.length
+  };
+};
+
+/**
+ * Obtiene estadísticas de precios
+ * @returns {object} - Estadísticas generales de precios
+ */
+export const getPriceStatistics = () => {
+  const prices = Object.values(priceMap);
+  const precioValues = prices.map(p => p.precio).filter(p => p > 0);
+  const pvpValues = prices.map(p => p.pvp).filter(p => p > 0);
+  
+  return {
+    totalBiomarkers: prices.length,
+    precioStats: {
+      min: Math.min(...precioValues),
+      max: Math.max(...precioValues),
+      avg: precioValues.reduce((a, b) => a + b, 0) / precioValues.length
+    },
+    pvpStats: {
+      min: Math.min(...pvpValues),
+      max: Math.max(...pvpValues),
+      avg: pvpValues.reduce((a, b) => a + b, 0) / pvpValues.length
+    }
+  };
+};
+
+// Exportar datos para debugging
+export { rawPriceData }; 
+
+// Compatibilidad con CommonJS para scripts de validación
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = {
+    rawPriceData,
+    parsePrice,
+    priceMap,
+    getPriceByCode,
+    getPriceDataByCode,
+    validatePriceData,
+    getPriceStatistics
+  };
+} 

@@ -1,15 +1,16 @@
 /**
  * PACKAGES PAGE
  * Página dedicada a mostrar todos los paquetes disponibles
+ * INTEGRADO CON API PARA DATOS REALES
  */
 
 'use client';
 
-import { useState } from 'react';
-import { PACKAGES_DATA } from '@/lib/data/packages-simple';
-import { getProfileBiomarkers, getProfileStats } from '@/lib/data/profile-biomarkers';
+import { useState, useEffect } from 'react';
+import { profilesAPI } from '@/lib/api-client';
 import { ProfileBiomarkersModal } from '@/components/landing/ProfileBiomarkersModal';
 import { PACKAGE_DESCRIPTIONS } from '@/lib/data/questionnaire';
+import { getProfileBiomarkers, getProfileStats } from '@/lib/data/profile-biomarkers';
 import PackageQuestionnaireModal from '@/components/landing/PackageQuestionnaireModal';
 
 interface ModalState {
@@ -21,11 +22,130 @@ interface ModalState {
 export default function PaquetesPage() {
   const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male');
   const [showPackageSelector, setShowPackageSelector] = useState(false);
+  const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     profileId: '',
     profileName: ''
   });
+
+  // Cargar perfiles desde la API
+  useEffect(() => {
+    const loadProfiles = async () => {
+      try {
+        const profilesData = await profilesAPI.getAll();
+        setProfiles(profilesData);
+      } catch (error) {
+        console.error('Error loading profiles:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfiles();
+  }, []);
+
+  // Datos estáticos de los paquetes (información visual y descriptiva)
+  const packagesInfo = [
+    {
+      id: 'essential',
+      name: 'Essential',
+      title: 'Seguimiento Básico',
+      description: 'Análisis fundamental para el seguimiento básico de tu salud y bienestar general.',
+      color: 'blue',
+      bgColor: 'bg-blue-50',
+      textColor: 'text-blue-700',
+      icon: '🔬',
+      addOnsCount: 16,
+      features: [
+        'Perfil lipídico completo',
+        'Función hepática',
+        'Función renal',
+        'Hemograma completo',
+        'Marcadores inflamatorios básicos'
+      ]
+    },
+    {
+      id: 'performance',
+      name: 'Performance',
+      title: 'Rendimiento Deportivo',
+      description: 'Optimización del rendimiento físico y cognitivo para deportistas y profesionales activos.',
+      color: 'purple',
+      bgColor: 'bg-purple-50',
+      textColor: 'text-purple-700',
+      icon: '⚡',
+      addOnsCount: 16,
+      features: [
+        'Perfil hormonal deportivo',
+        'Marcadores de recuperación',
+        'Análisis de estrés oxidativo',
+        'Vitaminas y minerales',
+        'Función cardiovascular avanzada'
+      ]
+    },
+    {
+      id: 'core',
+      name: 'Core',
+      title: 'Centros de Longevidad',
+      description: 'Análisis integral diseñado para centros especializados en medicina de longevidad.',
+      color: 'green',
+      bgColor: 'bg-green-50',
+      textColor: 'text-green-700',
+      isPopular: true,
+      icon: '🎯',
+      addOnsCount: 11,
+      features: [
+        'Análisis epigenético',
+        'Marcadores de envejecimiento',
+        'Perfil hormonal completo',
+        'Función mitocondrial',
+        'Biomarcadores de longevidad'
+      ]
+    },
+    {
+      id: 'advanced',
+      name: 'Advanced',
+      title: 'Análisis Completo',
+      description: 'El análisis más completo disponible, sin dejar nada al azar en tu salud.',
+      color: 'amber',
+      bgColor: 'bg-amber-50',
+      textColor: 'text-amber-700',
+      icon: '🔬',
+      addOnsCount: 3,
+      features: [
+        'Análisis genético completo',
+        'Microbioma intestinal',
+        'Marcadores tumorales',
+        'Edad biológica',
+        'Perfil completo de metales pesados'
+      ]
+    }
+  ];
+
+  // Función para obtener datos del perfil
+  const getProfileData = (profileId: string) => {
+    const profile = profiles.find(p => p.id === profileId);
+    if (!profile) return { 
+      biomarkers: 0, 
+      male: 0, 
+      female: 0, 
+      pricing: { precio: 0, pvp: 0 } 
+    };
+    
+    // Validación adicional para evitar errores durante pre-rendering
+    const pricing = profile.pricing?.[selectedGender];
+    const safePricing = pricing && typeof pricing.precio !== 'undefined' 
+      ? pricing 
+      : { precio: 0, pvp: 0 };
+    
+    return {
+      biomarkers: profile.biomarkersCount?.[selectedGender] || 0,
+      male: profile.biomarkersCount?.male || 0,
+      female: profile.biomarkersCount?.female || 0,
+      pricing: safePricing
+    };
+  };
 
   const handleViewBiomarkers = (profileId: string, profileName: string) => {
     setModalState({
@@ -118,7 +238,9 @@ export default function PaquetesPage() {
                       <p className="text-blue-600 font-medium">Perfecto para comenzar</p>
                     </div>
                   </div>
-                  <div className="text-6xl font-bold text-blue-600 mb-2">44+</div>
+                  <div className="text-6xl font-bold text-blue-600 mb-2">
+                    {loading ? '...' : getProfileData('essential').male}
+                  </div>
                   <div className="text-sm text-gray-600">biomarcadores fundamentales</div>
                 </div>
               </div>
@@ -158,7 +280,9 @@ export default function PaquetesPage() {
                       <p className="text-orange-600 font-medium">Optimiza tu rendimiento</p>
                     </div>
                   </div>
-                  <div className="text-6xl font-bold text-orange-600 mb-2">65+</div>
+                  <div className="text-6xl font-bold text-orange-600 mb-2">
+                    {loading ? '...' : getProfileData('performance').male}
+                  </div>
                   <div className="text-sm text-gray-600">biomarcadores especializados</div>
                 </div>
               </div>
@@ -198,7 +322,9 @@ export default function PaquetesPage() {
                       <p className="text-purple-600 font-medium">Análisis integral</p>
                     </div>
                   </div>
-                  <div className="text-6xl font-bold text-purple-600 mb-2">95+</div>
+                  <div className="text-6xl font-bold text-purple-600 mb-2">
+                    {loading ? '...' : getProfileData('core').male}
+                  </div>
                   <div className="text-sm text-gray-600">biomarcadores completos</div>
                 </div>
               </div>
@@ -243,7 +369,9 @@ export default function PaquetesPage() {
                       <p className="text-green-600 font-medium">Lo más completo</p>
                     </div>
                   </div>
-                  <div className="text-6xl font-bold text-green-600 mb-2">126+</div>
+                  <div className="text-6xl font-bold text-green-600 mb-2">
+                    {loading ? '...' : getProfileData('advanced').male}
+                  </div>
                   <div className="text-sm text-gray-600">biomarcadores avanzados</div>
                 </div>
               </div>
@@ -311,14 +439,15 @@ export default function PaquetesPage() {
 
           {/* Packages Grid - Moved here */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
-            {PACKAGES_DATA.map((pkg) => {
+            {packagesInfo.map((pkg) => {
               const biomarkers = getProfileBiomarkers(pkg.id, selectedGender);
               const stats = getProfileStats(pkg.id, selectedGender);
               const biomarkersCount = biomarkers.length;
               
-              // Calcular precio por biomarcador
-              const pricing = pkg.pricing[selectedGender] || pkg.pricing.both;
-              const pricePerBiomarker = pricing.price / biomarkersCount;
+              // Obtener datos del perfil desde la API
+              const profileData = getProfileData(pkg.id);
+              const pricing = profileData.pricing;
+              const pricePerBiomarker = biomarkersCount > 0 ? pricing.precio / biomarkersCount : 0;
 
               return (
                 <div
@@ -347,7 +476,7 @@ export default function PaquetesPage() {
                     
                     <div className="text-center">
                       <div className="text-3xl font-bold mb-2">
-                        {formatPrice(pricing.price)}
+                        {formatPrice(pricing.precio)}
                       </div>
                       <div className="text-sm opacity-80">
                         {formatPrice(pricePerBiomarker)} por biomarcador
@@ -461,7 +590,7 @@ export default function PaquetesPage() {
               <thead>
                 <tr className="bg-gray-50">
                   <th className="text-left p-4 font-semibold text-gray-900">Característica</th>
-                  {PACKAGES_DATA.map((pkg) => (
+                  {packagesInfo.map((pkg) => (
                     <th key={pkg.id} className={`text-center p-4 font-semibold ${pkg.textColor}`}>
                       <div className="flex flex-col items-center">
                         <span className="text-lg mb-1">{pkg.icon}</span>
@@ -474,7 +603,7 @@ export default function PaquetesPage() {
               <tbody>
                 <tr className="border-t border-gray-200">
                   <td className="p-4 font-medium text-gray-900">Biomarcadores</td>
-                  {PACKAGES_DATA.map((pkg) => {
+                  {packagesInfo.map((pkg) => {
                     const biomarkers = getProfileBiomarkers(pkg.id, selectedGender);
                     return (
                       <td key={pkg.id} className="text-center p-4">
@@ -487,12 +616,12 @@ export default function PaquetesPage() {
                 </tr>
                 <tr className="border-t border-gray-200 bg-gray-50">
                   <td className="p-4 font-medium text-gray-900">Precio</td>
-                  {PACKAGES_DATA.map((pkg) => {
-                    const pricing = pkg.pricing[selectedGender] || pkg.pricing.both;
+                  {packagesInfo.map((pkg) => {
+                    const profileData = getProfileData(pkg.id);
                     return (
                       <td key={pkg.id} className="text-center p-4">
                         <span className={`font-semibold ${pkg.textColor}`}>
-                          {formatPrice(pricing.price)}
+                          {formatPrice(profileData.pricing.precio)}
                         </span>
                       </td>
                     );
@@ -500,10 +629,10 @@ export default function PaquetesPage() {
                 </tr>
                 <tr className="border-t border-gray-200">
                   <td className="p-4 font-medium text-gray-900">Precio por biomarcador</td>
-                  {PACKAGES_DATA.map((pkg) => {
+                  {packagesInfo.map((pkg) => {
                     const biomarkers = getProfileBiomarkers(pkg.id, selectedGender);
-                    const pricing = pkg.pricing[selectedGender] || pkg.pricing.both;
-                    const pricePerBiomarker = pricing.price / biomarkers.length;
+                    const profileData = getProfileData(pkg.id);
+                    const pricePerBiomarker = biomarkers.length > 0 ? profileData.pricing.precio / biomarkers.length : 0;
                     return (
                       <td key={pkg.id} className="text-center p-4">
                         <span className={`font-semibold ${pkg.textColor}`}>
@@ -606,13 +735,20 @@ export default function PaquetesPage() {
                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                   <span className="text-gray-600">Precio:</span>
                   <span className="font-semibold text-green-600">
-                    {formatPrice(PACKAGES_DATA[0].pricing.both.price)}
+                    {(() => {
+                      const essentialData = getProfileData('essential');
+                      return formatPrice(essentialData.pricing.precio || 0);
+                    })()}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-200">
                   <span className="text-gray-600">Precio por biomarcador:</span>
                   <span className="font-semibold text-green-600">
-                    {formatPrice(PACKAGES_DATA[0].pricing.both.price / getProfileBiomarkers('essential', 'both').length)}
+                    {(() => {
+                      const essentialData = getProfileData('essential');
+                      const biomarkersCount = getProfileBiomarkers('essential', 'both').length;
+                      return biomarkersCount > 0 ? formatPrice((essentialData.pricing.precio || 0) / biomarkersCount) : '...';
+                    })()}
                   </span>
                 </div>
                 <div className="flex justify-between items-center py-2">
