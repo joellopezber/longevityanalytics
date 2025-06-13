@@ -58,6 +58,38 @@ export default function SavedOrdersPage() {
     }
   };
 
+  const getPackageIcon = (packageId: string) => {
+    switch (packageId) {
+      case 'essential': return '📊';
+      case 'performance': return '⚡';
+      case 'core': return '🎯';
+      case 'advanced': return '🔬';
+      default: return '📋';
+    }
+  };
+
+  const getAddOnIcon = (addonId: string) => {
+    switch (addonId) {
+      case 'hormonas': return '🧬';
+      case 'cardiovascular': return '❤️';
+      case 'immunity': return '🛡️';
+      case 'cancer': return '🔍';
+      case 'genome': return '🧪';
+      case 'bioage': return '⏳';
+      case 'metals': return '⚗️';
+      case 'digestion': return '🍃';
+      case 'antioxidantes': return '🌿';
+      case 'inflammation': return '🔥';
+      case 'iv_nutrients': return '💊';
+      case 'coagulation': return '🩸';
+      case 'bone_mineral': return '🦴';
+      case 'gut_gate': return '🦠';
+      case 'endocrino': return '⚖️';
+      case 'oxidative_cell': return '⚛️';
+      default: return '📋';
+    }
+  };
+
   const handleContinueOrder = (order: any) => {
     // Cargar la configuración en el store
     reset();
@@ -122,7 +154,7 @@ export default function SavedOrdersPage() {
             <div key={order.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center">
-                  <div className="text-2xl mr-3">{order.package.icon}</div>
+                  <div className="text-2xl mr-3">{getPackageIcon(order.package.id)}</div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">
                       {order.package.name}
@@ -168,7 +200,7 @@ export default function SavedOrdersPage() {
                   <div className="flex flex-wrap gap-2">
                     {order.addOns.map((addon) => (
                       <span key={addon.id} className="inline-flex items-center px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-md">
-                        <span className="mr-1">{addon.icon}</span>
+                        <span className="mr-1">{getAddOnIcon(addon.id)}</span>
                         {addon.name}
                       </span>
                     ))}

@@ -191,7 +191,7 @@ export function PackageCard({
         </div>
 
         {/* Actions */}
-        <div className={variant === 'compact' ? 'space-y-3' : 'space-y-3'}>
+        <div>
           <button 
             onClick={() => onViewBiomarkers(pkg.id, pkg.name)}
             className={`w-full py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 flex items-center justify-center space-x-2 ${
@@ -205,16 +205,6 @@ export function PackageCard({
             </svg>
             <span>Ver Biomarcadores</span>
           </button>
-          
-          <a
-            href={`/configurador?package=${pkg.id}`}
-            className="w-full py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 flex items-center justify-center space-x-2 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 shadow-sm hover:shadow-md"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-            <span>{variant === 'compact' ? 'Configurar' : 'Configurar Paquete'}</span>
-          </a>
         </div>
       </div>
     </div>

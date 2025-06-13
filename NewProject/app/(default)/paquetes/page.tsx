@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { usePackagesData } from '@/hooks/usePackagesData';
 import { PackageCard } from '@/components/shared/PackageCard';
 import { PackageSelectionCTA } from '@/components/shared/PackageSelectionCTA';
+import { ActionCTA } from '@/components/shared/ActionCTA';
 import { ProfileBiomarkersModal } from '@/components/landing/ProfileBiomarkersModal';
 import { PACKAGE_DESCRIPTIONS } from '@/lib/data/questionnaire';
 import { getProfileBiomarkers, getProfileStats } from '@/lib/data/profile-biomarkers';
@@ -92,6 +93,9 @@ export default function PaquetesPage() {
           </div>
         </div>
       </div>
+
+      {/* Action CTA */}
+      <ActionCTA />
 
       {/* Detailed Package Explanations */}
       <div className="bg-white py-12">

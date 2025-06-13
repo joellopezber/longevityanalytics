@@ -39,6 +39,16 @@ export function SavedOrdersWidget({
     }).format(date);
   };
 
+  const getPackageIcon = (packageId: string) => {
+    switch (packageId) {
+      case 'essential': return '📊';
+      case 'performance': return '⚡';
+      case 'core': return '🎯';
+      case 'advanced': return '🔬';
+      default: return '📋';
+    }
+  };
+
   const savedOrders = orders.filter(order => order.status === 'saved');
   const recentOrders = savedOrders.slice(0, maxItems);
 
@@ -83,7 +93,7 @@ export function SavedOrdersWidget({
                 {recentOrders.map((order) => (
                   <div key={order.id} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
                     <div className="flex items-center space-x-2">
-                      <span className="text-lg">{order.package.icon}</span>
+                      <span className="text-lg">{getPackageIcon(order.package.id)}</span>
                       <div>
                         <div className="text-sm font-medium text-gray-900">{order.package.name}</div>
                         <div className="text-xs text-gray-500">{formatDate(order.createdAt)}</div>
@@ -136,7 +146,7 @@ export function SavedOrdersWidget({
           {recentOrders.map((order) => (
             <div key={order.id} className="flex items-center justify-between text-sm">
               <div className="flex items-center space-x-2">
-                <span>{order.package.icon}</span>
+                <span>{getPackageIcon(order.package.id)}</span>
                 <span className="font-medium text-blue-900">{order.package.name}</span>
                 <span className="text-blue-600">({order.totals.biomarkers} tests)</span>
               </div>
@@ -194,7 +204,7 @@ export function SavedOrdersWidget({
         {recentOrders.map((order) => (
           <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
             <div className="flex items-center space-x-3">
-              <div className="text-2xl">{order.package.icon}</div>
+              <div className="text-2xl">{getPackageIcon(order.package.id)}</div>
               <div>
                 <div className="font-medium text-gray-900">{order.package.name}</div>
                 <div className="text-sm text-gray-600">
