@@ -6,7 +6,7 @@
 export const ADDONS = {
   hormonas: {
     id: 'hormonas',
-    name: 'Panel Hormonal Completo',
+    name: 'Panel Hormonal',
     description: 'Análisis exhaustivo del sistema endocrino y hormonas reproductivas',
     category: 'Hormonal',
     biomarkersCommon: ['B5350', 'B5380', 'B5420', 'B5800', 'B5980'],
@@ -38,7 +38,7 @@ export const ADDONS = {
 
   antioxidantes: {
     id: 'antioxidantes',
-    name: 'Perfil Antioxidante Completo',
+    name: 'Perfil Antioxidante',
     description: 'Vitaminas liposolubles y antioxidantes esenciales',
     category: 'Antioxidantes',
     biomarkersCommon: ['T0811', 'T1191', 'T2841', 'T1200', 'T2830'],
@@ -54,7 +54,7 @@ export const ADDONS = {
 
   estres_oxidativo: {
     id: 'estres_oxidativo',
-    name: 'Estrés Oxidativo y Defensa',
+    name: 'Estrés Oxidativo',
     description: 'Sistemas enzimáticos antioxidantes y capacidad de defensa celular',
     category: 'Estrés Oxidativo',
     biomarkersCommon: ['B7121', 'B3015', 'B3041', 'T3920'],
@@ -86,7 +86,7 @@ export const ADDONS = {
 
   cardiovascular: {
     id: 'cardiovascular',
-    name: 'Riesgo Cardiovascular Avanzado',
+    name: 'Riesgo Cardiovascular',
     description: 'Marcadores especializados de riesgo cardiovascular y cardiopatía',
     category: 'Cardiovascular',
     biomarkersCommon: ['B0110', 'B0750', 'B2120', 'B0220', 'B1900', 'B0190', 'B7700', 'I5047'],
@@ -134,7 +134,7 @@ export const ADDONS = {
 
   immunity: {
     id: 'immunity',
-    name: 'Sistema Inmune y Autoinmunidad',
+    name: 'Sistema Inmune',
     description: 'Evaluación del sistema inmunitario y marcadores autoinmunes',
     category: 'Inmunología',
     biomarkersCommon: ['I0141', 'I5072', 'B6321', 'B6300', 'B7750', 'B3130'],
@@ -150,7 +150,7 @@ export const ADDONS = {
 
   digestion: {
     id: 'digestion',
-    name: 'Digestión y Metabolismo',
+    name: 'Función Digestiva',
     description: 'Función digestiva y metabolismo de ácidos grasos',
     category: 'Digestivo',
     biomarkersCommon: ['T2590', 'B1980', 'B0350', 'B0260'],
@@ -166,7 +166,7 @@ export const ADDONS = {
 
   coagulation: {
     id: 'coagulation',
-    name: 'Coagulación Avanzada',
+    name: 'Coagulación',
     description: 'Perfil completo de coagulación sanguínea',
     category: 'Hematología',
     biomarkersCommon: ['H0050', 'H0850', 'H0860'],
@@ -249,7 +249,7 @@ export const ADDONS = {
 
   genome: {
     id: 'genome',
-    name: 'Análisis Genético Completo',
+    name: 'Análisis Genético',
     description: 'Suite completa de análisis genéticos especializados',
     category: 'Genética',
     biomarkersCommon: ['OG002', 'OG003', 'OG004', 'OG005', 'OG006'],

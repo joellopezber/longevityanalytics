@@ -5,6 +5,7 @@
 
 'use client';
 
+import { useState } from 'react';
 import { useConfiguratorStore } from '@/lib/store/useConfiguratorStore';
 import { StepIndicator } from './StepIndicator';
 import { PackageSelector } from './PackageSelector';
@@ -13,8 +14,8 @@ import { AddOnSelector } from './AddOnSelector';
 import { OrderSummary } from './OrderSummary';
 
 const STEPS = [
-  { id: 1, title: 'Paquete', description: 'Elige tu paquete base' },
-  { id: 2, title: 'Género', description: 'Selecciona tu género' },
+  { id: 1, title: 'Género', description: 'Selecciona tu género' },
+  { id: 2, title: 'Paquete', description: 'Elige tu paquete base' },
   { id: 3, title: 'Add-ons', description: 'Personaliza tu análisis' },
   { id: 4, title: 'Resumen', description: 'Confirma tu pedido' }
 ];
@@ -25,9 +26,9 @@ export default function PackageConfigurator() {
   const canProceedToNext = () => {
     switch (currentStep) {
       case 1:
-        return selectedProfile !== null;
+        return true; // Gender is always selected (default: 'male')
       case 2:
-        return true; // Gender is always selected (default: 'both')
+        return selectedProfile !== null;
       case 3:
         return true; // Add-ons are optional
       case 4:
@@ -40,15 +41,15 @@ export default function PackageConfigurator() {
   const renderCurrentStep = () => {
     switch (currentStep) {
       case 1:
-        return <PackageSelector />;
-      case 2:
         return <GenderSelector />;
+      case 2:
+        return <PackageSelector />;
       case 3:
         return <AddOnSelector />;
       case 4:
         return <OrderSummary />;
       default:
-        return <PackageSelector />;
+        return <GenderSelector />;
     }
   };
 
@@ -123,7 +124,7 @@ export default function PackageConfigurator() {
           </div>
 
           <div>
-            {currentStep < 4 ? (
+            {currentStep < 4 && (
               <button
                 onClick={nextStep}
                 disabled={!canProceedToNext()}
@@ -134,10 +135,6 @@ export default function PackageConfigurator() {
                 }`}
               >
                 Siguiente →
-              </button>
-            ) : (
-              <button className="px-8 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl">
-                Finalizar Pedido
               </button>
             )}
           </div>
@@ -178,19 +175,19 @@ function ConfigurationSummary() {
 
   return (
     <div className="space-y-4">
-      
+
+      {/* Gender */}
+      <div>
+        <h4 className="text-sm font-medium text-gray-500 mb-1">Género</h4>
+        <p className="text-gray-900">{getGenderLabel(selectedGender)}</p>
+      </div>
+
       {/* Package */}
       <div>
         <h4 className="text-sm font-medium text-gray-500 mb-1">Perfil</h4>
         <p className="text-gray-900">
           {selectedProfile ? selectedProfile.name : 'No seleccionado'}
         </p>
-      </div>
-
-      {/* Gender */}
-      <div>
-        <h4 className="text-sm font-medium text-gray-500 mb-1">Género</h4>
-        <p className="text-gray-900">{getGenderLabel(selectedGender)}</p>
       </div>
 
       {/* Add-ons */}

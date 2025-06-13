@@ -5,11 +5,9 @@
 
 'use client';
 
-import { useState } from 'react';
-import PackageQuestionnaireModal from '@/components/landing/PackageQuestionnaireModal';
+import { PackageSelectionCTA } from '@/components/shared/PackageSelectionCTA';
 
 export default function ProcesoPage() {
-  const [showPackageSelector, setShowPackageSelector] = useState(false);
 
   const steps = [
     {
@@ -265,45 +263,14 @@ export default function ProcesoPage() {
 
 
 
-      {/* Bottom CTA - Igual que en landing */}
+      {/* Bottom CTA */}
       <div className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                ¿No estás seguro de qué paquete elegir?
-              </h3>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                Te ayudamos a encontrar el paquete perfecto para ti, basado en tus objetivos de salud y necesidades específicas.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a 
-                  href="/configurador"
-                  className="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl inline-block"
-                >
-                  Configurador Inteligente
-                </a>
-                <button 
-                  onClick={() => setShowPackageSelector(true)}
-                  className="border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-                >
-                  ¿Qué paquete elegir?
-                </button>
-              </div>
-            </div>
-          </div>
+          <PackageSelectionCTA variant="process" />
         </div>
       </div>
 
-      {/* Modal de Cuestionario de Paquetes */}
-      <PackageQuestionnaireModal
-        isOpen={showPackageSelector}
-        onClose={() => setShowPackageSelector(false)}
-        onRecommendation={(result) => {
-          // El modal manejará el resultado internamente
-          console.log('Paquete recomendado:', result.recommendedPackage);
-        }}
-      />
+
     </div>
   );
 } 

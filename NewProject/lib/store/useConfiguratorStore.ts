@@ -227,10 +227,10 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
           );
 
           set({
-            totalBiomarkers: pricingData.totalBiomarkers,
-            totalPrice: pricingData.totalPrecio,
-            totalPvp: pricingData.totalPvp,
-            savings: pricingData.totalPvp - pricingData.totalPrecio,
+            totalBiomarkers: pricingData.final.totalBiomarkers,
+            totalPrice: pricingData.final.pricing.precio,
+            totalPvp: pricingData.final.pricing.pvp,
+            savings: pricingData.final.pricing.discount,
             isLoading: false
           });
 

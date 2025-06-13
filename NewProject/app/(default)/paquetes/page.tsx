@@ -6,12 +6,13 @@
 
 'use client';
 
-import { useState, useEffect } from 'react';
-import { profilesAPI } from '@/lib/api-client';
+import { useState } from 'react';
+import { usePackagesData } from '@/hooks/usePackagesData';
+import { PackageCard } from '@/components/shared/PackageCard';
+import { PackageSelectionCTA } from '@/components/shared/PackageSelectionCTA';
 import { ProfileBiomarkersModal } from '@/components/landing/ProfileBiomarkersModal';
 import { PACKAGE_DESCRIPTIONS } from '@/lib/data/questionnaire';
 import { getProfileBiomarkers, getProfileStats } from '@/lib/data/profile-biomarkers';
-import PackageQuestionnaireModal from '@/components/landing/PackageQuestionnaireModal';
 
 interface ModalState {
   isOpen: boolean;
@@ -20,132 +21,22 @@ interface ModalState {
 }
 
 export default function PaquetesPage() {
-  const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male');
-  const [showPackageSelector, setShowPackageSelector] = useState(false);
-  const [profiles, setProfiles] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { 
+    selectedGender, 
+    setSelectedGender, 
+    loading, 
+    getProfileData, 
+    formatPrice,
+    packagesInfo 
+  } = usePackagesData();
+  
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     profileId: '',
     profileName: ''
   });
 
-  // Cargar perfiles desde la API
-  useEffect(() => {
-    const loadProfiles = async () => {
-      try {
-        const profilesData = await profilesAPI.getAll();
-        setProfiles(profilesData);
-      } catch (error) {
-        console.error('Error loading profiles:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadProfiles();
-  }, []);
-
-  // Datos estáticos de los paquetes (información visual y descriptiva)
-  const packagesInfo = [
-    {
-      id: 'essential',
-      name: 'Essential',
-      title: 'Seguimiento Básico',
-      description: 'Análisis fundamental para el seguimiento básico de tu salud y bienestar general.',
-      color: 'blue',
-      bgColor: 'bg-blue-50',
-      textColor: 'text-blue-700',
-      icon: '🔬',
-      addOnsCount: 16,
-      features: [
-        'Perfil lipídico completo',
-        'Función hepática',
-        'Función renal',
-        'Hemograma completo',
-        'Marcadores inflamatorios básicos'
-      ]
-    },
-    {
-      id: 'performance',
-      name: 'Performance',
-      title: 'Rendimiento Deportivo',
-      description: 'Optimización del rendimiento físico y cognitivo para deportistas y profesionales activos.',
-      color: 'purple',
-      bgColor: 'bg-purple-50',
-      textColor: 'text-purple-700',
-      icon: '⚡',
-      addOnsCount: 16,
-      features: [
-        'Perfil hormonal deportivo',
-        'Marcadores de recuperación',
-        'Análisis de estrés oxidativo',
-        'Vitaminas y minerales',
-        'Función cardiovascular avanzada'
-      ]
-    },
-    {
-      id: 'core',
-      name: 'Core',
-      title: 'Centros de Longevidad',
-      description: 'Análisis integral diseñado para centros especializados en medicina de longevidad.',
-      color: 'green',
-      bgColor: 'bg-green-50',
-      textColor: 'text-green-700',
-      isPopular: true,
-      icon: '🎯',
-      addOnsCount: 11,
-      features: [
-        'Análisis epigenético',
-        'Marcadores de envejecimiento',
-        'Perfil hormonal completo',
-        'Función mitocondrial',
-        'Biomarcadores de longevidad'
-      ]
-    },
-    {
-      id: 'advanced',
-      name: 'Advanced',
-      title: 'Análisis Completo',
-      description: 'El análisis más completo disponible, sin dejar nada al azar en tu salud.',
-      color: 'amber',
-      bgColor: 'bg-amber-50',
-      textColor: 'text-amber-700',
-      icon: '🔬',
-      addOnsCount: 3,
-      features: [
-        'Análisis genético completo',
-        'Microbioma intestinal',
-        'Marcadores tumorales',
-        'Edad biológica',
-        'Perfil completo de metales pesados'
-      ]
-    }
-  ];
-
-  // Función para obtener datos del perfil
-  const getProfileData = (profileId: string) => {
-    const profile = profiles.find(p => p.id === profileId);
-    if (!profile) return { 
-      biomarkers: 0, 
-      male: 0, 
-      female: 0, 
-      pricing: { precio: 0, pvp: 0 } 
-    };
-    
-    // Validación adicional para evitar errores durante pre-rendering
-    const pricing = profile.pricing?.[selectedGender];
-    const safePricing = pricing && typeof pricing.precio !== 'undefined' 
-      ? pricing 
-      : { precio: 0, pvp: 0 };
-    
-    return {
-      biomarkers: profile.biomarkersCount?.[selectedGender] || 0,
-      male: profile.biomarkersCount?.male || 0,
-      female: profile.biomarkersCount?.female || 0,
-      pricing: safePricing
-    };
-  };
+  // Los datos y funciones ahora vienen del hook usePackagesData
 
   const handleViewBiomarkers = (profileId: string, profileName: string) => {
     setModalState({
@@ -163,14 +54,7 @@ export default function PaquetesPage() {
     });
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
+  // formatPrice ahora viene del hook usePackagesData
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -437,135 +321,31 @@ export default function PaquetesPage() {
             </div>
           </div>
 
-          {/* Packages Grid - Moved here */}
+          {/* Packages Grid - Using shared component */}
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             {packagesInfo.map((pkg) => {
               const biomarkers = getProfileBiomarkers(pkg.id, selectedGender);
               const stats = getProfileStats(pkg.id, selectedGender);
-              const biomarkersCount = biomarkers.length;
               
               // Obtener datos del perfil desde la API
               const profileData = getProfileData(pkg.id);
-              const pricing = profileData.pricing;
-              const pricePerBiomarker = biomarkersCount > 0 ? pricing.precio / biomarkersCount : 0;
 
               return (
-                <div
+                <PackageCard
                   key={pkg.id}
-                  className={`bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border-2 ${
-                    pkg.id === 'advanced' 
-                      ? 'border-green-500 ring-2 ring-green-200' 
-                      : 'border-gray-200 hover:border-gray-300'
-                  } overflow-hidden`}
-                >
-                  {/* Header */}
-                  <div className={`p-6 ${pkg.bgColor} ${pkg.textColor}`}>
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <span className="text-2xl">{pkg.icon}</span>
-                        <div>
-                          <h3 className="text-xl font-bold">{pkg.name}</h3>
-                          {pkg.id === 'advanced' && (
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
-                              Más Popular
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="text-center">
-                      <div className="text-3xl font-bold mb-2">
-                        {formatPrice(pricing.precio)}
-                      </div>
-                      <div className="text-sm opacity-80">
-                        {formatPrice(pricePerBiomarker)} por biomarcador
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    <p className="text-gray-600 text-sm mb-6 leading-relaxed">
-                      {pkg.description}
-                    </p>
-
-                    {/* Stats */}
-                    <div className="space-y-3 mb-6">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600">Biomarcadores:</span>
-                        <span className={`font-semibold ${pkg.textColor}`}>
-                          {biomarkersCount}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600">Categorías:</span>
-                        <span className={`font-semibold ${pkg.textColor}`}>
-                          {stats.totalCategories}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600">Add-ons disponibles:</span>
-                        <span className={`font-semibold ${pkg.textColor}`}>
-                          {pkg.addOnsCount}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-600">Específicos de género:</span>
-                        <span className={`font-semibold ${pkg.textColor}`}>
-                          {selectedGender === 'male' ? stats.biomarkersByGender.male : stats.biomarkersByGender.female}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Features */}
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-gray-900 mb-3">Incluye:</h4>
-                      <ul className="space-y-2">
-                        {pkg.features.slice(0, 4).map((feature, index) => (
-                          <li key={index} className="flex items-start space-x-2">
-                            <svg className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                            <span className="text-xs text-gray-600">{feature}</span>
-                          </li>
-                        ))}
-                        {pkg.features.length > 4 && (
-                          <li className="text-xs text-gray-500 italic">
-                            +{pkg.features.length - 4} análisis más...
-                          </li>
-                        )}
-                      </ul>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="space-y-3">
-                      <button 
-                        onClick={() => handleViewBiomarkers(pkg.id, pkg.name)}
-                        className={`w-full py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 flex items-center justify-center space-x-2 ${
-                          pkg.id === 'advanced'
-                            ? 'bg-gradient-to-r from-green-700 to-green-600 text-white hover:from-green-800 hover:to-green-700 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5'
-                            : `${pkg.bgColor} ${pkg.textColor} hover:bg-opacity-80 shadow-md hover:shadow-lg`
-                        }`}
-                      >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <span>Ver Biomarcadores</span>
-                      </button>
-                      
-                      <a
-                        href={`/configurador?package=${pkg.id}`}
-                        className="w-full py-3 px-4 rounded-lg font-medium text-sm transition-all duration-200 flex items-center justify-center space-x-2 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 shadow-sm hover:shadow-md"
-                      >
-                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                        </svg>
-                        <span>Configurar Paquete</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
+                  pkg={pkg}
+                  profileData={{
+                    biomarkers: biomarkers.length,
+                    male: profileData.male,
+                    female: profileData.female,
+                    pricing: profileData.pricing
+                  }}
+                  selectedGender={selectedGender}
+                  onViewBiomarkers={handleViewBiomarkers}
+                  variant="detailed"
+                  showStats={true}
+                  showComparison={true}
+                />
               );
             })}
           </div>
@@ -817,30 +597,7 @@ export default function PaquetesPage() {
       {/* CTA Section */}
       <div className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-200 max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                ¿No estás seguro de qué paquete elegir?
-              </h3>
-              <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-                Te ayudamos a encontrar el paquete perfecto para ti, basado en tus objetivos de salud y necesidades específicas.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href="/configurador"
-                  className="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors shadow-lg hover:shadow-xl inline-block"
-                >
-                  Configurador Inteligente
-                </a>
-                <button
-                  onClick={() => setShowPackageSelector(true)}
-                  className="border-2 border-gray-300 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
-                >
-                  ¿Qué paquete elegir?
-                </button>
-              </div>
-            </div>
-          </div>
+          <PackageSelectionCTA variant="packages" />
         </div>
       </div>
 
@@ -853,15 +610,7 @@ export default function PaquetesPage() {
         onClose={closeModal}
       />
 
-      {/* Modal de Cuestionario de Paquetes */}
-      <PackageQuestionnaireModal
-        isOpen={showPackageSelector}
-        onClose={() => setShowPackageSelector(false)}
-        onRecommendation={(result) => {
-          // El modal manejará el resultado internamente
-          console.log('Paquete recomendado:', result.recommendedPackage);
-        }}
-      />
+
     </div>
   );
 } 

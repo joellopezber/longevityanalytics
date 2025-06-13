@@ -7,7 +7,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 const nextConfig = {
   // Solo usar export estático para GitHub Pages, no para desarrollo
   ...(isGithubPages && {
-    output: 'export',
+  output: 'export',
   }),
   trailingSlash: true,
   images: {

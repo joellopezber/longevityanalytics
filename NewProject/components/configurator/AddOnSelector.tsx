@@ -9,6 +9,8 @@
 import { useState, useEffect } from 'react';
 import { useConfiguratorStore, type AddOn } from '@/lib/store/useConfiguratorStore';
 import { addonsAPI } from '@/lib/api-client';
+import { BIOMARKERS_DICTIONARY } from '@/data/biomarkers';
+import { AddOnBiomarkersModal } from './AddOnBiomarkersModal';
 
 // Categorías de add-ons del nuevo sistema
 const ADDON_CATEGORIES = [
@@ -38,7 +40,8 @@ export function AddOnSelector() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [availableAddOns, setAvailableAddOns] = useState<AddOn[]>([]);
   const [loading, setLoading] = useState(true);
-  const [biomarkersModalOpen, setBiomarkersModalOpen] = useState<AddOn | null>(null);
+  const [biomarkersModalOpen, setBiomarkersModalOpen] = useState<{id: string, name: string} | null>(null);
+  const [hoveredAddon, setHoveredAddon] = useState<string | null>(null);
 
   // Cargar add-ons disponibles
   useEffect(() => {
@@ -92,11 +95,16 @@ export function AddOnSelector() {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
-        <p className="text-gray-600">
-          Personaliza tu análisis añadiendo add-ons específicos para tus objetivos de salud.
-          Puedes seleccionar hasta 10 add-ons adicionales.
-        </p>
-        <div className="mt-2 text-sm text-gray-500">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg p-6 mb-6">
+          <h3 className="text-lg font-semibold text-white mb-2">
+            Tercer paso: Personaliza con Add-ons
+          </h3>
+          <p className="text-white">
+            Añade análisis específicos para completar tu perfil de salud personalizado. 
+            Puedes seleccionar hasta 10 add-ons adicionales.
+          </p>
+        </div>
+        <div className="text-sm text-gray-500">
           {selectedAddOns.length}/10 add-ons seleccionados
         </div>
       </div>
@@ -154,12 +162,13 @@ export function AddOnSelector() {
             return (
               <div
                 key={addon.id}
-                className={`relative rounded-2xl border-2 p-6 transition-all ${
+                onClick={() => canSelect && toggleAddOn(addon)}
+                className={`relative cursor-pointer rounded-2xl border-2 p-6 transition-all hover:shadow-lg ${
                   !canSelect && !isSelected
                     ? 'opacity-50 cursor-not-allowed border-gray-200 bg-gray-50'
                     : isSelected
                     ? 'border-green-500 bg-green-50 shadow-lg ring-2 ring-green-200'
-                    : 'border-gray-200 bg-white hover:border-green-300 hover:shadow-lg cursor-pointer'
+                    : 'border-gray-200 bg-white hover:border-green-300'
                 }`}
               >
                 {/* Selection Indicator */}
@@ -186,79 +195,69 @@ export function AddOnSelector() {
 
                 {/* Add-on Header */}
                 <div className="mt-8 mb-4">
-                  <div className="flex items-center mb-2">
-                    <div className="text-2xl mr-2">🧬</div>
-                    <div>
-                      <h3 className="text-lg font-bold text-gray-900">{addon.name}</h3>
-                      <p className="text-sm text-gray-600">{addon.description}</p>
+                  <div className="flex items-center justify-center relative">
+                    <h3 className="text-xl font-bold text-gray-900">{addon.name}</h3>
+                    <div className="relative">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setBiomarkersModalOpen({id: addon.id, name: addon.name});
+                        }}
+                        onMouseEnter={() => setHoveredAddon(addon.id)}
+                        onMouseLeave={() => setHoveredAddon(null)}
+                        className="ml-2 text-gray-400 hover:text-gray-600 transition-colors"
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      
+                      {/* Tooltip personalizado */}
+                      {hoveredAddon === addon.id && (
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-10">
+                          <div className="bg-gray-900 text-white text-sm rounded-lg py-2 px-3 max-w-xs whitespace-normal shadow-lg">
+                            {addon.description}
+                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-green-600">
-                      {biomarkersCount}
-                    </div>
-                    <div className="text-xs text-gray-500">Biomarcadores</div>
+                <div className="text-center mb-4">
+                  <div className="text-2xl font-bold text-green-600">
+                    {biomarkersCount}
                   </div>
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-gray-900">
-                      {formatPrice(pricing.precio)}
-                    </div>
-                    {discount > 0 && (
-                      <div className="text-xs text-green-600">
-                        Ahorra {discount}%
-                      </div>
-                    )}
-                  </div>
+                  <div className="text-xs text-gray-500">Biomarcadores</div>
                 </div>
 
-                {/* Pricing Details */}
-                {pricing.pvp > pricing.precio && (
-                  <div className="mb-4 text-center">
-                    <div className="text-sm text-gray-500 line-through">
-                      PVP: {formatPrice(pricing.pvp)}
-                    </div>
-                    <div className="text-sm font-medium text-green-600">
-                      Precio especial: {formatPrice(pricing.precio)}
-                    </div>
+                {/* Price */}
+                <div className="text-center mb-4">
+                  <div className="text-2xl font-bold text-gray-900">
+                    {formatPrice(pricing.precio)}
                   </div>
-                )}
-
-                {/* Biomarcadores Preview */}
-                <div className="mb-4">
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">
-                    Biomarcadores incluidos:
-                  </h4>
-                  <div className="text-xs text-gray-600">
-                    {addon.biomarkers.slice(0, 3).join(', ')}
-                    {addon.biomarkers.length > 3 && ` y ${addon.biomarkers.length - 3} más...`}
+                  <div className="text-sm text-gray-500">
+                    Precio para {selectedGender === 'male' ? 'hombre' : 'mujer'}
                   </div>
+                  {discount > 0 && (
+                    <div className="text-sm text-green-600 font-medium">
+                      Ahorra {discount}% sobre PVP ({formatPrice(pricing.pvp)})
+                    </div>
+                  )}
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-2 mt-4">
+                {/* Biomarkers Button */}
+                <div className="pt-4 border-t border-gray-200">
                   <button
-                    onClick={() => canSelect && toggleAddOn(addon)}
-                    disabled={!canSelect}
-                    className={`flex-1 px-4 py-2 rounded-lg font-medium transition-colors ${
-                      isSelected
-                        ? 'bg-red-100 text-red-700 hover:bg-red-200'
-                        : canSelect
-                        ? 'bg-green-600 text-white hover:bg-green-700'
-                        : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setBiomarkersModalOpen({id: addon.id, name: addon.name});
+                    }}
+                    className="w-full bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-lg transition-colors border border-green-200 hover:border-green-300"
                   >
-                    {isSelected ? 'Remover' : canSelect ? 'Añadir' : 'Límite alcanzado'}
-                  </button>
-                  
-                  <button
-                    onClick={() => setBiomarkersModalOpen(addon)}
-                    className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors text-sm"
-                  >
-                    Ver detalles
+                    Ver biomarcadores
                   </button>
                 </div>
               </div>
@@ -269,43 +268,12 @@ export function AddOnSelector() {
 
       {/* Biomarcadores Modal */}
       {biomarkersModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-            <div className="p-6 border-b">
-              <div className="flex justify-between items-center">
-                <div>
-                  <h2 className="text-xl font-bold">{biomarkersModalOpen.name}</h2>
-                  <p className="text-gray-600">{biomarkersModalOpen.description}</p>
-                </div>
-                <button
-                  onClick={() => setBiomarkersModalOpen(null)}
-                  className="text-gray-400 hover:text-gray-600"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            
-            <div className="p-6 overflow-y-auto">
-              <h3 className="font-semibold mb-4">Biomarcadores incluidos ({biomarkersModalOpen.biomarkersCount[selectedGender]}):</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {biomarkersModalOpen.biomarkers.map((code, index) => (
-                  <div key={index} className="flex items-center p-3 bg-gray-50 rounded-lg">
-                    <div className="text-sm font-mono text-gray-600 bg-white px-2 py-1 rounded mr-3">
-                      {code}
-                    </div>
-                    <div className="text-sm text-gray-900">
-                      {/* Aquí podrías mostrar el nombre del biomarcador si lo tienes */}
-                      {code}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        <AddOnBiomarkersModal
+          isOpen={true}
+          onClose={() => setBiomarkersModalOpen(null)}
+          addonId={biomarkersModalOpen.id}
+          addonName={biomarkersModalOpen.name}
+        />
       )}
     </div>
   );

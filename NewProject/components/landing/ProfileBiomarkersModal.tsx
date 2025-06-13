@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { getProfileBiomarkers, getProfileBiomarkerCategories, getProfileStats, type ProfileBiomarker } from '@/lib/data/profile-biomarkers';
+import { useState, useEffect } from 'react';
+import { biomarkersAPI, profilesAPI } from '@/lib/api-client';
+import { useConfiguratorStore } from '@/lib/store/useConfiguratorStore';
 import { Button } from '@/components/ui/Button';
 
 interface ProfileBiomarkersModalProps {
@@ -20,12 +21,57 @@ export function ProfileBiomarkersModal({
   selectedGender 
 }: ProfileBiomarkersModalProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [biomarkers, setBiomarkers] = useState<any[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
+  const { selectedProfile } = useConfiguratorStore();
+
+  // Cargar biomarcadores desde la API cuando se abre el modal
+  useEffect(() => {
+    if (!isOpen || !profileId) return;
+
+    const loadBiomarkers = async () => {
+      setLoading(true);
+      setError(null);
+      
+      try {
+        // Obtener detalles del perfil con biomarcadores desde la API
+        const profileData = await profilesAPI.getById(profileId, { 
+          gender: selectedGender, 
+          details: true 
+        });
+        
+        if (profileData && profileData.biomarkerCodes && profileData.biomarkerCodes.length > 0) {
+          // Usar los detalles que ya vienen de la API (más eficiente)
+          const biomarkersData = profileData.biomarkersDetails || [];
+          
+          // Extraer categorías únicas
+          const categoriesSet = new Set<string>();
+          biomarkersData.forEach(b => categoriesSet.add(b.category || ''));
+          const uniqueCategories = Array.from(categoriesSet);
+          
+          setBiomarkers(biomarkersData);
+          setCategories(uniqueCategories);
+        } else {
+          setBiomarkers([]);
+          setCategories([]);
+          setError('No se encontraron biomarcadores para este perfil');
+        }
+        
+      } catch (err) {
+        console.error('Error loading biomarkers:', err);
+        setError('Error cargando biomarcadores');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadBiomarkers();
+  }, [isOpen, profileId, selectedGender]);
 
   if (!isOpen) return null;
-
-  const biomarkers = getProfileBiomarkers(profileId, selectedGender);
-  const categories = getProfileBiomarkerCategories(profileId, selectedGender);
-  const stats = getProfileStats(profileId, selectedGender);
 
   const filteredBiomarkers = selectedCategory === 'all' 
     ? biomarkers 
@@ -54,29 +100,42 @@ export function ProfileBiomarkersModal({
           </div>
         </div>
 
-        {/* Estadísticas */}
-        <div className="p-4 border-b flex-shrink-0">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="text-center p-3 bg-blue-50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-600">{stats.totalBiomarkers}</div>
-              <div className="text-xs text-gray-600">Total Biomarcadores</div>
-            </div>
-            <div className="text-center p-3 bg-green-50 rounded-lg">
-              <div className="text-2xl font-bold text-green-600">{stats.totalCategories}</div>
-              <div className="text-xs text-gray-600">Categorías</div>
-            </div>
-            <div className="text-center p-3 bg-purple-50 rounded-lg">
-              <div className="text-2xl font-bold text-purple-600">{stats.biomarkersByGender.both}</div>
-              <div className="text-xs text-gray-600">Ambos Géneros</div>
-            </div>
-            <div className="text-center p-3 bg-orange-50 rounded-lg">
-              <div className="text-2xl font-bold text-orange-600">
-                {selectedGender === 'male' ? stats.biomarkersByGender.male : stats.biomarkersByGender.female}
+        {/* Loading y Estadísticas */}
+        {loading ? (
+          <div className="p-8 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Cargando biomarcadores...</p>
+          </div>
+        ) : error ? (
+          <div className="p-8 text-center">
+            <p className="text-red-600">{error}</p>
+          </div>
+        ) : (
+          <div className="p-4 border-b flex-shrink-0">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="text-center p-3 bg-blue-50 rounded-lg">
+                <div className="text-2xl font-bold text-blue-600">{biomarkers.length}</div>
+                <div className="text-xs text-gray-600">Total Biomarcadores</div>
               </div>
-              <div className="text-xs text-gray-600">Específicos de Género</div>
+              <div className="text-center p-3 bg-green-50 rounded-lg">
+                <div className="text-2xl font-bold text-green-600">{categories.length}</div>
+                <div className="text-xs text-gray-600">Categorías</div>
+              </div>
+              <div className="text-center p-3 bg-purple-50 rounded-lg">
+                <div className="text-2xl font-bold text-purple-600">
+                  {biomarkers.filter(b => b.gender === 'both').length}
+                </div>
+                <div className="text-xs text-gray-600">Ambos Géneros</div>
+              </div>
+              <div className="text-center p-3 bg-orange-50 rounded-lg">
+                <div className="text-2xl font-bold text-orange-600">
+                  {biomarkers.filter(b => b.gender === selectedGender).length}
+                </div>
+                <div className="text-xs text-gray-600">Específicos de Género</div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
 
 

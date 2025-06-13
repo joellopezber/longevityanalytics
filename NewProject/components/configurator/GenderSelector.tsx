@@ -5,10 +5,12 @@
 
 'use client';
 
+import { useState } from 'react';
 import { useConfiguratorStore, type Gender } from '@/lib/store/useConfiguratorStore';
 
 export function GenderSelector() {
   const { selectedGender, setGender, selectedProfile } = useConfiguratorStore();
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const genderOptions: { value: Gender; label: string; description: string; icon: string }[] = [
     {
@@ -36,13 +38,21 @@ export function GenderSelector() {
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg p-6 mb-6">
+          <h3 className="text-lg font-semibold text-white mb-2">
+            Primer paso: Selecciona tu género
+          </h3>
+          <p className="text-white">
+            Comenzamos con tu género porque <strong>los precios y biomarcadores varían</strong> entre hombres y mujeres. 
+            Esto nos permite mostrarte información exacta desde el inicio.
+          </p>
+        </div>
         <p className="text-gray-600">
-          Selecciona tu género para obtener un análisis más preciso y personalizado.
-          Los precios y biomarcadores pueden variar según la selección.
+          Cada género incluye biomarcadores específicos para obtener el análisis más preciso y personalizado.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="flex flex-col md:flex-row gap-6 justify-center max-w-2xl mx-auto">
         {genderOptions.map((option) => {
           const isSelected = selectedGender === option.value;
           const packagePricing = selectedProfile?.pricing[option.value];
@@ -52,7 +62,7 @@ export function GenderSelector() {
             <div
               key={option.value}
               onClick={() => setGender(option.value)}
-              className={`relative cursor-pointer rounded-2xl border-2 p-6 transition-all hover:shadow-lg ${
+              className={`relative cursor-pointer rounded-2xl border-2 p-6 transition-all hover:shadow-lg w-full md:w-80 ${
                 isSelected
                   ? 'border-green-500 bg-green-50 shadow-lg ring-2 ring-green-200'
                   : 'border-gray-200 bg-white hover:border-green-300'
@@ -138,30 +148,7 @@ export function GenderSelector() {
         })}
       </div>
 
-      {/* Info Box */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <div className="flex items-start space-x-3">
-          <div className="text-blue-600">
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-              <path
-                fillRule="evenodd"
-                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </div>
-          <div>
-            <h4 className="text-sm font-medium text-blue-900 mb-1">
-              ¿Por qué importa el género?
-            </h4>
-            <p className="text-sm text-blue-700">
-              Los análisis específicos por género incluyen biomarcadores únicos como hormonas sexuales, 
-              marcadores de próstata (hombres) o salud reproductiva (mujeres), proporcionando 
-              información más precisa y relevante para tu salud.
-            </p>
-          </div>
-        </div>
-      </div>
+
     </div>
   );
 } 

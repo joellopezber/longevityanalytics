@@ -173,7 +173,7 @@ export const PACKAGES_DATA: SimplePackage[] = [
       both: { price: 930, pvp: 1175 }
     },
     features: [
-      'Análisis genético completo',
+              'Análisis genético',
       'Microbioma intestinal',
       'Marcadores tumorales',
       'Edad biológica',

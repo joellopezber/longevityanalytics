@@ -95,7 +95,7 @@ const biomarkers = getBiomarkersForProfile('essential', 'male');
 | `cardiovascular` | Cardiovascular | 8 biomarcadores | Riesgo cardiovascular avanzado |
 | `cancer` | Oncología | 14 comunes + específicos | Marcadores tumorales |
 | `bioage` | Longevidad | 2 comunes + específicos | Edad biológica |
-| `genome` | Genética | 5 biomarcadores | Análisis genético completo |
+| `genome` | Genética | 5 biomarcadores | Análisis genético |
 
 ### **Función Helper**
 ```javascript

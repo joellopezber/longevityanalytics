@@ -6,9 +6,11 @@
 
 'use client';
 
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useConfiguratorStore } from '@/lib/store/useConfiguratorStore';
+import { useOrdersStore } from '@/lib/store/useOrdersStore';
 
 export function OrderSummary() {
   const router = useRouter();
@@ -24,6 +26,8 @@ export function OrderSummary() {
     savings,
     reset
   } = useConfiguratorStore();
+  
+  const { saveOrder } = useOrdersStore();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('es-ES', {
@@ -50,25 +54,95 @@ export function OrderSummary() {
       // Simular procesamiento
       await new Promise(resolve => setTimeout(resolve, 1500));
       
+      // Preparar datos del pedido para guardar
+      const orderData = {
+        package: {
+          id: selectedProfile.id,
+          name: selectedProfile.name,
+          title: selectedProfile.name,
+          description: selectedProfile.description,
+          targetAudience: 'Usuario configurador',
+          color: 'green',
+          bgColor: 'bg-green-50',
+          textColor: 'text-green-700',
+          icon: React.createElement('div', { className: 'text-2xl' }, '🧬'),
+          biomarkersCount: {
+            ...selectedProfile.biomarkersCount,
+            both: selectedProfile.biomarkersCount.male + selectedProfile.biomarkersCount.female
+          },
+          addOnsCount: selectedAddOns.length,
+          pricing: {
+            male: { 
+              price: selectedProfile.pricing.male.precio, 
+              pvp: selectedProfile.pricing.male.pvp 
+            },
+            female: { 
+              price: selectedProfile.pricing.female.precio, 
+              pvp: selectedProfile.pricing.female.pvp 
+            },
+            both: { 
+              price: (selectedProfile.pricing.male.precio + selectedProfile.pricing.female.precio) / 2, 
+              pvp: (selectedProfile.pricing.male.pvp + selectedProfile.pricing.female.pvp) / 2 
+            }
+          },
+          features: [],
+          recommendedFor: []
+        },
+        gender: selectedGender,
+        addOns: selectedAddOns.map(addon => ({
+          id: addon.id,
+          name: addon.name,
+          title: addon.name,
+          description: addon.description,
+          category: 'General',
+          icon: '🧬',
+          color: 'green',
+          bgColor: 'bg-green-50',
+          textColor: 'text-green-700',
+          biomarkersCount: {
+            ...addon.biomarkersCount,
+            both: addon.biomarkersCount.male + addon.biomarkersCount.female
+          },
+          pricing: {
+            male: { 
+              price: addon.pricing.male.precio, 
+              pvp: addon.pricing.male.pvp 
+            },
+            female: { 
+              price: addon.pricing.female.precio, 
+              pvp: addon.pricing.female.pvp 
+            },
+            both: { 
+              price: (addon.pricing.male.precio + addon.pricing.female.precio) / 2, 
+              pvp: (addon.pricing.male.pvp + addon.pricing.female.pvp) / 2 
+            }
+          },
+          benefits: [],
+          compatibility: { packages: [] },
+          recommendedFor: [],
+          hasGenderDifferences: addon.pricing.male.precio !== addon.pricing.female.precio
+        })),
+        totals: {
+          biomarkers: totalBiomarkers,
+          price: totalPrice,
+          pvp: totalPvp,
+          savings: savings
+        }
+      };
+      
+      // Guardar el pedido
+      const orderId = saveOrder(orderData);
+      
       // Limpiar configurador
       reset();
       
-      // Redirigir a home con mensaje de éxito
-      router.push('/?success=true');
+      // Redirigir a home con mensaje de éxito y ID del pedido
+      router.push(`/?success=true&order=${orderId}`);
       
     } catch (error) {
       console.error('Error al procesar el pedido:', error);
       setIsProcessing(false);
     }
-  };
-
-  const handleSaveForLater = () => {
-    if (!selectedProfile) return;
-    
-    // Mostrar confirmación y redirigir
-    alert('¡Configuración guardada! Funcionalidad completa disponible pronto.');
-    reset();
-    router.push('/');
   };
 
   if (!selectedProfile) {
@@ -203,24 +277,17 @@ export function OrderSummary() {
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <button
-          onClick={handleSaveForLater}
-          className="flex-1 bg-gray-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-700 transition-colors"
-        >
-          Guardar para más tarde
-        </button>
-        
+      <div className="flex justify-center">
         <button
           onClick={handleFinishOrder}
           disabled={isProcessing}
-          className={`flex-1 py-3 px-6 rounded-lg font-semibold transition-colors ${
+          className={`w-full max-w-md py-3 px-6 rounded-lg font-semibold transition-colors ${
             isProcessing
               ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
               : 'bg-green-600 text-white hover:bg-green-700'
           }`}
         >
-          {isProcessing ? 'Procesando...' : 'Finalizar Pedido'}
+          {isProcessing ? 'Guardando pedido...' : 'Finalizar y Guardar Pedido'}
         </button>
       </div>
 

@@ -63,7 +63,7 @@ export const BIOAGE_BIOMARKER_CODES_FEMALE_ONLY = ['D1001'];
 // GUT GATE: Microbioma y permeabilidad (4 tests)
 export const GUT_GATE_BIOMARKER_CODES = ['M1190', 'P3031', 'AB001', 'AB002'];
 
-// GENOME: Análisis genético completo (5 tests)
+// GENOME: Análisis genético (5 tests)
 export const GENOME_BIOMARKER_CODES = ['OG002', 'OG003', 'OG004', 'OG005', 'OG006'];
 
 // ================================

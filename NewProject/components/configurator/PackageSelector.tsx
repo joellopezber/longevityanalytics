@@ -8,11 +8,16 @@
 
 import { useState, useEffect } from 'react';
 import { useConfiguratorStore, type Profile } from '@/lib/store/useConfiguratorStore';
+import { ProfileBiomarkersModal } from '@/components/landing/ProfileBiomarkersModal';
 
 export function PackageSelector() {
-  const { selectedProfile, setProfile, loadProfiles } = useConfiguratorStore();
+  const { selectedProfile, selectedGender, setProfile, loadProfiles } = useConfiguratorStore();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showBiomarkersModal, setShowBiomarkersModal] = useState(false);
+  const [selectedProfileId, setSelectedProfileId] = useState<string>('');
+  const [selectedProfileName, setSelectedProfileName] = useState<string>('');
+  const [hoveredProfile, setHoveredProfile] = useState<string | null>(null);
 
   // Cargar perfiles disponibles
   useEffect(() => {
@@ -49,20 +54,22 @@ export function PackageSelector() {
     }).format(price);
   };
 
-  // Iconos para los perfiles
-  const profileIcons = {
-    'essential': '🧬',
-    'performance': '🏃‍♂️',
-    'core': '💎',
-    'advanced': '🔬'
-  };
+
 
   return (
     <div className="space-y-6">
       <div className="text-center mb-8">
+        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg p-6 mb-6">
+          <h3 className="text-lg font-semibold text-white mb-2">
+            Segundo paso: Selecciona tu perfil base
+          </h3>
+          <p className="text-white">
+            Selecciona el perfil base que mejor se adapte a tus objetivos de salud. 
+            Podrás personalizarlo con add-ons en el siguiente paso.
+          </p>
+        </div>
         <p className="text-gray-600">
-          Selecciona el perfil base que mejor se adapte a tus objetivos de salud.
-          Podrás personalizarlo con add-ons en el siguiente paso.
+          Los precios y biomarcadores mostrados son específicos para tu género seleccionado.
         </p>
       </div>
 
@@ -75,11 +82,10 @@ export function PackageSelector() {
           {profiles.map((profile) => {
             const isSelected = selectedProfile?.id === profile.id;
             
-            // Calcular promedios de precio y biomarcadores
-            const avgPrice = Math.round((profile.pricing.male.precio + profile.pricing.female.precio) / 2);
-            const avgBiomarkers = Math.round((profile.biomarkersCount.male + profile.biomarkersCount.female) / 2);
-            const avgPvp = Math.round((profile.pricing.male.pvp + profile.pricing.female.pvp) / 2);
-            const discount = Math.round(((avgPvp - avgPrice) / avgPvp) * 100);
+            // Usar datos específicos del género seleccionado
+            const genderPricing = profile.pricing[selectedGender];
+            const genderBiomarkers = profile.biomarkersCount[selectedGender];
+            const discount = Math.round(((genderPricing.pvp - genderPricing.precio) / genderPricing.pvp) * 100);
             
             return (
               <div
@@ -107,76 +113,77 @@ export function PackageSelector() {
                 )}
 
                 {/* Package Header */}
-                <div className="flex items-center mb-4">
-                  <div className="text-3xl mr-3">{profileIcons[profile.id] || '🧬'}</div>
-                  <div>
+                <div className="mb-4">
+                  <div className="flex items-center justify-center relative">
                     <h3 className="text-xl font-bold text-gray-900">{profile.name}</h3>
-                    <p className="text-sm text-gray-600">{profile.description}</p>
+                    <div className="relative">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedProfileId(profile.id);
+                          setSelectedProfileName(profile.name);
+                          setShowBiomarkersModal(true);
+                        }}
+                        onMouseEnter={() => setHoveredProfile(profile.id)}
+                        onMouseLeave={() => setHoveredProfile(null)}
+                        className="ml-2 text-gray-400 hover:text-gray-600 transition-colors"
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                      
+                      {/* Tooltip personalizado */}
+                      {hoveredProfile === profile.id && (
+                        <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 z-10">
+                          <div className="bg-gray-900 text-white text-sm rounded-lg py-2 px-3 max-w-xs whitespace-normal shadow-lg">
+                            {profile.description}
+                            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
 
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600">
-                      {avgBiomarkers}
-                    </div>
-                    <div className="text-xs text-gray-500">Biomarcadores</div>
+                <div className="text-center mb-4">
+                  <div className="text-2xl font-bold text-green-600">
+                    {genderBiomarkers}
                   </div>
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-green-600">
-                      {profile.biomarkers.length}
-                    </div>
-                    <div className="text-xs text-gray-500">Análisis incluidos</div>
-                  </div>
+                  <div className="text-xs text-gray-500">Biomarcadores</div>
                 </div>
 
                 {/* Price */}
                 <div className="text-center mb-4">
                   <div className="text-2xl font-bold text-gray-900">
-                    {formatPrice(avgPrice)}
+                    {formatPrice(genderPricing.precio)}
                   </div>
                   <div className="text-sm text-gray-500">
-                    Precio promedio (varía por género)
+                    Precio para {selectedGender === 'male' ? 'hombre' : 'mujer'}
                   </div>
                   {discount > 0 && (
                     <div className="text-sm text-green-600 font-medium">
-                      Ahorra {discount}% sobre PVP
+                      Ahorra {discount}% sobre PVP ({formatPrice(genderPricing.pvp)})
                     </div>
                   )}
                 </div>
 
-                {/* Pricing Details by Gender */}
-                <div className="bg-gray-50 rounded-lg p-3 mb-4">
-                  <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="text-center">
-                      <div className="font-medium text-gray-700">👨 Hombre</div>
-                      <div className="text-green-600 font-semibold">
-                        {formatPrice(profile.pricing.male.precio)}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        {profile.biomarkersCount.male} biomarcadores
-                      </div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-medium text-gray-700">👩 Mujer</div>
-                      <div className="text-green-600 font-semibold">
-                        {formatPrice(profile.pricing.female.precio)}
-                      </div>
-                      <div className="text-xs text-gray-500">
-                        {profile.biomarkersCount.female} biomarcadores
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                {/* Biomarkers Preview */}
+
+                {/* Biomarkers Button */}
                 <div className="pt-4 border-t border-gray-200">
-                  <h4 className="text-sm font-medium text-gray-900 mb-2">Biomarcadores incluidos:</h4>
-                  <div className="text-xs text-gray-600">
-                    {profile.biomarkers.slice(0, 3).join(', ')}
-                    {profile.biomarkers.length > 3 && ` y ${profile.biomarkers.length - 3} más...`}
-                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedProfileId(profile.id);
+                      setSelectedProfileName(profile.name);
+                      setShowBiomarkersModal(true);
+                    }}
+                    className="w-full bg-green-50 hover:bg-green-100 text-green-700 font-medium py-2 px-4 rounded-lg transition-colors border border-green-200 hover:border-green-300"
+                  >
+                    Ver biomarcadores
+                  </button>
                 </div>
               </div>
             );
@@ -190,6 +197,15 @@ export function PackageSelector() {
           ¿No estás seguro? Puedes cambiar tu selección en cualquier momento.
         </p>
       </div>
+
+      {/* Biomarkers Modal */}
+      <ProfileBiomarkersModal
+        isOpen={showBiomarkersModal}
+        onClose={() => setShowBiomarkersModal(false)}
+        profileId={selectedProfileId}
+        profileName={selectedProfileName}
+        selectedGender={selectedGender}
+      />
     </div>
   );
 } 

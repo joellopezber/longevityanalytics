@@ -36,7 +36,7 @@ export const ADDONS_DATA: SimpleAddOn[] = [
   {
     id: 'hormonas',
     name: 'Hormonas',
-    title: 'Panel Hormonal Completo',
+    title: 'Panel Hormonal',
     description: 'Análisis completo de hormonas sexuales, tiroideas y del estrés para optimizar tu equilibrio hormonal.',
     category: 'Endocrino',
     icon: '🧪',
@@ -74,7 +74,7 @@ export const ADDONS_DATA: SimpleAddOn[] = [
   {
     id: 'cardiovascular',
     name: 'Cardiovascular',
-    title: 'Salud Cardiovascular Avanzada',
+    title: 'Riesgo Cardiovascular',
     description: 'Evaluación completa del riesgo cardiovascular con marcadores avanzados de inflamación y coagulación.',
     category: 'Cardiovascular',
     icon: '❤️',
@@ -111,7 +111,7 @@ export const ADDONS_DATA: SimpleAddOn[] = [
   {
     id: 'antioxidantes',
     name: 'Antioxidantes',
-    title: 'Capacidad Antioxidante',
+    title: 'Perfil Antioxidante',
     description: 'Medición de tu capacidad antioxidante y niveles de vitaminas clave para combatir el envejecimiento.',
     category: 'Anti-aging',
     icon: '🛡️',
@@ -146,9 +146,46 @@ export const ADDONS_DATA: SimpleAddOn[] = [
     hasGenderDifferences: false
   },
   {
+    id: 'oxidative_cell',
+    name: 'Estrés Oxidativo',
+    title: 'Estrés Oxidativo',
+    description: 'Sistemas enzimáticos antioxidantes y capacidad de defensa celular contra el daño oxidativo.',
+    category: 'Anti-aging',
+    icon: '⚡',
+    color: 'yellow',
+    bgColor: 'bg-yellow-50',
+    textColor: 'text-yellow-700',
+    biomarkersCount: {
+      male: 4,
+      female: 4,
+      both: 4
+    },
+    pricing: {
+      male: { price: 65, pvp: 85 },
+      female: { price: 65, pvp: 85 },
+      both: { price: 65, pvp: 85 }
+    },
+    benefits: [
+      'Evaluación del daño celular',
+      'Capacidad antioxidante endógena',
+      'Estrategias anti-envejecimiento',
+      'Protección contra radicales libres'
+    ],
+    compatibility: {
+      packages: ['essential', 'performance', 'core', 'advanced']
+    },
+    recommendedFor: [
+      'Exposición a contaminación',
+      'Estrés crónico',
+      'Deportistas intensivos',
+      'Prevención del envejecimiento'
+    ],
+    hasGenderDifferences: false
+  },
+  {
     id: 'metals',
     name: 'Metales Pesados',
-    title: 'Detoxificación de Metales',
+    title: 'Metales Pesados',
     description: 'Análisis de metales pesados tóxicos y minerales esenciales para optimizar tu detoxificación.',
     category: 'Detox',
     icon: '⚗️',
@@ -185,7 +222,7 @@ export const ADDONS_DATA: SimpleAddOn[] = [
   {
     id: 'immunity',
     name: 'Inmunidad',
-    title: 'Sistema Inmunológico',
+    title: 'Sistema Inmune',
     description: 'Evaluación completa de tu sistema inmune para optimizar tus defensas naturales.',
     category: 'Inmunología',
     icon: '🛡️',
@@ -222,7 +259,7 @@ export const ADDONS_DATA: SimpleAddOn[] = [
   {
     id: 'digestion',
     name: 'Digestión',
-    title: 'Salud Digestiva',
+    title: 'Función Digestiva',
     description: 'Análisis completo de la función digestiva y absorción de nutrientes.',
     category: 'Gastroenterología',
     icon: '🍽️',
@@ -259,7 +296,7 @@ export const ADDONS_DATA: SimpleAddOn[] = [
   {
     id: 'cancer',
     name: 'Marcadores Tumorales',
-    title: 'Detección Temprana de Cáncer',
+    title: 'Marcadores Tumorales',
     description: 'Panel de marcadores tumorales para detección temprana y seguimiento oncológico.',
     category: 'Oncología',
     icon: '🎯',
@@ -296,7 +333,7 @@ export const ADDONS_DATA: SimpleAddOn[] = [
   {
     id: 'bioage',
     name: 'Edad Biológica',
-    title: 'Tu Edad Real',
+    title: 'Edad Biológica',
     description: 'Determina tu edad biológica real y descubre qué tan rápido estás envejeciendo.',
     category: 'Anti-aging',
     icon: '⏰',
@@ -329,6 +366,43 @@ export const ADDONS_DATA: SimpleAddOn[] = [
       'Curiosidad científica'
     ],
     hasGenderDifferences: true
+  },
+  {
+    id: 'genome',
+    name: 'Análisis Genético',
+    title: 'Análisis Genético',
+    description: 'Suite completa de análisis genéticos especializados para medicina personalizada.',
+    category: 'Genética',
+    icon: '🧬',
+    color: 'teal',
+    bgColor: 'bg-teal-50',
+    textColor: 'text-teal-700',
+    biomarkersCount: {
+      male: 5,
+      female: 5,
+      both: 5
+    },
+    pricing: {
+      male: { price: 250, pvp: 320 },
+      female: { price: 250, pvp: 320 },
+      both: { price: 250, pvp: 320 }
+    },
+    benefits: [
+      'Farmacogenética personalizada',
+      'Nutrigenética',
+      'Genética deportiva',
+      'Detoxificación genética'
+    ],
+    compatibility: {
+      packages: ['core', 'advanced']
+    },
+    recommendedFor: [
+      'Medicina personalizada',
+      'Optimización de medicamentos',
+      'Nutrición genética',
+      'Rendimiento deportivo'
+    ],
+    hasGenderDifferences: false
   }
 ];
 
@@ -357,5 +431,6 @@ export const ADDON_CATEGORIES = [
   'Detox',
   'Inmunología',
   'Gastroenterología',
-  'Oncología'
+  'Oncología',
+  'Genética'
 ] as const; 
