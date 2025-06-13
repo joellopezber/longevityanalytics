@@ -119,7 +119,7 @@ export function PackageSelector() {
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-600">
-                      {avgBiomarkers}+
+                      {avgBiomarkers}
                     </div>
                     <div className="text-xs text-gray-500">Biomarcadores</div>
                   </div>
