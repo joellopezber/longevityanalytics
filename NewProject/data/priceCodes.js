@@ -1,5 +1,6 @@
 
-PriceData = [
+// Datos de precios actualizados 
+const rawPriceData = [
   { code: "6897", precio: "8,08 €", pvp: "9,30 €" },
   { code: "AB001", precio: "273,90 €", pvp: "299,00 €" },
   { code: "AB002", precio: "383,90 €", pvp: "399,00 €" },

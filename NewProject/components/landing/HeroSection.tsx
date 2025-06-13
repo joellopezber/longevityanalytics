@@ -39,7 +39,7 @@ export default function HeroSection() {
                 rendimiento y bienestar a largo plazo.
               </p>
               
-              <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg mt-10">
+              <div className="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-lg mt-10 max-w-2xl">
                 <p className="text-green-800 font-medium">
                   "La longevidad no se trata solo de vivir más años, sino de vivir mejor cada año que tienes."
                 </p>
@@ -95,13 +95,13 @@ export default function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button 
                 onClick={() => setShowPackageSelector(true)}
-                className="bg-gradient-to-r from-green-700 to-green-600 text-white px-8 py-4 rounded-lg font-medium text-lg hover:from-green-800 hover:to-green-700 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-center"
+                className="btn-longevity btn-longevity-large"
               >
                 Descubre tu Paquete Ideal
               </button>
               <a 
                 href="/proceso"
-                className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-medium text-lg hover:bg-gray-50 transition-all text-center"
+                className="btn-longevity-secondary btn-longevity-large"
               >
                 Ver Cómo Funciona
               </a>

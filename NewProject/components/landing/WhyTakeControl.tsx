@@ -7,6 +7,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Icon from '../ui/Icon';
 
 interface Paper {
   title: string;
@@ -31,11 +32,7 @@ interface BenefitData {
 const benefitsData: BenefitData[] = [
   {
     id: 'lifespan-extension',
-    icon: (
-      <svg className="w-8 h-8 text-emerald-600" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M9.5 14.25l-5.584 2.718 1.84 3.837C7.234 20.405 9.53 20 12 20c2.47 0 4.766.405 6.244.805l1.84-3.837L14.5 14.25c-1.17.33-2.328.33-3.5 0zM12 14.5c1.438 0 2.562.5 2.562.5L16 13.5c0-1.5-1.79-2.5-4-2.5s-4 1-4 2.5L9.438 15S10.562 14.5 12 14.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.41 0 8 3.59 8 8 0 1.85-.63 3.55-1.69 4.9z"/>
-      </svg>
-    ),
+    icon: <Icon name="shield" size="xl" className="text-emerald-600" />,
     title: 'Extensión de Vida Saludable',
     description: 'Biomarcadores multi-ómicos + intervenciones tempranas alargan la salud funcional más allá de la edad cronológica.',
     result: 'Hasta +10 años de health-span',
@@ -72,11 +69,7 @@ const benefitsData: BenefitData[] = [
   },
   {
     id: 'performance-optimization',
-    icon: (
-      <svg className="w-8 h-8 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.07-.12C8.48 10.94 10.42 7.54 13 3h1l-1 7h3.5c.49 0 .56.33.47.51l-.07.15C12.96 17.55 11 21 11 21z"/>
-      </svg>
-    ),
+    icon: <Icon name="lightning" size="xl" className="text-amber-600" />,
     title: 'Optimización del Rendimiento',
     description: 'Monitorización continua permite ajustar energía, cognición y fuerza con nutrición de precisión y ejercicio dirigido.',
     result: 'Mejora del 30-50% en performance',
@@ -104,11 +97,7 @@ const benefitsData: BenefitData[] = [
   },
   {
     id: 'neurocognitive-enhancement',
-    icon: (
-      <svg className="w-8 h-8 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.94-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-      </svg>
-    ),
+    icon: <Icon name="brain" size="xl" className="text-indigo-600" />,
     title: 'Potenciación Neurocognitiva',
     description: 'Omega-3, vitaminas B y D, ejercicio aeróbico e IA de biomarcadores ralentizan el declive y mejoran la plasticidad cerebral.',
     result: '70% menos deterioro cognitivo',
@@ -154,11 +143,7 @@ const benefitsData: BenefitData[] = [
   },
   {
     id: 'cardiovascular-risk-reduction',
-    icon: (
-      <svg className="w-8 h-8 text-red-600" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z"/>
-      </svg>
-    ),
+    icon: <Icon name="heart" size="xl" className="text-red-600" />,
     title: 'Reducción del Riesgo Cardiovascular',
     description: 'Control de lípidos, omega-3, entrenamiento de fuerza y disminución de inflamación reducen eventos aterotrombóticos.',
     result: 'Hasta 60% menos eventos CV',
@@ -204,11 +189,7 @@ const benefitsData: BenefitData[] = [
   },
   {
     id: 'cancer-risk-reduction',
-    icon: (
-      <svg className="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 1L9 9l-8 3 8 3 3 8 3-8 8-3-8-3-3-8z"/>
-      </svg>
-    ),
+    icon: <Icon name="star" size="xl" className="text-blue-600" />,
     title: 'Disminución de la Tasa de Cáncer',
     description: 'Vitamina D, ejercicio y optimización inmune bajan la incidencia de tumores sólidos en poblaciones de riesgo.',
     result: '50% menos riesgo relativo',
@@ -245,7 +226,7 @@ const benefitsData: BenefitData[] = [
   },
   {
     id: 'inflammation-mitigation',
-    icon: '🔥',
+    icon: <Icon name="fire" size="xl" className="text-orange-600" />,
     title: 'Mitigación de la Inflamación Crónica',
     description: 'Dieta anti-inflamatoria, ayuno intermitente y senolíticos reducen marcadores de inflamm-aging (IL-6, CRP, TNF-α).',
     result: '−35% en marcadores HS-CRP',
@@ -302,9 +283,7 @@ function PapersModal({ benefit, isOpen, onClose }: PapersModalProps) {
               onClick={onClose}
               className="text-gray-400 hover:text-gray-600 transition-colors"
             >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
+              <Icon name="close" size="lg" />
             </button>
           </div>
           <p className="text-gray-600 mt-2">{benefit.description}</p>

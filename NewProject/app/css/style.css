@@ -3,6 +3,7 @@
 /* Additional styles */
 @import './additional-styles/utility-patterns.css' layer(components);
 @import './additional-styles/theme.css';
+@import './additional-styles/longevity-colors.css';
 
 @plugin "@tailwindcss/forms" {
   strategy: base;

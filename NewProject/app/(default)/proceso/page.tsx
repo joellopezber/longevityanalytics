@@ -161,11 +161,6 @@ export default function ProcesoPage() {
         <div className="absolute inset-0 bg-grid-gray-200/50 bg-[size:32px_32px] opacity-20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
-            <div className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200 mb-8">
-              <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-              Proceso Científicamente Validado
-            </div>
-            
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 mb-8 leading-tight">
               <span className="bg-gradient-to-r from-green-700 via-green-600 to-emerald-600 bg-clip-text text-transparent">Cómo funciona</span><br />
               <span className="text-gray-800">nuestro proceso</span>

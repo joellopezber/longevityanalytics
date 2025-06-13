@@ -713,7 +713,7 @@ export default function PaquetesPage() {
         isOpen={modalState.isOpen}
         profileId={modalState.profileId}
         profileName={modalState.profileName}
-        selectedGender={selectedGender === 'both' ? 'male' : selectedGender}
+        selectedGender={selectedGender}
         onClose={closeModal}
       />
 

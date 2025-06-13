@@ -1,0 +1,83 @@
+/**
+ * LONGEVITY COLORS - Colores unificados simples
+ * Solución mínima para coherencia visual inmediata
+ */
+
+@layer base {
+  :root {
+    /* Verde Longevity Unificado */
+    --longevity-green-50: #f0f9f4;
+    --longevity-green-100: #dcf4e6;
+    --longevity-green-200: #bbe8d0;
+    --longevity-green-500: #2D5A3D;
+    --longevity-green-600: #4A7C59;
+    --longevity-green-700: #1f472a;
+    --longevity-green-800: #1a3b22;
+  }
+}
+
+@layer utilities {
+  /* Clases de color unificadas */
+  .text-longevity-primary { color: var(--longevity-green-600); }
+  .text-longevity-dark { color: var(--longevity-green-700); }
+  .bg-longevity-light { background-color: var(--longevity-green-50); }
+  .bg-longevity-primary { background-color: var(--longevity-green-600); }
+  .bg-longevity-dark { background-color: var(--longevity-green-700); }
+  .border-longevity-primary { border-color: var(--longevity-green-600); }
+  
+  /* Gradiente principal unificado */
+  .gradient-longevity {
+    background: linear-gradient(135deg, var(--longevity-green-700), var(--longevity-green-600));
+  }
+  
+  /* Hover states */
+  .hover-longevity:hover { background-color: var(--longevity-green-700); }
+  
+  /* Botón principal unificado */
+  .btn-longevity {
+    background: linear-gradient(135deg, var(--longevity-green-700), var(--longevity-green-600));
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-longevity:hover {
+    background: linear-gradient(135deg, var(--longevity-green-800), var(--longevity-green-700));
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn-longevity-large {
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+  }
+  
+  /* Botón secundario */
+  .btn-longevity-secondary {
+    background: white;
+    color: var(--longevity-green-600);
+    border: 2px solid #e5e7eb;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .btn-longevity-secondary:hover {
+    border-color: var(--longevity-green-600);
+    background-color: var(--longevity-green-50);
+  }
+} 
