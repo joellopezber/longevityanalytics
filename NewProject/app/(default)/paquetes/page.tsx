@@ -19,7 +19,7 @@ interface ModalState {
 }
 
 export default function PaquetesPage() {
-  const [selectedGender, setSelectedGender] = useState<'male' | 'female' | 'both'>('both');
+  const [selectedGender, setSelectedGender] = useState<'male' | 'female'>('male');
   const [showPackageSelector, setShowPackageSelector] = useState(false);
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
@@ -286,16 +286,6 @@ export default function PaquetesPage() {
             <div className="flex justify-center">
               <div className="bg-white rounded-lg p-1 shadow-sm border border-gray-200">
                 <button
-                  onClick={() => setSelectedGender('both')}
-                  className={`px-6 py-3 rounded-md text-sm font-medium transition-colors ${
-                    selectedGender === 'both'
-                      ? 'bg-gradient-to-r from-green-700 to-green-600 text-white shadow-lg'
-                      : 'text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  Unisex
-                </button>
-                <button
                   onClick={() => setSelectedGender('male')}
                   className={`px-6 py-3 rounded-md text-sm font-medium transition-colors ${
                     selectedGender === 'male'
@@ -391,14 +381,12 @@ export default function PaquetesPage() {
                           {pkg.addOnsCount}
                         </span>
                       </div>
-                      {selectedGender !== 'both' && (
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-600">Específicos de género:</span>
-                          <span className={`font-semibold ${pkg.textColor}`}>
-                            {selectedGender === 'male' ? stats.biomarkersByGender.male : stats.biomarkersByGender.female}
-                          </span>
-                        </div>
-                      )}
+                      <div className="flex justify-between items-center">
+                        <span className="text-sm text-gray-600">Específicos de género:</span>
+                        <span className={`font-semibold ${pkg.textColor}`}>
+                          {selectedGender === 'male' ? stats.biomarkersByGender.male : stats.biomarkersByGender.female}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Features */}

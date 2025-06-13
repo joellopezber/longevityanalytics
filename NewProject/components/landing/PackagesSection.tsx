@@ -10,7 +10,7 @@ import { PACKAGES_DATA, type SimplePackage } from '@/lib/data/packages-simple';
 import { ProfileBiomarkersModal } from './ProfileBiomarkersModal';
 import PackageQuestionnaireModal from './PackageQuestionnaireModal';
 
-type Gender = 'male' | 'female' | 'both';
+type Gender = 'male' | 'female';
 
 interface ModalState {
   isOpen: boolean;
@@ -19,7 +19,7 @@ interface ModalState {
 }
 
 export default function PackagesSection() {
-  const [selectedGender, setSelectedGender] = useState<Gender>('both');
+  const [selectedGender, setSelectedGender] = useState<Gender>('male');
   const [modalState, setModalState] = useState<ModalState>({
     isOpen: false,
     profileId: '',
@@ -81,16 +81,6 @@ export default function PackagesSection() {
           {/* Gender Selector */}
           <div className="flex justify-center mb-8">
             <div className="bg-white rounded-lg p-1 shadow-sm border border-gray-200">
-              <button
-                onClick={() => setSelectedGender('both')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                  selectedGender === 'both'
-                    ? 'bg-green-600 text-white'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}
-              >
-                Unisex
-              </button>
               <button
                 onClick={() => setSelectedGender('male')}
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -260,7 +250,7 @@ export default function PackagesSection() {
         onClose={closeModal}
         profileId={modalState.profileId}
         profileName={modalState.profileName}
-        selectedGender={selectedGender === 'both' ? 'male' : selectedGender}
+        selectedGender={selectedGender}
       />
 
       {/* Modal de Cuestionario de Paquetes */}

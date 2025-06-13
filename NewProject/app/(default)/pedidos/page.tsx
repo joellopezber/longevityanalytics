@@ -36,7 +36,6 @@ export default function SavedOrdersPage() {
     switch (gender) {
       case 'male': return 'Hombre';
       case 'female': return 'Mujer';
-      case 'both': return 'Unisex';
       default: return 'No seleccionado';
     }
   };

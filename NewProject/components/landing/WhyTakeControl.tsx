@@ -20,7 +20,7 @@ interface Paper {
 
 interface BenefitData {
   id: string;
-  icon: React.ReactElement;
+  icon: React.ReactElement | string;
   title: string;
   description: string;
   result: string;
@@ -273,6 +273,13 @@ const benefitsData: BenefitData[] = [
   }
 ];
 
+const renderIcon = (icon: React.ReactElement | string) => {
+  if (typeof icon === 'string') {
+    return <span className="text-2xl">{icon}</span>;
+  }
+  return icon;
+};
+
 interface PapersModalProps {
   benefit: BenefitData | null;
   isOpen: boolean;
@@ -288,7 +295,7 @@ function PapersModal({ benefit, isOpen, onClose }: PapersModalProps) {
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-2xl">{benefit.icon}</span>
+              {renderIcon(benefit.icon)}
               <h3 className="text-xl font-bold text-gray-900">{benefit.title}</h3>
             </div>
             <button
@@ -419,7 +426,7 @@ export default function WhyTakeControl() {
                 onClick={() => openModal(benefit)}
               >
                 <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-4 shadow-sm">
-                  <span className="text-2xl">{benefit.icon}</span>
+                  {renderIcon(benefit.icon)}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-3">{benefit.title}</h3>
                 <p className="text-gray-600 mb-4 text-sm">

@@ -250,5 +250,5 @@ export const addOnPackages = {
 // console.log('✅ Add-ons packages creados:', {
   total: Object.keys(addOnPackages).length,
   withGenderDifferences: ['hormonas', 'cancer', 'bioage'],
-  unisex: Object.keys(addOnPackages).length - 3
+  total: Object.keys(addOnPackages).length
 }); 

@@ -12,12 +12,6 @@ export function GenderSelector() {
 
   const genderOptions: { value: Gender; label: string; description: string; icon: string }[] = [
     {
-      value: 'both',
-      label: 'Unisex',
-      description: 'Análisis estándar sin diferenciación por género',
-      icon: '👤'
-    },
-    {
       value: 'male',
       label: 'Hombre',
       description: 'Análisis optimizado para fisiología masculina',
@@ -113,18 +107,6 @@ export function GenderSelector() {
               <div className="mt-4 pt-4 border-t border-gray-200">
                 <h4 className="text-sm font-medium text-gray-900 mb-2">Ventajas:</h4>
                 <ul className="space-y-1">
-                  {option.value === 'both' && (
-                    <>
-                      <li className="flex items-start space-x-2">
-                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-xs text-gray-600">Precio más económico</span>
-                      </li>
-                      <li className="flex items-start space-x-2">
-                        <div className="w-1.5 h-1.5 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                        <span className="text-xs text-gray-600">Análisis estándar</span>
-                      </li>
-                    </>
-                  )}
                   {option.value === 'male' && (
                     <>
                       <li className="flex items-start space-x-2">
