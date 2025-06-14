@@ -42,6 +42,65 @@ export function AddOnSelector() {
   const [loading, setLoading] = useState(true);
   const [biomarkersModalOpen, setBiomarkersModalOpen] = useState<{id: string, name: string} | null>(null);
   const [hoveredAddon, setHoveredAddon] = useState<string | null>(null);
+  const [addonPrices, setAddonPrices] = useState<{[addonId: string]: {precio: number, pvp: number, biomarkersCount: number}}>({});
+
+  // Función para calcular precio de un add-on basándose en biomarcadores activos (igual que en el modal)
+  const calculateAddonPrice = async (addonId: string, excludedCodes: string[]) => {
+    try {
+      // Obtener detalles del add-on con biomarcadores desde la API
+      const addonData = await addonsAPI.getById(addonId, { 
+        gender: selectedGender, 
+        details: true 
+      });
+      
+      if (addonData && addonData.biomarkerCodes && addonData.biomarkerCodes.length > 0) {
+        // Filtrar biomarcadores activos (no excluidos)
+        const activeBiomarkers = addonData.biomarkerCodes.filter(code => !excludedCodes.includes(code));
+        
+        if (activeBiomarkers.length === 0) {
+          return { precio: 0, pvp: 0, biomarkersCount: 0 };
+        }
+
+        // Usar la misma API que usa el modal
+        const response = await fetch('/api/pricing', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            codes: activeBiomarkers,
+            gender: selectedGender
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          return {
+            precio: data.pricing.precio || 0,
+            pvp: data.pricing.pvp || 0,
+            biomarkersCount: activeBiomarkers.length
+          };
+        }
+      }
+    } catch (error) {
+      console.error('Error calculating addon price:', error);
+    }
+    
+    // Fallback: usar datos originales del add-on
+    const addon = availableAddOns.find(a => a.id === addonId);
+    if (addon) {
+      const originalPricing = addon.pricing[selectedGender];
+      const originalCount = addon.biomarkersCount[selectedGender];
+      const excludedCount = excludedCodes.length;
+      return {
+        precio: originalPricing.precio,
+        pvp: originalPricing.pvp,
+        biomarkersCount: Math.max(0, originalCount - excludedCount)
+      };
+    }
+    
+    return { precio: 0, pvp: 0, biomarkersCount: 0 };
+  };
 
   // Cargar add-ons disponibles
   useEffect(() => {
@@ -62,6 +121,25 @@ export function AddOnSelector() {
 
     loadAddOns();
   }, [selectedProfile, selectedGender]);
+
+  // Recalcular precios cuando cambian las exclusiones
+  useEffect(() => {
+    const updateAddonPrices = async () => {
+      if (availableAddOns.length === 0) return;
+      
+      const newPrices: {[addonId: string]: {precio: number, pvp: number, biomarkersCount: number}} = {};
+      
+      for (const addon of availableAddOns) {
+        const excludedCodes = excludedBiomarkers[addon.id] || [];
+        const pricing = await calculateAddonPrice(addon.id, excludedCodes);
+        newPrices[addon.id] = pricing;
+      }
+      
+      setAddonPrices(newPrices);
+    };
+
+    updateAddonPrices();
+  }, [availableAddOns, excludedBiomarkers, selectedGender]);
 
   if (!selectedProfile) {
     return (
@@ -154,9 +232,21 @@ export function AddOnSelector() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredAddOns.map((addon) => {
             const isSelected = isAddOnSelected(addon.id);
-            const pricing = addon.pricing[selectedGender];
-            const biomarkersCount = addon.biomarkersCount[selectedGender];
-            const discount = Math.round(((pricing.pvp - pricing.precio) / pricing.pvp) * 100);
+            const excludedCount = (excludedBiomarkers[addon.id] || []).length;
+            
+            // Usar precio calculado si está disponible, sino usar el original
+            const calculatedData = addonPrices[addon.id];
+            const originalPricing = addon.pricing[selectedGender];
+            const originalBiomarkersCount = addon.biomarkersCount[selectedGender];
+            
+            const pricing = calculatedData ? 
+              { precio: calculatedData.precio, pvp: calculatedData.pvp } : 
+              originalPricing;
+            const biomarkersCount = calculatedData ? 
+              calculatedData.biomarkersCount : 
+              Math.max(0, originalBiomarkersCount - excludedCount);
+            
+            const discount = pricing.pvp > 0 ? Math.round(((pricing.pvp - pricing.precio) / pricing.pvp) * 100) : 0;
             const canSelect = canAddMoreAddOns() || isSelected;
 
             return (
@@ -186,11 +276,23 @@ export function AddOnSelector() {
                   </div>
                 )}
 
-                {/* Category Badge */}
-                <div className="absolute top-4 left-4">
+                {/* Category Badge with Customization Icon */}
+                <div className="absolute top-4 left-4 flex items-center gap-2">
                   <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
                     {addon.category}
                   </span>
+                  
+                  {/* Customization Icon */}
+                  {excludedCount > 0 && (
+                    <div 
+                      className="w-5 h-5 bg-orange-100 border border-orange-300 rounded-full flex items-center justify-center shadow-sm hover:bg-orange-200 transition-colors"
+                      title={`Personalizado: ${excludedCount} biomarcadores excluidos`}
+                    >
+                      <svg className="w-3 h-3 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  )}
                 </div>
 
                 {/* Add-on Header */}
@@ -230,7 +332,18 @@ export function AddOnSelector() {
                   <div className="text-2xl font-bold text-green-600">
                     {biomarkersCount}
                   </div>
-                  <div className="text-xs text-gray-500">Biomarcadores</div>
+                  <div className="text-xs text-gray-500">
+                    {excludedCount > 0 ? (
+                      <>
+                        Biomarcadores activos
+                        <div className="text-xs text-orange-600 mt-1">
+                          ({excludedCount} excluidos de {originalBiomarkersCount})
+                        </div>
+                      </>
+                    ) : (
+                      'Biomarcadores'
+                    )}
+                  </div>
                 </div>
 
                 {/* Price */}

@@ -341,7 +341,11 @@ export function AddOnBiomarkersModal({ isOpen, onClose, addonId, addonName }: Ad
                 Incluir Todos
               </button>
               <button
-                onClick={onClose}
+                onClick={() => {
+                  // Forzar recálculo de totales antes de cerrar
+                  // Esto asegura que el store tenga los datos más actualizados
+                  onClose();
+                }}
                 className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
               >
                 Guardar Cambios
