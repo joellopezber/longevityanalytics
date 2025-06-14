@@ -12,6 +12,7 @@ import { PackageSelector } from './PackageSelector';
 import { GenderSelector } from './GenderSelector';
 import { AddOnSelector } from './AddOnSelector';
 import { OrderSummary } from './OrderSummary';
+import { ConfigurationSummary } from './ConfigurationSummary';
 
 const STEPS = [
   { id: 1, title: 'Género', description: 'Selecciona tu género' },
@@ -93,18 +94,35 @@ export default function PackageConfigurator() {
 
             {/* Right Column - Summary Sidebar */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-8">
+              <div className="bg-white rounded-2xl shadow-lg p-6 sticky top-20">
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">
                   Tu Configuración
                 </h3>
                 <ConfigurationSummary />
+                
+                {/* Botón Siguiente */}
+                {currentStep < 4 && (
+                  <div className="mt-6 pt-4 border-t border-gray-200">
+                    <button
+                      onClick={nextStep}
+                      disabled={!canProceedToNext()}
+                      className={`w-full px-8 py-3 rounded-lg font-medium transition-all ${
+                        canProceedToNext()
+                          ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg hover:shadow-xl'
+                          : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      }`}
+                    >
+                      Siguiente →
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
 
         {/* Navigation */}
-        <div className="mt-12 flex justify-between items-center">
+        <div className="mt-12">
           <div className="flex space-x-4">
             {currentStep > 1 && (
               <button
@@ -122,128 +140,10 @@ export default function PackageConfigurator() {
               Reiniciar
             </button>
           </div>
-
-          <div>
-            {currentStep < 4 && (
-              <button
-                onClick={nextStep}
-                disabled={!canProceedToNext()}
-                className={`px-8 py-3 rounded-lg font-medium transition-all ${
-                  canProceedToNext()
-                    ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg hover:shadow-xl'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                }`}
-              >
-                Siguiente →
-              </button>
-            )}
-          </div>
         </div>
       </div>
     </div>
   );
 }
 
-// Componente de resumen en la sidebar
-function ConfigurationSummary() {
-  const { 
-    selectedProfile, 
-    selectedGender, 
-    selectedAddOns, 
-    totalBiomarkers, 
-    totalPrice, 
-    totalPvp, 
-    savings 
-  } = useConfiguratorStore();
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
-
-  const getGenderLabel = (gender: string) => {
-    switch (gender) {
-      case 'male': return 'Hombre';
-      case 'female': return 'Mujer';
-      default: return 'No seleccionado';
-    }
-  };
-
-  return (
-    <div className="space-y-4">
-
-      {/* Gender */}
-      <div>
-        <h4 className="text-sm font-medium text-gray-500 mb-1">Género</h4>
-        <p className="text-gray-900">{getGenderLabel(selectedGender)}</p>
-      </div>
-
-      {/* Package */}
-      <div>
-        <h4 className="text-sm font-medium text-gray-500 mb-1">Perfil</h4>
-        <p className="text-gray-900">
-          {selectedProfile ? selectedProfile.name : 'No seleccionado'}
-        </p>
-      </div>
-
-      {/* Add-ons */}
-      <div>
-        <h4 className="text-sm font-medium text-gray-500 mb-1">
-          Add-ons ({selectedAddOns.length})
-        </h4>
-        {selectedAddOns.length > 0 ? (
-          <ul className="space-y-1">
-            {selectedAddOns.map((addon) => (
-              <li key={addon.id} className="text-sm text-gray-700">
-                {addon.name}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500 text-sm">Ninguno seleccionado</p>
-        )}
-      </div>
-
-      {/* Totals */}
-      {selectedProfile && (
-        <div className="border-t pt-4 mt-4">
-          <div className="space-y-2">
-            <div className="flex justify-between">
-              <span className="text-sm text-gray-600">Biomarcadores:</span>
-              <span className="font-medium">{totalBiomarkers}</span>
-            </div>
-            
-            {savings > 0 && (
-              <div className="flex justify-between">
-                <span className="text-sm text-gray-600">PVP:</span>
-                <span className="text-sm text-gray-500 line-through">
-                  {formatPrice(totalPvp)}
-                </span>
-              </div>
-            )}
-            
-            <div className="flex justify-between">
-              <span className="text-sm text-gray-600">Tu precio:</span>
-              <span className="font-bold text-green-600">
-                {formatPrice(totalPrice)}
-              </span>
-            </div>
-            
-            {savings > 0 && (
-              <div className="flex justify-between">
-                <span className="text-sm text-green-600">Ahorras:</span>
-                <span className="font-medium text-green-600">
-                  {formatPrice(savings)}
-                </span>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-} 
+ 
