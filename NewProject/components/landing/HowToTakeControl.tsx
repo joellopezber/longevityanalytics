@@ -60,15 +60,10 @@ export default function HowToTakeControl() {
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             ¿Cómo tomo el control de mi <span className="text-green-700">salud?</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto mb-8">
+          <p className="text-xl text-gray-600 max-w-4xl mx-auto">
             Ya sabes POR QUÉ es importante tomar el control. Ahora te mostramos CÓMO hacerlo de forma inteligente y eficiente. 
             No más estrategias genéricas: tu cuerpo es único y merece un enfoque personalizado.
           </p>
-          <div className="bg-green-100 border-l-4 border-green-500 p-4 rounded-r-lg max-w-3xl mx-auto">
-            <p className="text-green-800 font-medium">
-              "A partir de datos precisos puedes ser eficiente en cada acción que tomas y ver su repercusión real en tu salud."
-            </p>
-          </div>
         </div>
 
         {/* Process Steps */}

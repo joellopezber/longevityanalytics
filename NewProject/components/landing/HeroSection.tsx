@@ -111,7 +111,7 @@ export default function HeroSection() {
           {/* Visual */}
           <div className="relative">
             <div className="relative z-10">
-              <div className="bg-gradient-to-br from-white to-gray-50 border border-green-200 shadow-sm hover:shadow-md p-8 rounded-xl transform rotate-3 hover:rotate-0 transition-transform duration-300">
+              <div className="bg-gradient-to-br from-white to-gray-50 border border-green-200 shadow-sm hover:shadow-md p-8 rounded-xl transform lg:rotate-3 hover:rotate-0 transition-transform duration-300">
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-12 h-12 bg-gradient-to-br from-green-700 to-green-600 rounded-full flex items-center justify-center">
@@ -171,20 +171,20 @@ export default function HeroSection() {
             <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-green-300 rounded-full blur-xl opacity-10"></div>
             
             {/* Stats moved to right column */}
-            <div className="relative z-10 mt-20">
-              <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="relative z-10 mt-32">
+              <div className="grid grid-cols-3 gap-6 text-center">
                 <div>
-                  <div className="text-xl font-bold text-green-700">+150</div>
+                  <div className="text-4xl font-bold text-green-700 mb-2">+150</div>
                   <div className="text-sm text-gray-600">Biomarcadores</div>
                   <div className="text-xs text-gray-500">Análisis completo</div>
                 </div>
                 <div>
-                  <div className="text-xl font-bold text-green-700">+25</div>
+                  <div className="text-4xl font-bold text-green-700 mb-2">+25</div>
                   <div className="text-sm text-gray-600">Análisis Funcionales</div>
                   <div className="text-xs text-gray-500">Evaluación avanzada</div>
                 </div>
                 <div>
-                  <div className="text-xl font-bold text-green-700">+250</div>
+                  <div className="text-4xl font-bold text-green-700 mb-2">+250</div>
                   <div className="text-sm text-gray-600">Puntos de Extracción</div>
                   <div className="text-xs text-gray-500">Cobertura total</div>
                 </div>

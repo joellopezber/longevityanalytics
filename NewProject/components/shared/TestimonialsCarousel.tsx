@@ -66,11 +66,7 @@ export function TestimonialsCarousel() {
     <div className="py-16">
       {/* Minimal 3D Testimonials Carousel */}
       <div className="overflow-hidden">
-          <div className="text-center mb-12">
-            <h3 className="text-2xl font-bold text-gray-900">
-              Experiencia
-            </h3>
-          </div>
+
           
           <div className="relative h-64 flex items-center justify-center">
             <div className="relative w-full max-w-7xl mx-auto">

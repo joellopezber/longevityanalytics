@@ -154,13 +154,13 @@ export default function SavedOrdersPage() {
             <div key={order.id} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex items-center">
-                  <div className="text-2xl mr-3">{getPackageIcon(order.package.id)}</div>
+                  <div className="text-2xl mr-3">📋</div>
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">
-                      {order.package.name}
+                      Configuración de Análisis
                     </h3>
                     <p className="text-sm text-gray-600">
-                      {order.package.title}
+                      Pedido #{order.id.slice(-8)}
                     </p>
                   </div>
                 </div>
@@ -171,17 +171,33 @@ export default function SavedOrdersPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                <div>
-                  <div className="text-sm text-gray-500">Configurado para</div>
-                  <div className="font-medium">{getGenderLabel(order.gender)}</div>
+              {/* Paquete Base Destacado */}
+              <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-3">
+                    <div className="bg-blue-100 p-2 rounded-lg">
+                      <div className="text-lg">{getPackageIcon(order.package.id)}</div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-gray-500">Paquete base seleccionado</div>
+                      <div className="font-semibold text-gray-900">{order.package.name}</div>
+                      <div className="text-xs text-gray-600">{order.package.title}</div>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-sm text-gray-500">Configurado para</div>
+                    <div className="font-medium text-blue-600">{getGenderLabel(order.gender)}</div>
+                  </div>
                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                 <div>
-                  <div className="text-sm text-gray-500">Biomarcadores</div>
+                  <div className="text-sm text-gray-500">Biomarcadores totales</div>
                   <div className="font-medium">{order.totals.biomarkers}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">Add-ons</div>
+                  <div className="text-sm text-gray-500">Add-ons incluidos</div>
                   <div className="font-medium">{order.addOns.length}</div>
                 </div>
                 <div>
@@ -208,19 +224,7 @@ export default function SavedOrdersPage() {
                 </div>
               )}
 
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button
-                  onClick={() => handleContinueOrder(order)}
-                  className="flex-1 bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors"
-                >
-                  Continuar configuración
-                </button>
-                <button
-                  onClick={() => updateOrderStatus(order.id, 'completed')}
-                  className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                >
-                  Marcar como completado
-                </button>
+              <div className="flex justify-end">
                 <button
                   onClick={() => handleDeleteOrder(order.id)}
                   className="px-4 py-2 text-red-600 border border-red-300 rounded-lg font-medium hover:bg-red-50 transition-colors"
