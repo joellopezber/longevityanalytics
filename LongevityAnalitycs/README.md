@@ -1,175 +1,65 @@
-# 🧬 Longevity Analytics
+# Longevity Analytics Landing
 
-![React](https://img.shields.io/badge/React-18.2.0-blue)
-![Tailwind](https://img.shields.io/badge/TailwindCSS-3.3.6-blue)
-![Build](https://img.shields.io/badge/Build-Passing-green)
-![License](https://img.shields.io/badge/License-MIT-green)
+Este proyecto contiene la nueva landing page de Longevity Analytics con evidencia científica actualizada y componentes modernos.
 
-**Aplicación web moderna para la exploración y configuración de análisis clínicos de longevidad**
+## 🚀 Estado del Despliegue
+- ✅ GitHub Pages configurado  
+- ✅ Workflow automático activo
+- 🌐 URL: https://joellopezber.github.io/longevityanalytics/
 
-Una plataforma interactiva que permite a los usuarios explorar diferentes perfiles analíticos y personalizar su selección con módulos especializados (add-ons), con soporte multiidioma y pricing dinámico.
+## Desarrollo Local
 
-![Demo App](https://via.placeholder.com/800x400/1f2937/ffffff?text=Longevity+Analytics+Demo)
-
-## ✨ Características Principales
-
-### 🎯 **Sistema de Análisis Modular**
-- **4 Perfiles Principales**: Essential, Performance, Core, Advanced
-- **16 Add-Ons Especializados**: Módulos complementarios personalizables
-- **Análisis por Género**: Biomarcadores específicos y pricing diferenciado
-- **Recomendaciones Inteligentes**: Add-ons sugeridos según perfil seleccionado
-
-### 🌍 **Internacionalización Completa**
-- **3 Idiomas**: Español, Inglés, Francés
-- **Contenido Dinámico**: Traducciones automáticas de textos, beneficios y características
-- **Sistema Robusto**: Manejo inteligente de traducciones faltantes
-
-### 💰 **Pricing Dinámico**
-- **Cálculo en Tiempo Real**: Precios actualizados según selecciones
-- **Sistema Dual**: Precio Prevenii (costo) vs Precio Market (PVP)
-- **Transparencia**: Desglose completo de biomarcadores incluidos
-
-### 🎨 **Interfaz Moderna**
-- **Responsive Design**: Optimizada para móvil, tablet y desktop
-- **Animaciones Suaves**: Framer Motion para transiciones profesionales
-- **UX Intuitiva**: Cards interactivas y feedback visual en tiempo real
-
-## 🚀 Inicio Rápido
-
-### Requisitos Previos
-- Node.js 16+ (recomendado 18+)
-- npm 8+ o yarn 1.22+
-
-### Instalación y Ejecución
-
-   ```bash
-# Clonar repositorio
-git clone <repository-url>
-cd Longevity_Analitycs
-
-# Instalar dependencias
-   npm install
-
-# Ejecutar en desarrollo
-   npm start
-# La aplicación se abrirá en http://localhost:3000
-
-# Compilar para producción
-npm run build
+```bash
+cd NewProject
+npm install
+npm run dev
 ```
 
-## 🏗️ Arquitectura
+## Estructura del Proyecto
 
-### Stack Tecnológico
-- **Frontend**: React 18 + Hooks
-- **Styling**: Tailwind CSS 3.3
-- **Animaciones**: Framer Motion 10.16
-- **Iconos**: React Icons 4.12
-- **Build**: Create React App (Webpack + Babel)
+- `components/landing/` - Componentes principales de la landing
+- `lib/data/` - Datos y configuraciones
+- `app/` - Páginas y layouts de Next.js
 
-### Estructura del Proyecto
-```
-src/
-├── components/          # Componentes React
-│   ├── MedicalSystemsExplorer.jsx  # Componente principal
-│   └── PackageComparison.jsx       # Comparador de paquetes
-├── contexts/           # Context API providers
-│   ├── LanguageContext.js          # Sistema de traducciones
-│   └── BiomarkerSelectionContext.js # Estado de selecciones
-├── data/              # Configuraciones y datos
-│   ├── biomarkersDict.js           # Diccionario de biomarcadores
-│   ├── analysisPackages.js         # Configuración de perfiles
-│   ├── addOnPackages.js            # Configuración de add-ons
-│   ├── priceData.js                # Datos de precios
-│   └── priceCalculator.js          # Lógica de cálculo
-├── styles/            # Estilos CSS personalizados
-└── images/            # Assets e imágenes
+## GitHub Pages
+
+El proyecto está configurado para desplegarse automáticamente a GitHub Pages usando GitHub Actions cada vez que se hace push a la branch main.
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Getting Started
+
+First, run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
 ```
 
-## 📊 Sistema de Datos
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Perfiles Analíticos
-| Perfil | Tests (M/W) | Add-Ons Recomendados | Enfoque |
-|--------|-------------|----------------------|---------|
-| **Essential** | 44/43 | Todos (16) disponibles | Análisis fundamental |
-| **Performance** | 58/60 | 6 específicos | Deportistas y rendimiento |
-| **Core** | 76/75 | 7 intermedios | Análisis completo |
-| **Advanced** | 120/119 | 5 especializados | Análisis premium |
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### Add-Ons Especializados
-- 🧬 **Hormonas, Endocrino** - Análisis hormonal
-- 🛡️ **Antioxidantes, Estrés Oxidativo** - Sistema antioxidante
-- ❤️ **Cardiovascular, Inflamación** - Salud cardíaca
-- 🦴 **Salud Ósea, Coagulación** - Metabolismo óseo
-- 🧠 **Inmunidad, Digestión** - Sistemas corporales
-- 🧪 **Genética, Cáncer, Edad Biológica** - Análisis avanzados
+[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-## 🔧 Configuración
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-### Variables de Entorno
-```env
-# .env
-REACT_APP_ENV=production
-REACT_APP_VERSION=2.0.0
-```
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-### Extensiones VS Code Recomendadas
-- Tailwind CSS IntelliSense
-- Prettier - Code formatter
-- ESLint
-- Auto Rename Tag
+## Learn More
 
-## 📚 Documentación
+To learn more about Next.js, take a look at the following resources:
 
-Para documentación completa y detallada, consulta la carpeta [`docs/`](./docs/):
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-- 📖 **[Guía Completa](./docs/README.md)** - Índice general de documentación
-- 🏛️ **[Arquitectura](./docs/architecture/)** - Documentación técnica del sistema
-- 👩‍💻 **[Desarrollo](./docs/development/)** - Guías para desarrolladores
-- 🔄 **[Migración](./docs/migration/)** - Historial de cambios y migración v2
-- 🛠️ **[Troubleshooting](./docs/troubleshooting/)** - Solución de problemas
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## 🤝 Contribución
+## Deploy on Vercel
 
-1. **Fork** el repositorio
-2. **Crea** una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. **Commit** tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. **Push** a la rama (`git push origin feature/AmazingFeature`)
-5. **Abre** un Pull Request
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Por favor, lee las [guías de contribución](./docs/development/coding-standards.md) antes de contribuir.
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
-
-## 📊 Estado del Proyecto
-
-### ✅ Completado (v2.0.0)
-- [x] Arquitectura refactorizada y modular
-- [x] Sistema de traducciones completo (ES/EN/FR)
-- [x] 4 perfiles + 16 add-ons completamente funcionales
-- [x] Pricing dinámico con diferenciación por género
-- [x] Build optimizado sin warnings
-- [x] Documentación completa y organizada
-- [x] Interfaz responsive y moderna
-
-### 🔮 Futuras Mejoras
-- [ ] Testing automatizado con Jest/React Testing Library
-- [ ] API backend para persistencia de datos
-- [ ] Dashboard de administración
-- [ ] Analytics y tracking de uso
-- [ ] PWA (Progressive Web App)
-- [ ] Más idiomas (IT, DE, PT)
-
-## 📞 Soporte
-
-- 📚 **Documentación**: [`docs/`](./docs/)
-- 🐛 **Issues**: [GitHub Issues](../../issues)
-- 🔧 **Problemas comunes**: [Troubleshooting](./docs/troubleshooting/)
-
----
-
-**Desarrollado con ❤️ para el futuro de la medicina personalizada**
-
-*Última actualización: Diciembre 2024 | Versión: v2.0.0* 
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
