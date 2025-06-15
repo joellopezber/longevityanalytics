@@ -225,8 +225,8 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
           );
 
           if (hasExclusions) {
-            // Calcular manualmente cuando hay exclusiones
-            throw new Error('Usando cálculo manual por exclusiones');
+            // Calcular manualmente cuando hay exclusiones - saltar al catch sin error
+            throw new Error('MANUAL_CALCULATION');
           }
 
           // Usar nuestra API de pricing para cálculos exactos (solo si no hay exclusiones)
@@ -245,7 +245,10 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
           });
 
         } catch (error) {
-          console.error('Error calculating totals:', error);
+          // Solo mostrar error si no es un cálculo manual esperado
+          if (error instanceof Error && error.message !== 'MANUAL_CALCULATION') {
+            console.error('Error calculating totals:', error);
+          }
           
           // Fallback: cálculo manual con precios ajustados por exclusiones
           const profilePricing = selectedProfile.pricing[selectedGender];
@@ -265,53 +268,75 @@ export const useConfiguratorStore = create<ConfiguratorState>()(
             const excludedCodes = excludedBiomarkers[addon.id] || [];
             
             try {
+              // Verificar que el addon tenga biomarcadores
+              if (!addon.biomarkers || !Array.isArray(addon.biomarkers)) {
+                console.warn('Add-on sin biomarcadores válidos:', addon.id);
+                continue;
+              }
+              
               // Intentar calcular precio real basado en biomarcadores activos
+              const activeBiomarkers = addon.biomarkers.filter(code => !excludedCodes.includes(code));
+              
               const response = await fetch('/api/pricing', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                  codes: addon.biomarkers.filter(code => !excludedCodes.includes(code)),
+                  codes: activeBiomarkers,
                   gender: selectedGender
                 })
               });
 
               if (response.ok) {
                 const data = await response.json();
-                addOnsTotalPrice += data.pricing.precio || 0;
-                addOnsTotalPvp += data.pricing.pvp || 0;
-                addOnsTotalBiomarkers += Math.max(0, addon.biomarkers.length - excludedCodes.length);
+                addOnsTotalPrice += data.pricing?.precio || 0;
+                addOnsTotalPvp += data.pricing?.pvp || 0;
+                addOnsTotalBiomarkers += activeBiomarkers.length;
               } else {
                 // Si falla la API, usar precio proporcional
-                const addonPricing = addon.pricing[selectedGender];
-                const addonBiomarkers = addon.biomarkersCount[selectedGender];
-                const activeBiomarkers = Math.max(0, addonBiomarkers - excludedCodes.length);
-                const proportion = activeBiomarkers / addonBiomarkers;
+                const addonPricing = addon.pricing?.[selectedGender];
+                const addonBiomarkers = addon.biomarkersCount?.[selectedGender];
                 
-                addOnsTotalPrice += addonPricing.precio * proportion;
-                addOnsTotalPvp += addonPricing.pvp * proportion;
-                addOnsTotalBiomarkers += activeBiomarkers;
+                if (addonPricing && typeof addonBiomarkers === 'number') {
+                  const activeBiomarkersCount = Math.max(0, addonBiomarkers - excludedCodes.length);
+                  const proportion = addonBiomarkers > 0 ? activeBiomarkersCount / addonBiomarkers : 0;
+                  
+                  addOnsTotalPrice += (addonPricing.precio || 0) * proportion;
+                  addOnsTotalPvp += (addonPricing.pvp || 0) * proportion;
+                  addOnsTotalBiomarkers += activeBiomarkersCount;
+                }
               }
             } catch (apiError) {
               console.error('Error calculating addon price:', apiError);
               // Fallback final: precio proporcional
-              const addonPricing = addon.pricing[selectedGender];
-              const addonBiomarkers = addon.biomarkersCount[selectedGender];
-              const activeBiomarkers = Math.max(0, addonBiomarkers - excludedCodes.length);
-              const proportion = activeBiomarkers / addonBiomarkers;
+              const addonPricing = addon.pricing?.[selectedGender];
+              const addonBiomarkers = addon.biomarkersCount?.[selectedGender];
               
-              addOnsTotalPrice += addonPricing.precio * proportion;
-              addOnsTotalPvp += addonPricing.pvp * proportion;
-              addOnsTotalBiomarkers += activeBiomarkers;
+              if (addonPricing && typeof addonBiomarkers === 'number') {
+                const activeBiomarkersCount = Math.max(0, addonBiomarkers - excludedCodes.length);
+                const proportion = addonBiomarkers > 0 ? activeBiomarkersCount / addonBiomarkers : 0;
+                
+                addOnsTotalPrice += (addonPricing.precio || 0) * proportion;
+                addOnsTotalPvp += (addonPricing.pvp || 0) * proportion;
+                addOnsTotalBiomarkers += activeBiomarkersCount;
+              }
             }
           }
 
+          // Validar datos del perfil antes del cálculo final
+          const finalProfileBiomarkers = profileBiomarkers || 0;
+          const finalProfilePrecio = profilePricing?.precio || 0;
+          const finalProfilePvp = profilePricing?.pvp || 0;
+          
+          const finalTotalPrice = finalProfilePrecio + addOnsTotalPrice;
+          const finalTotalPvp = finalProfilePvp + addOnsTotalPvp;
+          
           set({
-            totalBiomarkers: profileBiomarkers + addOnsTotalBiomarkers,
-            totalPrice: profilePricing.precio + addOnsTotalPrice,
-            totalPvp: profilePricing.pvp + addOnsTotalPvp,
-            savings: (profilePricing.pvp + addOnsTotalPvp) - (profilePricing.precio + addOnsTotalPrice),
+            totalBiomarkers: finalProfileBiomarkers + addOnsTotalBiomarkers,
+            totalPrice: Math.round(finalTotalPrice * 100) / 100,
+            totalPvp: Math.round(finalTotalPvp * 100) / 100,
+            savings: Math.round((finalTotalPvp - finalTotalPrice) * 100) / 100,
             isLoading: false,
             error: hasExclusions ? 'Precios ajustados por exclusiones' : null
           });
