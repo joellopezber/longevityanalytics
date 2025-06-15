@@ -2,6 +2,11 @@
  * PACKAGES DATA HOOK
  * Hook personalizado para manejar datos y lógica común de paquetes
  * Conectado con API real para precios dinámicos calculados desde biomarcadores
+ * 
+ * @author: Juan Pablo Pérez
+ * @date: 2025-06-16
+ * @version: 1.0.0
+ */
 
 'use client';
 
